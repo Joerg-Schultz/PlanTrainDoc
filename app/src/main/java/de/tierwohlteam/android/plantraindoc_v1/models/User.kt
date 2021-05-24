@@ -1,6 +1,8 @@
 package de.tierwohlteam.android.plantraindoc_v1.models
 
 //import java.util.*
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import kotlinx.serialization.*
@@ -17,8 +19,10 @@ import kotlinx.serialization.*
  * @property[role] default standard, used to give access rights
  *
  */
+@Entity(tableName = "users")
 @Serializable
 data class User(
+    @PrimaryKey
     @Serializable(UUIDAsStringSerializer::class)
     val id: Uuid = uuid4(),
     //val id: UUID = UUID.randomUUID(),

@@ -19,6 +19,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas".toString())
+            arg("room.incremental", "true")
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -49,7 +55,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     //use google Truth
-    testImplementation "com.google.truth:truth:1.1.2"
+    androidTestImplementation 'com.google.truth:truth:1.1.2'
 
 
     implementation("com.benasher44:uuid:0.2.4")
