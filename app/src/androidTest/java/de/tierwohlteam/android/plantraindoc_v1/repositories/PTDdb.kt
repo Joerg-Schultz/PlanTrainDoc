@@ -12,6 +12,8 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PTDdbTest{
+    private lateinit var db: PTDdb
+
     @Test
     internal fun connectDBTest(){
         assert(true)
