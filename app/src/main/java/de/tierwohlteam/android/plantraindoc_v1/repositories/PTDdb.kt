@@ -57,11 +57,3 @@ class Converters {
         return uuid.toString()
     }
 }
-
-class UserRepository(private val userDao: UserDao) {
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun insert(user: User) {
-        userDao.insert(user)
-    }
-}
