@@ -1,8 +1,12 @@
 package de.tierwohlteam.android.plantraindoc_v1.repositories
 
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.google.common.truth.Truth.assertThat
+
 
 /**
  * Test initiation of Room database
@@ -12,10 +16,11 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PTDdbTest{
-    private lateinit var db: PTDdb
 
     @Test
-    internal fun connectDBTest(){
-        assert(true)
+    internal fun getDatabaseTest(){
+        val context: Context = ApplicationProvider.getApplicationContext()
+        val database by lazy { PTDdb.getDatabase(context) }
+        assertThat(database).isNotNull()
     }
 }
