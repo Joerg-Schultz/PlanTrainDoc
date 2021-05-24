@@ -31,6 +31,7 @@ abstract class PTDdb : RoomDatabase(){
         fun getDatabase(context: Context): PTDdb {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
+            // TODO on creation add new user
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

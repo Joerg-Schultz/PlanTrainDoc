@@ -40,7 +40,7 @@ class UserDaoTest {
         val dbUser = userDao.getByID(userID)
         assertThat(dbUser).isEqualTo(user)
     }
-
+    //TODO what happens if there is no user in db
     @After
     @Throws(IOException::class)
     fun closeDb() {
