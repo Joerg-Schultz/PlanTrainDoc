@@ -21,7 +21,7 @@ class GoalTest {
         val userID = uuid4() //add user object here??
         val parentGoal = Goal(id = parentGoalID, goal = "Sit", userID = userID)
         val childGoal = Goal(id = childGoalID, goal = "Sit 2 min", userID = userID, )
-        val goalWithParent = GoalWithParentAndDependencies(goal = childGoal, parent = parentGoal)
+        val goalWithParent = GoalWithRelations(goal = childGoal, parent = parentGoal)
         assertThat(goalWithParent.parent).isEqualTo(parentGoal)
         assertThat(goalWithParent.dependencies).isEmpty()
     }
@@ -33,7 +33,7 @@ class GoalTest {
         val userID = uuid4() //add user object here??
         val goal = Goal(id = goalID, goal = "Sit", userID = userID)
         val dependencyGoal = Goal(id = dependencyGoalID, goal = "Down 2 min", userID = userID )
-        val goalWithDependency = GoalWithParentAndDependencies(goal = goal, dependencies = listOf(dependencyGoal))
+        val goalWithDependency = GoalWithRelations(goal = goal, dependencies = listOf(dependencyGoal))
         assertThat(goal.parents).isNull()
         assertThat(goalWithDependency.dependencies).contains(dependencyGoal)
     }

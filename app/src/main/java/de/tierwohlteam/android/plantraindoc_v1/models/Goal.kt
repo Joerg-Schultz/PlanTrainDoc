@@ -7,7 +7,6 @@ import androidx.room.*
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import kotlinx.datetime.*
-import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
 
@@ -19,12 +18,11 @@ import kotlinx.serialization.UseSerializers
  * @property[goal] string, short title of goal
  * @property[description] longer explanation of behaviour, clear criteria
  * @property[parents] of whom this goal is a subgoal (can be null for top level goals) TODO only one
- * @property[dependencies] non sister goals which are needed for this goal
  * @property[position] the training order compared to its sister goals
  * @property[status] "new", "in progress", "finished", "stopped"
  * @property[created] timestamp for creation
  * @property[changed] timestamp for last modification
- * @property[user] to whom this goal belongs
+ * @property[userID] to whom this goal belongs
  */
 @Entity(tableName = "goals",
     foreignKeys = arrayOf(
@@ -63,7 +61,7 @@ data class Goal(
     }
 }
 
-data class GoalWithParentAndDependencies(
+data class GoalWithRelations(
     @Embedded
     val goal: Goal,
     @Relation(
