@@ -9,7 +9,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.Dog
 
 @Dao
 interface DogDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert()
     fun insert(dog: Dog)
 
     @Query("SELECT * from dogs where id = :dogID")
