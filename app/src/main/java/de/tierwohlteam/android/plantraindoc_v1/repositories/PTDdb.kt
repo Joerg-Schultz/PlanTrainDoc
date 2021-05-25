@@ -7,11 +7,12 @@ import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuidFrom
 import de.tierwohlteam.android.plantraindoc_v1.models.User
 import de.tierwohlteam.android.plantraindoc_v1.daos.UserDao
+import de.tierwohlteam.android.plantraindoc_v1.models.Dog
 
 /**
  * Build the Room database for PlanTrainDoc
  */
-@Database(entities = [User::class], version = 1, exportSchema = true)
+@Database(entities = [User::class, Dog::class], version = 1, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class PTDdb : RoomDatabase(){
 
