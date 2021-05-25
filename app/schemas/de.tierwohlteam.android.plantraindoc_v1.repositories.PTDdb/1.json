@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9ad918cff416d7fcbbc03891d87cbeb7",
+    "identityHash": "80e53725d9d61c62872b6fe091b08d67",
     "entities": [
       {
         "tableName": "users",
@@ -49,8 +49,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Dog",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `userID` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "tableName": "dogs",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `userID` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`userID`) REFERENCES `users`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -77,14 +77,35 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
-        "foreignKeys": []
+        "indices": [
+          {
+            "name": "index_dogs_userID",
+            "unique": false,
+            "columnNames": [
+              "userID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_dogs_userID` ON `${TABLE_NAME}` (`userID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "users",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "userID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9ad918cff416d7fcbbc03891d87cbeb7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '80e53725d9d61c62872b6fe091b08d67')"
     ]
   }
 }
