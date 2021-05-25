@@ -29,6 +29,7 @@ abstract class PTDdb : RoomDatabase(){
         /**
          * Return the database object
          * @param[context] the current context of the app
+         * @param[test] Boolean, default false. Set to true to generate in memory db for testing
          * @return the database object
          */
         fun getDatabase(context: Context, test: Boolean = false): PTDdb {

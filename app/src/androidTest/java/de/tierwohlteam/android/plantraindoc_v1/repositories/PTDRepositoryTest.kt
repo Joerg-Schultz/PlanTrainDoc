@@ -8,9 +8,7 @@ import com.google.common.truth.Truth.assertThat
 import de.tierwohlteam.android.plantraindoc_v1.models.Dog
 import de.tierwohlteam.android.plantraindoc_v1.models.User
 import kotlinx.coroutines.runBlocking
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
+import org.junit.*
 import org.junit.runner.RunWith
 import java.io.IOException
 
@@ -42,7 +40,7 @@ class PTDRepositoryTest {
 
     @Test
     @Throws(Exception::class)
-    internal fun insertAndGetUserDog() = runBlocking {
+    internal fun insertAndGetDogTest() = runBlocking {
         val userID = uuid4()
         val user = User(id = userID, name = "Test DogUser", email = "testuser@mail.de",
             password = "123", role = "standard")
@@ -57,7 +55,9 @@ class PTDRepositoryTest {
     @After
     @Throws(IOException::class)
     fun closeDb() {
-        db.close()
+        //TODO
+        //this is called before the tests are finished -> error
+        //how can I wait for the co-routines to finish?
+        //db.close()
     }
-
 }

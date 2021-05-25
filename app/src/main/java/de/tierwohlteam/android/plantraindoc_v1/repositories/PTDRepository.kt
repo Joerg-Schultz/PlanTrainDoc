@@ -6,17 +6,46 @@ import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.models.Dog
 import de.tierwohlteam.android.plantraindoc_v1.models.User
 
+/**
+ * Repository of the PlanTrainDoc Room database
+ * use these functions for interaction with the db
+ */
+
 class PTDRepository(context: Context) {
 
+    /**
+     * User functions
+     */
     private val userDao = PTDdb.getDatabase(context).userDao()
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
+    /**
+     *  Insert a User into the database
+     *  @param[user] user object
+     */
+    //@WorkerThread
     fun insertUser(user: User) = userDao.insert(user)
+
+    /**
+     * get a user from the DB using its id
+     * @param[userID] UUID id of the user
+     * @return User
+     */
     fun getUserByID(userID: Uuid) : User = userDao.getByID(userID)
 
+    /**
+     * Dog functions
+     */
     private val dogDao = PTDdb.getDatabase(context).dogDao()
+    /**
+     *  Insert a Dog into the database
+     *  @param[dog] dog object
+     */
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     fun insertDog(dog: Dog) = dogDao.insert(dog)
+    /**
+     * get a dog from the DB using its id
+     * @param[dogID] UUID id of the dog
+     * @return dog
+     */
     fun getDogByID(dogID: Uuid) : Dog = dogDao.getByID(dogID)
 }

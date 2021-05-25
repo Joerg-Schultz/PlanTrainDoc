@@ -51,7 +51,7 @@ class DogDaoTest {
     @After
     @Throws(IOException::class)
     fun closeDb() {
-        db.close()
+        //db.close()
     }
 
 }

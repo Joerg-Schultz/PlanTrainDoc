@@ -10,7 +10,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.UserWithDogs
 
 @Dao
 interface UserDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert
     fun insert(user: User)
 
     @Query("SELECT * from users where id = :userID")
