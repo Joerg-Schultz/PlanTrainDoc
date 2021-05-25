@@ -1,8 +1,13 @@
+@file:UseSerializers(
+    UUIDAsStringSerializer::class
+)
 package de.tierwohlteam.android.plantraindoc_v1.models
 
 //import java.util.*
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Relation
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import kotlinx.serialization.*
@@ -23,7 +28,6 @@ import kotlinx.serialization.*
 @Serializable
 data class User(
     @PrimaryKey
-    @Serializable(UUIDAsStringSerializer::class)
     val id: Uuid = uuid4(),
     //val id: UUID = UUID.randomUUID(),
     val name: String,
@@ -43,3 +47,12 @@ data class User(
     }
 }
 
+data class UserWithDogs(
+    @Embedded
+    val user: User,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "userID"
+    )
+    val dogs: List<Dog>
+)
