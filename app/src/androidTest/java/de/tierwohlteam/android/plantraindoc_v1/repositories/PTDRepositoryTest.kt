@@ -24,10 +24,7 @@ class PTDRepositoryTest {
         val context: Context = ApplicationProvider.getApplicationContext()
         // Using an in-memory database because the information stored here disappears when the
         // process is killed.
-        db = Room.inMemoryDatabaseBuilder(context, PTDdb::class.java)
-            // Allowing main thread queries, just for testing.
-            .allowMainThreadQueries()
-            .build()
+        db = PTDdb.getDatabase(context,test = true)
         repository = PTDRepository(context)
     }
 

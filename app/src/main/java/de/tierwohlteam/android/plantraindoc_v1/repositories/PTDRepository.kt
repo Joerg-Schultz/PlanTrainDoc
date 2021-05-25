@@ -10,9 +10,7 @@ class PTDRepository(context: Context) {
     private val userDao = PTDdb.getDatabase(context).userDao()
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insertUser(user: User) = userDao.insert(user)
+    fun insertUser(user: User) = userDao.insert(user)
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun getUserByID(userID: Uuid) : User = userDao.getByID(userID)
+    fun getUserByID(userID: Uuid) : User = userDao.getByID(userID)
 }

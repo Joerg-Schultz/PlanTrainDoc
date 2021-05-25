@@ -31,16 +31,22 @@ abstract class PTDdb : RoomDatabase(){
          * @param[context] the current context of the app
          * @return the database object
          */
-        fun getDatabase(context: Context): PTDdb {
+        fun getDatabase(context: Context, test: Boolean = false): PTDdb {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
             // TODO on creation add new user
             return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
+                val instance = if(!test) {
+                    Room.databaseBuilder(
                     context.applicationContext,
                     PTDdb::class.java,
                     "plantraindoc_db"
-                ).build()
+                ).build() } else {
+                    Room.inMemoryDatabaseBuilder(context, PTDdb::class.java)
+                    // Allowing main thread queries, just for testing.
+                    .allowMainThreadQueries()
+                    .build()
+                }
                 INSTANCE = instance
                 // return instance
                 instance
