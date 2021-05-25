@@ -41,7 +41,12 @@ class UserDaoTest {
         val dbUser = userDao.getByID(userID)
         assertThat(dbUser).isEqualTo(user)
     }
-    //TODO what happens if there is no user in db
+    @Test
+    fun notExistingUserByID() = runBlocking {
+        val nonUserID = uuid4()
+        val dbUser = userDao.getByID(nonUserID)
+        assertThat(dbUser).isNull()
+    }
 
 
     @Test(expected = SQLiteConstraintException::class)

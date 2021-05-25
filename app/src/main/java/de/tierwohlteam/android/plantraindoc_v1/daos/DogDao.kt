@@ -13,5 +13,5 @@ interface DogDao {
     fun insert(dog: Dog)
 
     @Query("SELECT * from dogs where id = :dogID")
-    fun getByID(dogID: Uuid): Dog
+    fun getByID(dogID: Uuid): Dog?
 }

@@ -1,7 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.daos
 
 import android.content.Context
-import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.benasher44.uuid.uuid4

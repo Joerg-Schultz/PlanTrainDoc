@@ -35,7 +35,13 @@ class PTDRepositoryTest {
         repository.insertUser(user)
         val dbUser = repository.getUserByID(userID)
         assertThat(dbUser).isEqualTo(user)
+    }
 
+    @Test
+    internal fun getNonExistingUserByID() = runBlocking{
+        val nonUserID = uuid4()
+        val dbUser = repository.getUserByID(nonUserID)
+        assertThat(dbUser).isNull()
     }
 
     @Test

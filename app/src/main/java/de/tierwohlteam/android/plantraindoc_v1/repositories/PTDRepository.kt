@@ -27,9 +27,9 @@ class PTDRepository(context: Context) {
     /**
      * get a user from the DB using its id
      * @param[userID] UUID id of the user
-     * @return User
+     * @return User? null if there is no user with this id
      */
-    fun getUserByID(userID: Uuid) : User = userDao.getByID(userID)
+    fun getUserByID(userID: Uuid) : User? = userDao.getByID(userID)
 
     /**
      * Dog functions
@@ -45,7 +45,7 @@ class PTDRepository(context: Context) {
     /**
      * get a dog from the DB using its id
      * @param[dogID] UUID id of the dog
-     * @return dog
+     * @return Dog or null if there is no dog with this ID in the DB
      */
-    fun getDogByID(dogID: Uuid) : Dog = dogDao.getByID(dogID)
+    fun getDogByID(dogID: Uuid) : Dog? = dogDao.getByID(dogID)
 }
