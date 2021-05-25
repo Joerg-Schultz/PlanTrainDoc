@@ -61,6 +61,8 @@ dependencies {
 
     implementation("com.benasher44:uuid:0.2.4")
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1'
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.0")
+
 
     // Room components
     def roomVersion = "2.3.0"
