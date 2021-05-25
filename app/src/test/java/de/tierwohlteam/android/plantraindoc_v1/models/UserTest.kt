@@ -37,4 +37,19 @@ class UserTest {
             )
         }
     }
+
+    @Test
+    fun userWithDogs() {
+        val userName = "Test User"
+        val uuid = uuid4()
+        val testUser = User(
+            id = uuid, name = userName,
+            email = "Testuser@test.org", password = "123"
+        )
+        val dog1 = Dog(userID = testUser.id, name = "Luna")
+        val dog2 = Dog(userID = testUser.id, name = "Rex")
+        val userWithDogs = UserWithDogs(user = testUser, dogs = listOf(dog1, dog2))
+        assertEquals(dog1, userWithDogs.dogs[0])
+        assertEquals(dog2, userWithDogs.dogs[1])
+    }
 }
