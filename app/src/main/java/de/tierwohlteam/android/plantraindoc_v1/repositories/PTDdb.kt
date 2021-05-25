@@ -5,6 +5,7 @@ import androidx.annotation.WorkerThread
 import androidx.room.*
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuidFrom
+import de.tierwohlteam.android.plantraindoc_v1.daos.DogDao
 import de.tierwohlteam.android.plantraindoc_v1.models.User
 import de.tierwohlteam.android.plantraindoc_v1.daos.UserDao
 import de.tierwohlteam.android.plantraindoc_v1.models.Dog
@@ -17,6 +18,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.Dog
 abstract class PTDdb : RoomDatabase(){
 
     abstract fun userDao(): UserDao
+    abstract fun dogDao(): DogDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the
