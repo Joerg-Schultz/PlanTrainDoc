@@ -37,7 +37,10 @@ import kotlinx.serialization.UseSerializers
             childColumns = arrayOf("parents")
         )
     ),
-    indices = [Index(value = arrayOf("userID"))]
+    indices = [
+        Index(value = arrayOf("userID")),
+        Index(value = arrayOf("parents"))
+    ]
 )
 @Serializable
 data class Goal(
@@ -48,8 +51,8 @@ data class Goal(
     var parents: Uuid? = null, //implemented as list in KTor, but only first element is used
     var position: Int = 0, // ranking in relation so sisters
     var status: String = statusNew, //"in progress", "finished", "stopped"
-    var created: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC),
-    var changed: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC),
+    var created: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
+    var changed: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
     val userID: Uuid
 ) {
     companion object {
@@ -68,7 +71,7 @@ data class GoalWithRelations(
         parentColumn = "id",
         entityColumn = "parents"
     )
-    val parent: Goal? = null,
+    val parent: Goal?,
     @Relation(
         parentColumn = "id",
         entityColumn = "id"

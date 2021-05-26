@@ -32,6 +32,8 @@ android {
         }
     }
     compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled = true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -62,6 +64,11 @@ dependencies {
     implementation("com.benasher44:uuid:0.2.4")
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1'
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.0")
+    //kotlinx-datetime on API < 26 (Android 8)
+    //https://github.com/Kotlin/kotlinx-datetime/issues/48
+    //https://developer.android.com/studio/write/java8-support#library-desugaring
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
+
 
 
     // Room components
