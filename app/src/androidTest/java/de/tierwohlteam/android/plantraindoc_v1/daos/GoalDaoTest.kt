@@ -7,6 +7,7 @@ import com.benasher44.uuid.uuid4
 import kotlinx.datetime.*
 import com.google.common.truth.Truth.assertThat
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
+import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithRelations
 import de.tierwohlteam.android.plantraindoc_v1.models.User
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDdb
@@ -40,6 +41,23 @@ class GoalDaoTest {
         goalDao.insert(goal)
         val dbGoal = goalDao.getByID(goalID)
         assertThat(dbGoal).isEqualTo(goal)
+    }
+
+    @Test
+    internal fun insertAndGetGoalParentTest() {
+        val userID = uuid4()
+        val user = User(id = userID, name = "Test User", email = "testuser@mail.de", password = "123", role = "standard")
+        repository.insertUser(user)
+        val parentGoalID = uuid4()
+        val childGoalID = uuid4()
+        val parentGoal = Goal(id = parentGoalID, goal = "Sit", userID = userID)
+        goalDao.insert(parentGoal)
+        val childGoal = Goal(id = childGoalID, goal = "Sit 2 min", userID = userID,
+            parents = parentGoalID)
+        goalDao.insert(childGoal)
+        val dbChildGoal = goalDao.getByIDWithRelations(childGoalID)
+        assertThat(dbChildGoal).isNotNull()
+        assertThat(dbChildGoal?.parent).isEqualTo(parentGoal)
     }
 
     @After

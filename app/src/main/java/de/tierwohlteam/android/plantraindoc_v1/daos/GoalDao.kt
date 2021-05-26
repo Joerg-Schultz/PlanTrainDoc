@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
+import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithRelations
 
 @Dao
 interface GoalDao {
@@ -14,5 +15,8 @@ interface GoalDao {
 
     @Query("SELECT * from goals where id = :goalID")
     fun getByID(goalID: Uuid): Goal?
+
+    @Query("SELECT * from goals where id = :goalID")
+    fun getByIDWithRelations(goalID: Uuid): GoalWithRelations?
 
 }

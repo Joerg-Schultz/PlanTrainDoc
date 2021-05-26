@@ -68,8 +68,8 @@ data class GoalWithRelations(
     @Embedded
     val goal: Goal,
     @Relation(
-        parentColumn = "id",
-        entityColumn = "parents"
+        parentColumn = "parents",
+        entityColumn = "id"
     )
     val parent: Goal?,
     @Relation(

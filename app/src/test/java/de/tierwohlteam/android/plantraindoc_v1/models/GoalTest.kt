@@ -33,7 +33,7 @@ class GoalTest {
         val userID = uuid4() //add user object here??
         val goal = Goal(id = goalID, goal = "Sit", userID = userID)
         val dependencyGoal = Goal(id = dependencyGoalID, goal = "Down 2 min", userID = userID )
-        val goalWithDependency = GoalWithRelations(goal = goal, dependencies = listOf(dependencyGoal))
+        val goalWithDependency = GoalWithRelations(goal = goal, dependencies = listOf(dependencyGoal), parent = null)
         assertThat(goal.parents).isNull()
         assertThat(goalWithDependency.dependencies).contains(dependencyGoal)
     }
