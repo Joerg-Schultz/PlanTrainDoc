@@ -9,6 +9,7 @@ import com.benasher44.uuid.uuid4
 import kotlinx.datetime.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
+import java.net.IDN
 
 
 /**
@@ -64,6 +65,13 @@ data class Goal(
     }
 }
 
+@Entity(primaryKeys = ["goalID", "dependentGoalID"]
+)
+data class GoalDependencyCrossRef(
+    val goalID: Uuid,
+    val dependentGoalID: Uuid
+)
+
 data class GoalWithRelations(
     @Embedded
     val goal: Goal,
@@ -74,7 +82,11 @@ data class GoalWithRelations(
     val parent: Goal?,
     @Relation(
         parentColumn = "id",
-        entityColumn = "id"
+        entity = Goal::class,
+        entityColumn = "id",
+        associateBy = Junction(value = GoalDependencyCrossRef::class,
+            parentColumn = "goalID",
+            entityColumn = "dependentGoalID")
     )
     val dependencies: List<Goal> = emptyList()
 )

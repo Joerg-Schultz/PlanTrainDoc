@@ -11,11 +11,14 @@ import de.tierwohlteam.android.plantraindoc_v1.models.User
 import de.tierwohlteam.android.plantraindoc_v1.daos.UserDao
 import de.tierwohlteam.android.plantraindoc_v1.models.Dog
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
+import de.tierwohlteam.android.plantraindoc_v1.models.GoalDependencyCrossRef
 
 /**
  * Build the Room database for PlanTrainDoc
  */
-@Database(entities = [User::class, Dog::class, Goal::class], version = 1, exportSchema = true)
+@Database(entities = [User::class, Dog::class,
+    Goal::class, GoalDependencyCrossRef::class],
+    version = 1, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class PTDdb : RoomDatabase(){
 
