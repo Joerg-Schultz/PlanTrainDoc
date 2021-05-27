@@ -3,6 +3,10 @@
 )
 package de.tierwohlteam.android.plantraindoc_v1.models
 
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import kotlinx.datetime.Clock
@@ -22,8 +26,20 @@ import kotlin.math.roundToInt
  * @property[planID] the plan object this session is associated with
  * @property[criterion] what exactly should be clicked in this session
  */
+@Entity(
+    tableName = "sessions",
+    foreignKeys = [
+        ForeignKey(
+            entity = Plan::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("planID")
+        )
+    ],
+    indices = [Index("planID")]
+)
 @Serializable
 data class Session(
+    @PrimaryKey
     val id: Uuid = uuid4(),
     val planID: Uuid,
     var created: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),

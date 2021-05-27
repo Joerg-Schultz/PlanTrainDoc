@@ -5,6 +5,7 @@ import androidx.annotation.WorkerThread
 import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.models.Dog
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
+import de.tierwohlteam.android.plantraindoc_v1.models.Plan
 import de.tierwohlteam.android.plantraindoc_v1.models.User
 
 /**
@@ -67,5 +68,24 @@ class PTDRepository(context: Context) {
      * @return Goal or null if there is no dog with this ID in the DB
      */
     fun getGoalByID(goalID: Uuid) : Goal? = goalDao.getByID(goalID)
+
+    /**
+     * Plan functions
+     */
+    private val planDao = PTDdb.getDatabase(context).planDao()
+    /**
+     *  Insert a Plan into the database
+     *  @param[plan] Plan object
+     */
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    fun insertPlan(plan: Plan) = planDao.insert(plan)
+    /**
+     * get a plan from the DB using its id
+     * @param[planID] UUID id of the plan
+     * @return Plan or null if there is no dog with this ID in the DB
+     */
+    fun getPlanByID(planID: Uuid) : Plan? = planDao.getByID(planID)
+
 
 }
