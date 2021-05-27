@@ -1,6 +1,7 @@
 @file:UseSerializers(
     UUIDAsStringSerializer::class
-)package de.tierwohlteam.android.plantraindoc_v1.models
+)
+package de.tierwohlteam.android.plantraindoc_v1.models
 
 import androidx.room.*
 import com.benasher44.uuid.Uuid
