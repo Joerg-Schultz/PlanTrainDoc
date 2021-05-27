@@ -3,10 +3,7 @@
 )
 package de.tierwohlteam.android.plantraindoc_v1.models
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import kotlinx.datetime.Clock
@@ -57,3 +54,13 @@ data class Session(
             ((successes.toFloat() / (successes + fails)) * 100).roundToInt()
     } */
 }
+
+data class SessionWithRelations(
+    @Embedded
+    val session:Session,
+    @Relation(
+        parentColumn = "planID",
+        entityColumn = "id"
+    )
+    val plan: Plan
+)

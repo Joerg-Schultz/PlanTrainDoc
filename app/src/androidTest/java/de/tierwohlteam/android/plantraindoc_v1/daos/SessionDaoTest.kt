@@ -49,7 +49,28 @@ class SessionDaoTest {
         assertThat(dbSession).isEqualTo(session)
     }
 
-    @After
+    @Test
+    fun insertAndGetSessionWithRelations() {
+        val userID = uuid4()
+        val user =
+            User(id = userID, name = "Test User", email = "testuser@mail.de", password = "123", role = "standard")
+        repository.insertUser(user)
+        val goalID = uuid4()
+        val goal = Goal(id = goalID, goal = "Sit", userID = userID)
+        repository.insertGoal(goal)
+        val planID = uuid4()
+        val plan = Plan(id = planID, goalID = goalID)
+        repository.insertPlan(plan)
+        val sessionID = uuid4()
+        val session = Session(id = sessionID, planID = planID, criterion = "Sit2 min")
+        sessionDao.insert(session)
+        val dbSession = sessionDao.getByIDWithRelations(sessionID)
+        assertThat(dbSession).isNotNull()
+        assertThat(dbSession?.session).isEqualTo(session)
+        assertThat(dbSession?.plan).isEqualTo(plan)
+    }
+
+        @After
     @Throws(IOException::class)
     fun closeDb() {
         //db.close()
