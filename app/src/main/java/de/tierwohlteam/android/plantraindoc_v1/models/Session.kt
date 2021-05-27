@@ -62,5 +62,11 @@ data class SessionWithRelations(
         parentColumn = "planID",
         entityColumn = "id"
     )
-    val plan: Plan
+    val plan: Plan,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "sessionID",
+        entity = Trial::class
+    )
+    val trials: List<Trial> = emptyList()
 )

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e3b1efaf25def0696ae7ef20d2465863",
+    "identityHash": "21801b5850342d7afb5ac8b33e9190aa",
     "entities": [
       {
         "tableName": "users",
@@ -480,12 +480,124 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "trials",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `sessionID` TEXT NOT NULL, `success` INTEGER NOT NULL, `created` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`sessionID`) REFERENCES `sessions`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sessionID",
+            "columnName": "sessionID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "success",
+            "columnName": "success",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_trials_sessionID",
+            "unique": false,
+            "columnNames": [
+              "sessionID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trials_sessionID` ON `${TABLE_NAME}` (`sessionID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "sessions",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "sessionID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "trialCriteria",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `trialID` TEXT NOT NULL, `criterion` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`trialID`) REFERENCES `trials`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "trialID",
+            "columnName": "trialID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "criterion",
+            "columnName": "criterion",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_trialCriteria_trialID",
+            "unique": false,
+            "columnNames": [
+              "trialID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trialCriteria_trialID` ON `${TABLE_NAME}` (`trialID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "trials",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "trialID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e3b1efaf25def0696ae7ef20d2465863')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '21801b5850342d7afb5ac8b33e9190aa')"
     ]
   }
 }

@@ -8,6 +8,8 @@ class TrialTest {
     @Test
     internal fun trialPropertiesTest(){
         val trial = Trial(success = true, sessionID = uuid4())
+        val trialCriterion = TrialCriterion(trialID = trial.id ,criterion = "bla")
         assertThat(trial.success).isTrue()
+        assertThat(trialCriterion.criterion).isEqualTo("bla")
     }
 }

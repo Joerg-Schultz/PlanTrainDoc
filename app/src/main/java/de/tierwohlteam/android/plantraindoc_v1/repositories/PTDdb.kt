@@ -15,7 +15,8 @@ import de.tierwohlteam.android.plantraindoc_v1.models.*
     entities = [User::class, Dog::class,
         Goal::class, GoalDependencyCrossRef::class,
         Plan::class, PlanHelper::class, PlanConstraint::class,
-        Session::class],
+        Session::class,
+        Trial::class, TrialCriterion::class],
     version = 1, exportSchema = true
 )
 @TypeConverters(Converters::class)
@@ -26,6 +27,7 @@ abstract class PTDdb : RoomDatabase(){
     abstract fun goalDao(): GoalDao
     abstract fun planDao(): PlanDao
     abstract fun sessionDao(): SessionDao
+    abstract fun trialDao(): TrialDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the

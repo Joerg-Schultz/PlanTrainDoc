@@ -3,10 +3,7 @@ package de.tierwohlteam.android.plantraindoc_v1.repositories
 import android.content.Context
 import androidx.annotation.WorkerThread
 import com.benasher44.uuid.Uuid
-import de.tierwohlteam.android.plantraindoc_v1.models.Dog
-import de.tierwohlteam.android.plantraindoc_v1.models.Goal
-import de.tierwohlteam.android.plantraindoc_v1.models.Plan
-import de.tierwohlteam.android.plantraindoc_v1.models.User
+import de.tierwohlteam.android.plantraindoc_v1.models.*
 
 /**
  * Repository of the PlanTrainDoc Room database
@@ -86,6 +83,26 @@ class PTDRepository(context: Context) {
      * @return Plan or null if there is no dog with this ID in the DB
      */
     fun getPlanByID(planID: Uuid) : Plan? = planDao.getByID(planID)
+
+
+    /**
+     * Session functions
+     */
+    private val sessionDao = PTDdb.getDatabase(context).sessionDao()
+    /**
+     *  Insert a Session into the database
+     *  @param[session] Session object
+     */
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    fun insertSession(session: Session) = sessionDao.insert(session)
+    /**
+     * get a session from the DB using its id
+     * @param[sessionID] UUID id of the session
+     * @return Session or null if there is no dog with this ID in the DB
+     */
+    fun getSessionByID(sessionID: Uuid) : Session? = sessionDao.getByID(sessionID)
+
 
 
 }
