@@ -103,6 +103,23 @@ class PTDRepository(context: Context) {
      */
     fun getSessionByID(sessionID: Uuid) : Session? = sessionDao.getByID(sessionID)
 
+    /**
+     * Trial functions
+     */
+    private val trialDao = PTDdb.getDatabase(context).trialDao()
+    /**
+     *  Insert a Trial into the database
+     *  @param[trial] Trial object
+     */
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    fun insertTrial(trial: Trial) = trialDao.insert(trial)
 
+    /**
+     * get a trial from the DB using its id
+     * @param[trialID] UUID id of the trial
+     * @return Trial or null if there is no dog with this ID in the DB
+     */
+    fun getTrialByID(trialID: Uuid) : Trial? = trialDao.getByID(trialID)
 
 }

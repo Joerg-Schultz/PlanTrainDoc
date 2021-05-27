@@ -5,10 +5,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.benasher44.uuid.uuid4
 import com.google.common.truth.Truth.assertThat
-import de.tierwohlteam.android.plantraindoc_v1.models.Goal
-import de.tierwohlteam.android.plantraindoc_v1.models.Plan
-import de.tierwohlteam.android.plantraindoc_v1.models.Session
-import de.tierwohlteam.android.plantraindoc_v1.models.User
+import de.tierwohlteam.android.plantraindoc_v1.models.*
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDdb
 import org.junit.After
@@ -64,10 +61,15 @@ class SessionDaoTest {
         val sessionID = uuid4()
         val session = Session(id = sessionID, planID = planID, criterion = "Sit2 min")
         sessionDao.insert(session)
+        //Insert Trial
+        val trialID = uuid4()
+        val trial = Trial(id = trialID, sessionID = sessionID, success = true)
+        repository.insertTrial(trial)
         val dbSession = sessionDao.getByIDWithRelations(sessionID)
         assertThat(dbSession).isNotNull()
         assertThat(dbSession?.session).isEqualTo(session)
         assertThat(dbSession?.plan).isEqualTo(plan)
+        assertThat(dbSession?.trials).contains(trial)
     }
 
     @After
