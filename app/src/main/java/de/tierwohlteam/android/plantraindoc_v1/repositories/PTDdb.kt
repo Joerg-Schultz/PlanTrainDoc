@@ -7,17 +7,16 @@ import com.benasher44.uuid.uuidFrom
 import kotlinx.datetime.*
 import de.tierwohlteam.android.plantraindoc_v1.daos.DogDao
 import de.tierwohlteam.android.plantraindoc_v1.daos.GoalDao
-import de.tierwohlteam.android.plantraindoc_v1.models.User
+import de.tierwohlteam.android.plantraindoc_v1.daos.PlanDao
 import de.tierwohlteam.android.plantraindoc_v1.daos.UserDao
-import de.tierwohlteam.android.plantraindoc_v1.models.Dog
-import de.tierwohlteam.android.plantraindoc_v1.models.Goal
-import de.tierwohlteam.android.plantraindoc_v1.models.GoalDependencyCrossRef
+import de.tierwohlteam.android.plantraindoc_v1.models.*
 
 /**
  * Build the Room database for PlanTrainDoc
  */
 @Database(entities = [User::class, Dog::class,
-    Goal::class, GoalDependencyCrossRef::class],
+    Goal::class, GoalDependencyCrossRef::class,
+    Plan::class, PlanHelper::class, PlanConstraint::class],
     version = 1, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class PTDdb : RoomDatabase(){
@@ -25,6 +24,7 @@ abstract class PTDdb : RoomDatabase(){
     abstract fun userDao(): UserDao
     abstract fun dogDao(): DogDao
     abstract fun goalDao(): GoalDao
+    abstract fun planDao(): PlanDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7b0bcde028d055d2f7fb2a149ed49b2e",
+    "identityHash": "37ce05a7c3da38e47b23bab78890d90e",
     "entities": [
       {
         "tableName": "users",
@@ -233,14 +233,200 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_GoalDependencyCrossRef_dependentGoalID",
+            "unique": false,
+            "columnNames": [
+              "dependentGoalID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_GoalDependencyCrossRef_dependentGoalID` ON `${TABLE_NAME}` (`dependentGoalID`)"
+          }
+        ],
         "foreignKeys": []
+      },
+      {
+        "tableName": "plans",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `created` TEXT NOT NULL, `changed` TEXT NOT NULL, `goalID` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`goalID`) REFERENCES `goals`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changed",
+            "columnName": "changed",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "goalID",
+            "columnName": "goalID",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_plans_goalID",
+            "unique": false,
+            "columnNames": [
+              "goalID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_plans_goalID` ON `${TABLE_NAME}` (`goalID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "goals",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "goalID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "PlanHelpers",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `planID` TEXT NOT NULL, `type` TEXT NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`planID`) REFERENCES `plans`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "planID",
+            "columnName": "planID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_PlanHelpers_planID",
+            "unique": false,
+            "columnNames": [
+              "planID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_PlanHelpers_planID` ON `${TABLE_NAME}` (`planID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "plans",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "planID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "PlanConstraints",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `planID` TEXT NOT NULL, `type` TEXT NOT NULL, `value` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`planID`) REFERENCES `plans`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "planID",
+            "columnName": "planID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_PlanConstraints_planID",
+            "unique": false,
+            "columnNames": [
+              "planID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_PlanConstraints_planID` ON `${TABLE_NAME}` (`planID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "plans",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "planID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7b0bcde028d055d2f7fb2a149ed49b2e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '37ce05a7c3da38e47b23bab78890d90e')"
     ]
   }
 }

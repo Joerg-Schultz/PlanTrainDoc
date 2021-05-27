@@ -65,7 +65,8 @@ data class Goal(
     }
 }
 
-@Entity(primaryKeys = ["goalID", "dependentGoalID"]
+@Entity(primaryKeys = ["goalID", "dependentGoalID"],
+    indices = [Index("dependentGoalID")]
 )
 data class GoalDependencyCrossRef(
     val goalID: Uuid,

@@ -17,13 +17,13 @@ import kotlinx.serialization.Serializable
  * Every user can have one or more dogs
  */
 @Entity(
-    tableName = "dogs", foreignKeys = arrayOf(
+    tableName = "dogs",
+    foreignKeys = [
         ForeignKey(
             entity = User::class,
             parentColumns = arrayOf("id"),
             childColumns = arrayOf("userID")
-        )
-    ),
+        )],
     indices = [Index(value = arrayOf("userID"))]
 )
 @Serializable

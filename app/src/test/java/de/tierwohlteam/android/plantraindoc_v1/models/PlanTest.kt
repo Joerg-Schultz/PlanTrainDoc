@@ -11,11 +11,11 @@ class PlanTest {
     @Test
     internal fun planPropertiesTest(){
         val userID = uuid4()
-        val goal = Goal(goal = "Sit", userID = userID)
-        val plan = Plan(goal = goal)
-        val constraint = PlanConstraint(type = "time", value = 60)
-        plan.constraint = constraint
-        assertThat(plan.helpers).isEmpty()
-        assertThat(plan.constraint).isEqualTo(constraint)
+        val goalID = uuid4()
+        val goal = Goal(id = goalID, goal = "Sit", userID = userID)
+        val planID = uuid4()
+        val plan = Plan(id = planID, goalID = goalID)
+        val constraintID = uuid4()
+        val constraint = PlanConstraint(id = constraintID, type = "time", value = 60,planID = planID)
     }
 }

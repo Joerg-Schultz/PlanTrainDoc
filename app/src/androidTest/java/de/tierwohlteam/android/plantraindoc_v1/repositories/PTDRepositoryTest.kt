@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.benasher44.uuid.uuid4
 import com.google.common.truth.Truth.assertThat
 import de.tierwohlteam.android.plantraindoc_v1.models.Dog
+import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.models.User
 import kotlinx.coroutines.runBlocking
 import org.junit.*
@@ -56,6 +57,16 @@ class PTDRepositoryTest {
         repository.insertDog(dog)
         val dbDog = repository.getDogByID(dogID)
         assertThat(dbDog).isEqualTo(dog)
+    }
+
+    @Test
+    internal fun insertAndGetGoal() = runBlocking {
+        val userID = uuid4()
+        val user = User(id = userID, name = "Test User", email = "testuser@mail.de", password = "123", role = "standard")
+        repository.insertUser(user)
+        val goalID = uuid4()
+        val goal = Goal(id = goalID, goal = "Sit", userID = userID)
+        repository.insertGoal(goal)
     }
 
     @After

@@ -1,36 +1,43 @@
-package de.tierwohlteam.android.plantraindoc_v1.models
+@file:UseSerializers(
+    UUIDAsStringSerializer::class
+)package de.tierwohlteam.android.plantraindoc_v1.models
 
+import androidx.room.*
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import kotlinx.datetime.*
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
 
 /**
  * A PTD *Plan*
  * A plan sets the method I want to use to train a defined goal
  *
  * @property[id] UUID of the Plan, set autmatically
- * @property[goal] there are not plans without a goal
  * @property[created] timestamp, optional
  * @property[changed] timestamp, optional
- * @property[constraint] [PlanConstraint] object
- * @property[helpers] list of [PlanHelper]
  *
  * Does not have user as property. This is in the associated goal.
  * I might add it here later, if this makes syncing easier
  */
+@Entity(tableName = "plans",
+    foreignKeys = arrayOf(
+        ForeignKey(
+            entity = Goal::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("goalID")
+        )
+    ),
+    indices = [Index("goalID")]
+)
 @Serializable
 data class Plan(
-    @Serializable(UUIDAsStringSerializer::class)
+    @PrimaryKey
     val id: Uuid = uuid4(),
-    @Contextual
-    var created: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC),
-    @Contextual
-    var changed: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC),
-    val goal: Goal,
-    var constraint: PlanConstraint? = null,
-    val helpers: List<PlanHelper> = listOf<PlanHelper>(),
+    var created: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
+    var changed: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
+    val goalID: Uuid,
 ) {
     companion object {
         const val path = "/plans"
@@ -42,9 +49,24 @@ data class Plan(
  * - time (train for 1 min)
  * - repetitions (train for 10 trials)
  */
+@Entity(
+    tableName = "PlanConstraints",
+    foreignKeys = [
+        ForeignKey(
+            entity = Plan::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("planID")
+        )],
+    indices = [Index("planID")]
+)
 @Serializable
-data class PlanConstraint(val type: String,
-                          val value: Int){
+data class PlanConstraint(
+    @PrimaryKey
+    val id: Uuid = uuid4(),
+    val planID: Uuid,
+    val type: String,
+    val value: Int
+    ){
     companion object{
         const val time = "time"
         const val repetition = "repetition"
@@ -59,10 +81,24 @@ data class PlanConstraint(val type: String,
  * - alternative Signals
  * plus combinations
  */
+@Entity(
+    tableName = "PlanHelpers",
+    foreignKeys = [
+        ForeignKey(
+            entity = Plan::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("planID")
+        )],
+    indices = [Index(value = arrayOf("planID"))]
+)
 @Serializable
-data class PlanHelper(val type: String,
-                      val value: String
-){
+data class PlanHelper(
+    @PrimaryKey
+    val id: Uuid = uuid4(),
+    val planID: Uuid,
+    val type: String,
+    val value: String
+    ){
     companion object {
         const val duration = "duration"
         const val distance = "distance"
@@ -71,3 +107,23 @@ data class PlanHelper(val type: String,
         const val free = "free"
     }
 }
+
+data class PlanWithRelations(
+    @Embedded
+    val plan: Plan,
+    @Relation(
+        parentColumn = "goalID",
+        entityColumn = "id"
+        )
+    val goal: Goal,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "planID"
+    )
+    val constraint: PlanConstraint?,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "planID"
+    )
+    val helpers: List<PlanHelper> = emptyList()
+)
