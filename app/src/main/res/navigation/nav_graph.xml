@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph"
+            app:startDestination="@+id/main">
+
+    <fragment
+            android:id="@+id/main"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.MainFragment"
+            android:label="main_fragment"
+            tools:layout="@layout/main_fragment">
+    </fragment>
+
+</navigation>
