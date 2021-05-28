@@ -2,7 +2,6 @@ package de.tierwohlteam.android.plantraindoc_v1
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import de.tierwohlteam.android.plantraindoc_v1.fragments.MainFragment
 
 class MainActivity : AppCompatActivity() {
 

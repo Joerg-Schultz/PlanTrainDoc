@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.MainViewModel
 
-class MainFragment : Fragment() {
+class StartFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = StartFragment()
     }
 
     private lateinit var viewModel: MainViewModel
@@ -21,7 +21,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        return inflater.inflate(R.layout.start_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

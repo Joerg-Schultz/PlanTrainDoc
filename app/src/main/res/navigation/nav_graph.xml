@@ -7,9 +7,9 @@
 
     <fragment
             android:id="@+id/main"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.MainFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.StartFragment"
             android:label="main_fragment"
-            tools:layout="@layout/main_fragment">
+            tools:layout="@layout/start_fragment">
     </fragment>
 
 </navigation>
