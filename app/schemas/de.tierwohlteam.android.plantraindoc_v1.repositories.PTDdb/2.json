@@ -1,0 +1,603 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "21801b5850342d7afb5ac8b33e9190aa",
+    "entities": [
+      {
+        "tableName": "users",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `email` TEXT NOT NULL, `password` TEXT NOT NULL, `role` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "role",
+            "columnName": "role",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "dogs",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `userID` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`userID`) REFERENCES `users`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userID",
+            "columnName": "userID",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_dogs_userID",
+            "unique": false,
+            "columnNames": [
+              "userID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_dogs_userID` ON `${TABLE_NAME}` (`userID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "users",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "userID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "goals",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `goal` TEXT NOT NULL, `description` TEXT NOT NULL, `parents` TEXT, `position` INTEGER NOT NULL, `status` TEXT NOT NULL, `created` TEXT NOT NULL, `changed` TEXT NOT NULL, `userID` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`userID`) REFERENCES `users`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`parents`) REFERENCES `goals`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "goal",
+            "columnName": "goal",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parents",
+            "columnName": "parents",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "position",
+            "columnName": "position",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changed",
+            "columnName": "changed",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userID",
+            "columnName": "userID",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_goals_userID",
+            "unique": false,
+            "columnNames": [
+              "userID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_goals_userID` ON `${TABLE_NAME}` (`userID`)"
+          },
+          {
+            "name": "index_goals_parents",
+            "unique": false,
+            "columnNames": [
+              "parents"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_goals_parents` ON `${TABLE_NAME}` (`parents`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "users",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "userID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "goals",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "parents"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "GoalDependencyCrossRef",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`goalID` TEXT NOT NULL, `dependentGoalID` TEXT NOT NULL, PRIMARY KEY(`goalID`, `dependentGoalID`))",
+        "fields": [
+          {
+            "fieldPath": "goalID",
+            "columnName": "goalID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dependentGoalID",
+            "columnName": "dependentGoalID",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "goalID",
+            "dependentGoalID"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_GoalDependencyCrossRef_dependentGoalID",
+            "unique": false,
+            "columnNames": [
+              "dependentGoalID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_GoalDependencyCrossRef_dependentGoalID` ON `${TABLE_NAME}` (`dependentGoalID`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "plans",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `created` TEXT NOT NULL, `changed` TEXT NOT NULL, `goalID` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`goalID`) REFERENCES `goals`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changed",
+            "columnName": "changed",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "goalID",
+            "columnName": "goalID",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_plans_goalID",
+            "unique": false,
+            "columnNames": [
+              "goalID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_plans_goalID` ON `${TABLE_NAME}` (`goalID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "goals",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "goalID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "PlanHelpers",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `planID` TEXT NOT NULL, `type` TEXT NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`planID`) REFERENCES `plans`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "planID",
+            "columnName": "planID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_PlanHelpers_planID",
+            "unique": false,
+            "columnNames": [
+              "planID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_PlanHelpers_planID` ON `${TABLE_NAME}` (`planID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "plans",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "planID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "PlanConstraints",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `planID` TEXT NOT NULL, `type` TEXT NOT NULL, `value` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`planID`) REFERENCES `plans`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "planID",
+            "columnName": "planID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_PlanConstraints_planID",
+            "unique": false,
+            "columnNames": [
+              "planID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_PlanConstraints_planID` ON `${TABLE_NAME}` (`planID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "plans",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "planID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "sessions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `planID` TEXT NOT NULL, `created` TEXT NOT NULL, `criterion` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`planID`) REFERENCES `plans`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "planID",
+            "columnName": "planID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "criterion",
+            "columnName": "criterion",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_sessions_planID",
+            "unique": false,
+            "columnNames": [
+              "planID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sessions_planID` ON `${TABLE_NAME}` (`planID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "plans",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "planID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "trials",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `sessionID` TEXT NOT NULL, `success` INTEGER NOT NULL, `created` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`sessionID`) REFERENCES `sessions`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sessionID",
+            "columnName": "sessionID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "success",
+            "columnName": "success",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_trials_sessionID",
+            "unique": false,
+            "columnNames": [
+              "sessionID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trials_sessionID` ON `${TABLE_NAME}` (`sessionID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "sessions",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "sessionID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "trialCriteria",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `trialID` TEXT NOT NULL, `criterion` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`trialID`) REFERENCES `trials`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "trialID",
+            "columnName": "trialID",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "criterion",
+            "columnName": "criterion",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_trialCriteria_trialID",
+            "unique": false,
+            "columnNames": [
+              "trialID"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_trialCriteria_trialID` ON `${TABLE_NAME}` (`trialID`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "trials",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "trialID"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '21801b5850342d7afb5ac8b33e9190aa')"
+    ]
+  }
+}
