@@ -10,6 +10,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.*
 
 /**
  * Build the Room database for PlanTrainDoc
+ * Actual start of the db in AppModule ->Hilt
  */
 @Database(
     entities = [User::class, Dog::class,
@@ -28,41 +29,6 @@ abstract class PTDdb : RoomDatabase(){
     abstract fun planDao(): PlanDao
     abstract fun sessionDao(): SessionDao
     abstract fun trialDao(): TrialDao
-
-    companion object {
-        // Singleton prevents multiple instances of database opening at the
-        // same time.
-        @Volatile
-        private var INSTANCE: PTDdb? = null
-
-        /**
-         * Return the database object
-         * @param[context] the current context of the app
-         * @param[test] Boolean, default false. Set to true to generate in memory db for testing
-         * @return the database object
-         */
-        fun getDatabase(context: Context, test: Boolean = false): PTDdb {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
-            // TODO on creation add new user
-            return INSTANCE ?: synchronized(this) {
-                val instance = if(!test) {
-                    Room.databaseBuilder(
-                    context.applicationContext,
-                    PTDdb::class.java,
-                    "plantraindoc_db"
-                ).build() } else {
-                    Room.inMemoryDatabaseBuilder(context, PTDdb::class.java)
-                    // Allowing main thread queries, just for testing.
-                    .allowMainThreadQueries()
-                    .build()
-                }
-                INSTANCE = instance
-                // return instance
-                instance
-            }
-        }
-    }
 }
 
 class Converters {

@@ -3,20 +3,27 @@ package de.tierwohlteam.android.plantraindoc_v1.repositories
 import android.content.Context
 import androidx.annotation.WorkerThread
 import com.benasher44.uuid.Uuid
+import de.tierwohlteam.android.plantraindoc_v1.daos.*
 import de.tierwohlteam.android.plantraindoc_v1.models.*
+import javax.inject.Inject
 
 /**
  * Repository of the PlanTrainDoc Room database
  * use these functions for interaction with the db
  */
 
-class PTDRepository(context: Context) {
+class PTDRepository @Inject constructor(
+    private val userDao: UserDao,
+    private val dogDao: DogDao,
+    private val goalDao: GoalDao,
+    private val planDao: PlanDao,
+    private val sessionDao: SessionDao,
+    private val trialDao: TrialDao
+) {
 
     /**
      * User functions
-     */
-    private val userDao = PTDdb.getDatabase(context).userDao()
-    /**
+     *
      *  Insert a User into the database
      *  @param[user] user object
      */
@@ -32,9 +39,7 @@ class PTDRepository(context: Context) {
 
     /**
      * Dog functions
-     */
-    private val dogDao = PTDdb.getDatabase(context).dogDao()
-    /**
+     *
      *  Insert a Dog into the database
      *  @param[dog] dog object
      */
@@ -50,9 +55,7 @@ class PTDRepository(context: Context) {
 
     /**
      * Goal functions
-     */
-    private val goalDao = PTDdb.getDatabase(context).goalDao()
-    /**
+     *
      *  Insert a Goal into the database
      *  @param[goal] Goal object
      */
@@ -68,9 +71,7 @@ class PTDRepository(context: Context) {
 
     /**
      * Plan functions
-     */
-    private val planDao = PTDdb.getDatabase(context).planDao()
-    /**
+     *
      *  Insert a Plan into the database
      *  @param[plan] Plan object
      */
@@ -87,9 +88,7 @@ class PTDRepository(context: Context) {
 
     /**
      * Session functions
-     */
-    private val sessionDao = PTDdb.getDatabase(context).sessionDao()
-    /**
+     *
      *  Insert a Session into the database
      *  @param[session] Session object
      */
@@ -105,9 +104,7 @@ class PTDRepository(context: Context) {
 
     /**
      * Trial functions
-     */
-    private val trialDao = PTDdb.getDatabase(context).trialDao()
-    /**
+     *
      *  Insert a Trial into the database
      *  @param[trial] Trial object
      */
