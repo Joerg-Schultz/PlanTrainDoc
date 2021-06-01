@@ -1,9 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.daos
 
-import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.benasher44.uuid.uuid4
 import com.google.common.truth.Truth.assertThat
@@ -17,7 +14,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Named
@@ -44,9 +40,7 @@ class TrialDaoTest {
     @Before
     internal fun setup() {
         hiltRule.inject()
-        //trialDao = database.trialDao()
     }
-
 
     @Test
     fun insertAndGetTrial(){

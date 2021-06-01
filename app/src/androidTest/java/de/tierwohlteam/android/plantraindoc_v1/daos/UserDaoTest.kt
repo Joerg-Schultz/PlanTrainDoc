@@ -1,40 +1,54 @@
 package de.tierwohlteam.android.plantraindoc_v1.daos
 
-import android.content.Context
 import android.database.sqlite.SQLiteConstraintException
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.filters.SmallTest
 import com.benasher44.uuid.uuid4
 import com.google.common.truth.Truth.assertThat
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import de.tierwohlteam.android.plantraindoc_v1.models.Dog
 import de.tierwohlteam.android.plantraindoc_v1.models.User
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDdb
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Named
 
-@RunWith(AndroidJUnit4::class)
+@ExperimentalCoroutinesApi
+@SmallTest
+@HiltAndroidTest
 class UserDaoTest {
-    private lateinit var userDao: UserDao
-    private lateinit var db: PTDdb
-    private val userID = uuid4()
-    private lateinit var repository: PTDRepository
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @Inject
+    @Named("testDB")
+    lateinit var db: PTDdb
+    @Inject
+    @Named("testUserDao")
+    lateinit var userDao: UserDao
+    @Inject
+    lateinit var repository: PTDRepository
 
     @Before
-    fun createDb() {
-        val context: Context = ApplicationProvider.getApplicationContext()
-        db = PTDdb.getDatabase(context, test = true)
-        repository = PTDRepository(context)
-        userDao = db.userDao()
+    internal fun setup() {
+        hiltRule.inject()
+        //trialDao = database.trialDao()
     }
+
     @Test
     @Throws(Exception::class)
     fun insertAndGetUser() = runBlocking {
+        val userID = uuid4()
         val user = User(id = userID, name = "Test User", email = "testuser@mail.de", password = "123", role = "standard")
         userDao.insert(user)
         val dbUser = userDao.getByID(userID)
