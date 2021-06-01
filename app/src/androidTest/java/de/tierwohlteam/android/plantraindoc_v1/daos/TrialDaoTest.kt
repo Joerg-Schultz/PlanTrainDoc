@@ -10,6 +10,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.*
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDdb
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -43,7 +44,7 @@ class TrialDaoTest {
     }
 
     @Test
-    fun insertAndGetTrial(){
+    fun insertAndGetTrial() = runBlockingTest {
         val userID = uuid4()
         val user = User(id = userID, name = "Test User", email = "testuser@mail.de", password = "123", role = "standard")
         repository.insertUser(user)

@@ -13,7 +13,7 @@ import org.junit.runners.Suite
 @RunWith(Suite::class)
 @Suite.SuiteClasses(PTDdbTest::class,
     UserDaoTest::class, DogDaoTest::class, GoalDaoTest::class,
-    PlanDaoTest::class, SessionDao::class, TrialDaoTest::class,
+    PlanDaoTest::class, SessionDaoTest::class, TrialDaoTest::class,
     PTDRepositoryTest::class)
 class AllPTDdbTests {
 }

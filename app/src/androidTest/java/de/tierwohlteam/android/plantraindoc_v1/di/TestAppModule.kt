@@ -9,7 +9,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDdb
 import javax.inject.Named
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,5 +43,5 @@ object TestAppModule {
 
     @Provides
     @Named("testTrialDao")
-    fun provideTestTrialDao(@Named("testDB") db : PTDdb) = db.trialDao()
+    fun provideTestTrialDao(db : PTDdb) = db.trialDao()
 }

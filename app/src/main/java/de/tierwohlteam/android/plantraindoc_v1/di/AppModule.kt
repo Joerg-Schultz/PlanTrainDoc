@@ -25,7 +25,8 @@ object AppModule {
         app.applicationContext,
         PTDdb::class.java,
         PTD_DB_NAME
-    ).build()
+    ).fallbackToDestructiveMigration() // comment out in production
+        .build()
 
     @Singleton
     @Provides
