@@ -42,7 +42,6 @@ class UserDaoTest {
     @Before
     internal fun setup() {
         hiltRule.inject()
-        //trialDao = database.trialDao()
     }
 
     @Test

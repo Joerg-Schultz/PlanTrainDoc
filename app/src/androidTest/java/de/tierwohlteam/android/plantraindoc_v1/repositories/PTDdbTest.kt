@@ -1,13 +1,16 @@
 package de.tierwohlteam.android.plantraindoc_v1.repositories
 
-import android.content.Context
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.filters.SmallTest
 import org.junit.Test
-import org.junit.runner.RunWith
 import com.google.common.truth.Truth.assertThat
-import de.tierwohlteam.android.plantraindoc_v1.models.User
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.Before
+import org.junit.Rule
+import javax.inject.Inject
+import javax.inject.Named
 
 
 /**
@@ -16,24 +19,29 @@ import de.tierwohlteam.android.plantraindoc_v1.models.User
  *
  */
 
-@RunWith(AndroidJUnit4::class)
+@ExperimentalCoroutinesApi
+@SmallTest
+@HiltAndroidTest
 class PTDdbTest{
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
+    @Inject
+    @Named("testDB")
+    lateinit var db: PTDdb
+
+    @Before
+    internal fun setup() {
+        hiltRule.inject()
+    }
     /**
      * build the database in memory.
      * Tests only the PTDdb file,not the Database Builder
      */
     @Test
     internal fun getDatabaseTest(){
-        val context: Context = ApplicationProvider.getApplicationContext()
-
-        // Using an in-memory database because the information stored here disappears when the
-        // process is killed.
-        val database = Room.inMemoryDatabaseBuilder(context, PTDdb::class.java)
-            // Allowing main thread queries, just for testing.
-            .allowMainThreadQueries()
-            .build()
-        //val database by lazy { PTDdb.getDatabase(context) }
-        assertThat(database).isNotNull()
+        assertThat(db).isNotNull()
     }
 }
