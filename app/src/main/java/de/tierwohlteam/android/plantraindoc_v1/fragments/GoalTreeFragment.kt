@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
@@ -30,7 +31,7 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
         return view
     }
 
-    private fun setupRecyclerView() = binding.rvGoaltree.apply {
+    private fun setupRecyclerView() = binding.rvGoalTree.apply {
         goalTreeAdapter = GoalTreeAdapter()
         adapter = goalTreeAdapter
         layoutManager = LinearLayoutManager(requireContext())
@@ -41,6 +42,9 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
         setupRecyclerView()
         lifecycleScope.launchWhenStarted {
             viewModel.goals.collect { goalTreeAdapter.submitList(it) }
+        }
+        binding.fabAddGoal.setOnClickListener {
+            findNavController().navigate(R.id.action_goalTreeFragment_to_addModifyPlanFragment)
         }
     }
 }

@@ -3,13 +3,22 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/nav_graph"
-            app:startDestination="@+id/main">
+            app:startDestination="@+id/goalTreeFragment">
 
     <fragment
-            android:id="@+id/main"
+            android:id="@+id/goalTreeFragment"
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.GoalTreeFragment"
             android:label="main_fragment"
             tools:layout="@layout/goaltree_fragment">
+        <action android:id="@+id/action_goalTreeFragment_to_addModifyPlanFragment"
+                app:destination="@id/addModifyGoalFragment"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/addModifyGoalFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.AddModifyGoalFragment"
+            android:label="main_fragment"
+            tools:layout="@layout/add_modify_goal_fragment">
     </fragment>
 
 </navigation>
