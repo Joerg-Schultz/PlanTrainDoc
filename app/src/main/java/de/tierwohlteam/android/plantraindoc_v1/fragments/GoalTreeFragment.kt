@@ -1,33 +1,46 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
-import de.tierwohlteam.android.plantraindoc_v1.viewmodels.MainViewModel
+import de.tierwohlteam.android.plantraindoc_v1.adapters.GoalTreeAdapter
+import de.tierwohlteam.android.plantraindoc_v1.databinding.GoaltreeFragmentBinding
+import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalTreeViewModel
+import kotlinx.coroutines.flow.collect
 
-class GoalTreeFragment : Fragment() {
+@AndroidEntryPoint
+class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
 
-    companion object {
-        fun newInstance() = GoalTreeFragment()
+    private var _binding: GoaltreeFragmentBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: GoalTreeViewModel by viewModels()
+    private lateinit var goalTreeAdapter: GoalTreeAdapter
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = GoaltreeFragmentBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
-    private lateinit var viewModel: MainViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.goaltree_fragment, container, false)
+    private fun setupRecyclerView() = binding.rvGoaltree.apply {
+        goalTreeAdapter = GoalTreeAdapter()
+        adapter = goalTreeAdapter
+        layoutManager = LinearLayoutManager(requireContext())
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        lifecycleScope.launchWhenStarted {
+            viewModel.goals.collect { goalTreeAdapter.submitList(it) }
+        }
     }
-
 }

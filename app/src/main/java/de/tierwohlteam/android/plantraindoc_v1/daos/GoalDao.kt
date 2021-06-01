@@ -8,6 +8,8 @@ import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.models.GoalDependencyCrossRef
 import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithRelations
+import kotlinx.coroutines.flow.Flow
+import java.net.IDN
 
 @Dao
 interface GoalDao {
@@ -27,5 +29,9 @@ interface GoalDao {
     @Transaction
     @Query("SELECT * from goals where id = :goalID")
     fun getByIDWithRelations(goalID: Uuid): GoalWithRelations?
+
+    @Query("SELECT * from goals where parents = :parentID")
+    fun getChildrenByID(parentID: Uuid?): Flow<List<Goal>>
+
 
 }

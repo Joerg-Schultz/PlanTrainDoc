@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">PlanTrainDoc_v1</string>
     <string name="add_new_goal">Neues Ziel hinzufügen</string>
+    <string name="goal">Ziel</string>
 </resources>

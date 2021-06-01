@@ -5,6 +5,7 @@ import androidx.annotation.WorkerThread
 import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.daos.*
 import de.tierwohlteam.android.plantraindoc_v1.models.*
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
@@ -70,6 +71,14 @@ class PTDRepository @Inject constructor(
     fun getGoalByID(goalID: Uuid) : Goal? = goalDao.getByID(goalID)
 
     /**
+     * get a list of all children of a goal
+     * @param[parent] the parent goal
+     * @return List of child goals, empty list if there are none
+     */
+    fun getChildGoals(parent: Goal?) : Flow<List<Goal>> = goalDao.getChildrenByID(parent?.id)
+
+
+    /**
      * Plan functions
      *
      *  Insert a Plan into the database
@@ -118,5 +127,4 @@ class PTDRepository @Inject constructor(
      * @return Trial or null if there is no dog with this ID in the DB
      */
     fun getTrialByID(trialID: Uuid) : Trial? = trialDao.getByID(trialID)
-
 }
