@@ -7,9 +7,9 @@
 
     <fragment
             android:id="@+id/main"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.StartFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.GoalTreeFragment"
             android:label="main_fragment"
-            tools:layout="@layout/start_fragment">
+            tools:layout="@layout/goaltree_fragment">
     </fragment>
 
 </navigation>
