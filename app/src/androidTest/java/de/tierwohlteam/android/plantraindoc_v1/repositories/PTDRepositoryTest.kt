@@ -86,9 +86,6 @@ class PTDRepositoryTest {
     @After
     @Throws(IOException::class)
     fun closeDb() {
-        //TODO
-        //this is called before the tests are finished -> error
-        //how can I wait for the co-routines to finish?
-        //db.close()
+        db.close()
     }
 }

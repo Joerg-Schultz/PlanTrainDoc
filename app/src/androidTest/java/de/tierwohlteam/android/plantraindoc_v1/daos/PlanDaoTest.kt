@@ -93,6 +93,6 @@ class PlanDaoTest {
     @After
     @Throws(IOException::class)
     fun closeDb() {
-        //db.close()
+        db.close()
     }
 }

@@ -1,12 +1,15 @@
 package de.tierwohlteam.android.plantraindoc_v1.daos
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.filters.SmallTest
 import com.benasher44.uuid.uuid4
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import de.tierwohlteam.android.plantraindoc_v1.models.*
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDdb
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -15,6 +18,9 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Named
 
+@ExperimentalCoroutinesApi
+@SmallTest
+@HiltAndroidTest
 class SessionDaoTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -82,6 +88,6 @@ class SessionDaoTest {
     @After
     @Throws(IOException::class)
     fun closeDb() {
-        //db.close()
+        db.close()
     }
 }

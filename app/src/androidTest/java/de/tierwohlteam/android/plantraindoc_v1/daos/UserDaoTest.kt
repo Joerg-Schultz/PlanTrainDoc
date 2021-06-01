@@ -90,6 +90,6 @@ class UserDaoTest {
     @After
     @Throws(IOException::class)
     fun closeDb() {
-        //db.close()
+        db.close()
     }
 }
