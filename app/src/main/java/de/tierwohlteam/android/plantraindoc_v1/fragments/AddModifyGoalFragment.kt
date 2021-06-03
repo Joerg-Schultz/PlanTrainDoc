@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.AddModifyGoalFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
+import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.AddModifyGoalViewModel
 
 @AndroidEntryPoint
@@ -28,26 +31,52 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        subscribeToObservers()
+
         if (viewModel.goal != null) fillFields(viewModel.goal!!)
 
         binding.buttonSavegoal.setOnClickListener {
             //TODO Add Observer for insert Status
             // https://github.com/philipplackner/ShoppingListTestingYT/blob/TestItemDeletion/app/src/main/java/com/androiddevs/shoppinglisttestingyt/ui/AddShoppingItemFragment.kt
-            viewModel.saveGoal(goal = binding.tiGoal.text.toString(),
+            viewModel.saveGoal(goalText = binding.tiGoal.text.toString(),
                 description = binding.tiDescription.text.toString(),
                 status = selectedStatus()
             )
-            view.findNavController().popBackStack()
         }
+
         binding.buttonCancel.setOnClickListener {
             //TODO move back
             view.findNavController().popBackStack()
         }
     }
 
+    private fun subscribeToObservers() {
+        viewModel.insertGoalStatus.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { result ->
+                when (result.status) {
+                    Status.ERROR -> {
+                        Snackbar.make(binding.root,
+                            result.message ?: "An unknown error occurred",
+                            Snackbar.LENGTH_LONG
+                        ).setAnchorView(R.id.button_savegoal)
+                            .show()
+                    }
+                    Status.SUCCESS -> {
+                        Snackbar.make(
+                            binding.root,
+                            "Added Goal Item",
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                        findNavController().popBackStack()
+                    }
+                    else -> {}
+                }
+            }
+        })
+    }
+
     private fun selectedStatus() : String? {
-        val selectedRadio = binding.radioGroupStatus.checkedRadioButtonId
-        return when(selectedRadio){
+        return when(binding.radioGroupStatus.checkedRadioButtonId) {
             R.id.radioButton_new -> Goal.statusNew
             R.id.radioButton_inprogress -> Goal.statusInProgress
             R.id.radioButton_stopped -> Goal.statusStopped
