@@ -2,4 +2,14 @@
     <string name="app_name">PlanTrainDoc_v1</string>
     <string name="add_new_goal">Add new goal</string>
     <string name="goal">Goal</string>
+    <string name="radioButton_new">New</string>
+    <string name="radioButton_inprogress">In Progress</string>
+    <string name="radioButton_done">Done</string>
+    <string name="radioButton_stopped">Stopped</string>
+    <string name="delete">Delete</string>
+    <string name="add_training_button">Add Plan</string>
+    <string name="train">Train</string>
+    <string name="details">Details</string>
+    <string name="tv_position">Position</string>
+    <string name="plan">Plan</string>
 </resources>
