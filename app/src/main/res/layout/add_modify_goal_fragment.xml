@@ -117,7 +117,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
     <!-- The three possible actions:
-        1. Save the goal
+        1. Save the goal -> Only one action per view!
         2. Add a Plan to the goal
         3. Start training -->
     <Button
@@ -130,6 +130,9 @@
             app:backgroundTint="@color/accent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Just work with the goal here. Save, update, delete
+    All the other stuff has to be handled elsewhere
     <Button
             android:id="@+id/button_addtraining"
             android:visibility="invisible"
@@ -152,5 +155,7 @@
             app:backgroundTint="@color/accent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+    -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
