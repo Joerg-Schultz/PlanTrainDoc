@@ -13,4 +13,8 @@
     <string name="details">Details</string>
     <string name="tv_position">Position</string>
     <string name="plan">Plan</string>
+    <string name="save_goal">Ziel Speichern</string>
+    <string name="add_goal_hint">Definiere das Ziel</string>
+    <string name="add_details_hint">Beschreibe die Details des Ziels</string>
+    <string name="do_not_save_goal">Nicht Speichern</string>
 </resources>

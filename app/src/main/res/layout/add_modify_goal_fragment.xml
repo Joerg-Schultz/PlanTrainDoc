@@ -19,7 +19,7 @@
                 android:id="@+id/textinput_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/goal"/>
+                android:hint="@string/add_goal_hint"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -34,7 +34,7 @@
                 android:id="@+id/textinput_goal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/details"/>
+                android:hint="@string/add_details_hint"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
@@ -69,6 +69,18 @@
                 android:text="@string/radioButton_stopped"/>
     </RadioGroup>
 
+    <TextView
+            android:id="@+id/tv_plan"
+            android:visibility="invisible"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/plan"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup_status"/>
+
     <!-- <TextView
             android:id="@+id/tv_position"
             android:layout_width="wrap_content"
@@ -78,6 +90,19 @@
             app:layout_constraintStart_toEndOf="@+id/radioGroup_status"
             app:layout_constraintTop_toBottomOf="@+id/goal"/> -->
 
+    <!-- If the goal is not stored yet, enable canceling
+    else enable deletion -->
+    <Button
+            android:id="@+id/button_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="false"
+            android:text="@string/do_not_save_goal"
+            style="?attr/materialButtonOutlinedStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
     <Button
             android:id="@+id/button_delete"
             android:layout_width="wrap_content"
@@ -90,8 +115,23 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
+    <!-- The three possible actions:
+        1. Save the goal
+        2. Add a Plan to the goal
+        3. Start training -->
+    <Button
+            android:id="@+id/button_savegoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/save_goal"
+            app:backgroundTint="@color/accent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     <Button
             android:id="@+id/button_addtraining"
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -112,14 +152,4 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-    <TextView
-            android:id="@+id/tv_training_period"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/plan"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup_status"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
