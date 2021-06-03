@@ -16,7 +16,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textinput_title"
+                android:id="@+id/ti_goal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/add_goal_hint"/>
@@ -31,7 +31,7 @@
             app:layout_constraintTop_toBottomOf="@+id/title">
 
         <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textinput_goal"
+                android:id="@+id/ti_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/add_details_hint"/>
