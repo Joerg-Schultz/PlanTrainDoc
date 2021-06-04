@@ -75,7 +75,8 @@ class PTDRepository @Inject constructor(
      * @param[parent] the parent goal
      * @return List of child goals, empty list if there are none
      */
-    fun getChildGoals(parent: Goal?) : Flow<List<Goal>> = goalDao.getChildrenByID(parent?.id)
+    fun getChildGoals(parent: Goal?) : Flow<List<Goal>> =
+        if(parent != null) goalDao.getChildrenByID(parent.id) else goalDao.getTopLevel()
 
 
     /**

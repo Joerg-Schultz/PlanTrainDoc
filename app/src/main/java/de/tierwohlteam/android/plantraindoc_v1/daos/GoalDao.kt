@@ -33,5 +33,8 @@ interface GoalDao {
     @Query("SELECT * from goals where parents = :parentID")
     fun getChildrenByID(parentID: Uuid?): Flow<List<Goal>>
 
+    @Query("SELECT * from goals where parents IS NULL")
+    fun getTopLevel(): Flow<List<Goal>>
+
 
 }

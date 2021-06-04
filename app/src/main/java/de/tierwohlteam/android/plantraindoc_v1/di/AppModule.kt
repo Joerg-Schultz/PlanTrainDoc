@@ -77,7 +77,7 @@ object AppModule {
             val user = User(id = newUserID, name = Constants.DEFAULT_USER_NAME,
                 email = Constants.DEFAULT_USER_EMAIL, password = Constants.DEFAULT_USER_PASSWORD
             )
-            repository.insertUser(user)
+            repository.insertUser(user) //TODO no main thread queries
             userID = newUserID.toString()
             sharedPreferences.edit().putString(KEY_USER_ID, newUserID.toString()).apply()
         }
