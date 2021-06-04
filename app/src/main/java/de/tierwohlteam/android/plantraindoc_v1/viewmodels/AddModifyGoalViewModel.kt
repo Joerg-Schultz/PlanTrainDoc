@@ -3,21 +3,21 @@ package de.tierwohlteam.android.plantraindoc_v1.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.benasher44.uuid.Uuid
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.others.Event
 import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class AddModifyGoalViewModel @Inject constructor(
-    private val repository: PTDRepository
+    private val repository: PTDRepository,
+    private val userID: Uuid
 ): ViewModel() {
-
-    val goal: Goal? = null //get from repository later
+    val goal: Goal? = null
+    private val parentGoal: Goal? = null //get from repository later
 
     private val _insertGoalStatus = MutableLiveData<Event<Resource<Goal>>>(Event(Resource.empty()))
     val insertGoalStatus: LiveData<Event<Resource<Goal>>> = _insertGoalStatus
@@ -29,10 +29,13 @@ class AddModifyGoalViewModel @Inject constructor(
             _insertGoalStatus.postValue(Event(Resource.error("The fields must not be empty", null)))
             return
         }
-        /*val newGoal = Goal(goal = goalText, description = description, parents = parentGoal,
+
+        //get UserId from shared prefs
+        val newGoal = Goal(goal = goalText, description = description, parents = parentGoal?.id,
         userID = userID)
-        repository.insertGoal(newGoal) */
-        _insertGoalStatus.postValue(Event(Resource.success(goal)))
+        if(status != null) newGoal.status = status
+        repository.insertGoal(newGoal)
+        _insertGoalStatus.postValue(Event(Resource.success(newGoal)))
     }
 
 

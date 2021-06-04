@@ -1,13 +1,23 @@
 package de.tierwohlteam.android.plantraindoc_v1.di
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import androidx.room.Room
+import com.benasher44.uuid.Uuid
+import com.benasher44.uuid.uuid4
+import com.benasher44.uuid.uuidFrom
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import de.tierwohlteam.android.plantraindoc_v1.models.User
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USER_ID
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.PTD_DB_NAME
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.SHARED_PREFERENCES_NAME
+import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDdb
 import javax.inject.Singleton
 
@@ -25,7 +35,8 @@ object AppModule {
         app.applicationContext,
         PTDdb::class.java,
         PTD_DB_NAME
-    ).fallbackToDestructiveMigration() // comment out in production
+    ).allowMainThreadQueries() //devdebug only!!!!
+        .fallbackToDestructiveMigration() // comment out in production
         .build()
 
     @Singleton
@@ -51,4 +62,25 @@ object AppModule {
     @Singleton
     @Provides
     fun provideTrialDao(db: PTDdb) = db.trialDao()
+
+    @Singleton
+    @Provides
+    fun provideSharedPreferences(@ApplicationContext app: Context) =
+        app.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE)
+
+    @Singleton
+    @Provides
+    fun provideUserID(sharedPreferences: SharedPreferences, repository: PTDRepository): Uuid {
+        var userID = sharedPreferences.getString(KEY_USER_ID, null)
+        if(userID == null){
+            val newUserID = uuid4()
+            val user = User(id = newUserID, name = Constants.DEFAULT_USER_NAME,
+                email = Constants.DEFAULT_USER_EMAIL, password = Constants.DEFAULT_USER_PASSWORD
+            )
+            repository.insertUser(user)
+            userID = newUserID.toString()
+            sharedPreferences.edit().putString(KEY_USER_ID, newUserID.toString()).apply()
+        }
+        return uuidFrom(userID)
+    }
 }
