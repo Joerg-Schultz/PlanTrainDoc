@@ -32,9 +32,11 @@ class GoalTreeAdapter: RecyclerView.Adapter<GoalTreeAdapter.GoalViewHolder>()  {
 
     override fun onBindViewHolder(holder: GoalViewHolder, position: Int) {
         val goal = differ.currentList[position]
-        val goalText = goal.goal
         holder.binding.apply {
-            tvGoal.text = goalText
+            tvGoal.text = goal.goal
+            tvDetails.text = goal.description
+            tvStatus.text = goal.status
+            btnAction.text = "Add Training"
         }
     }
 
