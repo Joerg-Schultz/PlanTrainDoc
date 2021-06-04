@@ -41,7 +41,10 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         lifecycleScope.launchWhenStarted {
-            viewModel.goals.collect { goalTreeAdapter.submitList(it) }
+            viewModel.goals.collect {
+                //TODO show info message if there are no goals (it.isEmpty() )
+                goalTreeAdapter.submitList(it)
+            }
         }
         binding.fabAddGoal.setOnClickListener {
             findNavController().navigate(R.id.action_goalTreeFragment_to_addModifyPlanFragment)
