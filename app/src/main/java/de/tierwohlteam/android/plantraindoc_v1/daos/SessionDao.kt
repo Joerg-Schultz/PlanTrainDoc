@@ -12,13 +12,13 @@ import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
 interface SessionDao {
 
     @Insert
-    fun insert(session: Session)
+    suspend fun insert(session: Session)
 
     @Query("SELECT * from sessions where id = :sessionID")
-    fun getByID(sessionID: Uuid): Session?
+    suspend fun getByID(sessionID: Uuid): Session?
 
     @Transaction
     @Query("SELECT * from sessions where id = :sessionID")
-    fun getByIDWithRelations(sessionID: Uuid): SessionWithRelations?
+    suspend fun getByIDWithRelations(sessionID: Uuid): SessionWithRelations?
 
 }

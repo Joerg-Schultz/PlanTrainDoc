@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GoalTreeViewModel @Inject constructor(
-    private val repository: PTDRepository
+    repository: PTDRepository
 ) : ViewModel() {
 
     private val currentGoal = null //Change of this variable should drive the recreation of view

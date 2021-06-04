@@ -14,20 +14,20 @@ import de.tierwohlteam.android.plantraindoc_v1.models.PlanWithRelations
 interface PlanDao {
 
     @Insert
-    fun insert(plan: Plan)
+    suspend fun insert(plan: Plan)
 
     @Transaction
     @Insert
-    fun insert(planConstraint: PlanConstraint)
+    suspend fun insert(planConstraint: PlanConstraint)
 
     @Transaction
     @Insert
-    fun insert(planHelper: PlanHelper)
+    suspend fun insert(planHelper: PlanHelper)
 
     @Query("SELECT * from plans where id = :planID")
-    fun getByID(planID: Uuid) : Plan?
+    suspend fun getByID(planID: Uuid) : Plan?
 
     @Transaction
     @Query("SELECT * from plans where id = :planID")
-    fun getByIDWithRelations(planID: Uuid): PlanWithRelations?
+    suspend fun getByIDWithRelations(planID: Uuid): PlanWithRelations?
 }

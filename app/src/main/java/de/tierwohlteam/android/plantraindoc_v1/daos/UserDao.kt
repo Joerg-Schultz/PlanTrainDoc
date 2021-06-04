@@ -11,13 +11,13 @@ import de.tierwohlteam.android.plantraindoc_v1.models.UserWithDogs
 @Dao
 interface UserDao {
     @Insert
-    fun insert(user: User)
+    suspend fun insert(user: User)
 
     @Query("SELECT * from users where id = :userID")
-    fun getByID(userID: Uuid): User?
+    suspend fun getByID(userID: Uuid): User?
 
     @Transaction
     @Query("SELECT * from users where id = :userID")
-    fun getByIDWithDogs(userID: Uuid): UserWithDogs?
+    suspend fun getByIDWithDogs(userID: Uuid): UserWithDogs?
 
 }

@@ -15,20 +15,20 @@ import java.net.IDN
 interface GoalDao {
 
     @Insert
-    fun insert(goal: Goal)
+    suspend fun insert(goal: Goal)
 
     @Insert
-    fun insertGoalDependency(dependencyCrossRef: GoalDependencyCrossRef)
+    suspend fun insertGoalDependency(dependencyCrossRef: GoalDependencyCrossRef)
 
     @Query("SELECT * from goals where id = :goalID")
-    fun getByID(goalID: Uuid): Goal?
+    suspend fun getByID(goalID: Uuid): Goal?
 
     // Because Room runs the two queries for us under the hood,
     // add the @Transaction annotation, to ensure that this
     // happens atomically.
     @Transaction
     @Query("SELECT * from goals where id = :goalID")
-    fun getByIDWithRelations(goalID: Uuid): GoalWithRelations?
+    suspend fun getByIDWithRelations(goalID: Uuid): GoalWithRelations?
 
     @Query("SELECT * from goals where parents = :parentID")
     fun getChildrenByID(parentID: Uuid?): Flow<List<Goal>>
