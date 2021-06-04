@@ -29,14 +29,14 @@ class PTDRepository @Inject constructor(
      *  @param[user] user object
      */
     //@WorkerThread
-    fun insertUser(user: User) = userDao.insert(user)
+    suspend fun insertUser(user: User) = userDao.insert(user)
 
     /**
      * get a user from the DB using its id
      * @param[userID] UUID id of the user
      * @return User? null if there is no user with this id
      */
-    fun getUserByID(userID: Uuid) : User? = userDao.getByID(userID)
+    suspend fun getUserByID(userID: Uuid) : User? = userDao.getByID(userID)
 
     /**
      * Dog functions
@@ -46,13 +46,13 @@ class PTDRepository @Inject constructor(
      */
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    fun insertDog(dog: Dog) = dogDao.insert(dog)
+    suspend fun insertDog(dog: Dog) = dogDao.insert(dog)
     /**
      * get a dog from the DB using its id
      * @param[dogID] UUID id of the dog
      * @return Dog or null if there is no dog with this ID in the DB
      */
-    fun getDogByID(dogID: Uuid) : Dog? = dogDao.getByID(dogID)
+    suspend fun getDogByID(dogID: Uuid) : Dog? = dogDao.getByID(dogID)
 
     /**
      * Goal functions
@@ -62,13 +62,13 @@ class PTDRepository @Inject constructor(
      */
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    fun insertGoal(goal: Goal) = goalDao.insert(goal)
+    suspend fun insertGoal(goal: Goal) = goalDao.insert(goal)
     /**
      * get a goal from the DB using its id
      * @param[goalID] UUID id of the goal
      * @return Goal or null if there is no dog with this ID in the DB
      */
-    fun getGoalByID(goalID: Uuid) : Goal? = goalDao.getByID(goalID)
+    suspend fun getGoalByID(goalID: Uuid) : Goal? = goalDao.getByID(goalID)
 
     /**
      * get a list of all children of a goal
@@ -87,13 +87,13 @@ class PTDRepository @Inject constructor(
      */
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    fun insertPlan(plan: Plan) = planDao.insert(plan)
+    suspend fun insertPlan(plan: Plan) = planDao.insert(plan)
     /**
      * get a plan from the DB using its id
      * @param[planID] UUID id of the plan
      * @return Plan or null if there is no dog with this ID in the DB
      */
-    fun getPlanByID(planID: Uuid) : Plan? = planDao.getByID(planID)
+    suspend fun getPlanByID(planID: Uuid) : Plan? = planDao.getByID(planID)
 
 
     /**
@@ -104,13 +104,13 @@ class PTDRepository @Inject constructor(
      */
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    fun insertSession(session: Session) = sessionDao.insert(session)
+    suspend fun insertSession(session: Session) = sessionDao.insert(session)
     /**
      * get a session from the DB using its id
      * @param[sessionID] UUID id of the session
      * @return Session or null if there is no dog with this ID in the DB
      */
-    fun getSessionByID(sessionID: Uuid) : Session? = sessionDao.getByID(sessionID)
+    suspend fun getSessionByID(sessionID: Uuid) : Session? = sessionDao.getByID(sessionID)
 
     /**
      * Trial functions
@@ -120,12 +120,12 @@ class PTDRepository @Inject constructor(
      */
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    fun insertTrial(trial: Trial) = trialDao.insert(trial)
+    suspend fun insertTrial(trial: Trial) = trialDao.insert(trial)
 
     /**
      * get a trial from the DB using its id
      * @param[trialID] UUID id of the trial
      * @return Trial or null if there is no dog with this ID in the DB
      */
-    fun getTrialByID(trialID: Uuid) : Trial? = trialDao.getByID(trialID)
+    suspend fun getTrialByID(trialID: Uuid) : Trial? = trialDao.getByID(trialID)
 }
