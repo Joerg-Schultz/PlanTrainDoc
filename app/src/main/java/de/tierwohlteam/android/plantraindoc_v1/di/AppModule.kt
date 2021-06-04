@@ -19,6 +19,8 @@ import de.tierwohlteam.android.plantraindoc_v1.others.Constants.PTD_DB_NAME
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.SHARED_PREFERENCES_NAME
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDdb
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Singleton
 
 @Module
@@ -35,7 +37,7 @@ object AppModule {
         app.applicationContext,
         PTDdb::class.java,
         PTD_DB_NAME
-    ).allowMainThreadQueries() //devdebug only!!!!
+    ) //.allowMainThreadQueries() //devdebug only!!!!
         .fallbackToDestructiveMigration() // comment out in production
         .build()
 
@@ -77,7 +79,9 @@ object AppModule {
             val user = User(id = newUserID, name = Constants.DEFAULT_USER_NAME,
                 email = Constants.DEFAULT_USER_EMAIL, password = Constants.DEFAULT_USER_PASSWORD
             )
-            repository.insertUser(user) //TODO no main thread queries
+            GlobalScope.launch {
+                repository.insertUser(user)
+            }
             userID = newUserID.toString()
             sharedPreferences.edit().putString(KEY_USER_ID, newUserID.toString()).apply()
         }

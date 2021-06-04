@@ -3,12 +3,14 @@ package de.tierwohlteam.android.plantraindoc_v1.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.benasher44.uuid.Uuid
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.others.Event
 import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,12 +32,13 @@ class AddModifyGoalViewModel @Inject constructor(
             return
         }
 
-        //get UserId from shared prefs
         val newGoal = Goal(goal = goalText, description = description, parents = parentGoal?.id,
         userID = userID)
         if(status != null) newGoal.status = status
-        repository.insertGoal(newGoal)
-        _insertGoalStatus.postValue(Event(Resource.success(newGoal)))
+        viewModelScope.launch {
+            repository.insertGoal(newGoal)
+            _insertGoalStatus.postValue(Event(Resource.success(newGoal)))
+        }
     }
 
 
