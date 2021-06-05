@@ -2,11 +2,14 @@ package de.tierwohlteam.android.plantraindoc_v1.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import de.tierwohlteam.android.plantraindoc_v1.databinding.GoalItemBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
+import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 
 class GoalTreeAdapter: RecyclerView.Adapter<GoalTreeAdapter.GoalViewHolder>()  {
 
@@ -37,6 +40,10 @@ class GoalTreeAdapter: RecyclerView.Adapter<GoalTreeAdapter.GoalViewHolder>()  {
             tvDetails.text = goal.description
             tvStatus.text = goal.status
             btnAction.text = "Add Training"
+            btnSubgoals.setOnClickListener {
+                //update viewModel.parentGoal
+
+            }
         }
     }
 

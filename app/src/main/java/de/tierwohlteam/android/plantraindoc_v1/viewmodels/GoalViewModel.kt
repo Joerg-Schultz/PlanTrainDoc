@@ -10,31 +10,42 @@ import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.others.Event
 import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class GoalViewModel @Inject constructor(
     private val repository: PTDRepository,
     private val userID: Uuid,
 ) : ViewModel() {
 
-    private val currentGoal = null //Change of this variable should drive the recreation of view
-    val goals = repository.getChildGoals(parent = currentGoal)
-
-    val goal: Goal? = null
-    private val parentGoal: Goal? = null //get from repository later
+    //observe the parent and if changed update the goals
+    private val parentGoal: MutableStateFlow<Goal?> = MutableStateFlow(value = null)
+    val selectedGoal: MutableStateFlow<Goal?> = MutableStateFlow(value = null)
+    val goals: StateFlow<List<Goal>> = parentGoal.flatMapLatest {
+        repository.getChildGoals(parent = it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = emptyList()
+    )
 
     private val _insertGoalStatus = MutableLiveData<Event<Resource<Goal>>>(Event(Resource.empty()))
     val insertGoalStatus: LiveData<Event<Resource<Goal>>> = _insertGoalStatus
 
-    fun saveGoal(goalText: String, description: String, status: String?) {
+    /**
+     * Save a new or updated goal to db
+     */
+    fun saveNewOrUpdatedGoal(goalText: String, description: String, status: String?) {
         if(goalText.isEmpty()) {
             _insertGoalStatus.postValue(Event(Resource.error("The fields must not be empty", null)))
             return
         }
 
-        val newGoal = Goal(goal = goalText, description = description, parents = parentGoal?.id,
+        val newGoal = Goal(goal = goalText, description = description, parents = parentGoal.value?.id,
             userID = userID)
         if(status != null) newGoal.status = status
         viewModelScope.launch {
