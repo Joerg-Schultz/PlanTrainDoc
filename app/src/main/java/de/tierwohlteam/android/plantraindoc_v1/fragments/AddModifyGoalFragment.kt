@@ -96,10 +96,10 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
         binding.tiGoal.setText(goal.goal)
         binding.tiDescription.setText(goal.description)
         when (goal.status) {
-            Goal.statusNew -> binding.radioButtonNew.isChecked
-            Goal.statusInProgress -> binding.radioButtonInprogress.isChecked
-            Goal.statusStopped -> binding.radioButtonStopped.isChecked
-            Goal.statusFinished -> binding.radioButtonDone.isChecked
+            Goal.statusNew -> binding.radioButtonNew.isChecked = true
+            Goal.statusInProgress -> binding.radioButtonInprogress.isChecked = true
+            Goal.statusStopped -> binding.radioButtonStopped.isChecked = true
+            Goal.statusFinished -> binding.radioButtonDone.isChecked = true
         }
     }
 }

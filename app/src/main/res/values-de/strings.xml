@@ -6,7 +6,7 @@
     <string name="radioButton_new">Neu</string>
     <string name="radioButton_inprogress">In Bearbeitung</string>
     <string name="radioButton_done">Erledigt</string>
-    <string name="radioButton_stopped">Gestoppet</string>
+    <string name="radioButton_stopped">Gestoppt</string>
     <string name="delete">Löschen</string>
     <string name="add_training_button">Plan Hinzufügen</string>
     <string name="train">Trainieren</string>
