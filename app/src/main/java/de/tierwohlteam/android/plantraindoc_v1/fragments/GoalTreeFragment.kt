@@ -9,7 +9,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.adapters.GoalTreeAdapter
@@ -36,12 +38,6 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
         return view
     }
 
-    private fun setupRecyclerView() = binding.rvGoalTree.apply {
-        goalTreeAdapter = GoalTreeAdapter()
-        adapter = goalTreeAdapter
-        layoutManager = LinearLayoutManager(requireContext())
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
@@ -54,5 +50,38 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
         binding.fabAddGoal.setOnClickListener {
             findNavController().navigate(R.id.action_goalTreeFragment_to_addModifyPlanFragment)
         }
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvGoalTree.apply {
+            goalTreeAdapter = GoalTreeAdapter()
+            adapter = goalTreeAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+        val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(binding.rvGoalTree)
+    }
+
+    val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
+        //ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+        0,
+        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+    ) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            TODO("Not yet implemented")
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val pos = viewHolder.adapterPosition
+            when(direction){
+                ItemTouchHelper.LEFT -> viewModel.moveTreeDown(pos)
+                ItemTouchHelper.RIGHT -> viewModel.moveTreeUp()
+            }
+        }
+
     }
 }
