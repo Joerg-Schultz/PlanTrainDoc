@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.adapters.GoalTreeAdapter
 import de.tierwohlteam.android.plantraindoc_v1.databinding.GoaltreeFragmentBinding
+import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalTreeViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -55,13 +56,14 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
             }
         }
         binding.fabAddGoal.setOnClickListener {
-            findNavController().navigate(R.id.action_goalTreeFragment_to_addModifyPlanFragment)
+            findNavController().navigate(R.id.action_goalTreeFragment_to_addModifyGoalFragment)
         }
     }
 
     private fun setupRecyclerView() {
         binding.rvGoalTree.apply {
-            goalTreeAdapter = GoalTreeAdapter()
+            //goalTreeAdapter = GoalTreeAdapter({goal: Goal -> viewModel.setSelectedGoal(goal)})
+            goalTreeAdapter = GoalTreeAdapter { goal: Goal -> viewModel.setSelectedGoal(goal) }
             adapter = goalTreeAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }

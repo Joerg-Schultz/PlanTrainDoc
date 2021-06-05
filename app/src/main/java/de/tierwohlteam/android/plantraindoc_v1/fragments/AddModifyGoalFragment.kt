@@ -29,7 +29,6 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
     private val viewModel: GoalViewModel by activityViewModels()
     private var _binding: AddModifyGoalFragmentBinding? = null
     private val binding get() = _binding!!
-    private var selectedGoal: Goal? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = AddModifyGoalFragmentBinding.inflate(inflater, container, false)
@@ -41,7 +40,7 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
 
-        selectedGoal?.let { fillFields(it) }
+        viewModel.selectedGoal.value?.let { fillFields(it) }
 
         binding.buttonSavegoal.setOnClickListener {
              viewModel.saveNewOrUpdatedGoal(goalText = binding.tiGoal.text.toString(),
@@ -56,11 +55,6 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
     }
 
     private fun subscribeToObservers() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.selectedGoal.collect {
-                selectedGoal = it
-            }
-        }
         //Did the insert work?
         viewModel.insertGoalStatus.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { result ->

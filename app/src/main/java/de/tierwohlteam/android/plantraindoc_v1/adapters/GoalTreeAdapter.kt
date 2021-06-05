@@ -4,14 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.GoalItemBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 
-class GoalTreeAdapter: RecyclerView.Adapter<GoalTreeAdapter.GoalViewHolder>()  {
+class GoalTreeAdapter(private val selectGoal: (Goal) -> Unit): RecyclerView.Adapter<GoalTreeAdapter.GoalViewHolder>()  {
 
     // generate a diff list to update only changed items in the RecView
     private val diffCallback = object : DiffUtil.ItemCallback<Goal>(){
@@ -40,6 +45,10 @@ class GoalTreeAdapter: RecyclerView.Adapter<GoalTreeAdapter.GoalViewHolder>()  {
             tvDetails.text = goal.description
             tvStatus.text = goal.status
             btnAction.text = "Add Training"
+        }
+        holder.itemView.setOnClickListener { view ->
+            selectGoal(goal)
+            view.findNavController().navigate(R.id.action_goalTreeFragment_to_addModifyGoalFragment)
         }
     }
 

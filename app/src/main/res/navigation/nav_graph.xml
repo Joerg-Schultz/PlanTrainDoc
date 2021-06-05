@@ -10,7 +10,7 @@
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.GoalTreeFragment"
             android:label="main_fragment"
             tools:layout="@layout/goaltree_fragment">
-        <action android:id="@+id/action_goalTreeFragment_to_addModifyPlanFragment"
+        <action android:id="@+id/action_goalTreeFragment_to_addModifyGoalFragment"
                 app:destination="@id/addModifyGoalFragment"/>
     </fragment>
 
