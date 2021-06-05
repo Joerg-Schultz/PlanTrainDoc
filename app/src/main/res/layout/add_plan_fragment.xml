@@ -18,73 +18,78 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+            android:text="@string/goal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/tv_goalforplan"
+            app:layout_constraintTop_toBottomOf="@+id/add_training_header"
+            app:layout_constraintStart_toStartOf="@+id/rg_criteria" app:layout_constraintEnd_toEndOf="@+id/rg_type"
+            android:layout_marginTop="8dp" android:layout_marginStart="16dp" android:layout_marginEnd="16dp"/>
     <RadioGroup
             android:id="@+id/rg_criteria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:checkedButton="@id/rb_free"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_training_header">
+            app:layout_constraintTop_toBottomOf="@+id/tv_goalforplan" android:layout_marginTop="24dp">
 
         <RadioButton
                 android:id="@+id/rb_distance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/distance" />
+                android:text="@string/distance"/>
 
         <RadioButton
                 android:id="@+id/rb_duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/duration" />
+                android:text="@string/duration"/>
 
         <RadioButton
                 android:id="@+id/rb_discrimination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/discrimination" />
+                android:text="@string/discrimination"/>
 
         <RadioButton
                 android:id="@+id/rb_cueintroduction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/cue_introduction" />
+                android:text="@string/cue_introduction"/>
 
         <RadioButton
                 android:id="@+id/rb_free"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/other_criterion" />
+                android:text="@string/other_criterion"/>
     </RadioGroup>
 
     <RadioGroup
             android:id="@+id/rg_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
             android:checkedButton="@id/rb_type_free"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_training_header">
+            app:layout_constraintTop_toBottomOf="@+id/tv_goalforplan" android:layout_marginTop="24dp">
 
         <RadioButton
                 android:id="@+id/rb_type_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/time_based" />
+                android:text="@string/time_based"/>
 
         <RadioButton
                 android:id="@+id/rb_type_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/repetition" />
+                android:text="@string/repetition"/>
 
         <RadioButton
                 android:id="@+id/rb_type_free"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/no_constraint" />
+                android:text="@string/no_constraint"/>
     </RadioGroup>
 
     <androidx.constraintlayout.widget.ConstraintLayout
