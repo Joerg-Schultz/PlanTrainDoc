@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.AddPlanFragment">
+
+    <TextView
+            android:id="@+id/add_training_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/add_training"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+            android:id="@+id/rg_criteria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:checkedButton="@id/rb_free"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_training_header">
+
+        <RadioButton
+                android:id="@+id/rb_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/distance" />
+
+        <RadioButton
+                android:id="@+id/rb_duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/duration" />
+
+        <RadioButton
+                android:id="@+id/rb_discrimination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/discrimination" />
+
+        <RadioButton
+                android:id="@+id/rb_cueintroduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cue_introduction" />
+
+        <RadioButton
+                android:id="@+id/rb_free"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/other_criterion" />
+    </RadioGroup>
+
+    <RadioGroup
+            android:id="@+id/rg_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:checkedButton="@id/rb_type_free"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_training_header">
+
+        <RadioButton
+                android:id="@+id/rb_type_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/time_based" />
+
+        <RadioButton
+                android:id="@+id/rb_type_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/repetition" />
+
+        <RadioButton
+                android:id="@+id/rb_type_free"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_constraint" />
+    </RadioGroup>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/LinearLayoutConditionals"
+            android:layout_width="0dp"
+            android:layout_height="254dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rg_criteria">
+
+        <TextView
+                android:id="@+id/cond_criterion_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+                android:id="@+id/conditional_criteria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cond_criterion_header" />
+
+        <TextView
+                android:id="@+id/conditional_type_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+                android:id="@+id/conditional_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/conditional_type_header">
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

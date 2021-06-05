@@ -16,4 +16,13 @@
     <string name="add_goal_hint">Define you goal</string>
     <string name="add_details_hint">Describe the details of your goal</string>
     <string name="do_not_save_goal">Don\'t Save</string>
+    <string name="add_training">Add Training Plan</string>
+    <string name="distance">Distance</string>
+    <string name="duration">Duration</string>
+    <string name="discrimination">Discrimination</string>
+    <string name="cue_introduction">Cue Introduction</string>
+    <string name="other_criterion">Others Criterion</string>
+    <string name="time_based">Time Based</string>
+    <string name="repetition">Repetitions</string>
+    <string name="no_constraint">No Constraints</string>
 </resources>

@@ -17,4 +17,13 @@
     <string name="add_goal_hint">Definiere das Ziel</string>
     <string name="add_details_hint">Beschreibe die Details des Ziels</string>
     <string name="do_not_save_goal">Nicht Speichern</string>
+    <string name="add_training">Trainingsplan hinzufügen</string>
+    <string name="distance">Distanz</string>
+    <string name="duration">Dauer</string>
+    <string name="discrimination">Unterscheidung</string>
+    <string name="cue_introduction">Signal einführen</string>
+    <string name="other_criterion">Anderes Kriterium</string>
+    <string name="time_based">Zeit basiert</string>
+    <string name="repetition">Wiederholungen</string>
+    <string name="no_constraint">Keine Einschränkung</string>
 </resources>
