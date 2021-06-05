@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,6 +36,11 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = GoaltreeFragmentBinding.inflate(inflater, container, false)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            // TODO how can I leave the app?
+            // implement like in BoxBreathing If pressed twice then leave?
+            viewModel.moveTreeUp()
+        }
         val view = binding.root
         return view
     }

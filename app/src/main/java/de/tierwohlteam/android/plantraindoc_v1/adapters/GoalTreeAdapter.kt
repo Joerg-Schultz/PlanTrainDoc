@@ -40,10 +40,6 @@ class GoalTreeAdapter: RecyclerView.Adapter<GoalTreeAdapter.GoalViewHolder>()  {
             tvDetails.text = goal.description
             tvStatus.text = goal.status
             btnAction.text = "Add Training"
-            btnSubgoals.setOnClickListener {
-                //update viewModel.parentGoal
-
-            }
         }
     }
 
