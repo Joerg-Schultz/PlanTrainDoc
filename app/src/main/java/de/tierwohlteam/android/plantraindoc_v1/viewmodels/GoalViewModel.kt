@@ -64,7 +64,7 @@ class GoalViewModel @Inject constructor(
         }
     }
 
-    fun setSelectedGoal(goal:Goal){
+    fun setSelectedGoal(goal:Goal?){
         selectedGoal.value = goal
     }
 

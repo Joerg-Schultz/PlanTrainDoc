@@ -50,6 +50,7 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
         }
 
         binding.buttonCancel.setOnClickListener {
+            viewModel.setSelectedGoal(null)
             view.findNavController().popBackStack()
         }
     }
@@ -73,6 +74,7 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
                             "Added Goal Item",
                             Snackbar.LENGTH_LONG
                         ).show()
+                        viewModel.setSelectedGoal(null)
                         findNavController().popBackStack()
                     }
                     else -> {
