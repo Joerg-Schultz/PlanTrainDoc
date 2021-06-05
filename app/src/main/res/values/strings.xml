@@ -25,4 +25,7 @@
     <string name="time_based">Time Based</string>
     <string name="repetition">Repetitions</string>
     <string name="no_constraint">No Constraints</string>
+    <string name="save_plan">Save Training Plan</string>
+    <string name="what_do_i_want_to_train">What do I want to train?</string>
+    <string name="how_do_i_want_to_train">How do I want to train?</string>
 </resources>

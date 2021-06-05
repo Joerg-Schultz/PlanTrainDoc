@@ -32,6 +32,7 @@ class AddPlanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
+        binding.tvGoalforplan.text = viewModel.selectedGoal.value?.goal ?: "No goal defined"
     }
 
     private fun subscribeToObservers() {
