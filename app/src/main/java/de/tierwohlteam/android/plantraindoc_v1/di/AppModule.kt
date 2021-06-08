@@ -3,6 +3,7 @@ package de.tierwohlteam.android.plantraindoc_v1.di
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.room.Room
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
@@ -12,6 +13,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import de.tierwohlteam.android.plantraindoc_v1.R
+import de.tierwohlteam.android.plantraindoc_v1.models.ReinforcementScheme
 import de.tierwohlteam.android.plantraindoc_v1.models.User
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USER_ID
@@ -21,6 +24,7 @@ import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDdb
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -86,5 +90,27 @@ object AppModule {
             sharedPreferences.edit().putString(KEY_USER_ID, newUserID.toString()).apply()
         }
         return uuidFrom(userID)
+    }
+
+    @Singleton
+    @Provides
+    @Named("DurationScheme")
+    fun provideDurationReinforcementScheme(@ApplicationContext app: Context) : ReinforcementScheme =
+        readSpectorScheme(app, R.raw.durationscheme)
+    @Singleton
+    @Provides
+    @Named("DistanceScheme")
+    fun provideDistanceReinforcementScheme(@ApplicationContext app: Context) : ReinforcementScheme =
+        readSpectorScheme(app, R.raw.distancescheme)
+
+    private fun readSpectorScheme(context: Context, fileID : Int): ReinforcementScheme {
+        val scheme = ReinforcementScheme()
+        context.resources?.openRawResource(fileID)?.bufferedReader()?.forEachLine { line ->
+            val elements = line.split(":")
+            val key = elements.first().toFloat()
+            val values = elements[1].split(", ").map { it.toFloat() }
+            scheme.addLevel(key, values)
+        }
+        return scheme
     }
 }
