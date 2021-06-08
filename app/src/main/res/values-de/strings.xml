@@ -31,4 +31,8 @@
     <string name="how_do_i_want_to_train">Wie will ich trainieren?</string>
     <string name="save">Speichern</string>
     <string name="number">Anzahl</string>
+    <string name="seconds">Sekunden</string>
+    <string name="values">Werte</string>
+    <string name="discrimination_hint">Komma separierte Liste</string>
+    <string name="percentages">Prozent</string>
 </resources>

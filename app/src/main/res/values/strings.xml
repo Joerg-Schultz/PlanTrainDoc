@@ -30,4 +30,8 @@
     <string name="how_do_i_want_to_train">How do I want to train?</string>
     <string name="save">Save</string>
     <string name="number">Count</string>
+    <string name="seconds">Seconds</string>
+    <string name="values"/>
+    <string name="discrimination_hint">Comma separated list</string>
+    <string name="percentages">Percent</string>
 </resources>

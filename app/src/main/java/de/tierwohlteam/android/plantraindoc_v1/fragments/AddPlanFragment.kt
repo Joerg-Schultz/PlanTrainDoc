@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.TextView
@@ -115,9 +116,6 @@ class AddPlanFragment : Fragment() {
                 numberPicker.layoutParams = layoutParams
                 numberPicker.wrapSelectorWheel = true
                 numberPicker.minValue = 1
-                var periodCriterion = "distance"
-                var periodCriterionConst = false
-                var periodCriterionValue = distanceScheme.getLevels().first()
                 numberPicker.displayedValues = distanceScheme.getLevels().map { it.toString() }.toTypedArray()
                 numberPicker.maxValue = distanceScheme.getLevels().size - 1
                 numberPicker.value = 5
@@ -128,6 +126,63 @@ class AddPlanFragment : Fragment() {
                 binding.condHelperHeader.text = getString(R.string.number)
                 binding.conditionalHelper.removeAllViewsInLayout()
                 binding.conditionalHelper.addView(numberPicker)
+            }
+        }
+        //Duration
+        binding.rbHelperDuration.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val numberPicker = NumberPicker(context)
+                numberPicker.layoutParams = layoutParams
+                numberPicker.wrapSelectorWheel = true
+                numberPicker.minValue = 1
+                numberPicker.displayedValues = durationScheme.getLevels().map { it.toString() }.toTypedArray()
+                numberPicker.maxValue = durationScheme.getLevels().size - 1
+                numberPicker.value = 5
+                numberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+                    //periodCriterionValue = scheme.keys.toTypedArray()[newVal - 1].toFloat()
+                    //Toast.makeText(activity,scheme.keys.toTypedArray()[newVal - 1],Toast.LENGTH_SHORT).show()
+                }
+                binding.condHelperHeader.text = getString(R.string.seconds)
+                binding.conditionalHelper.removeAllViewsInLayout()
+                binding.conditionalHelper.addView(numberPicker)
+            }
+        }
+        //Discrimination
+        binding.rbHelperDiscrimination.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+                val discriminationInput = EditText(activity)
+                discriminationInput.setHint(R.string.discrimination_hint)
+                discriminationInput.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                discriminationInput.setPadding(20, 20, 20, 20)
+                binding.condHelperHeader.text = getString(R.string.values)
+                binding.conditionalHelper.removeAllViewsInLayout()
+                binding.conditionalHelper.addView(discriminationInput)
+            }
+        }
+        //Cue Introduction
+        binding.rbHelperCueintroduction.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+                val percentages = arrayOf("0","25","50","75","100")
+                val numberPicker = NumberPicker(context)
+                numberPicker.layoutParams = layoutParams
+                numberPicker.wrapSelectorWheel = true
+                numberPicker.minValue = 1
+                numberPicker.displayedValues = percentages
+                numberPicker.maxValue = percentages.size
+                numberPicker.value = 3
+                numberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+                    //periodCriterionValue = percentages[newVal - 1].toFloat()
+                    //Toast.makeText(activity,scheme.keys.toTypedArray()[newVal - 1],Toast.LENGTH_SHORT).show()
+                }
+                binding.condHelperHeader.text = getString(R.string.percentages)
+                binding.conditionalHelper.removeAllViewsInLayout()
+                binding.conditionalHelper.addView(numberPicker)
+            }
+        }
+        binding.rbHelperFree.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+                binding.condHelperHeader.text = ""
+                binding.conditionalHelper.removeAllViewsInLayout()
             }
         }
     }
