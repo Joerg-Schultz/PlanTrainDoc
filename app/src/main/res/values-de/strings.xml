@@ -30,4 +30,5 @@
     <string name="what_do_i_want_to_train">Was will ich trainieren?</string>
     <string name="how_do_i_want_to_train">Wie will ich trainieren?</string>
     <string name="save">Speichern</string>
+    <string name="number">Anzahl</string>
 </resources>

@@ -15,9 +15,12 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.AddPlanFragmentBinding
+import de.tierwohlteam.android.plantraindoc_v1.models.ReinforcementScheme
 import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import javax.inject.Inject
+import javax.inject.Named
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -25,6 +28,13 @@ class AddPlanFragment : Fragment() {
     private val viewModel: GoalViewModel by activityViewModels()
     private var _binding: AddPlanFragmentBinding? = null
     private val binding get() = _binding!!
+
+    @Inject
+    @Named("DistanceScheme")
+    lateinit var distanceScheme : ReinforcementScheme
+    @Inject
+    @Named("DurationScheme")
+    lateinit var durationScheme : ReinforcementScheme
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = AddPlanFragmentBinding.inflate(inflater, container, false)
@@ -96,7 +106,30 @@ class AddPlanFragment : Fragment() {
     }
 
     private fun setupHelperRadioGroup() {
-
+        val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT)
+        //Distance
+        binding.rbHelperDistance.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                val numberPicker = NumberPicker(context)
+                numberPicker.layoutParams = layoutParams
+                numberPicker.wrapSelectorWheel = true
+                numberPicker.minValue = 1
+                var periodCriterion = "distance"
+                var periodCriterionConst = false
+                var periodCriterionValue = distanceScheme.getLevels().first()
+                numberPicker.displayedValues = distanceScheme.getLevels().map { it.toString() }.toTypedArray()
+                numberPicker.maxValue = distanceScheme.getLevels().size - 1
+                numberPicker.value = 5
+                numberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+                    //periodCriterionValue = distanceScheme.keys.toTypedArray()[newVal - 1].toFloat()
+                    //Toast.makeText(activity,scheme.keys.toTypedArray()[newVal - 1],Toast.LENGTH_SHORT).show()
+                }
+                binding.condHelperHeader.text = getString(R.string.number)
+                binding.conditionalHelper.removeAllViewsInLayout()
+                binding.conditionalHelper.addView(numberPicker)
+            }
+        }
     }
 
     private fun subscribeToObservers() {
