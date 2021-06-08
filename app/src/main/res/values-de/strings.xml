@@ -26,7 +26,8 @@
     <string name="time_based">Zeit basiert</string>
     <string name="repetition">Wiederholungen</string>
     <string name="no_constraint">Keine Einschränkung</string>
-    <string name="save_plan">Trainingsplan Speichern</string>
+    <string name="save_plan">Plan Speichern</string>
     <string name="what_do_i_want_to_train">Was will ich trainieren?</string>
     <string name="how_do_i_want_to_train">Wie will ich trainieren?</string>
+    <string name="save">Speichern</string>
 </resources>
