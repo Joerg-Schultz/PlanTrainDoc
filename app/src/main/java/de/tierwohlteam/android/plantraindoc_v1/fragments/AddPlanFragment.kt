@@ -11,6 +11,7 @@ import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +51,13 @@ class AddPlanFragment : Fragment() {
         binding.addTrainingHeader.text = header
         setupHelperRadioGroup()
         setupConstraintRadioGroup()
+
+        binding.buttonCancel.setOnClickListener {
+            view.findNavController().popBackStack()
+        }
+        binding.buttonSaveplan.setOnClickListener {
+            TODO()
+        }
     }
 
     private fun setupConstraintRadioGroup() {
@@ -62,11 +70,10 @@ class AddPlanFragment : Fragment() {
                 val numberPicker = NumberPicker(context)
                 numberPicker.layoutParams = layoutParams
                 numberPicker.wrapSelectorWheel = true
-                var periodType = "count"
                 numberPicker.minValue = 1
                 numberPicker.maxValue = 20
                 numberPicker.value = 5
-                var periodLimit = 5
+                var periodLimit = 5 //Otherwise picker has to be moved
                 numberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
                     periodLimit = newVal
                 }
