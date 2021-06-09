@@ -40,6 +40,8 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
         super.onViewCreated(view, savedInstanceState)
         val goal = goalViewModel.selectedGoal.value?.goal
         val plan = goalViewModel.selectedGoal.value?.plan
+        binding.tvGoalForTraining.text = goal?.goal
+
         lifecycleScope.launch {
             var planHelper: PlanHelper? = null
             val planHelperJob = launch {
@@ -51,9 +53,16 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
             }
             planHelperJob.join()
             planConstraintJob.join()
-            if(planHelper != null) binding.tvPlanForTraining.text = planHelper?.type
+            // TODO overwrite PlanHelper / PlanConstraint toString method
+            binding.tvPlanHelper.text =
+                StringBuilder()
+                .append(planHelper?.type ?: "")
+                .append(planHelper?.value ?: "")
+            binding.tvPlanConstraint.text =
+                StringBuilder()
+                    .append(planConstraint?.type ?: "")
+                    .append(planConstraint?.value ?: "")
         }
-        binding.tvGoalForTraining.text = goal?.goal
 
     }
 }
