@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.benasher44.uuid.Uuid
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
+import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithPlan
 import de.tierwohlteam.android.plantraindoc_v1.others.Event
 import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
@@ -23,10 +24,10 @@ class GoalViewModel @Inject constructor(
 ) : ViewModel() {
 
     //observe the parent and if changed update the goals
-    val parentGoal: MutableStateFlow<Goal?> = MutableStateFlow(value = null)
-    val selectedGoal: MutableStateFlow<Goal?> = MutableStateFlow(value = null)
-    val goals: StateFlow<List<Goal>> = parentGoal.flatMapLatest {
-        repository.getChildGoals(parent = it)
+    val parentGoal: MutableStateFlow<GoalWithPlan?> = MutableStateFlow(value = null)
+    val selectedGoal: MutableStateFlow<GoalWithPlan?> = MutableStateFlow(value = null)
+    val goals: StateFlow<List<GoalWithPlan>> = parentGoal.flatMapLatest {
+        repository.getChildGoalsWithPlan(parent = it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -45,7 +46,7 @@ class GoalViewModel @Inject constructor(
             return
         }
 
-        val newGoal = Goal(goal = goalText, description = description, parents = parentGoal.value?.id,
+        val newGoal = Goal(goal = goalText, description = description, parents = parentGoal.value?.goal?.id,
             userID = userID)
         if(status != null) newGoal.status = status
         viewModelScope.launch {
@@ -60,11 +61,11 @@ class GoalViewModel @Inject constructor(
 
     fun moveTreeUp() {
         viewModelScope.launch {
-            parentGoal.value = repository.getParentGoal(parentGoal.value)
+            parentGoal.value = repository.getParentGoalWithPlan(parentGoal.value)
         }
     }
 
-    fun setSelectedGoal(goal:Goal?){
+    fun setSelectedGoal(goal:GoalWithPlan?){
         selectedGoal.value = goal
     }
 

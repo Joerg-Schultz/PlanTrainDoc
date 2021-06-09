@@ -2,36 +2,27 @@ package de.tierwohlteam.android.plantraindoc_v1.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.GoalItemBinding
-import de.tierwohlteam.android.plantraindoc_v1.models.Goal
-import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
+import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithPlan
 
-class GoalTreeAdapter(private val selectGoal: (Goal) -> Unit): RecyclerView.Adapter<GoalTreeAdapter.GoalViewHolder>()  {
+class GoalTreeAdapter(private val selectGoal: (GoalWithPlan) -> Unit): RecyclerView.Adapter<GoalTreeAdapter.GoalViewHolder>()  {
 
     // generate a diff list to update only changed items in the RecView
-    private val diffCallback = object : DiffUtil.ItemCallback<Goal>(){
-        override fun areItemsTheSame(oldItem: Goal, newItem: Goal): Boolean {
-            return oldItem.id == newItem.id
+    private val diffCallback = object : DiffUtil.ItemCallback<GoalWithPlan>(){
+        override fun areItemsTheSame(oldItem: GoalWithPlan, newItem: GoalWithPlan): Boolean {
+            return oldItem.goal.id == newItem.goal.id
         }
-        override fun areContentsTheSame(oldItem: Goal, newItem: Goal): Boolean {
+        override fun areContentsTheSame(oldItem: GoalWithPlan, newItem: GoalWithPlan): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
     private val differ = AsyncListDiffer(this, diffCallback)
-    fun submitList(list: List<Goal>) = differ.submitList(list)
+    fun submitList(list: List<GoalWithPlan>) = differ.submitList(list)
 
     inner class GoalViewHolder(val binding: GoalItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -42,19 +33,23 @@ class GoalTreeAdapter(private val selectGoal: (Goal) -> Unit): RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: GoalViewHolder, position: Int) {
-        val goal = differ.currentList[position]
+        val goalWithPlan = differ.currentList[position]
         holder.binding.apply {
-            tvGoal.text = goal.goal
-            tvDetails.text = goal.description
-            tvStatus.text = goal.status
-            btnAction.text = "Add Training"
-            btnAction.setOnClickListener {
-                selectGoal(goal)
-                it.findNavController().navigate(R.id.action_goalTreeFragment_to_addPlanFragment)
+            tvGoal.text = goalWithPlan.goal.goal
+            tvDetails.text = goalWithPlan.goal.description
+            tvStatus.text = goalWithPlan.goal.status
+            if(goalWithPlan.plan != null) {
+                btnAction.text = "Train"
+            } else {
+                btnAction.text = "Add Training"
+                btnAction.setOnClickListener {
+                    selectGoal(goalWithPlan)
+                    it.findNavController().navigate(R.id.action_goalTreeFragment_to_addPlanFragment)
+                }
             }
         }
         holder.itemView.setOnClickListener { view ->
-            selectGoal(goal)
+            selectGoal(goalWithPlan)
             view.findNavController().navigate(R.id.action_goalTreeFragment_to_addModifyGoalFragment)
         }
     }

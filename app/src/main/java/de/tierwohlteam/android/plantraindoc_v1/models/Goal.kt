@@ -91,3 +91,13 @@ data class GoalWithRelations(
     )
     val dependencies: List<Goal> = emptyList()
 )
+
+data class GoalWithPlan(
+    @Embedded
+    val goal: Goal,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "goalID"
+    )
+    val plan: Plan?
+)

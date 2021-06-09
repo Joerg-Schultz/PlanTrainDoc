@@ -79,11 +79,28 @@ class PTDRepository @Inject constructor(
         if(parent != null) goalDao.getChildrenByID(parent.id) else goalDao.getTopLevel()
 
     /**
+     * get a list of all children of a goal with associated plans
+     * @param[parent] GoalWithPlan
+     * @return List of child goalWithPlan, empty list if there are none
+     */
+    fun getChildGoalsWithPlan(parent: GoalWithPlan?) : Flow<List<GoalWithPlan>> =
+        if(parent != null) goalDao.getChildrenByIDWithPlan(parent.goal.id) else goalDao.getTopLevelWithPlan()
+
+
+    /**
      * get the parent of a goal
      * @param[goal] the child goal
      * @return Goal parent or null if goal already is top level
      */
     suspend fun getParentGoal(goal: Goal?): Goal? = goal?.parents?.let { goalDao.getByID(it) }
+
+    /**
+     * get the parent of a goalWithPlan
+     * @param[goal] GoalWithPlan the child goal
+     * @return GoalWithPlan parent or null if goal already is top level
+     */
+    suspend fun getParentGoalWithPlan(goalWithPlan: GoalWithPlan?): GoalWithPlan? =
+        goalWithPlan?.goal?.parents?.let { goalDao.getByIDWithPlan(it) }
 
     /**
      * Plan functions
@@ -147,5 +164,6 @@ class PTDRepository @Inject constructor(
      * @return Trial or null if there is no dog with this ID in the DB
      */
     suspend fun getTrialByID(trialID: Uuid) : Trial? = trialDao.getByID(trialID)
+
 
 }

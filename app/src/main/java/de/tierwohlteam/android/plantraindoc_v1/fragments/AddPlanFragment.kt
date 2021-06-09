@@ -62,7 +62,7 @@ class AddPlanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
-        val header = getString(R.string.plan) + " " + goalViewModel.selectedGoal.value?.goal
+        val header = getString(R.string.plan) + " " + goalViewModel.selectedGoal.value?.goal?.goal
         binding.addTrainingHeader.text = header
         setupHelperRadioGroup()
         setupConstraintRadioGroup()
@@ -76,7 +76,7 @@ class AddPlanFragment : Fragment() {
             }
             lifecycleScope.launch {
                 planViewModel.save(
-                    goal = goalViewModel.selectedGoal.value,
+                    goal = goalViewModel.selectedGoal.value?.goal,
                     constraintType = constraintType,
                     constraintValue = constraintValue,
                     helperType = helperType,

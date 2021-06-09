@@ -14,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.AddModifyGoalFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
+import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithPlan
 import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -90,7 +91,8 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
         }
     }
 
-    private fun fillFields(goal: Goal) {
+    private fun fillFields(goalWithPlan: GoalWithPlan) {
+        val goal = goalWithPlan.goal
         binding.tiGoal.setText(goal.goal)
         binding.tiDescription.setText(goal.description)
         when (goal.status) {

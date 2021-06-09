@@ -56,6 +56,10 @@ class PlanViewModel @Inject constructor(
             planConstraint = PlanConstraint(type = type, value = value!!, planID = planID)
             return true
         }
+        if(type == PlanConstraint.open){
+            planConstraint = null
+            return true
+        }
         _insertPlanStatus.postValue(Event(Resource.error("Unknown error for Constraint", null)))
         return false
     }
@@ -79,6 +83,10 @@ class PlanViewModel @Inject constructor(
         }
         if (type != PlanHelper.free) {
             planHelper = PlanHelper(planID = planID, type = type, value = value.toString())
+            return true
+        }
+        if(type == PlanHelper.free){
+            planHelper = null
             return true
         }
         _insertPlanStatus.postValue(Event(Resource.error("Unknown error for Helper", null)))
