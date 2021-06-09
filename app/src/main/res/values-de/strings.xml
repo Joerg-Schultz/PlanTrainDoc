@@ -36,4 +36,5 @@
     <string name="discrimination_hint">Komma separierte Liste</string>
     <string name="percentages">Prozent</string>
     <string name="plan_verb">Planen</string>
+    <string name="criterion">Kriterium</string>
 </resources>
