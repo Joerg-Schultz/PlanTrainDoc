@@ -14,6 +14,8 @@
                 app:destination="@id/addModifyGoalFragment"/>
         <action android:id="@+id/action_goalTreeFragment_to_addPlanFragment"
                 app:destination="@id/addPlanFragment"/>
+        <action android:id="@+id/action_goalTreeFragment_to_showTrainingFragment"
+                app:destination="@id/showTrainingFragment"/>
     </fragment>
 
     <fragment
@@ -21,6 +23,13 @@
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.AddModifyGoalFragment"
             android:label="main_fragment"
             tools:layout="@layout/add_modify_goal_fragment">
+    </fragment>
+
+    <fragment
+            android:id="@+id/showTrainingFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.ShowTrainingFragment"
+            android:label="main_fragment"
+            tools:layout="@layout/show_training_fragment">
     </fragment>
 
     <fragment
