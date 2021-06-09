@@ -19,7 +19,6 @@ import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.adapters.GoalTreeAdapter
 import de.tierwohlteam.android.plantraindoc_v1.databinding.GoaltreeFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
-import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalTreeViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect

@@ -43,7 +43,7 @@ class PlanDaoTest {
     }
 
     @Test
-    fun insertAndGetPlan() {
+    suspend fun insertAndGetPlan() {
         val userID = uuid4()
         val user = User(id = userID, name = "Test User", email = "testuser@mail.de", password = "123", role = "standard")
         repository.insertUser(user)
@@ -58,7 +58,7 @@ class PlanDaoTest {
     }
 
     @Test
-    fun insertAndGetPlanWithRelations() {
+    suspend fun insertAndGetPlanWithRelations() {
         val userID = uuid4()
         val user = User(id = userID, name = "Test User", email = "testuser@mail.de", password = "123", role = "standard")
         repository.insertUser(user)

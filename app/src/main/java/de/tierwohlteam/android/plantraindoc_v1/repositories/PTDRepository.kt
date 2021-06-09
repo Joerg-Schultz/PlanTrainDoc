@@ -95,6 +95,19 @@ class PTDRepository @Inject constructor(
     @WorkerThread
     suspend fun insertPlan(plan: Plan) = planDao.insert(plan)
     /**
+     * Insert a Constraint for a Plan
+     * @param[constraint] a PlanConstraint object
+     */
+    suspend fun insertPlanConstraint(constraint: PlanConstraint) =
+        planDao.insert(constraint)
+    /**
+     * Insert a Helper for a Plan
+     * @param[helper] a PlanHelper object
+     */
+    suspend fun insertPlanHelper(helper: PlanHelper) =
+        planDao.insert(helper)
+
+    /**
      * get a plan from the DB using its id
      * @param[planID] UUID id of the plan
      * @return Plan or null if there is no dog with this ID in the DB

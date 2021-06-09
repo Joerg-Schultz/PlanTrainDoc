@@ -72,6 +72,8 @@ data class PlanConstraint(
         const val time = "time"
         const val repetition = "repetition"
         const val open = ""
+        const val defaultTime = 60
+        const val defaultRepetition = 5
     }
 }
 
@@ -102,9 +104,12 @@ data class PlanHelper(
     ){
     companion object {
         const val duration = "duration"
+        const val defaultDuration = 1.0f
         const val distance = "distance"
+        const val defaultDistance = 3.0f
         const val discrimination = "discrimination"
         const val cueIntroduction = "cue introduction"
+        const val defaultCueIntroduction = 50.0f
         const val free = "free"
     }
 }
