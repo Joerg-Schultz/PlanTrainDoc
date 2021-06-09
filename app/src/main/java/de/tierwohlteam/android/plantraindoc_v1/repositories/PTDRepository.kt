@@ -125,6 +125,21 @@ class PTDRepository @Inject constructor(
         planDao.insert(helper)
 
     /**
+     * Get the Helper for a Plan (currently only one)
+     * @param[plan] Plan object
+     * @return the Helper or null
+     */
+    suspend fun getPlanHelper(plan: Plan): PlanHelper? = planDao.getHelperForPlan(plan.id)
+
+    /**
+     * Get the Constraint for a Plan (currently only one)
+     * @param[plan] Plan object
+     * @return the Constraint or null
+     */
+    suspend fun getPlanConstraint(plan: Plan): PlanConstraint? = planDao.getConstraintForPlan(plan.id)
+
+
+    /**
      * get a plan from the DB using its id
      * @param[planID] UUID id of the plan
      * @return Plan or null if there is no dog with this ID in the DB

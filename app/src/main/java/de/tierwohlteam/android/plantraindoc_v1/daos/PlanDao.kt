@@ -30,4 +30,11 @@ interface PlanDao {
     @Transaction
     @Query("SELECT * from plans where id = :planID")
     suspend fun getByIDWithRelations(planID: Uuid): PlanWithRelations?
+
+    @Transaction
+    @Query("SELECT * from PlanHelpers where planID = :planID")
+    suspend fun getHelperForPlan(planID: Uuid): PlanHelper?
+    @Transaction
+    @Query("SELECT * from PlanConstraints where planID = :planID")
+    suspend fun getConstraintForPlan(planID: Uuid): PlanConstraint?
 }

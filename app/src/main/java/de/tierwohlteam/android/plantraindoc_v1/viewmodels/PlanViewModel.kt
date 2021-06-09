@@ -105,4 +105,7 @@ class PlanViewModel @Inject constructor(
             _insertPlanStatus.postValue(Event(Resource.success(null)))
         }
     }
+
+    suspend fun getHelper(plan: Plan): PlanHelper? = repository.getPlanHelper(plan)
+    suspend fun getConstraint(plan: Plan): PlanConstraint? = repository.getPlanConstraint(plan)
 }
