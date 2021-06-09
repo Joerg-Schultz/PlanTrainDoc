@@ -39,9 +39,9 @@ class GoalTreeAdapter(private val selectGoal: (GoalWithPlan) -> Unit): RecyclerV
             tvDetails.text = goalWithPlan.goal.description
             tvStatus.text = goalWithPlan.goal.status
             if(goalWithPlan.plan != null) {
-                btnAction.text = "Train"
+                btnAction.text = holder.itemView.context.getText(R.string.train)
             } else {
-                btnAction.text = "Add Training"
+                btnAction.text = holder.itemView.context.getText(R.string.plan_verb)
                 btnAction.setOnClickListener {
                     selectGoal(goalWithPlan)
                     it.findNavController().navigate(R.id.action_goalTreeFragment_to_addPlanFragment)

@@ -34,4 +34,5 @@
     <string name="values"/>
     <string name="discrimination_hint">Comma separated list</string>
     <string name="percentages">Percent</string>
+    <string name="plan_verb">Plan</string>
 </resources>
