@@ -38,14 +38,16 @@ class GoalTreeAdapter(private val selectGoal: (GoalWithPlan) -> Unit): RecyclerV
             tvGoal.text = goalWithPlan.goal.goal
             tvDetails.text = goalWithPlan.goal.description
             tvStatus.text = goalWithPlan.goal.status
+            var btnText = holder.itemView.context.getText(R.string.plan_verb)
+            var navTarget = R.id.action_goalTreeFragment_to_addPlanFragment
             if(goalWithPlan.plan != null) {
-                btnAction.text = holder.itemView.context.getText(R.string.train)
-            } else {
-                btnAction.text = holder.itemView.context.getText(R.string.plan_verb)
-                btnAction.setOnClickListener {
-                    selectGoal(goalWithPlan)
-                    it.findNavController().navigate(R.id.action_goalTreeFragment_to_addPlanFragment)
+                btnText = holder.itemView.context.getText(R.string.train)
+                navTarget = R.id.action_goalTreeFragment_to_showTrainingFragment
                 }
+            btnAction.text = btnText
+            btnAction.setOnClickListener {
+                    selectGoal(goalWithPlan)
+                    it.findNavController().navigate(navTarget)
             }
         }
         holder.itemView.setOnClickListener { view ->
