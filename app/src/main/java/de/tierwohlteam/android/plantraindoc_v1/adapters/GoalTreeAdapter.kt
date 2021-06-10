@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.GoalItemBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithPlan
+import de.tierwohlteam.android.plantraindoc_v1.models.Plan
 
-class GoalTreeAdapter(private val selectGoal: (GoalWithPlan) -> Unit): RecyclerView.Adapter<GoalTreeAdapter.GoalViewHolder>()  {
+class GoalTreeAdapter(private val selectGoal: (GoalWithPlan) -> Unit)
+    : RecyclerView.Adapter<GoalTreeAdapter.GoalViewHolder>()  {
 
     // generate a diff list to update only changed items in the RecView
     private val diffCallback = object : DiffUtil.ItemCallback<GoalWithPlan>(){
@@ -38,16 +40,18 @@ class GoalTreeAdapter(private val selectGoal: (GoalWithPlan) -> Unit): RecyclerV
             tvGoal.text = goalWithPlan.goal.goal
             tvDetails.text = goalWithPlan.goal.description
             tvStatus.text = goalWithPlan.goal.status
-            var btnText = holder.itemView.context.getText(R.string.plan_verb)
-            var navTarget = R.id.action_goalTreeFragment_to_addPlanFragment
-            if(goalWithPlan.plan != null) {
-                btnText = holder.itemView.context.getText(R.string.train)
-                navTarget = R.id.action_goalTreeFragment_to_showTrainingFragment
-                }
-            btnAction.text = btnText
-            btnAction.setOnClickListener {
+            if(goalWithPlan.plan == null) {
+                btnAction.tag = holder.itemView.context.getText(R.string.plan_verb)
+                btnAction.setOnClickListener {
                     selectGoal(goalWithPlan)
-                    it.findNavController().navigate(navTarget)
+                    it.findNavController().navigate(R.id.action_goalTreeFragment_to_addPlanFragment)
+                }
+            } else {
+                btnAction.text = holder.itemView.context.getText(R.string.train)
+                btnAction.setOnClickListener {
+                    selectGoal(goalWithPlan)
+                    it.findNavController().navigate(R.id.action_goalTreeFragment_to_showTrainingFragment)
+                }
             }
         }
         holder.itemView.setOnClickListener { view ->

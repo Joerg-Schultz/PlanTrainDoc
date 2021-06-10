@@ -7,6 +7,7 @@ import androidx.room.Transaction
 import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.models.Session
 import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SessionDao {
@@ -20,5 +21,8 @@ interface SessionDao {
     @Transaction
     @Query("SELECT * from sessions where id = :sessionID")
     suspend fun getByIDWithRelations(sessionID: Uuid): SessionWithRelations?
+
+    @Query("SELECT * from sessions where planID = :planID")
+    fun getByPlanID(planID: Uuid?): Flow<List<Session>>
 
 }

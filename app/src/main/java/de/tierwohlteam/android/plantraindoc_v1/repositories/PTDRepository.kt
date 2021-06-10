@@ -164,6 +164,13 @@ class PTDRepository @Inject constructor(
     suspend fun getSessionByID(sessionID: Uuid) : Session? = sessionDao.getByID(sessionID)
 
     /**
+     * get all session associated with a plan
+     * @param[plan] Plan object
+     * @return a flow of the sessions
+     */
+    suspend fun getSessionsFromPlan(plan: Plan?) : Flow<List<Session>> =
+        sessionDao.getByPlanID(plan?.id)
+    /**
      * Trial functions
      *
      *  Insert a Trial into the database

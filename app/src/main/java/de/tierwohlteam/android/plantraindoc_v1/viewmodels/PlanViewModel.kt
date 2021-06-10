@@ -1,28 +1,23 @@
 package de.tierwohlteam.android.plantraindoc_v1.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.lifecycle.HiltViewModel
-import de.tierwohlteam.android.plantraindoc_v1.models.Goal
-import de.tierwohlteam.android.plantraindoc_v1.models.Plan
-import de.tierwohlteam.android.plantraindoc_v1.models.PlanConstraint
-import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
+import de.tierwohlteam.android.plantraindoc_v1.models.*
 import de.tierwohlteam.android.plantraindoc_v1.others.Event
 import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class PlanViewModel @Inject constructor(
     private val repository: PTDRepository,
-    private val userID: Uuid,
 ) : ViewModel() {
     private var planHelper: PlanHelper? = null
     private var planConstraint: PlanConstraint? = null
