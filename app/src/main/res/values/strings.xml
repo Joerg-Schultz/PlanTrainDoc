@@ -37,4 +37,5 @@
     <string name="plan_verb">Plan</string>
     <string name="criterion">Criterion</string>
     <string name="result">Result</string>
+    <string name="no_helper">free</string>
 </resources>

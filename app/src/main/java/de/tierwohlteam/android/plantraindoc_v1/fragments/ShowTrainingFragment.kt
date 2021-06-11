@@ -79,11 +79,8 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
             planHelperJob.join()
             planConstraintJob.join()
             // TODO overwrite PlanHelper / PlanConstraint toString method
-            binding.tvPlanHelper.text = planConstraint?.let {translateAndFormatConstraint(it) }
-            binding.tvPlanConstraint.text =
-                StringBuilder()
-                    .append(planConstraint?.type ?: "")
-                    .append(planConstraint?.value ?: "")
+            binding.tvPlanConstraint.text = planConstraint?.let {translateAndFormatConstraint(it) }
+            binding.tvPlanHelper.text = planHelper?.let { translateAndFormatHelper(it) }
         }
 
     }
@@ -93,6 +90,17 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
             PlanConstraint.time -> "${constraint.value} ${getString(R.string.seconds)}"
             PlanConstraint.repetition -> "${constraint.value} ${getString(R.string.repetition)}"
             PlanConstraint.open -> getString(R.string.no_constraint)
+            else -> ""
+        }
+    }
+
+    private fun translateAndFormatHelper(helper: PlanHelper) : String{
+        return when (helper.type){
+            PlanHelper.duration -> "${getString(R.string.duration)} ${helper.value} ${getString(R.string.seconds)}"
+            PlanHelper.distance -> "${getString(R.string.distance)} ${helper.value}"
+            PlanHelper.cueIntroduction -> "${getString(R.string.cue_introduction)} ${helper.value} %"
+            PlanHelper.discrimination -> "${getString(R.string.discrimination)} ${helper.value}"
+            PlanHelper.free -> getString(R.string.no_helper)
             else -> ""
         }
     }
