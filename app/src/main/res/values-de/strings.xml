@@ -39,4 +39,6 @@
     <string name="criterion">Kriterium</string>
     <string name="result">Ergebnis</string>
     <string name="no_helper">Keine Vorgabe</string>
+    <string name="click">Click</string>
+    <string name="reset">Neustart</string>
 </resources>

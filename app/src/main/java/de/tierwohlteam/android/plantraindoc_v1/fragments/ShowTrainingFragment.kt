@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
@@ -55,7 +56,9 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
                 sessionListAdapter.submitList(it)
             }
         }
-
+        binding.btnTrain.setOnClickListener {
+            findNavController().navigate(R.id.action_showTrainingFragment_to_trainingFragment)
+        }
     }
 
     private fun setupRecyclerView() {

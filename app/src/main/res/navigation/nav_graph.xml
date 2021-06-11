@@ -30,6 +30,8 @@
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.ShowTrainingFragment"
             android:label="main_fragment"
             tools:layout="@layout/show_training_fragment">
+        <action android:id="@+id/action_showTrainingFragment_to_trainingFragment"
+                app:destination="@id/trainingFragment"/>
     </fragment>
 
     <fragment
@@ -37,5 +39,12 @@
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.AddPlanFragment"
             android:label="main_fragment"
             tools:layout="@layout/add_plan_fragment">
+    </fragment>
+
+    <fragment
+            android:id="@+id/trainingFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.TrainingFragment"
+            android:label="main_fragment"
+            tools:layout="@layout/training_fragment">
     </fragment>
 </navigation>

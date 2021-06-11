@@ -38,4 +38,6 @@
     <string name="criterion">Criterion</string>
     <string name="result">Result</string>
     <string name="no_helper">free</string>
+    <string name="click">Click</string>
+    <string name="reset">Reset</string>
 </resources>
