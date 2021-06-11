@@ -5,24 +5,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import de.tierwohlteam.android.plantraindoc_v1.databinding.GoalItemBinding
 import de.tierwohlteam.android.plantraindoc_v1.databinding.SessionItemBinding
-import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithPlan
-import de.tierwohlteam.android.plantraindoc_v1.models.Session
+import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
 
 class SessionListAdapter : RecyclerView.Adapter<SessionListAdapter.SessionViewHolder>()  {
 
     // generate a diff list to update only changed items in the RecView
-    private val diffCallback = object : DiffUtil.ItemCallback<Session>(){
-        override fun areItemsTheSame(oldItem: Session, newItem: Session): Boolean {
-            return oldItem.id == newItem.id
+    private val diffCallback = object : DiffUtil.ItemCallback<SessionWithRelations>(){
+        override fun areItemsTheSame(oldItem: SessionWithRelations, newItem: SessionWithRelations): Boolean {
+            return oldItem.session.id == newItem.session.id
         }
-        override fun areContentsTheSame(oldItem: Session, newItem: Session): Boolean {
+        override fun areContentsTheSame(oldItem: SessionWithRelations, newItem: SessionWithRelations): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
     private val differ = AsyncListDiffer(this, diffCallback)
-    fun submitList(list: List<Session>) = differ.submitList(list)
+    fun submitList(list: List<SessionWithRelations>) = differ.submitList(list)
 
     inner class SessionViewHolder(val binding: SessionItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -36,7 +34,7 @@ class SessionListAdapter : RecyclerView.Adapter<SessionListAdapter.SessionViewHo
     }
 
     override fun onBindViewHolder(holder: SessionListAdapter.SessionViewHolder, position: Int) {
-        val session = differ.currentList[position]
+        val session = differ.currentList[position].session
     }
 
 }

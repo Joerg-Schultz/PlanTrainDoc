@@ -51,7 +51,7 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
         setupConstraintAndHelperInfo()
         setupRecyclerView()
         lifecycleScope.launchWhenStarted {
-            trainingViewModel.sessionList(goalViewModel.selectedGoal).collect {
+            trainingViewModel.sessionWithRelationsList(goalViewModel.selectedGoal).collect {
                 sessionListAdapter.submitList(it)
             }
         }
@@ -79,15 +79,21 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
             planHelperJob.join()
             planConstraintJob.join()
             // TODO overwrite PlanHelper / PlanConstraint toString method
-            binding.tvPlanHelper.text =
-                StringBuilder()
-                    .append(planHelper?.type ?: "")
-                    .append(planHelper?.value ?: "")
+            binding.tvPlanHelper.text = planConstraint?.let {translateAndFormatConstraint(it) }
             binding.tvPlanConstraint.text =
                 StringBuilder()
                     .append(planConstraint?.type ?: "")
                     .append(planConstraint?.value ?: "")
         }
 
+    }
+
+    private fun translateAndFormatConstraint(constraint: PlanConstraint) : String {
+        return when (constraint.type) {
+            PlanConstraint.time -> "${constraint.value} ${getString(R.string.seconds)}"
+            PlanConstraint.repetition -> "${constraint.value} ${getString(R.string.repetition)}"
+            PlanConstraint.open -> getString(R.string.no_constraint)
+            else -> ""
+        }
     }
 }

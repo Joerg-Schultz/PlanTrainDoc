@@ -25,4 +25,7 @@ interface SessionDao {
     @Query("SELECT * from sessions where planID = :planID")
     fun getByPlanID(planID: Uuid?): Flow<List<Session>>
 
+    @Query("SELECT * from sessions where planID = :planID")
+    fun getByPlanIDWithRelations(planID: Uuid?) : Flow<List<SessionWithRelations>>
+
 }

@@ -168,8 +168,17 @@ class PTDRepository @Inject constructor(
      * @param[plan] Plan object
      * @return a flow of the sessions
      */
-    suspend fun getSessionsFromPlan(plan: Plan?) : Flow<List<Session>> =
+    fun getSessionsFromPlan(plan: Plan?) : Flow<List<Session>> =
         sessionDao.getByPlanID(plan?.id)
+
+    /**
+     * get all sessions with Relations associated with a plan
+     * @param[plan] Plan object
+     * @return a flow of SessionWithRelation
+     */
+    fun getSessionsWithRelationFromPlan(plan: Plan?): Flow<List<SessionWithRelations>> =
+       sessionDao.getByPlanIDWithRelations(plan?.id)
+
     /**
      * Trial functions
      *
