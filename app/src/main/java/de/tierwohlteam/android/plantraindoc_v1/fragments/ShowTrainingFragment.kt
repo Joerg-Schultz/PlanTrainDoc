@@ -58,6 +58,9 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
             }
         }
         binding.btnTrain.setOnClickListener {
+            lifecycleScope.launchWhenStarted {
+                trainingViewModel.newSession()
+            }
             findNavController().navigate(R.id.action_showTrainingFragment_to_trainingFragment)
         }
     }

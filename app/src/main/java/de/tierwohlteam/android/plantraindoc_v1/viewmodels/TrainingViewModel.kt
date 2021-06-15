@@ -16,11 +16,14 @@ class TrainingViewModel @Inject constructor(
     private val repository: PTDRepository,
 )  : ViewModel() {
 
+    private lateinit var session: Session
+
     private val selectedPlan: MutableStateFlow<Plan?> = MutableStateFlow(value = null)
     // TODO use _selectedPlan
     fun setSelectedPlan(plan: Plan){
         selectedPlan.value = plan
     }
+
 
     val sessionWithRelationsList:  StateFlow<List<SessionWithRelations>> = selectedPlan.flatMapLatest {
         repository.getSessionsWithRelationFromPlan(it)
@@ -37,4 +40,17 @@ class TrainingViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = null
     )
+
+    fun addTrial(success: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    suspend fun newSession() {
+        if (selectedPlan.value == null) {
+            //TODO Display message here
+        } else {
+            session = Session(planID = selectedPlan.value!!.id)
+            repository.insertSession(session)
+        }
+    }
 }
