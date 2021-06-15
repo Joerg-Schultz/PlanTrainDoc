@@ -63,8 +63,10 @@ class TrainingViewModel @Inject constructor(
         val constraint = selectedPlanWithRelations.value?.constraint!!
         //check for repetitions
         if(constraint.type == PlanConstraint.repetition){
-            if(totalTrials >= constraint.value)
+            if(totalTrials >= constraint.value) {
+                totalTrials = 0
                 return true
+            }
         }
         return false
     }

@@ -66,6 +66,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         binding.buttonReset.setOnClickListener {
             lifecycleScope.launchWhenStarted {
                 trainingViewModel.addTrial(false)
+                if(trainingViewModel.constraintsDone()) view.findNavController().popBackStack()
             }
         }
     }
