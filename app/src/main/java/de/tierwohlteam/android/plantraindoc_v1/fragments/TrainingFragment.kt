@@ -1,5 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
+import android.media.SoundPool
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,9 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
     private var _binding: TrainingFragmentBinding? = null
     private val binding get() = _binding!!
 
+    private var soundPool: SoundPool? = null
+    private var soundId = 1
+
     // I need the plan with Relations here
     // I generate a new session object in on create view
     // I add trials
@@ -32,6 +36,11 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = TrainingFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
+        soundPool = SoundPool.Builder()
+            .setMaxStreams(1)
+            .build()
+        //soundPool = SoundPool(6, AudioManager.STREAM_MUSIC, 0)
+        soundId = soundPool!!.load(activity, R.raw.click_test, 10)
         return view
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,6 +49,9 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             trainingViewModel.selectedPlanWithRelations.collect {
                 planWithRelations = it
             }
+        }
+        binding.buttonClick.setOnClickListener {
+            soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
         }
     }
 }
