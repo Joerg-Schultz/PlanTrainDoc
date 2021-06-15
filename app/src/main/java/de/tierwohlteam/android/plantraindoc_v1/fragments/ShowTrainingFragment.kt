@@ -54,7 +54,7 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
         plan?.let { trainingViewModel.setSelectedPlan(it) }
         lifecycleScope.launchWhenStarted {
             trainingViewModel.sessionWithRelationsList.collect {
-                sessionListAdapter.submitList(it)
+                sessionListAdapter.submitList(it.reversed())
             }
         }
         binding.btnTrain.setOnClickListener {

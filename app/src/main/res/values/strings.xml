@@ -40,4 +40,5 @@
     <string name="no_helper">free</string>
     <string name="click">Click</string>
     <string name="reset">Reset</string>
+    <string name="success">Success</string>
 </resources>
