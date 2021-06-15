@@ -9,6 +9,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.Plan
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanConstraint
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanWithRelations
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PlanDao {
@@ -37,4 +38,8 @@ interface PlanDao {
     @Transaction
     @Query("SELECT * from PlanConstraints where planID = :planID")
     suspend fun getConstraintForPlan(planID: Uuid): PlanConstraint?
+
+    @Transaction
+    @Query("SELECT * from plans where id = :planID")
+    fun getPlanWithRelationsFromPlan(planID: Uuid): Flow<PlanWithRelations?>
 }

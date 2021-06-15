@@ -6,6 +6,7 @@ import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.daos.*
 import de.tierwohlteam.android.plantraindoc_v1.models.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 /**
@@ -146,6 +147,13 @@ class PTDRepository @Inject constructor(
      */
     suspend fun getPlanByID(planID: Uuid) : Plan? = planDao.getByID(planID)
 
+    /**
+     * get a plan from the DB using its id
+     * @param[planID] UUID id of the plan
+     * @return Plan or null if there is no dog with this ID in the DB
+     */
+    fun getPlanWithRelationsFromPlan(plan: Plan?) : Flow<PlanWithRelations?> =
+        if (plan == null) flowOf(null) else planDao.getPlanWithRelationsFromPlan(planID = plan.id)
 
     /**
      * Session functions
