@@ -52,11 +52,15 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         }
         binding.buttonClick.setOnClickListener {
             soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
-            trainingViewModel.addTrial(true)
+            lifecycleScope.launchWhenStarted {
+                trainingViewModel.addTrial(true)
+            }
         }
 
-        binding.buttonClick.setOnClickListener {
-            trainingViewModel.addTrial(false)
+        binding.buttonReset.setOnClickListener {
+            lifecycleScope.launchWhenStarted {
+                trainingViewModel.addTrial(false)
+            }
         }
     }
 }

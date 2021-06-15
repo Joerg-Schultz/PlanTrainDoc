@@ -41,8 +41,9 @@ class TrainingViewModel @Inject constructor(
         initialValue = null
     )
 
-    fun addTrial(success: Boolean) {
-        TODO("Not yet implemented")
+    suspend fun addTrial(success: Boolean) {
+        val trial = Trial(sessionID = session.id, success = success)
+        repository.insertTrial(trial)
     }
 
     suspend fun newSession() {
