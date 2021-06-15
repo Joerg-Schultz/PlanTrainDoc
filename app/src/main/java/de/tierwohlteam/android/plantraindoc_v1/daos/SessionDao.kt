@@ -20,7 +20,7 @@ interface SessionDao {
 
     @Transaction
     @Query("SELECT * from sessions where id = :sessionID")
-    suspend fun getByIDWithRelations(sessionID: Uuid): SessionWithRelations?
+    fun getByIDWithRelations(sessionID: Uuid): Flow<SessionWithRelations?>
 
     @Query("SELECT * from sessions where planID = :planID")
     fun getByPlanID(planID: Uuid?): Flow<List<Session>>

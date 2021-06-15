@@ -18,6 +18,7 @@ class TrainingViewModel @Inject constructor(
 )  : ViewModel() {
 
     private lateinit var session: Session
+    private var totalTrials = 0
 
     private val selectedPlan: MutableStateFlow<Plan?> = MutableStateFlow(value = null)
     // TODO use _selectedPlan
@@ -45,6 +46,7 @@ class TrainingViewModel @Inject constructor(
     suspend fun addTrial(success: Boolean) {
         val trial = Trial(sessionID = session.id, success = success)
         repository.insertTrial(trial)
+        totalTrials++
     }
 
     suspend fun newSession(criterion: String) {
@@ -54,5 +56,16 @@ class TrainingViewModel @Inject constructor(
             session = Session(planID = selectedPlan.value!!.id, criterion = criterion)
             repository.insertSession(session)
         }
+    }
+
+    fun constraintsDone(): Boolean {
+        if(selectedPlanWithRelations.value?.constraint == null) return false
+        val constraint = selectedPlanWithRelations.value?.constraint!!
+        //check for repetitions
+        if(constraint.type == PlanConstraint.repetition){
+            if(totalTrials >= constraint.value)
+                return true
+        }
+        return false
     }
 }

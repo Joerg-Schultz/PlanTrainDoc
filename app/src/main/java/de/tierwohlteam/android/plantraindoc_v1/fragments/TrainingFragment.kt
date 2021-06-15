@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
+import de.tierwohlteam.android.plantraindoc_v1.models.PlanConstraint
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanWithRelations
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
@@ -43,6 +45,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         soundId = soundPool!!.load(activity, R.raw.click_test, 10)
         return view
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launchWhenStarted {
@@ -50,10 +53,13 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 planWithRelations = it
             }
         }
+
         binding.buttonClick.setOnClickListener {
             soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
             lifecycleScope.launchWhenStarted {
                 trainingViewModel.addTrial(true)
+                if(trainingViewModel.constraintsDone()) view.findNavController().popBackStack()
+
             }
         }
 
