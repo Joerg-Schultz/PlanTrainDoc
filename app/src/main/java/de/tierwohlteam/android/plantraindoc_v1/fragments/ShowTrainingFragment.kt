@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 @AndroidEntryPoint
 class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
     private val goalViewModel: GoalViewModel by activityViewModels()
@@ -43,7 +44,6 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
         return view
     }
 
-    @OptIn(InternalCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         goal = goalViewModel.selectedGoal.value?.goal
@@ -58,8 +58,9 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
             }
         }
         binding.btnTrain.setOnClickListener {
+            val criterion: String = binding.tiCriterion.text.toString()
             lifecycleScope.launchWhenStarted {
-                trainingViewModel.newSession()
+                trainingViewModel.newSession(criterion)
             }
             findNavController().navigate(R.id.action_showTrainingFragment_to_trainingFragment)
         }
@@ -89,7 +90,6 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
             binding.tvPlanConstraint.text = planConstraint?.let {translateAndFormatConstraint(it) }
             binding.tvPlanHelper.text = planHelper?.let { translateAndFormatHelper(it) }
         }
-
     }
 
     private fun translateAndFormatConstraint(constraint: PlanConstraint) : String {

@@ -2,6 +2,7 @@ package de.tierwohlteam.android.plantraindoc_v1.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.material.textfield.TextInputEditText
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.*
@@ -46,11 +47,11 @@ class TrainingViewModel @Inject constructor(
         repository.insertTrial(trial)
     }
 
-    suspend fun newSession() {
+    suspend fun newSession(criterion: String) {
         if (selectedPlan.value == null) {
             //TODO Display message here
         } else {
-            session = Session(planID = selectedPlan.value!!.id)
+            session = Session(planID = selectedPlan.value!!.id, criterion = criterion)
             repository.insertSession(session)
         }
     }
