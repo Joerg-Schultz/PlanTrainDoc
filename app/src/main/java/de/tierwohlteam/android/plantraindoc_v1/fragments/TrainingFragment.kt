@@ -69,5 +69,10 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 if(trainingViewModel.constraintsDone()) view.findNavController().popBackStack()
             }
         }
+        lifecycleScope.launchWhenStarted {
+            trainingViewModel.totalTrials.collect {
+                binding.tvConstraintCounter.text = it.toString()
+            }
+        }
     }
 }
