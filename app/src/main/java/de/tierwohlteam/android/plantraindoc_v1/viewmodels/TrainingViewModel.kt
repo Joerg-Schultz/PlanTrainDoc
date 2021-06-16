@@ -1,10 +1,8 @@
 package de.tierwohlteam.android.plantraindoc_v1.viewmodels
 
 import android.os.CountDownTimer
-import android.widget.MultiAutoCompleteTextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.textfield.TextInputEditText
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.*
@@ -21,12 +19,14 @@ class TrainingViewModel @Inject constructor(
 )  : ViewModel() {
 
     private lateinit var session: Session
+    private lateinit var constraintTimer: CountDownTimer
+
+    // TODO use non Mutables for interaction with outside world
     var totalTrials : MutableStateFlow<Int> = MutableStateFlow(value = 0)
     var countDown : MutableStateFlow<Int?> = MutableStateFlow(value = null)
 
     private val selectedPlan: MutableStateFlow<Plan?> = MutableStateFlow(value = null)
     private val selectedPlanConstraint: MutableStateFlow<PlanConstraint?> = MutableStateFlow(value = null)
-    // TODO use _selectedPlan
     fun setSelectedPlan(plan: Plan){
         selectedPlan.value = plan
         viewModelScope.launch {
@@ -65,15 +65,18 @@ class TrainingViewModel @Inject constructor(
     fun sessionTimer() {
         if (selectedPlanConstraint.value != null && selectedPlanConstraint.value!!.type == PlanConstraint.time) {
             countDown.value = selectedPlanConstraint.value!!.value
-            val timer = object : CountDownTimer(countDown.value!!.toLong() * 1000, 1000) {
+            constraintTimer = object : CountDownTimer(countDown.value!!.toLong() * 1000, 1000) {
                 override fun onTick(p0: Long) {
                     countDown.value = countDown.value!! - 1
                 }
-
                 override fun onFinish() {
                 }
             }
-            timer.start()
+            constraintTimer.start()
         }
+    }
+    //enable cancel of timer from fragment
+    fun cleanup(){
+        if(::constraintTimer.isInitialized) constraintTimer.cancel()
     }
 }

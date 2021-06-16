@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -34,9 +35,16 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         soundPool = SoundPool.Builder()
             .setMaxStreams(1)
             .build()
-        //soundPool = SoundPool(6, AudioManager.STREAM_MUSIC, 0)
         soundId = soundPool!!.load(activity, R.raw.click_test, 10)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            stopTraining(view)
+        }
         return view
+    }
+
+    private fun stopTraining(view: View) {
+        trainingViewModel.cleanup()
+        view.findNavController().popBackStack()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,24 +62,34 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 trainingViewModel.addTrial(false)
             }
         }
-        //Show sum of trials
+
+        //Result text field
         lifecycleScope.launchWhenStarted {
             trainingViewModel.totalTrials.collect {
+                val text = it.toString()
+                binding.resultTextview.text = text
+            }
+        }
+
+        //start timer if constraint is time
+        trainingViewModel.sessionTimer()
+        //Constraint text field
+        lifecycleScope.launchWhenStarted {
+            trainingViewModel.countDown.collect {
                 val text = it.toString()
                 binding.tvConstraintCounter.text = text
             }
         }
-        trainingViewModel.sessionTimer()
-        //Show countdown
-        lifecycleScope.launchWhenStarted {
-            trainingViewModel.countDown.collect {
-                binding.tvHelperInfo.text = it?.toString()
-            }
-        }
+
+        //Helper text field
+        binding.tvHelperInfo.text = "To be done"
+
         //stop when countdown is 0
         lifecycleScope.launchWhenStarted {
             trainingViewModel.countDown.collect {
-                if (it != null && it <= 0) view.findNavController().popBackStack()
+                if (it != null && it <= 0) {
+                    stopTraining(view)
+                }
             }
         }
     }
