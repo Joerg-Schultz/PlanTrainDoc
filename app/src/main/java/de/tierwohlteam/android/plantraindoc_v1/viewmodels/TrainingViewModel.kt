@@ -24,6 +24,7 @@ class TrainingViewModel @Inject constructor(
     // TODO use non Mutables for interaction with outside world
     var totalTrials : MutableStateFlow<Int> = MutableStateFlow(value = 0)
     var countDown : MutableStateFlow<Int?> = MutableStateFlow(value = null)
+    var clickResetCounter: MutableStateFlow<Pair<Int,Int>> = MutableStateFlow(value = Pair(0,0))
 
     private val selectedPlan: MutableStateFlow<Plan?> = MutableStateFlow(value = null)
     private val selectedPlanConstraint: MutableStateFlow<PlanConstraint?> = MutableStateFlow(value = null)
@@ -49,6 +50,8 @@ class TrainingViewModel @Inject constructor(
         val trial = Trial(sessionID = session.id, success = success)
         repository.insertTrial(trial)
         totalTrials.value++
+        var (click, reset) = clickResetCounter.value
+        clickResetCounter.value = if(success) Pair(++click, reset) else Pair(click, ++reset)
         if(countDown.value != null) countDown.value = countDown.value!! - 1
     }
 
@@ -77,6 +80,7 @@ class TrainingViewModel @Inject constructor(
     }
     //enable cancel of timer from fragment
     fun cleanup(){
+        totalTrials.value = 0
         if(::constraintTimer.isInitialized) constraintTimer.cancel()
     }
 }

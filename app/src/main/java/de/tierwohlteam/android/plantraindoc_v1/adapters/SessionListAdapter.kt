@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.SessionItemBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
+import de.tierwohlteam.android.plantraindoc_v1.others.percentage
 import kotlin.math.roundToInt
 
 class SessionListAdapter : RecyclerView.Adapter<SessionListAdapter.SessionViewHolder>()  {
@@ -50,9 +51,4 @@ class SessionListAdapter : RecyclerView.Adapter<SessionListAdapter.SessionViewHo
             resultImageview.setImageResource(image)
         }
     }
-    private fun percentage(a: Int, b:Int) : Int{
-        return if((a+b) == 0) 0 else
-            ((a.toFloat() / (a + b)) * 100).roundToInt()
-    }
-
 }

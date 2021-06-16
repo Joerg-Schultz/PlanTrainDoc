@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
+import de.tierwohlteam.android.plantraindoc_v1.others.percentage
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -65,8 +66,9 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
         //Result text field
         lifecycleScope.launchWhenStarted {
-            trainingViewModel.totalTrials.collect {
-                val text = it.toString()
+            trainingViewModel.clickResetCounter.collect {
+                val (click, reset) = it
+                val text = "$click / $reset (${percentage(click,reset)} % ${getString(R.string.click)})"
                 binding.resultTextview.text = text
             }
         }
