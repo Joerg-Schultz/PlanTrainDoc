@@ -12,9 +12,6 @@ import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
-import de.tierwohlteam.android.plantraindoc_v1.models.PlanConstraint
-import de.tierwohlteam.android.plantraindoc_v1.models.PlanWithRelations
-import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect

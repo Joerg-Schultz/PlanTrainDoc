@@ -59,12 +59,4 @@ class TrainingViewModel @Inject constructor(
             repository.insertSession(session)
         }
     }
-
-    fun constraintsDone(): Boolean {
-        return when(countDown.value){
-            null -> false
-            0 -> true
-            else -> false
-        }
-    }
 }
