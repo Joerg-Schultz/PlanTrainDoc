@@ -24,16 +24,12 @@ import kotlinx.coroutines.flow.collect
 class TrainingFragment : Fragment(R.layout.training_fragment) {
     private val trainingViewModel: TrainingViewModel by activityViewModels()
 
-    private var planWithRelations: PlanWithRelations? = null
     private var _binding: TrainingFragmentBinding? = null
     private val binding get() = _binding!!
 
     private var soundPool: SoundPool? = null
     private var soundId = 1
 
-    // I need the plan with Relations here
-    // I generate a new session object in on create view
-    // I add trials
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = TrainingFragmentBinding.inflate(inflater, container, false)
@@ -48,11 +44,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launchWhenStarted {
-            trainingViewModel.selectedPlanWithRelations.collect {
-                planWithRelations = it
-            }
-        }
+
 
         binding.buttonClick.setOnClickListener {
             soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
@@ -71,7 +63,13 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         }
         lifecycleScope.launchWhenStarted {
             trainingViewModel.totalTrials.collect {
-                binding.tvConstraintCounter.text = it.toString()
+                val text = it.toString()
+                binding.tvConstraintCounter.text = text
+            }
+        }
+        lifecycleScope.launchWhenStarted {
+            trainingViewModel.countDown.collect {
+                binding.tvHelperInfo.text = trainingViewModel.countDown.value.toString()
             }
         }
     }
