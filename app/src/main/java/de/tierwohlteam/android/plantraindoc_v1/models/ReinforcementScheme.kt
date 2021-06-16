@@ -8,7 +8,7 @@ class ReinforcementScheme() {
         }
 
         fun getStep(): Float {
-            if(pos > steps.size) pos = 0
+            if(pos >= steps.size) pos = 0
             return steps[pos++]
         }
     }

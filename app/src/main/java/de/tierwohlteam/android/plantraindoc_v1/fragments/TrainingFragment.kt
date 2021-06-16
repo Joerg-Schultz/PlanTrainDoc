@@ -84,7 +84,11 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         }
 
         //Helper text field
-        binding.tvHelperInfo.text = "To be done"
+        lifecycleScope.launchWhenStarted {
+            trainingViewModel.helperNextValue.collect {
+                binding.tvHelperInfo.text = it
+            }
+        }
 
         //stop when countdown is 0
         lifecycleScope.launchWhenStarted {
