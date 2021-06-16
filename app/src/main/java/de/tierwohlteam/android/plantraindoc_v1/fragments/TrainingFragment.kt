@@ -44,32 +44,36 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        //Click
         binding.buttonClick.setOnClickListener {
             soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
             lifecycleScope.launchWhenStarted {
                 trainingViewModel.addTrial(true)
-                if(trainingViewModel.constraintsDone()) view.findNavController().popBackStack()
-
             }
         }
-
+        //Reset
         binding.buttonReset.setOnClickListener {
             lifecycleScope.launchWhenStarted {
                 trainingViewModel.addTrial(false)
-                if(trainingViewModel.constraintsDone()) view.findNavController().popBackStack()
             }
         }
+        //Show sum of trials
         lifecycleScope.launchWhenStarted {
             trainingViewModel.totalTrials.collect {
                 val text = it.toString()
                 binding.tvConstraintCounter.text = text
             }
         }
+        //Show countdown
         lifecycleScope.launchWhenStarted {
             trainingViewModel.countDown.collect {
-                binding.tvHelperInfo.text = trainingViewModel.countDown.value.toString()
+                binding.tvHelperInfo.text = it?.toString()
+            }
+        }
+        //stop when countdown is 0
+        lifecycleScope.launchWhenStarted {
+            trainingViewModel.countDown.collect {
+                if (it != null && it <= 0) view.findNavController().popBackStack()
             }
         }
     }
