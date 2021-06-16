@@ -1,5 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.viewmodels
 
+import android.os.CountDownTimer
 import android.widget.MultiAutoCompleteTextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -57,6 +58,22 @@ class TrainingViewModel @Inject constructor(
         } else {
             session = Session(planID = selectedPlan.value!!.id, criterion = criterion)
             repository.insertSession(session)
+        }
+    }
+
+    //start constraint timer
+    fun sessionTimer() {
+        if (selectedPlanConstraint.value != null && selectedPlanConstraint.value!!.type == PlanConstraint.time) {
+            countDown.value = selectedPlanConstraint.value!!.value
+            val timer = object : CountDownTimer(countDown.value!!.toLong() * 1000, 1000) {
+                override fun onTick(p0: Long) {
+                    countDown.value = countDown.value!! - 1
+                }
+
+                override fun onFinish() {
+                }
+            }
+            timer.start()
         }
     }
 }

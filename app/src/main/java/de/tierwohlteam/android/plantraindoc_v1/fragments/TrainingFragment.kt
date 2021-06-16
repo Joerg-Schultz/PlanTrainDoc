@@ -61,6 +61,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 binding.tvConstraintCounter.text = text
             }
         }
+        trainingViewModel.sessionTimer()
         //Show countdown
         lifecycleScope.launchWhenStarted {
             trainingViewModel.countDown.collect {
