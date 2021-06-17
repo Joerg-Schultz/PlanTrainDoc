@@ -58,8 +58,8 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         lifecycleScope.launchWhenStarted {
             trainingViewModel.sessionType.collect {
                 when (it) {
-                    PlanHelper.distance -> UIDistanceHelper()
-                    PlanHelper.duration -> UIDurationHelper()
+                    PlanHelper.distance, PlanHelper.discrimination  -> UISingleValueHelper()
+                    PlanHelper.duration -> UITimerHelper()
                     else -> UINoHelper()
                 }.makeBindings()
             }
@@ -93,7 +93,14 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             }
         }
     }
+/*
+ * Generate the helpers here
+ * Use inheritance if possible
+ */
 
+    /*
+     * No helper
+     */
     open inner class UINoHelper() {
         fun makeBindings() {
             makeButtonClick()
@@ -126,7 +133,11 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         }
     }
 
-    open inner class UIDistanceHelper() : UINoHelper() {
+    /*
+     * Helper for a single value like Distance or Discrimination
+     * shows a single count in the helper information text view
+     */
+    open inner class UISingleValueHelper() : UINoHelper() {
         override fun makeHelper() {
             lifecycleScope.launchWhenStarted {
                 trainingViewModel.helperNextValue.collect {
@@ -136,7 +147,12 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         }
     }
 
-    open inner class UIDurationHelper() : UINoHelper(){
+    /*
+     * Helper Timer
+     * Start a timer with the click button
+     * When timer is running, use Click button as standard
+     */
+    open inner class UITimerHelper() : UINoHelper(){
         lateinit var timer: CountDownTimer
         var timerIsRunning : Boolean = false
 
@@ -172,7 +188,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 if(timerIsRunning){
                     timer.cancel()
                     binding.buttonClick.setBackgroundColor(resources.getColor(R.color.primaryColor))
-                    binding.buttonClick.text = "Start Timer"
+                    binding.buttonClick.text = getString(R.string.startTimer)
                     timerIsRunning = false
                 }
             }
@@ -198,3 +214,4 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         }
     }
 }
+

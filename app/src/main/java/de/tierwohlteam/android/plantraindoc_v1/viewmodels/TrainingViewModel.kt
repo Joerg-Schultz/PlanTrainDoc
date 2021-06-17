@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
+import kotlin.random.Random
 
 @ExperimentalCoroutinesApi
 @HiltViewModel
@@ -67,6 +68,11 @@ class TrainingViewModel @Inject constructor(
             }
             PlanHelper.duration -> {
                 { durationScheme.getStep(value.toFloat()).toString() }
+            }
+            PlanHelper.discrimination -> {
+                {val criteria = value.split(",")
+                val position = Random.nextInt(0,criteria.size )
+                criteria[position]}
             }
             else -> null
         }
