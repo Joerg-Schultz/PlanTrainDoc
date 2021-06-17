@@ -2,6 +2,8 @@ package de.tierwohlteam.android.plantraindoc_v1.fragments
 
 import android.media.SoundPool
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +57,11 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         // Select the right interface
         lifecycleScope.launchWhenStarted {
             trainingViewModel.sessionType.collect {
-                createClickResetHelperText(it)
+                when (it) {
+                    PlanHelper.distance -> UIDistanceHelper()
+                    PlanHelper.duration -> UIDurationHelper()
+                    else -> UINoHelper()
+                }.makeBindings()
             }
         }
 
@@ -86,15 +92,6 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 }
             }
         }
-    }
-
-    private fun createClickResetHelperText(sessionType: String?) {
-        val ui = when (sessionType) {
-            PlanHelper.distance -> UIDistanceHelper()
-            PlanHelper.duration -> UIDistanceHelper()
-            else -> UINoHelper()
-        }
-        ui.makeBindings()
     }
 
     open inner class UINoHelper() {
@@ -134,6 +131,68 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             lifecycleScope.launchWhenStarted {
                 trainingViewModel.helperNextValue.collect {
                     binding.tvHelperInfo.text = it
+                }
+            }
+        }
+    }
+
+    open inner class UIDurationHelper() : UINoHelper(){
+        lateinit var timer: CountDownTimer
+        var timerIsRunning : Boolean = false
+
+        override fun makeButtonClick() {
+            binding.buttonClick.setBackgroundColor(resources.getColor(R.color.primaryColor))
+            binding.buttonClick.text = getString(R.string.startTimer)
+            binding.buttonClick.setOnClickListener {
+                if (!timerIsRunning) {
+                    timer.start()
+                    timerIsRunning = true
+                    binding.buttonClick.setBackgroundColor(resources.getColor(R.color.accent))
+                    binding.buttonClick.text = getString(R.string.click)
+                } else {
+                    soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
+                    lifecycleScope.launchWhenStarted {
+                        trainingViewModel.addTrial(true)
+                    }
+                    if(timerIsRunning){
+                        timer.cancel()
+                        timerIsRunning = false
+                    }
+                    binding.buttonClick.setBackgroundColor(resources.getColor(R.color.primaryColor))
+                    binding.buttonClick.text = getString(R.string.startTimer)
+                }
+            }
+        }
+
+        override fun makeButtonReset() {
+            binding.buttonReset.setOnClickListener {
+                lifecycleScope.launchWhenStarted {
+                    trainingViewModel.addTrial(false)
+                }
+                if(timerIsRunning){
+                    timer.cancel()
+                    binding.buttonClick.setBackgroundColor(resources.getColor(R.color.primaryColor))
+                    binding.buttonClick.text = "Start Timer"
+                    timerIsRunning = false
+                }
+            }
+        }
+
+        override fun makeHelper() {
+            lifecycleScope.launchWhenStarted {
+                trainingViewModel.helperNextValue.collect {
+                    binding.tvHelperInfo.text = it
+                    if (it != null) {
+                        timer = object : CountDownTimer((it.toFloat() * 1000).toLong(), 1000) {
+                            override fun onTick(p0: Long) {
+                                binding.tvHelperInfo.text = (p0 / 1000).toString()
+                            }
+
+                            override fun onFinish() {
+                                //TODO Add vibration here
+                            }
+                        }
+                    }
                 }
             }
         }

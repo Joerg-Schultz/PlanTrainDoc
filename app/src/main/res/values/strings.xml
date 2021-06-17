@@ -41,4 +41,5 @@
     <string name="click">Click</string>
     <string name="reset">Reset</string>
     <string name="success">Success</string>
+    <string name="startTimer">Start Timer</string>
 </resources>
