@@ -63,7 +63,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         lifecycleScope.launchWhenStarted {
             trainingViewModel.clickResetCounter.collect {
                 val (click, reset) = it
-                val text = "$click / $reset (${percentage(click,reset)} % ${getString(R.string.click)})"
+                val text = "$click / $reset (${percentage(click, reset)} % ${getString(R.string.click)})"
                 binding.resultTextview.text = text
             }
         }
@@ -89,50 +89,52 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
     }
 
     private fun createClickResetHelperText(sessionType: String?) {
-        when(sessionType){
-            PlanHelper.distance -> UIDistance()
-            PlanHelper.duration -> UIDistance()
-            else -> UIDefault()
+        val ui = when (sessionType) {
+            PlanHelper.distance -> UIDistanceHelper()
+            PlanHelper.duration -> UIDistanceHelper()
+            else -> UINoHelper()
         }
+        ui.makeBindings()
     }
 
-    private fun UIDefault() {
-        //Click
-        binding.buttonClick.setOnClickListener {
-            soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
-            lifecycleScope.launchWhenStarted {
-                trainingViewModel.addTrial(true)
+    open inner class UINoHelper() {
+        fun makeBindings() {
+            makeButtonClick()
+            makeButtonReset()
+            makeHelper()
+        }
+
+        open fun makeButtonClick() {
+            binding.buttonClick.setOnClickListener {
+                soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
+                lifecycleScope.launchWhenStarted {
+                    trainingViewModel.addTrial(true)
+                }
             }
         }
+
         //Reset
-        binding.buttonReset.setOnClickListener {
-            lifecycleScope.launchWhenStarted {
-                trainingViewModel.addTrial(false)
+        open fun makeButtonReset() {
+            binding.buttonReset.setOnClickListener {
+                lifecycleScope.launchWhenStarted {
+                    trainingViewModel.addTrial(false)
+                }
             }
         }
+
         //Helper text empty
-        binding.tvHelperHeader.text = ""
-        binding.tvHelperInfo.text = ""
+        open fun makeHelper() {
+            binding.tvHelperHeader.text = ""
+            binding.tvHelperInfo.text = ""
+        }
     }
 
-    private fun UIDistance(){
-        //Click
-        binding.buttonClick.setOnClickListener {
-            soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
+    open inner class UIDistanceHelper() : UINoHelper() {
+        override fun makeHelper() {
             lifecycleScope.launchWhenStarted {
-                trainingViewModel.addTrial(true)
-            }
-        }
-        //Reset
-        binding.buttonReset.setOnClickListener {
-            lifecycleScope.launchWhenStarted {
-                trainingViewModel.addTrial(false)
-            }
-        }
-        //Helper text field
-        lifecycleScope.launchWhenStarted {
-            trainingViewModel.helperNextValue.collect {
-                binding.tvHelperInfo.text = it
+                trainingViewModel.helperNextValue.collect {
+                    binding.tvHelperInfo.text = it
+                }
             }
         }
     }
