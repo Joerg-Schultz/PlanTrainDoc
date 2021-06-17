@@ -1,9 +1,12 @@
 package de.tierwohlteam.android.plantraindoc_v1.models
 
+import kotlin.random.Random
+
 //make the exposed variable immutable
 class ReinforcementScheme() {
     class ReinforcementLevel(val steps: List<Float>) {
         companion object {
+            //TODO start at variabel positions
             var pos = 0
         }
 

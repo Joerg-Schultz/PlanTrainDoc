@@ -76,15 +76,19 @@ class TrainingViewModel @Inject constructor(
         initialValue = emptyList()
     )
 
-    suspend fun addTrial(success: Boolean) {
+    suspend fun addTrial(success: Boolean, criteria: List<String> = emptyList()) {
         val trial = Trial(sessionID = session.id, success = success)
         repository.insertTrial(trial)
+        for(criterion in criteria){
+            val trialCriterion = TrialCriterion(trialID = trial.id, criterion = criterion)
+            repository.insertTrialCriterion(trialCriterion)
+        }
         totalTrials.value++
         var (click, reset) = clickResetCounter.value
         clickResetCounter.value = if(success) Pair(++click, reset) else Pair(click, ++reset)
         if(selectedPlanConstraint.value?.type == PlanConstraint.repetition)
             countDown.value = countDown.value!! - 1
-        if(getHelperNextValue != null) helperNextValue.value = getHelperNextValue?.let { it() }
+        helperNextValue.value = getHelperNextValue?.let { it() }
     }
 
     suspend fun newSession(criterion: String) {

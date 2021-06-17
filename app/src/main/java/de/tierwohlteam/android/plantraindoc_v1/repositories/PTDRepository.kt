@@ -212,5 +212,11 @@ class PTDRepository @Inject constructor(
      */
     suspend fun getTrialByID(trialID: Uuid) : Trial? = trialDao.getByID(trialID)
 
+    /**
+     * save a trial criterion in the db
+     * @param[trialCriterion] TrialCriterion object
+     */
+    suspend fun insertTrialCriterion(trialCriterion: TrialCriterion) = trialDao.insert(trialCriterion)
+
 
 }
