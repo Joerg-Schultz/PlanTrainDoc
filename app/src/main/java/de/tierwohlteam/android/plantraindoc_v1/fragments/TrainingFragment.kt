@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
+import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
 import de.tierwohlteam.android.plantraindoc_v1.others.percentage
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -50,17 +51,11 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //Click
-        binding.buttonClick.setOnClickListener {
-            soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
-            lifecycleScope.launchWhenStarted {
-                trainingViewModel.addTrial(true)
-            }
-        }
-        //Reset
-        binding.buttonReset.setOnClickListener {
-            lifecycleScope.launchWhenStarted {
-                trainingViewModel.addTrial(false)
+
+        // Select the right interface
+        lifecycleScope.launchWhenStarted {
+            trainingViewModel.sessionType.collect {
+                createClickResetHelperText(it)
             }
         }
 
@@ -83,19 +78,61 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             }
         }
 
-        //Helper text field
-        lifecycleScope.launchWhenStarted {
-            trainingViewModel.helperNextValue.collect {
-                binding.tvHelperInfo.text = it
-            }
-        }
-
         //stop when countdown is 0
         lifecycleScope.launchWhenStarted {
             trainingViewModel.countDown.collect {
                 if (it != null && it <= 0) {
                     stopTraining(view)
                 }
+            }
+        }
+    }
+
+    private fun createClickResetHelperText(sessionType: String?) {
+        when(sessionType){
+            PlanHelper.distance -> UIDistance()
+            PlanHelper.duration -> UIDistance()
+            else -> UIDefault()
+        }
+    }
+
+    private fun UIDefault() {
+        //Click
+        binding.buttonClick.setOnClickListener {
+            soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
+            lifecycleScope.launchWhenStarted {
+                trainingViewModel.addTrial(true)
+            }
+        }
+        //Reset
+        binding.buttonReset.setOnClickListener {
+            lifecycleScope.launchWhenStarted {
+                trainingViewModel.addTrial(false)
+            }
+        }
+        //Helper text empty
+        binding.tvHelperHeader.text = ""
+        binding.tvHelperInfo.text = ""
+    }
+
+    private fun UIDistance(){
+        //Click
+        binding.buttonClick.setOnClickListener {
+            soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
+            lifecycleScope.launchWhenStarted {
+                trainingViewModel.addTrial(true)
+            }
+        }
+        //Reset
+        binding.buttonReset.setOnClickListener {
+            lifecycleScope.launchWhenStarted {
+                trainingViewModel.addTrial(false)
+            }
+        }
+        //Helper text field
+        lifecycleScope.launchWhenStarted {
+            trainingViewModel.helperNextValue.collect {
+                binding.tvHelperInfo.text = it
             }
         }
     }

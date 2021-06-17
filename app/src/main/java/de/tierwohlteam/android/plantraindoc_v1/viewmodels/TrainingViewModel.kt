@@ -32,6 +32,7 @@ class TrainingViewModel @Inject constructor(
     var countDown : MutableStateFlow<Int?> = MutableStateFlow(value = null)
     var clickResetCounter: MutableStateFlow<Pair<Int,Int>> = MutableStateFlow(value = Pair(0,0))
     var helperNextValue: MutableStateFlow<String?> = MutableStateFlow(value = null)
+    var sessionType: MutableStateFlow<String?> = MutableStateFlow(value = null)
 
     private val selectedPlan: MutableStateFlow<Plan?> = MutableStateFlow(value = null)
     private val selectedPlanConstraint: MutableStateFlow<PlanConstraint?> = MutableStateFlow(value = null)
@@ -49,9 +50,12 @@ class TrainingViewModel @Inject constructor(
         //prepare Helper
         viewModelScope.launch {
             selectedPlanHelper.value = repository.getPlanHelper(plan)
-            if(selectedPlanHelper.value != null){
+            if(selectedPlanHelper.value == null) {
+                sessionType.value = null
+            }else{
                 getHelperNextValue = setupHelper(selectedPlanHelper.value!!.type, selectedPlanHelper.value!!.value)
                 helperNextValue.value = getHelperNextValue?.let { it() }
+                sessionType.value = selectedPlanHelper.value!!.type
             }
         }
     }
@@ -76,11 +80,11 @@ class TrainingViewModel @Inject constructor(
         initialValue = emptyList()
     )
 
-    suspend fun addTrial(success: Boolean, criteria: List<String> = emptyList()) {
+    suspend fun addTrial(success: Boolean) {
         val trial = Trial(sessionID = session.id, success = success)
         repository.insertTrial(trial)
-        for(criterion in criteria){
-            val trialCriterion = TrialCriterion(trialID = trial.id, criterion = criterion)
+        if(helperNextValue.value != null){
+            val trialCriterion = TrialCriterion(trialID = trial.id, criterion = helperNextValue.value!!)
             repository.insertTrialCriterion(trialCriterion)
         }
         totalTrials.value++
@@ -117,6 +121,7 @@ class TrainingViewModel @Inject constructor(
     //enable cancel of timer from fragment
     fun cleanup(){
         totalTrials.value = 0
+        clickResetCounter.value = Pair(0,0)
         if(::constraintTimer.isInitialized) constraintTimer.cancel()
     }
 }
