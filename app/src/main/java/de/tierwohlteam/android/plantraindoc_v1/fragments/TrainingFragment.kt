@@ -3,7 +3,6 @@ package de.tierwohlteam.android.plantraindoc_v1.fragments
 import android.media.SoundPool
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

@@ -70,9 +70,7 @@ class TrainingViewModel @Inject constructor(
                 { durationScheme.getStep(value.toFloat()).toString() }
             }
             PlanHelper.discrimination -> {
-                {val criteria = value.split(",")
-                val position = Random.nextInt(0,criteria.size )
-                criteria[position]}
+                { value.split(",").random() }
             }
             else -> null
         }
