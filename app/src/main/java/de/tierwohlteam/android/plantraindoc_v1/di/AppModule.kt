@@ -78,24 +78,38 @@ object AppModule {
     @Provides
     fun provideUserID(sharedPreferences: SharedPreferences, repository: PTDRepository): Uuid {
         var userID = sharedPreferences.getString(KEY_USER_ID, null)
-        GlobalScope.launch {
-            var userInDB = false
-            val dbJob = launch {
-                val dbUsers = repository.getUsers()
-                if (dbUsers.any { it.id.toString() == userID }) userInDB = true
+        if(userID == null){
+            val newUserID = uuid4()
+            val user = User(
+                id = newUserID, name = Constants.DEFAULT_USER_NAME,
+                email = Constants.DEFAULT_USER_EMAIL, password = Constants.DEFAULT_USER_PASSWORD
+            )
+            val insertJob = GlobalScope.launch {
+                repository.insertUser(user)
             }
-            dbJob.join()
-            if (!userInDB) {
-                val newUserID = Uuid.fromString(userID) ?: uuid4()
-                val user = User(
-                    id = newUserID, name = Constants.DEFAULT_USER_NAME,
-                    email = Constants.DEFAULT_USER_EMAIL, password = Constants.DEFAULT_USER_PASSWORD
-                )
-                GlobalScope.launch {
-                    repository.insertUser(user)
+            userID = newUserID.toString()
+            sharedPreferences.edit().putString(KEY_USER_ID, newUserID.toString()).apply()
+        } else {
+            GlobalScope.launch {
+                var userInDB = false
+                val dbJob = launch {
+                    val dbUsers = repository.getUsers()
+                    if (dbUsers.any { it.id.toString() == userID }) userInDB = true
                 }
-                userID = newUserID.toString()
-                sharedPreferences.edit().putString(KEY_USER_ID, newUserID.toString()).apply()
+                dbJob.join()
+                if (!userInDB) {
+                    val newUserID = Uuid.fromString(userID) ?: uuid4()
+                    val user = User(
+                        id = newUserID, name = Constants.DEFAULT_USER_NAME,
+                        email = Constants.DEFAULT_USER_EMAIL, password = Constants.DEFAULT_USER_PASSWORD
+                    )
+                    val insertJob = GlobalScope.launch {
+                        repository.insertUser(user)
+                    }
+                    insertJob.join()
+                    userID = newUserID.toString()
+                    sharedPreferences.edit().putString(KEY_USER_ID, newUserID.toString()).apply()
+                }
             }
         }
         return uuidFrom(userID!!)

@@ -1,7 +1,7 @@
 package de.tierwohlteam.android.plantraindoc_v1.others
 
 object Constants {
-    const val PTD_DB_NAME = "plantraindoc_db"
+    const val PTD_DB_NAME = "plantraindocv1_db"
 
     const val SHARED_PREFERENCES_NAME = "sharedPrefs"
     const val KEY_USER_ID = "KEY_USER_ID"
