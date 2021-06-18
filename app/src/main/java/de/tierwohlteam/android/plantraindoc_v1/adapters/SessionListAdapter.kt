@@ -49,6 +49,7 @@ class SessionListAdapter : RecyclerView.Adapter<SessionListAdapter.SessionViewHo
             holder.binding.apply {
                 tvComment.visibility = INVISIBLE
                 tilComment.visibility = VISIBLE
+                tiComment.visibility = VISIBLE
 
             }
         } else {
