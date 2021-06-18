@@ -40,6 +40,13 @@ class PTDRepository @Inject constructor(
     suspend fun getUserByID(userID: Uuid) : User? = userDao.getByID(userID)
 
     /**
+     * Get all users from the db
+     * needed to check if the androiduser is in the db
+     * after destructive db migration
+     */
+    suspend fun getUsers(): List<User> = userDao.getAll()
+
+    /**
      * Dog functions
      *
      *  Insert a Dog into the database
@@ -217,6 +224,4 @@ class PTDRepository @Inject constructor(
      * @param[trialCriterion] TrialCriterion object
      */
     suspend fun insertTrialCriterion(trialCriterion: TrialCriterion) = trialDao.insert(trialCriterion)
-
-
 }

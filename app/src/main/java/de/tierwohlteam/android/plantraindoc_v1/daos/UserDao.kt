@@ -7,6 +7,7 @@ import androidx.room.Transaction
 import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.models.User
 import de.tierwohlteam.android.plantraindoc_v1.models.UserWithDogs
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
@@ -19,5 +20,8 @@ interface UserDao {
     @Transaction
     @Query("SELECT * from users where id = :userID")
     suspend fun getByIDWithDogs(userID: Uuid): UserWithDogs?
+
+    @Query("SELECT * from users")
+    suspend fun getAll(): List<User>
 
 }

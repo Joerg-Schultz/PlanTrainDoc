@@ -17,7 +17,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.*
         Plan::class, PlanHelper::class, PlanConstraint::class,
         Session::class,
         Trial::class, TrialCriterion::class],
-    version = 2, exportSchema = true
+    version = 3, exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class PTDdb : RoomDatabase(){
