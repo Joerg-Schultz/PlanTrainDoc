@@ -42,7 +42,8 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
         binding.buttonSavegoal.setOnClickListener {
              viewModel.saveNewOrUpdatedGoal(goalText = binding.tiGoal.text.toString(),
                 description = binding.tiDescription.text.toString(),
-                status = selectedStatus()
+                status = selectedStatus(),
+                 goalWP = viewModel.selectedGoal.value
             )
         }
 

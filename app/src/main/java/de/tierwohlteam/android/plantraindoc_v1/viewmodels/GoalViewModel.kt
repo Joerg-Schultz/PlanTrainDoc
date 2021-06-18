@@ -40,18 +40,31 @@ class GoalViewModel @Inject constructor(
     /**
      * Save a new or updated goal to db
      */
-    fun saveNewOrUpdatedGoal(goalText: String, description: String, status: String?) {
+    fun saveNewOrUpdatedGoal(goalText: String, description: String, status: String?, goalWP: GoalWithPlan? = null) {
         if(goalText.isEmpty()) {
             _insertGoalStatus.postValue(Event(Resource.error("The fields must not be empty", null)))
             return
         }
-
-        val newGoal = Goal(goal = goalText, description = description, parents = parentGoal.value?.goal?.id,
-            userID = userID)
-        if(status != null) newGoal.status = status
-        viewModelScope.launch {
-            repository.insertGoal(newGoal)
-            _insertGoalStatus.postValue(Event(Resource.success(newGoal)))
+        //update existing goal
+        if(goalWP != null) {
+            val goal: Goal = goalWP.goal
+            goal.goal = goalText
+            goal.description = description
+            if (status != null) goal.status = status
+            viewModelScope.launch {
+                repository.updateGoal(goal)
+                _insertGoalStatus.postValue(Event(Resource.success(goal)))
+            }
+        } else { // insert new goal
+            val newGoal = Goal(
+                goal = goalText, description = description, parents = parentGoal.value?.goal?.id,
+                userID = userID
+            )
+            if (status != null) newGoal.status = status
+            viewModelScope.launch {
+                repository.insertGoal(newGoal)
+                _insertGoalStatus.postValue(Event(Resource.success(newGoal)))
+            }
         }
     }
 

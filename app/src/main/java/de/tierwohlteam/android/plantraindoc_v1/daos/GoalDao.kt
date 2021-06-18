@@ -1,9 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.daos
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.models.GoalDependencyCrossRef
@@ -48,6 +45,9 @@ interface GoalDao {
     @Transaction
     @Query("SELECT * from goals where parents IS NULL")
     fun getTopLevelWithPlan(): Flow<List<GoalWithPlan>>
+
+    @Update
+    suspend fun update(goal: Goal)
 
 
 }

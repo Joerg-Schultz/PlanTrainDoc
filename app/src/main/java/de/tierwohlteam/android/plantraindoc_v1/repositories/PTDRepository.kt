@@ -71,6 +71,12 @@ class PTDRepository @Inject constructor(
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insertGoal(goal: Goal) = goalDao.insert(goal)
+
+    /**
+     * Update existing goal
+     * @param[goal] goal object existing in db
+     */
+    suspend fun updateGoal(goal: Goal) = goalDao.update(goal)
     /**
      * get a goal from the DB using its id
      * @param[goalID] UUID id of the goal
