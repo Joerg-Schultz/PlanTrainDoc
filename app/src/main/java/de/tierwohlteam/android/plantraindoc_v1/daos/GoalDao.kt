@@ -32,18 +32,18 @@ interface GoalDao {
     @Query("SELECT * from goals where id = :goalID")
     suspend fun getByIDWithRelations(goalID: Uuid): GoalWithRelations?
 
-    @Query("SELECT * from goals where parents = :parentID")
+    @Query("SELECT * from goals where parents = :parentID order by position")
     fun getChildrenByID(parentID: Uuid?): Flow<List<Goal>>
 
     @Transaction
-    @Query("SELECT * from goals where parents = :parentID")
+    @Query("SELECT * from goals where parents = :parentID order by position")
     fun getChildrenByIDWithPlan(parentID: Uuid?): Flow<List<GoalWithPlan>>
 
-    @Query("SELECT * from goals where parents IS NULL")
+    @Query("SELECT * from goals where parents IS NULL order by position")
     fun getTopLevel(): Flow<List<Goal>>
 
     @Transaction
-    @Query("SELECT * from goals where parents IS NULL")
+    @Query("SELECT * from goals where parents IS NULL order by position")
     fun getTopLevelWithPlan(): Flow<List<GoalWithPlan>>
 
     @Update

@@ -58,7 +58,7 @@ class GoalViewModel @Inject constructor(
         } else { // insert new goal
             val newGoal = Goal(
                 goal = goalText, description = description, parents = parentGoal.value?.goal?.id,
-                userID = userID
+                userID = userID, position = -1
             )
             if (status != null) newGoal.status = status
             viewModelScope.launch {
@@ -80,6 +80,14 @@ class GoalViewModel @Inject constructor(
 
     fun setSelectedGoal(goal:GoalWithPlan?){
         selectedGoal.value = goal
+    }
+
+    suspend fun updatePositions(goalList: List<GoalWithPlan>) {
+        for(i in goalList.indices){
+            val goal = goalList[i].goal
+            goal.position = i
+            repository.updateGoal(goal)
+        }
     }
 
 }
