@@ -1,9 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.daos
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.models.Session
 import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
@@ -27,5 +24,8 @@ interface SessionDao {
 
     @Query("SELECT * from sessions where planID = :planID")
     fun getByPlanIDWithRelations(planID: Uuid?) : Flow<List<SessionWithRelations>>
+
+    @Query("UPDATE sessions set comment = :comment where id = :sessionID")
+    suspend fun updateComment(sessionID: Uuid, comment: String?)
 
 }

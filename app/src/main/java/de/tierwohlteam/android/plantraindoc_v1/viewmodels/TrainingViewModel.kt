@@ -128,4 +128,13 @@ class TrainingViewModel @Inject constructor(
         clickResetCounter.value = Pair(0,0)
         if(::constraintTimer.isInitialized) constraintTimer.cancel()
     }
+
+    private val commentedSession: MutableStateFlow<Session?> = MutableStateFlow(value = null)
+    fun setCommentedSession(session: Session) {
+        commentedSession.value = session
+    }
+
+    suspend fun updateCommentedSession() {
+        repository.updateCommentInSession(commentedSession.value)
+    }
 }

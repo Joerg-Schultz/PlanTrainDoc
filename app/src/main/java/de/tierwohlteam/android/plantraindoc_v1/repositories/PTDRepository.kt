@@ -203,6 +203,14 @@ class PTDRepository @Inject constructor(
        sessionDao.getByPlanIDWithRelations(plan?.id)
 
     /**
+     * update a comment for a session
+     */
+    suspend fun updateCommentInSession(session: Session?){
+        if(session != null)
+        sessionDao.updateComment(session.id, session.comment)
+    }
+
+    /**
      * Trial functions
      *
      *  Insert a Trial into the database

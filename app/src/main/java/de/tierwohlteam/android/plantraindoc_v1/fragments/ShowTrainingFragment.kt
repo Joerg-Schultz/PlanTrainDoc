@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -68,7 +69,11 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
 
     private fun setupRecyclerView() {
         binding.rvSessionlist.apply {
-            sessionListAdapter = SessionListAdapter()
+            sessionListAdapter = SessionListAdapter { session: Session ->
+                trainingViewModel.setCommentedSession(
+                    session
+                )
+            }
             adapter = sessionListAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
@@ -110,5 +115,12 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
             PlanHelper.free -> getString(R.string.no_helper)
             else -> ""
         }
+    }
+
+    override fun onDestroyView() {
+        lifecycleScope.launchWhenStarted {
+            trainingViewModel.updateCommentedSession()
+        }
+        super.onDestroyView()
     }
 }
