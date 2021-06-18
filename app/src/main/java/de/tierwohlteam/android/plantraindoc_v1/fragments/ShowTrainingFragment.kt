@@ -19,6 +19,7 @@ import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.PlanViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -118,7 +119,7 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
     }
 
     override fun onDestroyView() {
-        lifecycleScope.launchWhenStarted {
+        GlobalScope.launch {
             trainingViewModel.updateCommentedSession()
         }
         super.onDestroyView()
