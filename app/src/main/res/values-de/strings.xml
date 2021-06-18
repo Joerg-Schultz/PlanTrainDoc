@@ -43,4 +43,5 @@
     <string name="reset">Neustart</string>
     <string name="success">Erfolg</string>
     <string name="startTimer">Starte Timer</string>
+    <string name="comment">Bemerkung</string>
 </resources>

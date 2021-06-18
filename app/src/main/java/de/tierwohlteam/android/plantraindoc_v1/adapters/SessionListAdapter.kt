@@ -1,6 +1,8 @@
 package de.tierwohlteam.android.plantraindoc_v1.adapters
 
 import android.view.LayoutInflater
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -9,7 +11,6 @@ import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.SessionItemBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
 import de.tierwohlteam.android.plantraindoc_v1.others.percentage
-import kotlin.math.roundToInt
 
 class SessionListAdapter : RecyclerView.Adapter<SessionListAdapter.SessionViewHolder>()  {
 
@@ -44,6 +45,15 @@ class SessionListAdapter : RecyclerView.Adapter<SessionListAdapter.SessionViewHo
         val percent = percentage(successes,resets)
         val successText = holder.itemView.context.getText(R.string.success)
         val evaluationText = "$successText: $percent % ($successes / $resets)"
+        if(position == 0){
+            holder.binding.apply {
+                tvComment.visibility = INVISIBLE
+                tilComment.visibility = VISIBLE
+
+            }
+        } else {
+            holder.binding.tvComment.text = session.comment
+        }
         val image = if (percent >= 80) R.drawable.ic_success else R.drawable.ic_repeat
         holder.binding.apply {
             tvSessionConstraint.text = session.criterion

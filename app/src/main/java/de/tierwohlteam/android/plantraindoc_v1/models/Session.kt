@@ -41,6 +41,7 @@ data class Session(
     val planID: Uuid,
     var created: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
     var criterion: String? = null,
+    var comment: String? = null
 ) {
 /*    /**
      * Return the percentage of successful trial as Int
