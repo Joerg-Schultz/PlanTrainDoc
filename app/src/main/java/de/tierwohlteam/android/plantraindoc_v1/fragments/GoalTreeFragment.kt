@@ -5,10 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -89,7 +87,6 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
             val toPos = target.adapterPosition
             Collections.swap(currentGoals, fromPos, toPos)
             val titleList = currentGoals.map { it.goal.goal }
-            Toast.makeText(context,"Liste: $titleList", Toast.LENGTH_LONG).show()
             recyclerView.adapter?.notifyItemMoved(fromPos,toPos)
             return true
         }
@@ -108,7 +105,6 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
     }
 
     override fun onDestroyView() {
-        Toast.makeText(context,"destroying view",Toast.LENGTH_LONG).show()
         GlobalScope.launch {
             goalViewModel.updatePositions(currentGoals)
         }

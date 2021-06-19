@@ -1,8 +1,10 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
 import android.content.Context
+import android.content.res.Resources
 import android.media.SoundPool
 import android.os.*
+import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +22,10 @@ import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_SHORT
 import de.tierwohlteam.android.plantraindoc_v1.others.percentage
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -32,15 +37,30 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
     private var soundPool: SoundPool? = null
     private var soundId = 1
+    private var tts: TextToSpeech? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = TrainingFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
+        // Clicker
         soundPool = SoundPool.Builder()
             .setMaxStreams(1)
             .build()
         soundId = soundPool!!.load(activity, R.raw.click_test, 10)
+
+        //Prepare text to speech
+        val appLanguage = Locale.getDefault().language
+        //val sysLanguage = Resources.getSystem().configuration.locales.toLanguageTags()
+        tts = TextToSpeech(context) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                //tts?.language = Locale(appLanguage)
+                tts?.language = Locale.GERMAN
+            }
+        }
+
+
+        //Back button stops training
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             stopTraining(view)
         }
@@ -152,11 +172,21 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
      * Helper for a single value like Distance or Discrimination
      * shows a single count in the helper information text view
      */
+    // TODO can I observe on changes to tvHelperInfo? And then speak the new value?
+    // No need for implementation in classes
+    // Not directly tvHelperInfo, but this value here
+    // HelperInfo is updated in countdown
     open inner class UISingleValueHelper() : UINoHelper() {
         override fun makeHelper() {
             lifecycleScope.launchWhenStarted {
                 trainingViewModel.helperNextValue.collect {
-                    binding.tvHelperInfo.text = it
+                    if (it != null) {
+                        binding.tvHelperInfo.text = it
+                        launch {
+                            delay(1000)
+                            tts!!.speak(it, TextToSpeech.QUEUE_FLUSH, null, "")
+                        }
+                    }
                 }
             }
         }
@@ -214,6 +244,10 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 trainingViewModel.helperNextValue.collect {
                     binding.tvHelperInfo.text = it
                     if (it != null) {
+                        launch {
+                            delay(1000)
+                            tts!!.speak(it, TextToSpeech.QUEUE_FLUSH, null,"")
+                        }
                         timer = object : CountDownTimer((it.toFloat() * 1000).toLong(), 1000) {
                             override fun onTick(p0: Long) {
                                 binding.tvHelperInfo.text = (p0 / 1000).toString()
