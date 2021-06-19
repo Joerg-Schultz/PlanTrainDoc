@@ -1,8 +1,8 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
+import android.content.Context
 import android.media.SoundPool
-import android.os.Bundle
-import android.os.CountDownTimer
+import android.os.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_LONG
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_SHORT
 import de.tierwohlteam.android.plantraindoc_v1.others.percentage
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -46,10 +48,22 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
     }
 
     private fun stopTraining(view: View) {
+        vibrate()
         trainingViewModel.cleanup()
         view.findNavController().popBackStack()
     }
-
+    private fun vibrate(duration: String = "long"){
+        val milliseconds = when(duration){
+            "short" -> VIBRATION_SHORT
+            else -> VIBRATION_LONG
+        }
+        val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(200)
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -204,7 +218,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                             }
 
                             override fun onFinish() {
-                                //TODO Add vibration here
+                                vibrate("short")
                             }
                         }
                     }

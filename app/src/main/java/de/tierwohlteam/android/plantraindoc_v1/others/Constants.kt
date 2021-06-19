@@ -8,4 +8,7 @@ object Constants {
     const val DEFAULT_USER_NAME = "PTD AppUser"
     const val DEFAULT_USER_EMAIL = "PTD.appuser@mail.de"
     const val DEFAULT_USER_PASSWORD = "1234"
+
+    const val VIBRATION_SHORT = 200
+    const val VIBRATION_LONG = 500
 }
