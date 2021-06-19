@@ -47,23 +47,6 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         return view
     }
 
-    private fun stopTraining(view: View) {
-        vibrate()
-        trainingViewModel.cleanup()
-        view.findNavController().popBackStack()
-    }
-    private fun vibrate(duration: String = "long"){
-        val milliseconds = when(duration){
-            "short" -> VIBRATION_SHORT
-            else -> VIBRATION_LONG
-        }
-        val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        if (Build.VERSION.SDK_INT >= 26) {
-            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
-        } else {
-            vibrator.vibrate(200)
-        }
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -106,6 +89,25 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             }
         }
     }
+
+    private fun stopTraining(view: View) {
+        vibrate()
+        trainingViewModel.cleanup()
+        view.findNavController().popBackStack()
+    }
+    private fun vibrate(duration: String = "long"){
+        val milliseconds = when(duration){
+            "short" -> VIBRATION_SHORT
+            else -> VIBRATION_LONG
+        }
+        val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(milliseconds)
+        }
+    }
+
 /*
  * Generate the helpers here
  * Use inheritance if possible
