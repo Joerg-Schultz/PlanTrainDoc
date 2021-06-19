@@ -32,7 +32,8 @@ class TrainingViewModel @Inject constructor(
     var totalTrials : MutableStateFlow<Int> = MutableStateFlow(value = 0)
     var countDown : MutableStateFlow<Int?> = MutableStateFlow(value = null)
     var clickResetCounter: MutableStateFlow<Pair<Int,Int>> = MutableStateFlow(value = Pair(0,0))
-    var helperNextValue: MutableStateFlow<String?> = MutableStateFlow(value = null)
+    //var helperNextValue: MutableStateFlow<String?> = MutableStateFlow(value = null)
+    var helperNextValue: MutableSharedFlow<String?> = MutableSharedFlow(replay = 1)
     var sessionType: MutableStateFlow<String?> = MutableStateFlow(value = null)
 
     private val selectedPlan: MutableStateFlow<Plan?> = MutableStateFlow(value = null)
@@ -55,7 +56,7 @@ class TrainingViewModel @Inject constructor(
                 sessionType.value = null
             }else{
                 getHelperNextValue = setupHelper(selectedPlanHelper.value!!.type, selectedPlanHelper.value!!.value)
-                helperNextValue.value = getHelperNextValue?.let { it() }
+                helperNextValue.emit(getHelperNextValue?.let { it() })
                 sessionType.value = selectedPlanHelper.value!!.type
             }
         }
@@ -87,16 +88,20 @@ class TrainingViewModel @Inject constructor(
     suspend fun addTrial(success: Boolean) {
         val trial = Trial(sessionID = session.id, success = success)
         repository.insertTrial(trial)
-        if(helperNextValue.value != null){
-            val trialCriterion = TrialCriterion(trialID = trial.id, criterion = helperNextValue.value!!)
-            repository.insertTrialCriterion(trialCriterion)
+        viewModelScope.launch {
+            helperNextValue.collect {
+                if (it != null) {
+                    val trialCriterion = TrialCriterion(trialID = trial.id, criterion = it)
+                    repository.insertTrialCriterion(trialCriterion)
+                }
+            }
         }
         totalTrials.value++
         var (click, reset) = clickResetCounter.value
         clickResetCounter.value = if(success) Pair(++click, reset) else Pair(click, ++reset)
         if(selectedPlanConstraint.value?.type == PlanConstraint.repetition)
             countDown.value = countDown.value!! - 1
-        helperNextValue.value = getHelperNextValue?.let { it() }
+        helperNextValue.emit(getHelperNextValue?.let { it() })
     }
 
     suspend fun newSession(criterion: String) {
