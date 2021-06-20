@@ -95,7 +95,6 @@ class GoalViewModel @Inject constructor(
 
     fun deleteGoal() {
         if (selectedGoal.value != null) {
-            Log.d("DELETEGOAL", "In delete function")
             val goal = selectedGoal.value!!.goal
             val plan = selectedGoal.value!!.plan
             viewModelScope.launch {

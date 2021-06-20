@@ -45,7 +45,6 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
 
         binding.buttonDeletegoal.visibility = if (viewModel.selectedGoal.value == null) INVISIBLE else VISIBLE
         binding.buttonDeletegoal.setOnClickListener {
-            Toast.makeText(context, "Clicked delete", Toast.LENGTH_LONG).show()
             viewModel.deleteGoal()
         }
 
