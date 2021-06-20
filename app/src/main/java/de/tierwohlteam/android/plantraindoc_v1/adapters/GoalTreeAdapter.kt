@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.GoalItemBinding
+import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithPlan
 import de.tierwohlteam.android.plantraindoc_v1.models.Plan
 
@@ -39,7 +40,13 @@ class GoalTreeAdapter(private val selectGoal: (GoalWithPlan) -> Unit)
         holder.binding.apply {
             tvGoal.text = goalWithPlan.goal.goal
             tvDetails.text = goalWithPlan.goal.description
-            tvStatus.text = goalWithPlan.goal.status
+            tvStatus.text = when(goalWithPlan.goal.status){
+                Goal.statusFinished -> holder.itemView.context.getString(R.string.status_done)
+                Goal.statusStopped ->  holder.itemView.context.getString(R.string.status_stopped)
+                Goal.statusInProgress ->  holder.itemView.context.getString(R.string.status_inprogress)
+                Goal.statusNew ->  holder.itemView.context.getString(R.string.status_new)
+                else -> ""
+            }
             if(goalWithPlan.plan == null) {
                 btnAction.text = holder.itemView.context.getText(R.string.plan_verb)
                 btnAction.setOnClickListener {

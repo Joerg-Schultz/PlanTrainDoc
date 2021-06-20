@@ -48,25 +48,25 @@
                 android:id="@+id/radioButton_new"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/radioButton_new"/>
+                android:text="@string/status_new"/>
 
         <RadioButton
                 android:id="@+id/radioButton_inprogress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/radioButton_inprogress"/>
+                android:text="@string/status_inprogress"/>
 
         <RadioButton
                 android:id="@+id/radioButton_done"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/radioButton_done"/>
+                android:text="@string/status_done"/>
 
         <RadioButton
                 android:id="@+id/radioButton_stopped"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/radioButton_stopped"/>
+                android:text="@string/status_stopped"/>
     </RadioGroup>
 
     <TextView
