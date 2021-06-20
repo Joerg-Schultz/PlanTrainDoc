@@ -1,5 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,23 +13,30 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.adapters.GoalTreeAdapter
 import de.tierwohlteam.android.plantraindoc_v1.databinding.GoaltreeFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithPlan
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.FIRST_GOAL
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.FIRST_USAGE
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
 
     private val goalViewModel: GoalViewModel by activityViewModels()
+
+    @Inject
+    lateinit var sharedPreferences : SharedPreferences
 
     private var _binding: GoaltreeFragmentBinding? = null
     private val binding get() = _binding!!
@@ -53,14 +61,43 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
         setupRecyclerView()
         lifecycleScope.launchWhenStarted {
             goalViewModel.goals.collect {
-                //TODO show info message if there are no goals (it.isEmpty() )
                 goalTreeAdapter.submitList(it)
-                if(it.isNotEmpty()) currentGoals = it as MutableList<GoalWithPlan>
+                if(it.isNotEmpty()) {
+                    currentGoals = it as MutableList<GoalWithPlan>
+                }
+                when {
+                    firstUse("app") -> MaterialAlertDialogBuilder(view.context)
+                        .setTitle(getString(R.string.welcome))
+                        .setMessage(getString(R.string.welcome_message))
+                        .setPositiveButton(getString(R.string.ok)) { dialog, which -> {}}
+                        .show()
+                    //set FIRSTUSAGE to false
+                    firstUse("goal") -> MaterialAlertDialogBuilder(view.context)
+                        .setTitle(getString(R.string.congratulation))
+                        .setMessage(getString(R.string.firstgoal_message))
+                        .setPositiveButton(getString(R.string.ok)) { dialog, which -> {}}
+                        .show()
+                }
             }
         }
         binding.fabAddGoal.setOnClickListener {
             goalViewModel.selectedGoal.value = null
             findNavController().navigate(R.id.action_goalTreeFragment_to_addModifyGoalFragment)
+        }
+    }
+
+    private fun firstUse(level: String): Boolean {
+        val selectedLevel = when(level){
+            "app" -> FIRST_USAGE
+            "goal" -> FIRST_GOAL
+            else -> return false
+        }
+        val isFirst = sharedPreferences.getBoolean(selectedLevel, true)
+        return if(!isFirst){
+            false
+        } else {
+            sharedPreferences.edit().putBoolean(selectedLevel, false).apply()
+            true
         }
     }
 

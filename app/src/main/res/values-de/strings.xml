@@ -44,4 +44,9 @@
     <string name="success">Erfolg</string>
     <string name="startTimer">Starte Timer</string>
     <string name="comment">Bemerkung</string>
+    <string name="welcome">Willkommen bei PlanTrainDoc</string>
+    <string name="welcome_message">Du kannst dein erstes Ziel mit dem \'+\' Button unten rechts hinzufügen</string>
+    <string name="ok">OK</string>
+    <string name="congratulation">Glückwunsch!</string>
+    <string name="firstgoal_message">Du hast dein erstes Ziel erstellt! Du kannst jetzt Unterziele dazu erstellen, indem du das Ziel nach links wischst. </string>
 </resources>

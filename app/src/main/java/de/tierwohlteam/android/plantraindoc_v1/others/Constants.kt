@@ -9,6 +9,9 @@ object Constants {
     const val DEFAULT_USER_EMAIL = "PTD.appuser@mail.de"
     const val DEFAULT_USER_PASSWORD = "1234"
 
+    const val FIRST_USAGE = "FIRST_USAGE"
+    const val FIRST_GOAL = "FIRST_GOAL"
+
     const val VIBRATION_SHORT = 200L
     const val VIBRATION_LONG = 500L
 }
