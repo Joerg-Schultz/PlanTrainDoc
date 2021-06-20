@@ -49,5 +49,6 @@ interface GoalDao {
     @Update
     suspend fun update(goal: Goal)
 
-
+    @Delete
+    suspend fun delete(goal: Goal)
 }

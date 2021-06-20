@@ -77,6 +77,12 @@ class PTDRepository @Inject constructor(
      * @param[goal] goal object existing in db
      */
     suspend fun updateGoal(goal: Goal) = goalDao.update(goal)
+
+    /**
+     * delete a goal
+     * @param[goal] Goal object
+     */
+    suspend fun deleteGoal(goal: Goal) = goalDao.delete(goal)
     /**
      * get a goal from the DB using its id
      * @param[goalID] UUID id of the goal
@@ -125,6 +131,15 @@ class PTDRepository @Inject constructor(
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insertPlan(plan: Plan) = planDao.insert(plan)
+    /**
+     * delete a plan with constraint and helper
+     * only works if the plan has no sessions
+     * //TODO Can I make this a transaction?
+     */
+    suspend fun deletePlanWithHelpersAndConstraints(plan: Plan){
+        planDao.deleteWithHelpersAndConstraints(plan)
+    }
+
     /**
      * Insert a Constraint for a Plan
      * @param[constraint] a PlanConstraint object

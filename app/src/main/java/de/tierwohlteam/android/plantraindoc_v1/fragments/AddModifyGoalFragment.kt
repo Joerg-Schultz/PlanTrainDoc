@@ -3,10 +3,14 @@ package de.tierwohlteam.android.plantraindoc_v1.fragments
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -39,26 +43,33 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
 
         viewModel.selectedGoal.value?.let { fillFields(it) }
 
+        binding.buttonDeletegoal.visibility = if (viewModel.selectedGoal.value == null) INVISIBLE else VISIBLE
+        binding.buttonDeletegoal.setOnClickListener {
+            Toast.makeText(context, "Clicked delete", Toast.LENGTH_LONG).show()
+            viewModel.deleteGoal()
+        }
+
         binding.fabSavegoal.setOnClickListener {
-            viewModel.saveNewOrUpdatedGoal(goalText = binding.tiGoal.text.toString(),
+            viewModel.saveNewOrUpdatedGoal(
+                goalText = binding.tiGoal.text.toString(),
                 description = binding.tiDescription.text.toString(),
                 status = selectedStatus(),
                 goalWP = viewModel.selectedGoal.value
             )
         }
-        /*
-        binding.buttonSavegoal.setOnClickListener {
-             viewModel.saveNewOrUpdatedGoal(goalText = binding.tiGoal.text.toString(),
-                description = binding.tiDescription.text.toString(),
-                status = selectedStatus(),
-                 goalWP = viewModel.selectedGoal.value
-            )
-        }
+            /*
+            binding.buttonSavegoal.setOnClickListener {
+                 viewModel.saveNewOrUpdatedGoal(goalText = binding.tiGoal.text.toString(),
+                    description = binding.tiDescription.text.toString(),
+                    status = selectedStatus(),
+                     goalWP = viewModel.selectedGoal.value
+                )
+            }
 
-        binding.buttonCancel.setOnClickListener {
-            viewModel.setSelectedGoal(null)
-            view.findNavController().popBackStack()
-        } */
+            binding.buttonCancel.setOnClickListener {
+                viewModel.setSelectedGoal(null)
+                view.findNavController().popBackStack()
+            } */
     }
 
     private fun subscribeToObservers() {
@@ -75,11 +86,12 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
                             .show()
                     }
                     Status.SUCCESS -> {
-                        /*Snackbar.make(
+                        Snackbar.make(
                             binding.root,
-                            "Added Goal Item",
+                            "Added/Deleted Goal Item",
                             Snackbar.LENGTH_LONG
-                        ).show() */
+                        ).setAnchorView(R.id.fab_savegoal)
+                            .show()
                         viewModel.setSelectedGoal(null)
                         findNavController().popBackStack()
                     }

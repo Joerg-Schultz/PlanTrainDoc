@@ -1,5 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,8 @@ import com.benasher44.uuid.Uuid
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithPlan
+import de.tierwohlteam.android.plantraindoc_v1.models.Session
+import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
 import de.tierwohlteam.android.plantraindoc_v1.others.Event
 import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
@@ -90,4 +93,28 @@ class GoalViewModel @Inject constructor(
         }
     }
 
+    fun deleteGoal() {
+        if (selectedGoal.value != null) {
+            Log.d("DELETEGOAL", "In delete function")
+            val goal = selectedGoal.value!!.goal
+            val plan = selectedGoal.value!!.plan
+            viewModelScope.launch {
+                if (plan != null) {
+                    val sessions = repository.getSessionsFromPlan(plan)
+                    sessions.collect {
+                        if (it.isNotEmpty()) {
+                            _insertGoalStatus.postValue(Event(Resource.error("Can't delete goal with Session", null)))
+                        } else {
+                            repository.deletePlanWithHelpersAndConstraints(plan)
+                            repository.deleteGoal(goal)
+                            _insertGoalStatus.postValue(Event(Resource.success(null)))
+                        }
+                    }
+                } else {
+                    repository.deleteGoal(goal)
+                    _insertGoalStatus.postValue(Event(Resource.success(null)))
+                }
+            }
+        }
+    }
 }

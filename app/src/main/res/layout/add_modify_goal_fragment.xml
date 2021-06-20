@@ -81,17 +81,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroup_status"/>
 
-    <!-- <TextView
-            android:id="@+id/tv_position"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_position"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/radioGroup_status"
-            app:layout_constraintTop_toBottomOf="@+id/goal"/> -->
-
-    <!-- If the goal is not stored yet, enable canceling
-    else enable deletion -->
+  <!--
     <Button
             android:id="@+id/button_cancel"
             android:layout_width="wrap_content"
@@ -102,21 +92,8 @@
             android:text="@string/do_not_save_goal"
             style="?attr/materialButtonOutlinedStyle"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:visibility="invisible"/>
-
-    <!--
-    <Button
-            android:id="@+id/button_delete"
-            android:visibility="invisible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:clickable="false"
-            android:text="@string/delete"
-            style="?attr/materialButtonOutlinedStyle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible"/>
 
     <Button
             android:id="@+id/button_savegoal"
@@ -129,6 +106,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:visibility="invisible"/>
     -->
+
+    <Button
+            android:id="@+id/button_deletegoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="false"
+            android:text="@string/delete_goal"
+            style="?attr/materialButtonOutlinedStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             style="@style/Theme.UnderstandColor.fab"
