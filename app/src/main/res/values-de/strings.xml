@@ -49,4 +49,5 @@
     <string name="ok">OK</string>
     <string name="congratulation">Glückwunsch!</string>
     <string name="firstgoal_message">Du hast dein erstes Ziel erstellt! Du kannst jetzt Unterziele dazu erstellen, indem du das Ziel nach links wischst. </string>
+    <string name="add_new_plan">Neuen Plan speichern</string>
 </resources>

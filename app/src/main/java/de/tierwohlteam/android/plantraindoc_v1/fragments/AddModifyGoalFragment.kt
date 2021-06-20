@@ -39,6 +39,14 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
 
         viewModel.selectedGoal.value?.let { fillFields(it) }
 
+        binding.fabSavegoal.setOnClickListener {
+            viewModel.saveNewOrUpdatedGoal(goalText = binding.tiGoal.text.toString(),
+                description = binding.tiDescription.text.toString(),
+                status = selectedStatus(),
+                goalWP = viewModel.selectedGoal.value
+            )
+        }
+        /*
         binding.buttonSavegoal.setOnClickListener {
              viewModel.saveNewOrUpdatedGoal(goalText = binding.tiGoal.text.toString(),
                 description = binding.tiDescription.text.toString(),
@@ -50,7 +58,7 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
         binding.buttonCancel.setOnClickListener {
             viewModel.setSelectedGoal(null)
             view.findNavController().popBackStack()
-        }
+        } */
     }
 
     private fun subscribeToObservers() {
@@ -63,15 +71,15 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
                             binding.root,
                             result.message ?: "An unknown error occurred",
                             Snackbar.LENGTH_LONG
-                        ).setAnchorView(R.id.button_savegoal)
+                        ).setAnchorView(R.id.fab_savegoal)
                             .show()
                     }
                     Status.SUCCESS -> {
-                        Snackbar.make(
+                        /*Snackbar.make(
                             binding.root,
                             "Added Goal Item",
                             Snackbar.LENGTH_LONG
-                        ).show()
+                        ).show() */
                         viewModel.setSelectedGoal(null)
                         findNavController().popBackStack()
                     }

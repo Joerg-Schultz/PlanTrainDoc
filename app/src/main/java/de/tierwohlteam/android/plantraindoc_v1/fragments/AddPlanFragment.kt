@@ -67,10 +67,11 @@ class AddPlanFragment : Fragment() {
         setupHelperRadioGroup()
         setupConstraintRadioGroup()
 
-        binding.buttonCancel.setOnClickListener {
+        /*binding.buttonCancel.setOnClickListener {
             view.findNavController().popBackStack()
         }
-        binding.buttonSaveplan.setOnClickListener {
+        binding.buttonSaveplan.setOnClickListener { */
+        binding.fabSaveplan.setOnClickListener {
             if(helperType == PlanHelper.discrimination) {
                 helperValue = discriminationInput.text.toString()
             }
@@ -257,15 +258,15 @@ class AddPlanFragment : Fragment() {
                             binding.root,
                             result.message ?: "An unknown error occurred",
                             Snackbar.LENGTH_LONG
-                        ).setAnchorView(R.id.button_saveplan)
+                        ).setAnchorView(R.id.fab_saveplan)
                             .show()
                     }
                     Status.SUCCESS -> {
-                        Snackbar.make(
+                        /*Snackbar.make(
                             binding.root,
                             "Added Training Plan",
                             Snackbar.LENGTH_LONG
-                        ).show()
+                        ).show() */
                         goalViewModel.setSelectedGoal(null)
                         findNavController().popBackStack()
                     }

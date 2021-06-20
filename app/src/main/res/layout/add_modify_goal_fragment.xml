@@ -102,7 +102,9 @@
             android:text="@string/do_not_save_goal"
             style="?attr/materialButtonOutlinedStyle"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" android:visibility="invisible"/>
+
+    <!--
     <Button
             android:id="@+id/button_delete"
             android:visibility="invisible"
@@ -116,10 +118,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- The three possible actions:
-        1. Save the goal -> Only one action per view!
-        2. Add a Plan to the goal
-        3. Start training -->
     <Button
             android:id="@+id/button_savegoal"
             android:layout_width="wrap_content"
@@ -129,33 +127,19 @@
             android:text="@string/save_goal"
             app:backgroundTint="@color/accent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Just work with the goal here. Save, update, delete
-    All the other stuff has to be handled elsewhere
-    <Button
-            android:id="@+id/button_addtraining"
-            android:visibility="invisible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/add_training_button"
-            app:backgroundTint="@color/accent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-    <Button
-            android:id="@+id/button_train"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/train"
-            android:visibility="invisible"
-            app:backgroundTint="@color/accent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
+            app:layout_constraintEnd_toEndOf="parent" android:visibility="invisible"/>
     -->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/Theme.UnderstandColor.fab"
+            android:src="@android:drawable/ic_menu_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_margin="@dimen/fab_margin"
+            android:id="@+id/fab_savegoal"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
+            android:contentDescription="@string/add_new_goal" app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
