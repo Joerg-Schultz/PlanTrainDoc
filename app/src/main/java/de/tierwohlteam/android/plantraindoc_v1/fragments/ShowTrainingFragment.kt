@@ -93,13 +93,14 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
             planHelperJob.join()
             planConstraintJob.join()
             // TODO Use PlanWithRelations instead ->just a single call
-            binding.tvPlanConstraint.text = planConstraint?.let {translateAndFormatConstraint(it) }
-            binding.tvPlanHelper.text = planHelper?.let { translateAndFormatHelper(it) }
+            binding.tvPlanConstraint.text = translateAndFormatConstraint(planConstraint)
+            binding.tvPlanHelper.text = translateAndFormatHelper(planHelper)
         }
     }
 
-    private fun translateAndFormatConstraint(constraint: PlanConstraint) : String {
-        return when (constraint.type) {
+    private fun translateAndFormatConstraint(constraint: PlanConstraint?) : String {
+        return if(constraint == null) getString(R.string.no_constraint) else
+        when (constraint.type) {
             PlanConstraint.time -> "${constraint.value} ${getString(R.string.seconds)}"
             PlanConstraint.repetition -> "${constraint.value} ${getString(R.string.repetition)}"
             PlanConstraint.open -> getString(R.string.no_constraint)
@@ -107,8 +108,9 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
         }
     }
 
-    private fun translateAndFormatHelper(helper: PlanHelper) : String{
-        return when (helper.type){
+    private fun translateAndFormatHelper(helper: PlanHelper?) : String{
+        return if(helper == null) getString(R.string.no_helper) else
+        when (helper.type){
             PlanHelper.duration -> "${getString(R.string.duration)} ${helper.value} ${getString(R.string.seconds)}"
             PlanHelper.distance -> "${getString(R.string.distance)} ${helper.value}"
             PlanHelper.cueIntroduction -> "${getString(R.string.cue_introduction)} ${helper.value} %"

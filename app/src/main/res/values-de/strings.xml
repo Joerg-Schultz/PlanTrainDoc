@@ -56,4 +56,6 @@
     <string name="make_click">Verwende Clicker mit Geräusch</string>
     <string name="use_speech">Sage Kriterien an</string>
     <string name="remaining">Übrig</string>
+    <string name="how_do_i_want_to_train_short">Wie?</string>
+    <string name="what_do_i_want_to_train_short">Was?</string>
 </resources>
