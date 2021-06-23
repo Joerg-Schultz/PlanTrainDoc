@@ -17,7 +17,11 @@
                 android:layout_width="match_parent">
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.fragment.app.FragmentContainerView
+        <!-- Changing to fragmentcontainer led to crashes
+        "Layout" does not have a NavController set
+        https://stackoverflow.com/questions/57682209/exception-view-does-not-have-a-navcontroller-set
+        -->
+        <fragment
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"

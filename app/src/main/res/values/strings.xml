@@ -55,5 +55,6 @@
     <string name="goals">Goals</string>
     <string name="make_click">use Clicker with sound</string>
     <string name="use_speech">Say criteria</string>
+    <string name="remaining">Remaining</string>
 
 </resources>

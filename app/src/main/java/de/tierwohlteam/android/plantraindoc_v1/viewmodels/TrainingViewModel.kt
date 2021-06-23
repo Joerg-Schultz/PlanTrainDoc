@@ -48,6 +48,9 @@ class TrainingViewModel @Inject constructor(
             if(selectedPlanConstraint.value != null){
                 countDown.value = selectedPlanConstraint.value!!.value
             }
+            else {
+                countDown.value = null
+            }
         }
         //prepare Helper
         viewModelScope.launch {

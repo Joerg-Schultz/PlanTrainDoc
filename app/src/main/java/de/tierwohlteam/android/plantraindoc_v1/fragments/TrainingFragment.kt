@@ -2,7 +2,6 @@ package de.tierwohlteam.android.plantraindoc_v1.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Resources
 import android.media.SoundPool
 import android.os.*
 import android.speech.tts.TextToSpeech
@@ -54,6 +53,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         soundId = soundPool!!.load(activity, R.raw.click_test, 10)
 
         //Prepare text to speech
+        //TODO choose app language
         val appLanguage = Locale.getDefault().language
         //val sysLanguage = Resources.getSystem().configuration.locales.toLanguageTags()
         tts = TextToSpeech(context) { status ->
@@ -101,8 +101,14 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         //Constraint text field
         lifecycleScope.launchWhenStarted {
             trainingViewModel.countDown.collect {
-                val text = it.toString()
-                binding.tvConstraintCounter.text = text
+                if(it != null) {
+                    binding.tvConstraintHeader.text = getString(R.string.remaining)
+                    val text = it.toString()
+                    binding.tvConstraintCounter.text = text
+                } else {
+                    binding.tvConstraintHeader.text = ""
+                    binding.tvConstraintCounter.text = ""
+                }
             }
         }
 
