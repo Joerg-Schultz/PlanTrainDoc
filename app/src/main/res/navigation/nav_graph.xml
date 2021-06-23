@@ -8,7 +8,7 @@
     <fragment
             android:id="@+id/goalTreeFragment"
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.GoalTreeFragment"
-            android:label="main_fragment"
+            android:label="@string/plan_verb"
             tools:layout="@layout/goaltree_fragment">
         <action android:id="@+id/action_goalTreeFragment_to_addModifyGoalFragment"
                 app:destination="@id/addModifyGoalFragment"/>
@@ -21,14 +21,14 @@
     <fragment
             android:id="@+id/addModifyGoalFragment"
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.AddModifyGoalFragment"
-            android:label="main_fragment"
+            android:label="@string/plan_verb"
             tools:layout="@layout/add_modify_goal_fragment">
     </fragment>
 
     <fragment
             android:id="@+id/showTrainingFragment"
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.ShowTrainingFragment"
-            android:label="main_fragment"
+            android:label="@string/train"
             tools:layout="@layout/show_training_fragment">
         <action android:id="@+id/action_showTrainingFragment_to_trainingFragment"
                 app:destination="@id/trainingFragment"/>
@@ -37,14 +37,14 @@
     <fragment
             android:id="@+id/addPlanFragment"
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.AddPlanFragment"
-            android:label="main_fragment"
+            android:label="@string/plan_verb"
             tools:layout="@layout/add_plan_fragment">
     </fragment>
 
     <fragment
             android:id="@+id/trainingFragment"
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.TrainingFragment"
-            android:label="main_fragment"
+            android:label="@string/train"
             tools:layout="@layout/training_fragment">
     </fragment>
 
