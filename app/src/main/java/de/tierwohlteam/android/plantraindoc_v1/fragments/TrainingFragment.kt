@@ -1,6 +1,7 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Resources
 import android.media.SoundPool
 import android.os.*
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
@@ -38,6 +40,8 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
     private var soundPool: SoundPool? = null
     private var soundId = 1
     private var tts: TextToSpeech? = null
+    private lateinit var sharedPreferences : SharedPreferences
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -59,6 +63,8 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             }
         }
 
+        //Preferences
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
 
         //Back button stops training
         requireActivity().onBackPressedDispatcher.addCallback(this) {
@@ -145,7 +151,8 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
         open fun makeButtonClick() {
             binding.buttonClick.setOnClickListener {
-                soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
+                if(sharedPreferences.getBoolean("useClicker", true))
+                    soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
                 lifecycleScope.launchWhenStarted {
                     trainingViewModel.addTrial(true)
                 }
