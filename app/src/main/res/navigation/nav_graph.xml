@@ -47,4 +47,10 @@
             android:label="main_fragment"
             tools:layout="@layout/training_fragment">
     </fragment>
+
+    <fragment
+            android:id="@+id/settingsFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.SettingsFragment"
+            android:label="@string/settings">
+    </fragment>
 </navigation>
