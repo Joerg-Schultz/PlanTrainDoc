@@ -189,9 +189,10 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 trainingViewModel.helperNextValue.collect {
                     if (it != null) {
                         binding.tvHelperInfo.text = it
-                        launch {
-                            delay(1000)
-                            tts!!.speak(it, TextToSpeech.QUEUE_FLUSH, null, "")
+                        if(sharedPreferences.getBoolean("useSpeechforHelper", true))
+                            launch {
+                                delay(1000)
+                                tts!!.speak(it, TextToSpeech.QUEUE_FLUSH, null, "")
                         }
                     }
                 }
@@ -218,7 +219,8 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                     binding.buttonClick.setBackgroundColor(resources.getColor(R.color.accent))
                     binding.buttonClick.text = getString(R.string.click)
                 } else {
-                    soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
+                    if(sharedPreferences.getBoolean("useClicker", true))
+                        soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
                     lifecycleScope.launchWhenStarted {
                         trainingViewModel.addTrial(true)
                     }
@@ -251,10 +253,11 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 trainingViewModel.helperNextValue.collect {
                     binding.tvHelperInfo.text = it
                     if (it != null) {
-                        launch {
-                            delay(1000)
-                            tts!!.speak(it, TextToSpeech.QUEUE_FLUSH, null,"")
-                        }
+                        if (sharedPreferences.getBoolean("useSpeechforHelper", true))
+                            launch {
+                                delay(1000)
+                                tts!!.speak(it, TextToSpeech.QUEUE_FLUSH, null, "")
+                            }
                         timer = object : CountDownTimer((it.toFloat() * 1000).toLong(), 1000) {
                             override fun onTick(p0: Long) {
                                 binding.tvHelperInfo.text = (p0 / 1000).toString()

@@ -53,5 +53,7 @@
     <string name="delete_goal">Delete Goal</string>
     <string name="settings">Settings</string>
     <string name="goals">Goals</string>
+    <string name="make_click">use Clicker with sound</string>
+    <string name="use_speech">Say criteria</string>
 
 </resources>

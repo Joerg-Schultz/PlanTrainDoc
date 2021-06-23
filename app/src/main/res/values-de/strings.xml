@@ -53,4 +53,6 @@
     <string name="delete_goal">Ziel löschen</string>
     <string name="settings">Einstellungen</string>
     <string name="goals">Ziele</string>
+    <string name="make_click">Verwende Clicker mit Geräusch</string>
+    <string name="use_speech">Sage Kriterien an</string>
 </resources>

@@ -5,11 +5,11 @@
         <SwitchPreferenceCompat
                 app:key="useClicker"
                 app:defaultValue="true"
-                app:title="Make Clicker Sound"/>
+                app:title="@string/make_click"/>
         <SwitchPreferenceCompat
                 app:key="useSpeechforHelper"
                 app:defaultValue="true"
-                app:title="Use Speech for Helpers"/>
+                app:title="@string/use_speech"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
