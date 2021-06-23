@@ -2,6 +2,7 @@ package de.tierwohlteam.android.plantraindoc_v1.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 import android.media.SoundPool
 import android.os.*
 import android.speech.tts.TextToSpeech
@@ -46,6 +47,11 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = TrainingFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        // Lock the screen orientation
+        // remember to free in onDestroyView!!!!
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
         // Clicker
         soundPool = SoundPool.Builder()
             .setMaxStreams(1)
@@ -66,10 +72,6 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         //Preferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
 
-        //Back button stops training
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            stopTraining(view)
-        }
         return view
     }
 
@@ -124,7 +126,6 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
     private fun stopTraining(view: View) {
         vibrate()
-        trainingViewModel.cleanup()
         view.findNavController().popBackStack()
     }
     private fun vibrate(duration: String = "long"){
@@ -138,6 +139,12 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         } else {
             vibrator.vibrate(milliseconds)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        trainingViewModel.cleanup()
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
 
 /*
