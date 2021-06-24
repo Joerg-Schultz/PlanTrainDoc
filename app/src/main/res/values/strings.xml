@@ -58,5 +58,6 @@
     <string name="remaining">Remaining</string>
     <string name="how_do_i_want_to_train_short">How?</string>
     <string name="what_do_i_want_to_train_short">What?</string>
+    <string name="statistics">Statistics</string>
 
 </resources>

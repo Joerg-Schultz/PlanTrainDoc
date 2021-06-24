@@ -60,6 +60,10 @@ class GoalTreeAdapter(private val selectGoal: (GoalWithPlan) -> Unit)
                     it.findNavController().navigate(R.id.action_goalTreeFragment_to_showTrainingFragment)
                 }
             }
+            btnStats.setOnClickListener {
+                selectGoal(goalWithPlan)
+                it.findNavController().navigate(R.id.action_goalTreeFragment_to_statisticsFragment)
+            }
         }
         holder.itemView.setOnClickListener { view ->
             selectGoal(goalWithPlan)
