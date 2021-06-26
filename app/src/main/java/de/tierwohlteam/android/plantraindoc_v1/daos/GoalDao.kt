@@ -53,11 +53,11 @@ interface GoalDao {
     // returns GoalTreeItem
     @Transaction
     @Query("WITH RECURSIVE subGoals(id, goal, level) AS (" +
-            "VALUES(:goalID,0)" +
+            "VALUES(:goalID,:goal,0)" +
             "    UNION ALL" +
-            "    SELECT goals.goal, subGoals.level+1\n" +
+            "    SELECT goals.id, goals.goal, subGoals.level+1\n" +
             "      FROM goals JOIN subGoals ON goals.parents=subGoals.id" +
             "     ORDER BY 2 DESC)" +
             "SELECT id, goal, level FROM subGoals")
-    fun getSubGoalsRecursive(goalID: Uuid): Flow<List<GoalTreeItem>>
+    fun getSubGoalsRecursive(goalID: Uuid, goal:String): Flow<List<GoalTreeItem>>
 }

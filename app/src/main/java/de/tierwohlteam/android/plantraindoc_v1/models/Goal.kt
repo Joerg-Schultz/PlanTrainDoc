@@ -103,7 +103,7 @@ data class GoalWithPlan(
 )
 
 data class GoalTreeItem(
-    val goalID: Uuid,
+    val id: Uuid,
     val goal: String,
     val level: Int
 )

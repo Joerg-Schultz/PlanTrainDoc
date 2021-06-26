@@ -7,10 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.benasher44.uuid.Uuid
 import dagger.hilt.android.lifecycle.HiltViewModel
-import de.tierwohlteam.android.plantraindoc_v1.models.Goal
-import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithPlan
-import de.tierwohlteam.android.plantraindoc_v1.models.Session
-import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
+import de.tierwohlteam.android.plantraindoc_v1.models.*
 import de.tierwohlteam.android.plantraindoc_v1.others.Event
 import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
@@ -31,6 +28,14 @@ class GoalViewModel @Inject constructor(
     val selectedGoal: MutableStateFlow<GoalWithPlan?> = MutableStateFlow(value = null)
     val goals: StateFlow<List<GoalWithPlan>> = parentGoal.flatMapLatest {
         repository.getChildGoalsWithPlan(parent = it)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = emptyList()
+    )
+
+    val subGoalsRecursive: StateFlow<List<GoalTreeItem>?> = selectedGoal.flatMapLatest {
+        repository.getSubGoalsRecursive(goal = it?.goal)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),

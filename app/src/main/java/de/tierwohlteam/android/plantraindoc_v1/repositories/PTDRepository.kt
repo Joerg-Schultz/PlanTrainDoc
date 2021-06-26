@@ -127,7 +127,13 @@ class PTDRepository @Inject constructor(
      * @param[goal] Goal
      * @return List of GoalTreeItem
      */
-    fun getSubGoalsRecursive(goal: Goal): Flow<List<GoalTreeItem>> = goalDao.getSubGoalsRecursive(goal.id)
+    fun getSubGoalsRecursive(goal: Goal?): Flow<List<GoalTreeItem>> {
+        return if (goal == null) {
+            flowOf(emptyList())
+        } else {
+            goalDao.getSubGoalsRecursive(goal.id, goal.goal)
+        }
+    }
 
     /**
      * Plan functions

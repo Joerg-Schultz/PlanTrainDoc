@@ -19,6 +19,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.StatisticsViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -35,6 +36,7 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
         return view
     }
 
+    @OptIn(InternalCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val goal = goalViewModel.selectedGoal.value?.goal ?: return
         binding.statsGoal.text = goal.goal
