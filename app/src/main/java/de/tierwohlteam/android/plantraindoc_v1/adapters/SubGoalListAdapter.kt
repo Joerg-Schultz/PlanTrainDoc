@@ -37,6 +37,9 @@ class SubGoalListAdapter() :
     override fun onBindViewHolder(holder: SubGoalListAdapter.GoalViewHolder, position: Int) {
         val goal = differ.currentList[position]
         holder.binding.tvGoal.text = goal.goal
+        val params = holder.itemView.layoutParams as RecyclerView.LayoutParams
+        params.leftMargin = goal.level * 30
+        holder.itemView.layoutParams = params
     }
 
     override fun getItemCount(): Int {

@@ -14,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.adapters.SubGoalListAdapter
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsSubGoalsBinding
+import de.tierwohlteam.android.plantraindoc_v1.models.GoalTreeItem
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -49,28 +50,12 @@ class SubGoalsFragment(title: String) : TabLayoutFragments(title = title) {
             goalListAdapter = SubGoalListAdapter()
             adapter = goalListAdapter
             layoutManager = LinearLayoutManager(requireContext())
-            addItemDecoration(LeftIndent())
         }
         lifecycleScope.launchWhenStarted {
             goalViewModel.subGoalsRecursive.collect{
                 if (it != null) {
                     goalListAdapter.submitList(it)
                 }
-            }
-        }
-    }
-
-    class LeftIndent : RecyclerView.ItemDecoration() {
-        override fun getItemOffsets(
-            outRect: Rect, view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State
-        ) {
-            with(outRect) {
-                top = 0
-                left = parent.getChildAdapterPosition(view) * 30
-                right = 0
-                bottom = 0
             }
         }
     }
