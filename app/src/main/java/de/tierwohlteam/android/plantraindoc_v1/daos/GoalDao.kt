@@ -2,10 +2,7 @@ package de.tierwohlteam.android.plantraindoc_v1.daos
 
 import androidx.room.*
 import com.benasher44.uuid.Uuid
-import de.tierwohlteam.android.plantraindoc_v1.models.Goal
-import de.tierwohlteam.android.plantraindoc_v1.models.GoalDependencyCrossRef
-import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithPlan
-import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithRelations
+import de.tierwohlteam.android.plantraindoc_v1.models.*
 import kotlinx.coroutines.flow.Flow
 import java.net.IDN
 
@@ -51,4 +48,16 @@ interface GoalDao {
 
     @Delete
     suspend fun delete(goal: Goal)
+
+    // get all subgoals for a goal
+    // returns GoalTreeItem
+    @Transaction
+    @Query("WITH RECURSIVE subGoals(id, goal, level) AS (" +
+            "VALUES(:goalID,0)" +
+            "    UNION ALL" +
+            "    SELECT goals.goal, subGoals.level+1\n" +
+            "      FROM goals JOIN subGoals ON goals.parents=subGoals.id" +
+            "     ORDER BY 2 DESC)" +
+            "SELECT id, goal, level FROM subGoals")
+    fun getSubGoalsRecursive(goalID: Uuid): Flow<List<GoalTreeItem>>
 }

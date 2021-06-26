@@ -123,6 +123,13 @@ class PTDRepository @Inject constructor(
         goalWithPlan?.goal?.parents?.let { goalDao.getByIDWithPlan(it) }
 
     /**
+     * recursively get all sub Goals for a goal
+     * @param[goal] Goal
+     * @return List of GoalTreeItem
+     */
+    fun getSubGoalsRecursive(goal: Goal): Flow<List<GoalTreeItem>> = goalDao.getSubGoalsRecursive(goal.id)
+
+    /**
      * Plan functions
      *
      *  Insert a Plan into the database
