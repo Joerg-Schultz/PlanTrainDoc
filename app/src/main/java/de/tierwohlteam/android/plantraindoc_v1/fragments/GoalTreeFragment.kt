@@ -112,8 +112,8 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
     }
 
     private val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
-        ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-        //0,
+        //ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+        0,
         ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
     ) {
         override fun onMove(

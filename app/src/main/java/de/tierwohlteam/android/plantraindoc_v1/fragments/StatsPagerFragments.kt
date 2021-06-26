@@ -15,7 +15,7 @@ import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsSubGoalsBinding
 abstract class TabLayoutFragments(val title: String) : Fragment(){
 }
 
-class FirstFragment(title: String) : TabLayoutFragments(title = title) {
+class SubGoalsFragment(title: String) : TabLayoutFragments(title = title) {
 
     private var _binding: StatsSubGoalsBinding? = null
     private val binding get() = _binding!!

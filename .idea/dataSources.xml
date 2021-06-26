@@ -24,5 +24,11 @@
       <jdbc-url>jdbc:sqlite:C:\Users\binf009\AppData\Local\JetBrains\IntelliJIdea2021.1\android\databases\EMULATOR_Pixel_2_API_24\de.tierwohlteam.android.plantraindoc_v1\internal\plantraindoc_db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="PTDv1" uuid="a050a672-aa3b-477c-af0c-a70c2f6152f9">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\binf009\AppData\Local\JetBrains\IntelliJIdea2021.1\android\databases\EMULATOR_Pixel_2_API_24\de.tierwohlteam.android.plantraindoc_v1\internal\plantraindocv1_db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

@@ -24,6 +24,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
 
+    private val goalViewModel: GoalViewModel by activityViewModels()
+
     private var _binding: StatisticsFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -34,10 +36,12 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val goal = goalViewModel.selectedGoal.value?.goal ?: return
+        binding.statsGoal.text = goal.goal
         val viewPager2 = view.findViewById<ViewPager2>(R.id.stats_pager_container)
 
         val fragmentList = arrayListOf<TabLayoutFragments>(
-            FirstFragment("Goals"),
+            SubGoalsFragment("Goals"),
             SecondFragment("Clicks"),
            /* ThirdFragment(),
             FourthFragment(),
