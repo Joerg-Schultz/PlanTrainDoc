@@ -15,6 +15,8 @@ class StatisticsViewModel @Inject constructor(
 )  : ViewModel() {
 
     var clickResetCounter: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(value = null)
+    var trialsFromPlan: MutableStateFlow<List<Triple<Int, Int, String>>> = MutableStateFlow(value = emptyList())
+
 
     private lateinit var trainingList: List<SessionWithRelations>
 
@@ -22,11 +24,20 @@ class StatisticsViewModel @Inject constructor(
         this.trainingList = trainingList
         var totalClick = 0
         var totalReset = 0
-        for(session in trainingList){
+        var xPos = 0
+        var yPos = 0
+        val timeCourse : MutableList<Triple<Int, Int, String>> = mutableListOf()
+        for(session in trainingList.sortedBy { it.session.created }){
+            val criterion = session.session.criterion
             totalClick += session.trials.filter { it.success }.size
             totalReset += session.trials.filter { !it.success }.size
+            for(trial in session.trials.sortedBy { it.created }){
+                if(trial.success) yPos++
+                timeCourse.add(Triple(xPos++, yPos, criterion ?: ""))
+            }
         }
         clickResetCounter.value = Pair(totalClick,totalReset)
+        trialsFromPlan.value = timeCourse
     }
 
 }
