@@ -233,8 +233,9 @@ class PTDRepository @Inject constructor(
      * @param[plan] Plan object
      * @return a flow of SessionWithRelation
      */
-    fun getSessionsWithRelationFromPlan(plan: Plan?): Flow<List<SessionWithRelations>> =
-       sessionDao.getByPlanIDWithRelations(plan?.id)
+    fun getSessionsWithRelationFromPlan(plan: Plan?): Flow<List<SessionWithRelations>> {
+        return if(plan == null) flowOf(emptyList()) else sessionDao.getByPlanIDWithRelations(plan.id)
+    }
 
     /**
      * update a comment for a session

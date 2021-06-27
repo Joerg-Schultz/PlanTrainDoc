@@ -60,5 +60,6 @@
     <string name="what_do_i_want_to_train_short">What?</string>
     <string name="statistics">Statistics</string>
     <string name="clickBarChart">Clicks vs. Resets</string>
+    <string name="no_planstats">No Training Plan yet</string>
 
 </resources>

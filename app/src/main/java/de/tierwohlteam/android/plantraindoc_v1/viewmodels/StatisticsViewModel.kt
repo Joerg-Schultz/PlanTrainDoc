@@ -28,4 +28,5 @@ class StatisticsViewModel @Inject constructor(
         }
         clickResetCounter.value = Pair(totalClick,totalReset)
     }
+
 }
