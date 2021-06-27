@@ -9,7 +9,7 @@
         tools:context=".fragments.ClicksFragment">
 
     <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/stackedbarChart"
+            android:id="@+id/clicksBarChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
