@@ -13,11 +13,13 @@ import com.github.mikephil.charting.data.*
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.adapters.SubGoalListAdapter
+import de.tierwohlteam.android.plantraindoc_v1.databinding.LineChartAnnotationBinding
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsGoalClicksBinding
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsSubGoalsBinding
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsTimeCourseBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.models.Plan
+import de.tierwohlteam.android.plantraindoc_v1.others.LineChartMarkerView
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.StatisticsViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
@@ -196,12 +198,13 @@ class TimeCourseFragment(title: String) : TabLayoutFragments(title = title) {
                 statisticsViewModel.trialsFromPlan.collect {
                     if (it.isNotEmpty()) {
                         val dataList: MutableList<Entry> = mutableListOf()
-                        for(triple in it){
-                            dataList.add(Entry(triple.first.toFloat(),triple.second.toFloat()))
+                        for(chartPoint in it){
+                            dataList.add(Entry(chartPoint.xValue.toFloat(),chartPoint.yValue.toFloat()))
                         }
                         val dataSet = LineDataSet(dataList,"Time Course")
                         binding.timeCourseChart.apply {
                             data = LineData(dataSet)
+                            marker = LineChartMarkerView(it,requireContext(),R.layout.line_chart_annotation)
                             invalidate()
                         }
                     }

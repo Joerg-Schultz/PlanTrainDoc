@@ -15,7 +15,7 @@ class StatisticsViewModel @Inject constructor(
 )  : ViewModel() {
 
     var clickResetCounter: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(value = null)
-    var trialsFromPlan: MutableStateFlow<List<Triple<Int, Int, String>>> = MutableStateFlow(value = emptyList())
+    var trialsFromPlan: MutableStateFlow<List<ChartPoint>> = MutableStateFlow(value = emptyList())
 
 
     private lateinit var trainingList: List<SessionWithRelations>
@@ -26,14 +26,14 @@ class StatisticsViewModel @Inject constructor(
         var totalReset = 0
         var xPos = 0
         var yPos = 0
-        val timeCourse : MutableList<Triple<Int, Int, String>> = mutableListOf()
+        val timeCourse : MutableList<ChartPoint> = mutableListOf()
         for(session in trainingList.sortedBy { it.session.created }){
             val criterion = session.session.criterion
             totalClick += session.trials.filter { it.success }.size
             totalReset += session.trials.filter { !it.success }.size
             for(trial in session.trials.sortedBy { it.created }){
                 if(trial.success) yPos++
-                timeCourse.add(Triple(xPos++, yPos, criterion ?: ""))
+                timeCourse.add(ChartPoint(xPos++, yPos, criterion ?: ""))
             }
         }
         clickResetCounter.value = Pair(totalClick,totalReset)
@@ -41,3 +41,5 @@ class StatisticsViewModel @Inject constructor(
     }
 
 }
+
+data class ChartPoint(val xValue: Int, val yValue: Int, val annotation: String)
