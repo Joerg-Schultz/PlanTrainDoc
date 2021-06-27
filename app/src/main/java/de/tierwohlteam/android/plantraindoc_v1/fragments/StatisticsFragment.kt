@@ -44,7 +44,7 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
 
         val fragmentList = arrayListOf<TabLayoutFragments>(
             SubGoalsFragment("Goals"),
-            SecondFragment("Clicks"),
+            ClicksFragment("Clicks"),
            /* ThirdFragment(),
             FourthFragment(),
             FifthFragment(), */

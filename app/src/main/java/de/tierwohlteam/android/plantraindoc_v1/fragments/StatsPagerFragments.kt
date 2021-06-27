@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.adapters.SubGoalListAdapter
+import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsGoalClicksBinding
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsSubGoalsBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.GoalTreeItem
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
+import de.tierwohlteam.android.plantraindoc_v1.viewmodels.StatisticsViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -63,13 +65,23 @@ class SubGoalsFragment(title: String) : TabLayoutFragments(title = title) {
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @AndroidEntryPoint
-class SecondFragment(title: String) : TabLayoutFragments(title) {
+class ClicksFragment(title: String) : TabLayoutFragments(title) {
+    private val goalViewModel: GoalViewModel by activityViewModels()
+    private val statisticsViewModel: StatisticsViewModel by activityViewModels()
+
+    private var _binding: StatsGoalClicksBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.stats_goal_clicks, container, false)
+    ): View {
+        _binding = StatsGoalClicksBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
 }
