@@ -1,6 +1,7 @@
 package de.tierwohlteam.android.plantraindoc_v1.others
 
 import android.content.Context
+import android.graphics.Canvas
 import android.util.Log
 import android.widget.TextView
 import com.github.mikephil.charting.components.MarkerView
@@ -15,10 +16,23 @@ class LineChartMarkerView(
     c: Context,
     layoutID: Int) : MarkerView(c, layoutID) {
 
-    override fun getOffset(): MPPointF {
+ /*   override fun getOffset(): MPPointF {
         return MPPointF(-width / 2f, -height.toFloat())
-    }
+    } */
 
+    override fun draw(canvas: Canvas?, posX: Float, posY: Float) {
+        if(canvas == null)
+            super.draw(canvas, posX, posY)
+        else {
+            val fixedX = 40F
+            val fixedY = 50F
+            // translate to the correct position and draw
+            // https://stackoverflow.com/questions/32838687/show-marker-view-under-x-axis-at-the-same-height-whatever-the-value-is-using-m
+            canvas.translate(fixedX, fixedY)
+            draw(canvas)
+            canvas.translate(-fixedX, -fixedY)
+        }
+    }
     override fun refreshContent(e: Entry?, highlight: Highlight?) {
         super.refreshContent(e, highlight)
         if(e == null) return
