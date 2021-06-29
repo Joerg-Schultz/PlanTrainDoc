@@ -43,12 +43,11 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
         val viewPager2 = view.findViewById<ViewPager2>(R.id.stats_pager_container)
 
         val fragmentList = arrayListOf<TabLayoutFragments>(
-            ClicksFragment("Clicks"),
-            TimeCourseFragment("Trend"),
+            ClicksFragment("Clicks", level = "top"),
+            TimeCourseFragment("Trend", level = "top"),
             SubGoalsFragment("Goals"),
-           /* ThirdFragment(),
-            FourthFragment(),
-            FifthFragment(), */
+            ClicksFragment("Total Clicks", level = "all"),
+            TimeCourseFragment("Total Trend", level = "all"),
         )
         viewPager2.adapter = StatsViewPagerAdapter(this.childFragmentManager, lifecycle, fragmentList)
 

@@ -70,7 +70,7 @@ class SubGoalsFragment(title: String) : TabLayoutFragments(title = title) {
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @AndroidEntryPoint
-class ClicksFragment(title: String) : TabLayoutFragments(title) {
+class ClicksFragment(title: String, private val level: String = "all") : TabLayoutFragments(title) {
     private val goalViewModel: GoalViewModel by activityViewModels()
     private val trainingViewModel: TrainingViewModel by activityViewModels()
     private val statisticsViewModel: StatisticsViewModel by activityViewModels()
@@ -108,15 +108,10 @@ class ClicksFragment(title: String) : TabLayoutFragments(title) {
            lifecycleScope.launchWhenStarted {
                 goalViewModel.subGoalsRecursive.collect {
                     if (it != null && it.isNotEmpty()) {
-                        statisticsViewModel.analyzeGoals(it, level = "top")
+                        statisticsViewModel.analyzeGoals(it, level = level)
                     }
                 }
            }
-         /*   lifecycleScope.launchWhenStarted {
-                trainingViewModel.sessionWithRelationsList.collect {
-                    statisticsViewModel.analyzeSessionList(it)
-                }
-            } */
             setupBarChart()
             lifecycleScope.launchWhenStarted {
                 statisticsViewModel.clickResetCounter.collect {
@@ -159,7 +154,7 @@ class ClicksFragment(title: String) : TabLayoutFragments(title) {
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @AndroidEntryPoint
-class TimeCourseFragment(title: String) : TabLayoutFragments(title = title) {
+class TimeCourseFragment(title: String, private val level: String = "all") : TabLayoutFragments(title = title) {
     private val goalViewModel: GoalViewModel by activityViewModels()
     private val trainingViewModel: TrainingViewModel by activityViewModels()
     private val statisticsViewModel: StatisticsViewModel by activityViewModels()
@@ -197,15 +192,10 @@ class TimeCourseFragment(title: String) : TabLayoutFragments(title = title) {
             lifecycleScope.launchWhenStarted {
                 goalViewModel.subGoalsRecursive.collect {
                     if (it != null) {
-                        statisticsViewModel.analyzeGoals(it, level = "top")
+                        statisticsViewModel.analyzeGoals(it, level = level)
                     }
                 }
             }
-         /*   lifecycleScope.launchWhenStarted {
-                trainingViewModel.sessionWithRelationsList.collect {
-                    statisticsViewModel.analyzeSessionList(it)
-                }
-            } */
             setupLineChart()
             lifecycleScope.launchWhenStarted {
                 statisticsViewModel.trialsFromPlan.collect {
