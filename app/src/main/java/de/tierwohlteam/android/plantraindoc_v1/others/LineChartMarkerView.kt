@@ -38,9 +38,11 @@ class LineChartMarkerView(
         if(e == null) return
         val xValue = e.x.toInt()
         val point = points.first{it.xValue == xValue}
-        val annotation = if(point.goal == "") "No annotation" else point.goal
-        val tvCriterion = findViewById<TextView>(R.id.tv_criterion)
-        tvCriterion.text = annotation
-
+        val goalAnnotation = if(point.goal == "") "No annotation" else point.goal
+        val tvGoal = findViewById<TextView>(R.id.tv_chart_goal)
+        tvGoal.text = goalAnnotation
+        val sessionAnnotation = if(point.sessionCriterion == "") "No annotation" else point.sessionCriterion
+        val tvSession = findViewById<TextView>(R.id.tv_chart_session)
+        tvSession.text = sessionAnnotation
     }
 }

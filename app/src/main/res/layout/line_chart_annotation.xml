@@ -8,13 +8,22 @@
         app:cardElevation="10dp">
     <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <TextView
                 android:text="@string/criterion"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_criterion"
-                android:layout_weight="1" android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
+                android:id="@+id/tv_chart_goal"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        <TextView
+                android:text="@string/criterion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_chart_session"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
