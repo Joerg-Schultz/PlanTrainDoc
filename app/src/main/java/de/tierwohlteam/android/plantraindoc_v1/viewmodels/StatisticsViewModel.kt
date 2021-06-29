@@ -1,14 +1,20 @@
 package de.tierwohlteam.android.plantraindoc_v1.viewmodels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
+import de.tierwohlteam.android.plantraindoc_v1.models.GoalTreeItem
+import de.tierwohlteam.android.plantraindoc_v1.models.TrialWithAnnotations
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 @HiltViewModel
 class StatisticsViewModel @Inject constructor(
     private val repository: PTDRepository,
@@ -18,23 +24,31 @@ class StatisticsViewModel @Inject constructor(
     var trialsFromPlan: MutableStateFlow<List<ChartPoint>> = MutableStateFlow(value = emptyList())
 
 
-    private lateinit var trainingList: List<SessionWithRelations>
+    fun analyzeGoals(goals: List<GoalTreeItem>, level: String = "all"){
+        val selectedGoals: List<GoalTreeItem> = when(level){
+            "top" -> goals.filter { it.level == 0 }
+            else -> goals
+        }
+        viewModelScope.launch {
+            repository.getTrialsByGoalIDList(selectedGoals.map { it.id }).collect {
+                analyzeTrialList(it)
+            }
+        }
+    }
 
-    fun setTrainingList(trainingList: List<SessionWithRelations>) {
-        this.trainingList = trainingList
+     private fun analyzeTrialList(trialList: List<TrialWithAnnotations>) {
         var totalClick = 0
         var totalReset = 0
-        var xPos = 0
-        var yPos = 0
+         var yPos = 0
         val timeCourse : MutableList<ChartPoint> = mutableListOf()
-        for(session in trainingList.sortedBy { it.session.created }){
-            val criterion = session.session.criterion
-            totalClick += session.trials.filter { it.success }.size
-            totalReset += session.trials.filter { !it.success }.size
-            for(trial in session.trials.sortedBy { it.created }){
-                if(trial.success) yPos++
-                timeCourse.add(ChartPoint(xPos++, yPos, criterion ?: ""))
+        for((xPos, trial) in trialList.sortedBy { it.created }.withIndex()){
+            if(!trial.success) {
+                totalReset++
+            } else {
+                totalClick++
+                yPos++
             }
+            timeCourse.add(ChartPoint(xPos, yPos, trial.sessionCriterion, trial.goal))
         }
         clickResetCounter.value = Pair(totalClick,totalReset)
         trialsFromPlan.value = timeCourse
@@ -42,4 +56,4 @@ class StatisticsViewModel @Inject constructor(
 
 }
 
-data class ChartPoint(val xValue: Int, val yValue: Int, val annotation: String)
+data class ChartPoint(val xValue: Int, val yValue: Int, val sessionCriterion: String, val goal: String)

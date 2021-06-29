@@ -28,4 +28,10 @@ interface SessionDao {
     @Query("UPDATE sessions set comment = :comment where id = :sessionID")
     suspend fun updateComment(sessionID: Uuid, comment: String?)
 
+    @Transaction
+    @Query("SELECT * from sessions " +
+            "INNER JOIN plans ON plans.id = sessions.planID " +
+            "WHERE plans.goalID IN (:goalIDList)")
+    fun getByGoalIDList(goalIDList: List<Uuid>): Flow<List<SessionWithRelations>>
+
 }

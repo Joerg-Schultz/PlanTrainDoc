@@ -13,7 +13,6 @@ import com.github.mikephil.charting.data.*
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.adapters.SubGoalListAdapter
-import de.tierwohlteam.android.plantraindoc_v1.databinding.LineChartAnnotationBinding
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsGoalClicksBinding
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsSubGoalsBinding
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsTimeCourseBinding
@@ -106,11 +105,18 @@ class ClicksFragment(title: String) : TabLayoutFragments(title) {
                 tvNoPlan.visibility = View.GONE
                 clicksBarChart.visibility = View.VISIBLE
             }
-            lifecycleScope.launchWhenStarted {
-                trainingViewModel.sessionWithRelationsList.collect {
-                    statisticsViewModel.setTrainingList(it)
+           lifecycleScope.launchWhenStarted {
+                goalViewModel.subGoalsRecursive.collect {
+                    if (it != null && it.isNotEmpty()) {
+                        statisticsViewModel.analyzeGoals(it, level = "top")
+                    }
                 }
-            }
+           }
+         /*   lifecycleScope.launchWhenStarted {
+                trainingViewModel.sessionWithRelationsList.collect {
+                    statisticsViewModel.analyzeSessionList(it)
+                }
+            } */
             setupBarChart()
             lifecycleScope.launchWhenStarted {
                 statisticsViewModel.clickResetCounter.collect {
@@ -189,10 +195,17 @@ class TimeCourseFragment(title: String) : TabLayoutFragments(title = title) {
                 timeCourseChart.visibility = View.VISIBLE
             }
             lifecycleScope.launchWhenStarted {
-                trainingViewModel.sessionWithRelationsList.collect {
-                    statisticsViewModel.setTrainingList(it)
+                goalViewModel.subGoalsRecursive.collect {
+                    if (it != null) {
+                        statisticsViewModel.analyzeGoals(it, level = "top")
+                    }
                 }
             }
+         /*   lifecycleScope.launchWhenStarted {
+                trainingViewModel.sessionWithRelationsList.collect {
+                    statisticsViewModel.analyzeSessionList(it)
+                }
+            } */
             setupLineChart()
             lifecycleScope.launchWhenStarted {
                 statisticsViewModel.trialsFromPlan.collect {

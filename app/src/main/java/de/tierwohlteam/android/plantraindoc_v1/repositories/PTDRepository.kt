@@ -238,6 +238,14 @@ class PTDRepository @Inject constructor(
     }
 
     /**
+     * get all sessions with Relations associated with goals
+     * @param[goalIDList] List of GoalIds
+     * @return a flow of SessionWithRelation
+     */
+    fun getSessionsWithRelationFromGoalIDList(goalIDList: List<Uuid>): Flow<List<SessionWithRelations>> =
+        sessionDao.getByGoalIDList(goalIDList)
+
+    /**
      * update a comment for a session
      */
     suspend fun updateCommentInSession(session: Session?){
@@ -267,4 +275,12 @@ class PTDRepository @Inject constructor(
      * @param[trialCriterion] TrialCriterion object
      */
     suspend fun insertTrialCriterion(trialCriterion: TrialCriterion) = trialDao.insert(trialCriterion)
+
+    /**
+     * get all Trials with session criterion and goal
+     * @param[goalsIDList] list of ids of goals
+     * @return Flow of List of TrialWithAnnotations
+     */
+    fun getTrialsByGoalIDList(goalsIDList: List<Uuid>) : Flow<List<TrialWithAnnotations>> =
+        trialDao.getByGoalIDList(goalsIDList)
 }

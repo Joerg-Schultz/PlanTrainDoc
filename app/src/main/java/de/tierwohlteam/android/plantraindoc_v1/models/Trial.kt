@@ -67,3 +67,11 @@ data class TrialWithCriteria(
     )
     val criteria: List<TrialCriterion> = emptyList()
 )
+
+data class TrialWithAnnotations(
+    val id: Uuid = uuid4(),
+    val success: Boolean,
+    val created: LocalDateTime,
+    val sessionCriterion: String = "",
+    val goal: String
+)
