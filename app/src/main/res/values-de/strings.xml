@@ -61,4 +61,6 @@
     <string name="statistics">Statistik</string>
     <string name="clickBarChart">Clicks vs. Resets</string>
     <string name="no_planstats">Noch kein Trainingsplan</string>
+    <string name="name">Name</string>
+    <string name="register">Register</string>
 </resources>

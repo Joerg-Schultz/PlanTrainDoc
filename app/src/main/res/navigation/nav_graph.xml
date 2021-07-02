@@ -62,4 +62,11 @@
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.SettingsFragment"
             android:label="@string/settings">
     </fragment>
+
+    <fragment
+            android:id="@+id/serverFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.ServerFragment"
+            android:label="Web Server"
+            >
+    </fragment>
 </navigation>
