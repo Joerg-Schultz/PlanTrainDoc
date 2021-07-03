@@ -14,4 +14,6 @@ object Constants {
 
     const val VIBRATION_SHORT = 200L
     const val VIBRATION_LONG = 500L
+
+    val IGNORE_AUTH_URLS = listOf("/register")
 }
