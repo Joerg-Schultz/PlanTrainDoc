@@ -17,13 +17,19 @@ import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.models.ReinforcementScheme
 import de.tierwohlteam.android.plantraindoc_v1.models.User
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.BASE_URL
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USER_ID
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.PTD_DB_NAME
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.SHARED_PREFERENCES_NAME
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDdb
+import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.BasicAuthInterceptor
+import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.PTDapi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -73,6 +79,22 @@ object AppModule {
     @Provides
     fun provideSharedPreferences(@ApplicationContext app: Context) =
         app.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE)
+
+    @Singleton
+    @Provides
+    fun providePTDapi(
+        basicAuthInterceptor: BasicAuthInterceptor
+    ) : PTDapi {
+        val client = OkHttpClient.Builder()
+            .addInterceptor(basicAuthInterceptor)
+            .build()
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+            .create(PTDapi::class.java)
+    }
 
     @Singleton
     @Provides

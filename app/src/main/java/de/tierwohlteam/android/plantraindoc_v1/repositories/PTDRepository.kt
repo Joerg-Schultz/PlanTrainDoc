@@ -5,8 +5,13 @@ import androidx.annotation.WorkerThread
 import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.daos.*
 import de.tierwohlteam.android.plantraindoc_v1.models.*
+import de.tierwohlteam.android.plantraindoc_v1.others.Resource
+import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.PTDapi
+import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.AccountRequest
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -20,7 +25,8 @@ class PTDRepository @Inject constructor(
     private val goalDao: GoalDao,
     private val planDao: PlanDao,
     private val sessionDao: SessionDao,
-    private val trialDao: TrialDao
+    private val trialDao: TrialDao,
+    private val ptdApi : PTDapi
 ) {
 
     /**
@@ -283,4 +289,37 @@ class PTDRepository @Inject constructor(
      */
     fun getTrialsByGoalIDList(goalsIDList: List<Uuid>) : Flow<List<TrialWithAnnotations>> =
         trialDao.getByGoalIDList(goalsIDList)
+
+
+    /**
+     * **********************************************************************
+     * Interaction with PTD Server
+     * **********************************************************************
+     *
+     */
+
+    /**
+     * register a new user
+     * @param[id] Uuid of the user (from Room)
+     * @param[name] name of user
+     * @param[eMail] email
+     * @param[password]
+     */
+    suspend fun register(id:Uuid, name: String, eMail: String, password: String){
+        withContext(Dispatchers.IO){
+            try {
+                val response = ptdApi.register(
+                    AccountRequest(name = name, eMail = eMail, password = password, id = id.toString()))
+                if(response.isSuccessful){
+                    Resource.success(response.body()?.message)
+                } else {
+                    Resource.error(response.message(), null)
+                }
+            } catch (e: Exception) {
+                Resource.error("Couldn't connect to PlanTrainDoc Web Server", null)
+
+            }
+        }
+
+    }
 }
