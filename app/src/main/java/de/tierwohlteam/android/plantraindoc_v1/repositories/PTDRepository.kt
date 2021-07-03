@@ -244,14 +244,6 @@ class PTDRepository @Inject constructor(
     }
 
     /**
-     * get all sessions with Relations associated with goals
-     * @param[goalIDList] List of GoalIds
-     * @return a flow of SessionWithRelation
-     */
-    fun getSessionsWithRelationFromGoalIDList(goalIDList: List<Uuid>): Flow<List<SessionWithRelations>> =
-        sessionDao.getByGoalIDList(goalIDList)
-
-    /**
      * update a comment for a session
      */
     suspend fun updateCommentInSession(session: Session?){
@@ -305,7 +297,7 @@ class PTDRepository @Inject constructor(
      * @param[eMail] email
      * @param[password]
      */
-    suspend fun register(id:Uuid, name: String, eMail: String, password: String){
+    suspend fun register(id:Uuid, name: String, eMail: String, password: String) =
         withContext(Dispatchers.IO){
             try {
                 val response = ptdApi.register(
@@ -317,9 +309,6 @@ class PTDRepository @Inject constructor(
                 }
             } catch (e: Exception) {
                 Resource.error("Couldn't connect to PlanTrainDoc Web Server", null)
-
             }
         }
-
-    }
 }

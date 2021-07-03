@@ -111,6 +111,6 @@
             android:id="@+id/progressBar_register"
             app:layout_constraintTop_toBottomOf="@+id/tilRegisterPasswordConfirm"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btn_register"/>
+            app:layout_constraintBottom_toTopOf="@+id/btn_register" android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

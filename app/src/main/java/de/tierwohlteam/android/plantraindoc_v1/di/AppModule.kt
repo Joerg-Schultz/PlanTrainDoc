@@ -158,4 +158,8 @@ object AppModule {
         }
         return scheme
     }
+
+    @Singleton
+    @Provides
+    fun provideBasicAuthInterceptor() = BasicAuthInterceptor()
 }
