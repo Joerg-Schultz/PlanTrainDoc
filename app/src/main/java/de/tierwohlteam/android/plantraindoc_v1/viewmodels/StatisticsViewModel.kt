@@ -9,6 +9,7 @@ import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,8 +21,10 @@ class StatisticsViewModel @Inject constructor(
     private val repository: PTDRepository,
 )  : ViewModel() {
 
-    var clickResetCounter: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(value = null)
-    var trialsFromPlan: MutableStateFlow<List<ChartPoint>> = MutableStateFlow(value = emptyList())
+    private var _clickResetCounter: MutableStateFlow<Pair<Int, Int>?> = MutableStateFlow(value = null)
+    var clickResetCounter: StateFlow<Pair<Int, Int>?> = _clickResetCounter
+    private var _trialsFromPlan: MutableStateFlow<List<ChartPoint>> = MutableStateFlow(value = emptyList())
+    var trialsFromPlan: StateFlow<List<ChartPoint>> = _trialsFromPlan
 
 
     fun analyzeGoals(goals: List<GoalTreeItem>, level: String = "all"){
@@ -50,8 +53,8 @@ class StatisticsViewModel @Inject constructor(
             }
             timeCourse.add(ChartPoint(xPos, yPos, trial.sessionCriterion, trial.goal))
         }
-        clickResetCounter.value = Pair(totalClick,totalReset)
-        trialsFromPlan.value = timeCourse
+        _clickResetCounter.value = Pair(totalClick,totalReset)
+        _trialsFromPlan.value = timeCourse
     }
 
 }
