@@ -30,12 +30,8 @@ import kotlinx.coroutines.flow.collect
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @AndroidEntryPoint
-abstract class TabLayoutFragments(val title: String) : Fragment(){
-}
-@ExperimentalCoroutinesApi
-@InternalCoroutinesApi
-@AndroidEntryPoint
-class SubGoalsFragment(title: String) : TabLayoutFragments(title = title) {
+class SubGoalsFragment : Fragment() {
+
     private val goalViewModel: GoalViewModel by activityViewModels()
 
     private var _binding: StatsSubGoalsBinding? = null
@@ -68,10 +64,20 @@ class SubGoalsFragment(title: String) : TabLayoutFragments(title = title) {
         }
     }
 }
+
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @AndroidEntryPoint
-class ClicksFragment(title: String, private val level: String = "all") : TabLayoutFragments(title) {
+class ClicksFragment : Fragment() {
+    companion object {
+        fun newInstance(level: String): ClicksFragment {
+            val args = Bundle()
+            args.putString("level", level)
+            val fragment = ClicksFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
     private val goalViewModel: GoalViewModel by activityViewModels()
     private val trainingViewModel: TrainingViewModel by activityViewModels()
     private val statisticsViewModel: StatisticsViewModel by activityViewModels()
@@ -82,6 +88,12 @@ class ClicksFragment(title: String, private val level: String = "all") : TabLayo
     private var goal: Goal? = null
     private var plan: Plan? = null
 
+    private var level: String = "all"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        level = arguments?.getString("level") ?: "all"
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -136,6 +148,7 @@ class ClicksFragment(title: String, private val level: String = "all") : TabLayo
                                 )
                                 binding.clicksBarChart.apply {
                                     data = BarData(barDataSet)
+                                    setNoDataText("No Training for this goal")
                                     invalidate()
                                 }
                             }
@@ -164,7 +177,16 @@ class ClicksFragment(title: String, private val level: String = "all") : TabLayo
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @AndroidEntryPoint
-class TimeCourseFragment(title: String, private val level: String = "all") : TabLayoutFragments(title = title) {
+class TimeCourseFragment : Fragment() {
+    companion object {
+        fun newInstance(level: String): TimeCourseFragment {
+            val args = Bundle()
+            args.putString("level", level)
+            val fragment = TimeCourseFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
     private val goalViewModel: GoalViewModel by activityViewModels()
     private val trainingViewModel: TrainingViewModel by activityViewModels()
     private val statisticsViewModel: StatisticsViewModel by activityViewModels()
@@ -174,6 +196,13 @@ class TimeCourseFragment(title: String, private val level: String = "all") : Tab
 
     private var goal: Goal? = null
     private var plan: Plan? = null
+
+    private var level: String = "all"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        level = arguments?.getString("level") ?: "all"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -225,6 +254,10 @@ class TimeCourseFragment(title: String, private val level: String = "all") : Tab
                                 binding.timeCourseChart.apply {
                                     data = LineData(dataSet)
                                     data.setDrawValues(false)
+                                    axisLeft.apply {
+                                        setDrawGridLines(false)
+                                    }
+                                    setNoDataText("No Training for this goal")
                                     marker = LineChartMarkerView(result.data, requireContext(), R.layout.line_chart_annotation)
                                     invalidate()
                                 }

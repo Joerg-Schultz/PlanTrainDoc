@@ -42,18 +42,25 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
         binding.statsGoal.text = goal.goal
         val viewPager2 = view.findViewById<ViewPager2>(R.id.stats_pager_container)
 
-        val fragmentList = arrayListOf<TabLayoutFragments>(
-            ClicksFragment("Clicks", level = "top"),
-            TimeCourseFragment("Trend", level = "top"),
-            SubGoalsFragment("Goals"),
-            ClicksFragment("Total Clicks", level = "all"),
-            TimeCourseFragment("Total Trend", level = "all"),
+        val fragmentList = arrayListOf<Fragment>(
+            ClicksFragment.newInstance(level = "top"),
+            TimeCourseFragment.newInstance(level = "top"),
+            SubGoalsFragment(),
+            ClicksFragment.newInstance(level = "all"),
+            TimeCourseFragment.newInstance(level = "all"),
+        )
+        val titleList = arrayListOf<String>(
+            "Clicks",
+            "Trend",
+            "Goals",
+            "Total Clicks",
+            "Total Trend"
         )
         viewPager2.adapter = StatsViewPagerAdapter(this.childFragmentManager, lifecycle, fragmentList)
 
         val tabLayout = view.findViewById<TabLayout>(R.id.stats_tablayout)
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
-            tab.text = fragmentList[position].title
+            tab.text = titleList[position]
         }.attach()
 
     }

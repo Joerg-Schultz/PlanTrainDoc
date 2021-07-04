@@ -62,4 +62,14 @@
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.SettingsFragment"
             android:label="@string/settings">
     </fragment>
+
+    <fragment
+            android:id="@+id/subGoalsFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.SubGoalsFragment"
+            android:label="blabla">
+        <argument
+                android:name="title"
+                app:argType="string"
+                android:defaultValue="NavSubGoals" />
+    </fragment>
 </navigation>
