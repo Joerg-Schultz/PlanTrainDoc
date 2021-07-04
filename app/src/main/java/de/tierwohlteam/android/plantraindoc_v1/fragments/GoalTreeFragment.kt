@@ -81,7 +81,7 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
             }
         }
         binding.fabAddGoal.setOnClickListener {
-            goalViewModel.selectedGoal.value = null
+            goalViewModel.setSelectedGoal(null)
             findNavController().navigate(R.id.action_goalTreeFragment_to_addModifyGoalFragment)
         }
     }
