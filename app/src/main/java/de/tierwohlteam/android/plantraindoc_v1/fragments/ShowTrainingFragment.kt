@@ -120,10 +120,16 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
         }
     }
 
-    override fun onDestroyView() {
+    override fun onPause() {
+        GlobalScope.launch {
+            trainingViewModel.updateCommentedSession()
+        }
+        super.onPause()
+    }
+ /*   override fun onDestroyView() {
         GlobalScope.launch {
             trainingViewModel.updateCommentedSession()
         }
         super.onDestroyView()
-    }
+    } */
 }

@@ -12,4 +12,12 @@
                 app:title="@string/use_speech"/>
     </PreferenceCategory>
 
+    <PreferenceCategory
+        app:title="Web Server">
+        <SwitchPreferenceCompat
+            app:title="@string/useWebServer"
+            app:defaultValue="false"
+            app:key="useWebServer"/>
+
+    </PreferenceCategory>
 </PreferenceScreen>

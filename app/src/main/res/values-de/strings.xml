@@ -63,4 +63,5 @@
     <string name="no_planstats">Noch kein Trainingsplan</string>
     <string name="name">Name</string>
     <string name="register">Register</string>
+    <string name="useWebServer">Web Server verwenden</string>
 </resources>

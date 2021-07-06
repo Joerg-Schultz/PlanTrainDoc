@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.*
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -90,8 +91,10 @@ class TrainingViewModel @Inject constructor(
 
     suspend fun addTrial(success: Boolean) {
         val trial = Trial(sessionID = session.id, success = success)
-        repository.insertTrial(trial)
-        viewModelScope.launch {
+        //Using GlobalScope as the insert also has to happen when
+        // training is stopped and ViewModel is closed
+        GlobalScope.launch {
+            repository.insertTrial(trial)
             helperNextValue.collect {
                 if (it != null) {
                     val trialCriterion = TrialCriterion(trialID = trial.id, criterion = it)
