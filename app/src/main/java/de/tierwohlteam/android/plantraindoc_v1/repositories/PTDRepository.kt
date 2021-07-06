@@ -9,8 +9,8 @@ import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.PTDapi
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.AccountRequest
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -109,8 +109,13 @@ class PTDRepository @Inject constructor(
      * @param[parent] GoalWithPlan
      * @return List of child goalWithPlan, empty list if there are none
      */
-    fun getChildGoalsWithPlan(parent: GoalWithPlan?) : Flow<List<GoalWithPlan>> =
-        if(parent != null) goalDao.getChildrenByIDWithPlan(parent.goal.id) else goalDao.getTopLevelWithPlan()
+    @OptIn(InternalCoroutinesApi::class)
+    fun getChildGoalsWithPlan(parent: GoalWithPlan?) : Flow<Resource<List<GoalWithPlan>>> = flow {
+        emit(Resource.loading(null))
+        val dataFlow = if (parent != null) goalDao.getChildrenByIDWithPlan(parent.goal.id) else
+            goalDao.getTopLevelWithPlan()
+        emitAll(dataFlow.map { Resource.success(it) })
+    }
 
 
     /**
