@@ -70,6 +70,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         }
 
         //Preferences
+        //TODO Inject???
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
 
         return view

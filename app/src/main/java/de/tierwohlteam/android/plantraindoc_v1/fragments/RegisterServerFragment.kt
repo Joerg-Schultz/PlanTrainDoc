@@ -9,19 +9,19 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import de.tierwohlteam.android.plantraindoc_v1.databinding.ServerFragmentBinding
+import de.tierwohlteam.android.plantraindoc_v1.databinding.RegisterServerFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.ServerViewModel
 
 @AndroidEntryPoint
-class ServerFragment : Fragment() {
+class RegisterServerFragment : Fragment() {
     private val serverViewModel: ServerViewModel by activityViewModels()
 
-    private var _binding: ServerFragmentBinding? = null
+    private var _binding: RegisterServerFragmentBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = ServerFragmentBinding.inflate(inflater, container, false)
+        _binding = RegisterServerFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
     }

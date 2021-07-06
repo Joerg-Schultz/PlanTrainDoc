@@ -4,40 +4,39 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
-
-    private lateinit var sharedPreferences : SharedPreferences
+    @Inject
+    lateinit var sharedPrefs: SharedPreferences
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
-        //Preferences
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
 
-        findPreference<SwitchPreferenceCompat>("UseWeb")?.setOnPreferenceChangeListener { preference, newValue ->
-            if (newValue == true) {
-                makeAccount()
-                Toast.makeText(activity, "Hallo", Toast.LENGTH_LONG).show()
+        findPreference<SwitchPreferenceCompat>("useClicker")?.setOnPreferenceChangeListener{ preference, newValue ->
+            if (newValue == true){
+                Toast.makeText(activity, "Clicker true", Toast.LENGTH_LONG).show()
             }
-            //write new value to prefs
+            if (newValue == false) Toast.makeText(activity, "Clicker false", Toast.LENGTH_LONG).show()
+            true
+        }
+
+        findPreference<SwitchPreferenceCompat>("useWebServer")?.setOnPreferenceChangeListener{ preference, newValue ->
+            if (newValue == true) {
+                if (sharedPrefs.getBoolean("hasAccount", false)) {
+                    Toast.makeText(activity, "You can ow sync your training", Toast.LENGTH_LONG).show()
+                } else {
+                    //navigate to register fragment
+                }
+            }
+            if (newValue == false) Toast.makeText(activity, "Web false", Toast.LENGTH_LONG).show()
             true
         }
 
     }
 
-    private fun makeAccount(){
-        if(sharedPreferences.getBoolean("hasServerAccount", false)){
-            view?.let { Snackbar.make(it, "You already have an account", Snackbar.LENGTH_SHORT).show() }
-        }
-        else{
-            view?.let { Snackbar.make(it, "Create account now", Snackbar.LENGTH_SHORT).show() }
-
-        }
-    }
 }

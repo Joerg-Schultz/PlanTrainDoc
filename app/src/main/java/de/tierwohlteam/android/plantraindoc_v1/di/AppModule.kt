@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
@@ -77,7 +78,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideSharedPreferences(@ApplicationContext app: Context) =
+    fun provideSharedPreferences(@ApplicationContext app: Context): SharedPreferences =
         app.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE)
 
     @Singleton
