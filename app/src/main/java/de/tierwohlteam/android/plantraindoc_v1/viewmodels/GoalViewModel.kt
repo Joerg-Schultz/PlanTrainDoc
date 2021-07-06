@@ -24,14 +24,16 @@ class GoalViewModel @Inject constructor(
 ) : ViewModel() {
 
     //observe the parent and if changed update the goals
-    val parentGoal: MutableStateFlow<GoalWithPlan?> = MutableStateFlow(value = null)
-    val selectedGoal: MutableStateFlow<GoalWithPlan?> = MutableStateFlow(value = null)
-    val goals: StateFlow<List<GoalWithPlan>> = parentGoal.flatMapLatest {
+    private val parentGoal: MutableStateFlow<GoalWithPlan?> = MutableStateFlow(value = null)
+    private val _selectedGoal: MutableStateFlow<GoalWithPlan?> = MutableStateFlow(value = null)
+    val selectedGoal: StateFlow<GoalWithPlan?> = _selectedGoal
+
+    val goals: StateFlow<Resource<List<GoalWithPlan>>> = parentGoal.flatMapLatest {
         repository.getChildGoalsWithPlan(parent = it)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList()
+        initialValue = Resource.loading(emptyList())
     )
 
     val subGoalsRecursive: StateFlow<List<GoalTreeItem>?> = selectedGoal.flatMapLatest {
@@ -77,7 +79,7 @@ class GoalViewModel @Inject constructor(
     }
 
     fun moveTreeDown(pos: Int) {
-        parentGoal.value = goals.value[pos]
+        parentGoal.value = goals.value.data?.get(pos)
     }
 
     fun moveTreeUp() {
@@ -87,7 +89,7 @@ class GoalViewModel @Inject constructor(
     }
 
     fun setSelectedGoal(goal:GoalWithPlan?){
-        selectedGoal.value = goal
+        _selectedGoal.value = goal
     }
 
     suspend fun updatePositions(goalList: List<GoalWithPlan>) {

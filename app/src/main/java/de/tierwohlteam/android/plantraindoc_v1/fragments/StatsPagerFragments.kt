@@ -19,6 +19,7 @@ import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsTimeCourseBindin
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.models.Plan
 import de.tierwohlteam.android.plantraindoc_v1.others.LineChartMarkerView
+import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.StatisticsViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
@@ -29,12 +30,8 @@ import kotlinx.coroutines.flow.collect
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @AndroidEntryPoint
-abstract class TabLayoutFragments(val title: String) : Fragment(){
-}
-@ExperimentalCoroutinesApi
-@InternalCoroutinesApi
-@AndroidEntryPoint
-class SubGoalsFragment(title: String) : TabLayoutFragments(title = title) {
+class SubGoalsFragment : Fragment() {
+
     private val goalViewModel: GoalViewModel by activityViewModels()
 
     private var _binding: StatsSubGoalsBinding? = null
@@ -67,10 +64,20 @@ class SubGoalsFragment(title: String) : TabLayoutFragments(title = title) {
         }
     }
 }
+
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @AndroidEntryPoint
-class ClicksFragment(title: String, private val level: String = "all") : TabLayoutFragments(title) {
+class ClicksFragment : Fragment() {
+    companion object {
+        fun newInstance(level: String): ClicksFragment {
+            val args = Bundle()
+            args.putString("level", level)
+            val fragment = ClicksFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
     private val goalViewModel: GoalViewModel by activityViewModels()
     private val trainingViewModel: TrainingViewModel by activityViewModels()
     private val statisticsViewModel: StatisticsViewModel by activityViewModels()
@@ -81,6 +88,12 @@ class ClicksFragment(title: String, private val level: String = "all") : TabLayo
     private var goal: Goal? = null
     private var plan: Plan? = null
 
+    private var level: String = "all"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        level = arguments?.getString("level") ?: "all"
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -104,6 +117,7 @@ class ClicksFragment(title: String, private val level: String = "all") : TabLayo
             binding.apply {
                 tvNoPlan.visibility = View.GONE
                 clicksBarChart.visibility = View.VISIBLE
+                binding.pBBarchart.visibility = View.VISIBLE
             }
            lifecycleScope.launchWhenStarted {
                 goalViewModel.subGoalsRecursive.collect {
@@ -114,21 +128,30 @@ class ClicksFragment(title: String, private val level: String = "all") : TabLayo
            }
             setupBarChart()
             lifecycleScope.launchWhenStarted {
-                statisticsViewModel.clickResetCounter.collect {
-                    if (it != null) {
-                        val barDataSet = BarDataSet(
-                            listOf(
-                                BarEntry(1F, it.first.toFloat()),
-                                BarEntry(2F, it.second.toFloat())
-                            ), "ClickRatio"
-                        )
-                        barDataSet.setColors(
-                            resources.getColor(R.color.accent),
-                            resources.getColor(R.color.primaryLightColor)
-                        )
-                        binding.clicksBarChart.apply {
-                            data = BarData(barDataSet)
-                            invalidate()
+                statisticsViewModel.clickResetCounter.collect { result ->
+                    when(result.status){
+                        Status.LOADING ->{
+                            binding.pBBarchart.visibility = View.VISIBLE
+                        }
+                        Status.SUCCESS -> {
+                            if (result.data != null) {
+                                binding.pBBarchart.visibility = View.GONE
+                                val barDataSet = BarDataSet(
+                                    listOf(
+                                        BarEntry(1F, result.data.first.toFloat()),
+                                        BarEntry(2F, result.data.second.toFloat())
+                                    ), "ClickRatio"
+                                )
+                                barDataSet.setColors(
+                                    resources.getColor(R.color.accent),
+                                    resources.getColor(R.color.primaryLightColor)
+                                )
+                                binding.clicksBarChart.apply {
+                                    data = BarData(barDataSet)
+                                    setNoDataText("No Training for this goal")
+                                    invalidate()
+                                }
+                            }
                         }
                     }
                 }
@@ -154,7 +177,16 @@ class ClicksFragment(title: String, private val level: String = "all") : TabLayo
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @AndroidEntryPoint
-class TimeCourseFragment(title: String, private val level: String = "all") : TabLayoutFragments(title = title) {
+class TimeCourseFragment : Fragment() {
+    companion object {
+        fun newInstance(level: String): TimeCourseFragment {
+            val args = Bundle()
+            args.putString("level", level)
+            val fragment = TimeCourseFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
     private val goalViewModel: GoalViewModel by activityViewModels()
     private val trainingViewModel: TrainingViewModel by activityViewModels()
     private val statisticsViewModel: StatisticsViewModel by activityViewModels()
@@ -164,6 +196,13 @@ class TimeCourseFragment(title: String, private val level: String = "all") : Tab
 
     private var goal: Goal? = null
     private var plan: Plan? = null
+
+    private var level: String = "all"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        level = arguments?.getString("level") ?: "all"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -198,17 +237,31 @@ class TimeCourseFragment(title: String, private val level: String = "all") : Tab
             }
             setupLineChart()
             lifecycleScope.launchWhenStarted {
-                statisticsViewModel.trialsFromPlan.collect {
-                    if (it.isNotEmpty()) {
-                        val dataList: MutableList<Entry> = mutableListOf()
-                        for(chartPoint in it){
-                            dataList.add(Entry(chartPoint.xValue.toFloat(),chartPoint.yValue.toFloat()))
+                statisticsViewModel.trialsFromPlan.collect { result ->
+                    when(result.status) {
+                        Status.LOADING -> {
+                            binding.pBTimecourse.visibility = View.VISIBLE
                         }
-                        val dataSet = LineDataSet(dataList,"Time Course")
-                        binding.timeCourseChart.apply {
-                            data = LineData(dataSet)
-                            marker = LineChartMarkerView(it,requireContext(),R.layout.line_chart_annotation)
-                            invalidate()
+                        Status.SUCCESS -> {
+                            if (result.data!!.isNotEmpty()) {
+                                binding.pBTimecourse.visibility = View.GONE
+                                val dataList: MutableList<Entry> = mutableListOf()
+                                for (chartPoint in result.data) {
+                                    dataList.add(Entry(chartPoint.xValue.toFloat(), chartPoint.yValue.toFloat()))
+                                }
+                                val dataSet = LineDataSet(dataList, "Time Course")
+                                dataSet.circleRadius = 8f
+                                binding.timeCourseChart.apply {
+                                    data = LineData(dataSet)
+                                    data.setDrawValues(false)
+                                    axisLeft.apply {
+                                        setDrawGridLines(false)
+                                    }
+                                    setNoDataText("No Training for this goal")
+                                    marker = LineChartMarkerView(result.data, requireContext(), R.layout.line_chart_annotation)
+                                    invalidate()
+                                }
+                            }
                         }
                     }
                 }

@@ -21,6 +21,7 @@ import de.tierwohlteam.android.plantraindoc_v1.databinding.GoaltreeFragmentBindi
 import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithPlan
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.FIRST_GOAL
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.FIRST_USAGE
+import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -60,28 +61,41 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         lifecycleScope.launchWhenStarted {
-            goalViewModel.goals.collect {
-                goalTreeAdapter.submitList(it)
-                if(it.isNotEmpty()) {
-                    currentGoals = it as MutableList<GoalWithPlan>
-                }
-                when {
-                    firstUse("app") -> MaterialAlertDialogBuilder(view.context)
-                        .setTitle(getString(R.string.welcome))
-                        .setMessage(getString(R.string.welcome_message))
-                        .setPositiveButton(getString(R.string.ok)) { dialog, which -> {}}
-                        .show()
-                    //set FIRSTUSAGE to false
-                    firstUse("goal") -> MaterialAlertDialogBuilder(view.context)
-                        .setTitle(getString(R.string.congratulation))
-                        .setMessage(getString(R.string.firstgoal_message))
-                        .setPositiveButton(getString(R.string.ok)) { dialog, which -> {}}
-                        .show()
+            goalViewModel.goals.collect { result ->
+                when (result.status) {
+                    Status.LOADING -> {
+                        binding.pBgoaltree.visibility = View.VISIBLE
+
+                    }
+                    Status.SUCCESS -> {
+                        binding.pBgoaltree.visibility = View.GONE
+                        result.data?.let {
+                            goalTreeAdapter.submitList(it)
+                            if (it.isNotEmpty()) {
+                                currentGoals = it as MutableList<GoalWithPlan>
+                            } else {
+                                when {
+                                    firstUse("app") -> MaterialAlertDialogBuilder(view.context)
+                                        .setTitle(getString(R.string.welcome))
+                                        .setMessage(getString(R.string.welcome_message))
+                                        .setPositiveButton(getString(R.string.ok)) { dialog, which -> {} }
+                                        .show()
+                                    //set FIRSTUSAGE to false
+                                    firstUse("goal") -> MaterialAlertDialogBuilder(view.context)
+                                        .setTitle(getString(R.string.congratulation))
+                                        .setMessage(getString(R.string.firstgoal_message))
+                                        .setPositiveButton(getString(R.string.ok)) { dialog, which -> {} }
+                                        .show()
+                                    else -> {}
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
         binding.fabAddGoal.setOnClickListener {
-            goalViewModel.selectedGoal.value = null
+            goalViewModel.setSelectedGoal(null)
             findNavController().navigate(R.id.action_goalTreeFragment_to_addModifyGoalFragment)
         }
     }
