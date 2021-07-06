@@ -3,6 +3,7 @@ package de.tierwohlteam.android.plantraindoc_v1.fragments
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,12 +29,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<SwitchPreferenceCompat>("useWebServer")?.setOnPreferenceChangeListener{ preference, newValue ->
             if (newValue == true) {
                 if (sharedPrefs.getBoolean("hasAccount", false)) {
-                    Toast.makeText(activity, "You can ow sync your training", Toast.LENGTH_LONG).show()
+                    Toast.makeText(activity, "You can now sync your training", Toast.LENGTH_LONG).show()
                 } else {
                     //navigate to register fragment
+                    findNavController().navigate(R.id.action_settingsFragment_to_registerServerFragment)
                 }
             }
-            if (newValue == false) Toast.makeText(activity, "Web false", Toast.LENGTH_LONG).show()
+            if (newValue == false) Toast.makeText(activity, "Sync is not available", Toast.LENGTH_LONG).show()
             true
         }
 

@@ -1,5 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,15 +8,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.databinding.RegisterServerFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.ServerViewModel
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterServerFragment : Fragment() {
     private val serverViewModel: ServerViewModel by activityViewModels()
+
+    @Inject
+    lateinit var sharedPrefs: SharedPreferences
 
     private var _binding: RegisterServerFragmentBinding? = null
     private val binding get() = _binding!!
@@ -48,6 +54,11 @@ class RegisterServerFragment : Fragment() {
                         Snackbar.make(binding.root,
                             result.data ?: "Successfully registered",
                             Snackbar.LENGTH_SHORT).show()
+                        with (sharedPrefs.edit()) {
+                            putBoolean("hasAccount",true)
+                            apply()
+                        }
+                        findNavController().popBackStack()
                     }
                     Status.ERROR -> {
                         binding.progressBarRegister.visibility = View.GONE

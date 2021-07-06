@@ -61,6 +61,8 @@
             android:id="@+id/settingsFragment"
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.SettingsFragment"
             android:label="@string/settings">
+        <action android:id="@+id/action_settingsFragment_to_registerServerFragment"
+                app:destination="@id/registerServerFragment"/>
     </fragment>
 
     <fragment
