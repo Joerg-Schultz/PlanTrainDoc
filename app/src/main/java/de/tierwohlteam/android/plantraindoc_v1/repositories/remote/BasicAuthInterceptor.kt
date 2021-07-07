@@ -8,8 +8,8 @@ import okhttp3.Response
 
 class BasicAuthInterceptor : Interceptor {
 
-    val id: Uuid? = null
-    val password: String? = null
+    var id: Uuid? = null
+    var password: String? = null
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()

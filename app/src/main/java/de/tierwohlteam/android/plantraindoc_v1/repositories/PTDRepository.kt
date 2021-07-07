@@ -307,13 +307,36 @@ class PTDRepository @Inject constructor(
             try {
                 val response = ptdApi.register(
                     AccountRequest(name = name, eMail = eMail, password = password, id = id.toString()))
-                if(response.isSuccessful){
+                if(response.isSuccessful && response.body()!!.successful){
                     Resource.success(response.body()?.message)
                 } else {
-                    Resource.error(response.message(), null)
+                    Resource.error(response.body()?.message ?: response.message(), null)
                 }
             } catch (e: Exception) {
                 Resource.error("Couldn't connect to PlanTrainDoc Web Server", null)
             }
         }
+
+    /**
+     * login a user
+     * @param[id] Uuid of the user (from Room)
+     * @param[name] name of user
+     * @param[eMail] email
+     * @param[password]
+     */
+    suspend fun login(id:Uuid, name: String, eMail: String, password: String) =
+        withContext(Dispatchers.IO){
+            try {
+                val response = ptdApi.login(
+                    AccountRequest(name = name, eMail = eMail, password = password, id = id.toString()))
+                if(response.isSuccessful && response.body()!!.successful){
+                    Resource.success(response.body()?.message)
+                } else {
+                    Resource.error(response.body()?.message ?: response.message(), null)
+                }
+            } catch (e: Exception) {
+                Resource.error("Couldn't connect to PlanTrainDoc Web Server", null)
+            }
+        }
+
 }
