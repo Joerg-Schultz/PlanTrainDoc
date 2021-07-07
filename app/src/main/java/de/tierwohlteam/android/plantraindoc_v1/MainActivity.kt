@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener{
         val inflater = menuInflater
         inflater.inflate(R.menu.top_bar_menu, menu)
         topMenu = menu
+        topMenu?.findItem(R.id.menuItemSync)?.isVisible =
+            sharedPrefs.getBoolean("useWebServer",false)
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
