@@ -17,6 +17,8 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.LoginServerFragmentBinding
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.DEFAULT_USER_EMAIL
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.DEFAULT_USER_PASSWORD
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_LOGGED_IN_EMAIL
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_LOGGED_IN_NAME
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_PASSWORD
@@ -48,6 +50,7 @@ class LoginServerFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
+            //TODO is that working? Or am I stuck in the login?
             findNavController().popBackStack()
         }
     }
@@ -59,7 +62,10 @@ class LoginServerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        if(isLoggedIn()){
+            authenticateApi(curPassword ?: "")
+            redirectLogin()
+        }
         subscribeToObservers()
 
         binding.btnLogin.setOnClickListener {
@@ -73,6 +79,11 @@ class LoginServerFragment : Fragment() {
         }
     }
 
+    private fun isLoggedIn(): Boolean {
+        curEmail = sharedPrefs.getString(KEY_LOGGED_IN_EMAIL, DEFAULT_USER_EMAIL) ?: DEFAULT_USER_EMAIL
+        curPassword = sharedPrefs.getString(KEY_PASSWORD, DEFAULT_USER_PASSWORD) ?: DEFAULT_USER_PASSWORD
+        return curEmail != DEFAULT_USER_EMAIL && curPassword != DEFAULT_USER_PASSWORD
+    }
     private fun authenticateApi(password: String){
         basicAuthInterceptor.id = userID
         basicAuthInterceptor.password = password
@@ -90,20 +101,24 @@ class LoginServerFragment : Fragment() {
     private fun subscribeToObservers(){
         serverViewModel.loginStatus.observe(viewLifecycleOwner, Observer { result ->
             result?.let {
-                when(result.status){
+                when(result.status) {
                     Status.SUCCESS -> {
-                        binding.progressBarLogin.visibility = View.GONE
-                        Snackbar.make(binding.root,
-                            result.data ?: "Successfully logged in",
-                            Snackbar.LENGTH_SHORT).show()
-                        with (sharedPrefs.edit()) {
-                            putString(KEY_LOGGED_IN_EMAIL,curEmail)
-                            putString(KEY_LOGGED_IN_NAME,curName)
-                            putString(KEY_PASSWORD,curPassword)
-                            apply()
+                        if (result.data != null) {
+                            binding.progressBarLogin.visibility = View.GONE
+                            Snackbar.make(
+                                binding.root,
+                                result.data ?: "Successfully logged in",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                            with(sharedPrefs.edit()) {
+                                putString(KEY_LOGGED_IN_EMAIL, curEmail)
+                                putString(KEY_LOGGED_IN_NAME, curName)
+                                putString(KEY_PASSWORD, curPassword)
+                                apply()
+                            }
+                            authenticateApi(curPassword ?: "")
+                            redirectLogin()
                         }
-                        authenticateApi(curPassword ?: "")
-                        redirectLogin()
                     }
                     Status.ERROR -> {
                         binding.progressBarLogin.visibility = View.GONE
