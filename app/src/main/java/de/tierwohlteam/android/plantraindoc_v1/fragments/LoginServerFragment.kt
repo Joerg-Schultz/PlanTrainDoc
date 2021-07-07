@@ -51,7 +51,7 @@ class LoginServerFragment : Fragment() {
         super.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             sharedPrefs.edit().putBoolean("useWebServer", false).apply()
-            findNavController().popBackStack()
+            redirectLogin()
         }
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
