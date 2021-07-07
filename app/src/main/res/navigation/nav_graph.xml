@@ -78,5 +78,7 @@
             android:id="@+id/loginServerFragment"
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.LoginServerFragment"
             android:label="@string/Login">
+        <action android:id="@+id/action_loginServerFragment_to_settingsFragment"
+                app:destination="@id/settingsFragment"/>
     </fragment>
 </navigation>

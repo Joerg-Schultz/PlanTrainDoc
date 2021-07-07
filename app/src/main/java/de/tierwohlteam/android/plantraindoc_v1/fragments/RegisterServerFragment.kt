@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.RegisterServerFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.ServerViewModel
@@ -36,10 +37,10 @@ class RegisterServerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
         binding.btnRegister.setOnClickListener {
-            val name: String = binding.tiUserName.text.toString()
-            val email: String = binding.tiUserEmail.text.toString()
-            val password: String = binding.etRegisterPassword.text.toString()
-            val repeatedPassword: String = binding.etRegisterPasswordConfirm.text.toString()
+            val name: String = binding.tiUserNameRegister.text.toString()
+            val email: String = binding.tiUserEmailRegister.text.toString()
+            val password: String = binding.tiPasswordRegister.text.toString()
+            val repeatedPassword: String = binding.tiPasswordConfirmRegister.text.toString()
             serverViewModel.register(name = name, eMail = email,
                 password = password, repeatedPassword = repeatedPassword)
         }
@@ -52,13 +53,13 @@ class RegisterServerFragment : Fragment() {
                     Status.SUCCESS -> {
                         binding.progressBarRegister.visibility = View.GONE
                         Snackbar.make(binding.root,
-                            result.data ?: "Successfully registered",
+                            result.data ?: "Successfully registered, you can now log in",
                             Snackbar.LENGTH_SHORT).show()
                         with (sharedPrefs.edit()) {
                             putBoolean("hasAccount",true)
                             apply()
                         }
-                        findNavController().popBackStack()
+                        findNavController().navigate(R.id.action_registerServerFragment_to_loginServerFragment)
                     }
                     Status.ERROR -> {
                         binding.progressBarRegister.visibility = View.GONE

@@ -31,7 +31,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<SwitchPreferenceCompat>("useWebServer")?.setOnPreferenceChangeListener{ preference, newValue ->
             if (newValue == true) {
                 if (sharedPrefs.getBoolean("hasAccount", false)) {
-                    Toast.makeText(activity, "You can now sync your training", Toast.LENGTH_LONG).show()
+                    findNavController().navigate(R.id.action_settingsFragment_to_loginServerFragment)
                 } else {
                     findNavController().navigate(R.id.action_settingsFragment_to_registerServerFragment)
                 }
