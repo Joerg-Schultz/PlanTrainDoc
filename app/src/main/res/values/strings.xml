@@ -64,5 +64,6 @@
     <string name="name">Name</string>
     <string name="register">Register</string>
     <string name="useWebServer">Use Web Server</string>
+    <string name="Login">Login</string>
 
 </resources>

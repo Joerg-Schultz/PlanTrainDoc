@@ -63,12 +63,20 @@
             android:label="@string/settings">
         <action android:id="@+id/action_settingsFragment_to_registerServerFragment"
                 app:destination="@id/registerServerFragment"/>
+        <action android:id="@+id/action_settingsFragment_to_loginServerFragment"
+                app:destination="@id/loginServerFragment"/>
     </fragment>
 
     <fragment
             android:id="@+id/registerServerFragment"
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.RegisterServerFragment"
-            android:label="Registration"
-            >
+            android:label="Registration">
+        <action android:id="@+id/action_registerServerFragment_to_loginServerFragment"
+                app:destination="@id/loginServerFragment"/>
+    </fragment>
+    <fragment
+            android:id="@+id/loginServerFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.LoginServerFragment"
+            android:label="@string/Login">
     </fragment>
 </navigation>
