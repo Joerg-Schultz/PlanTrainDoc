@@ -16,6 +16,8 @@
         app:title="Web Server">
         <SwitchPreferenceCompat
             app:title="@string/useWebServer"
+            app:summaryOn="You can sync your training with the the menu"
+            app:summaryOff="Synchronisation is off"
             app:defaultValue="false"
             app:key="useWebServer"/>
 

@@ -2,6 +2,8 @@ package de.tierwohlteam.android.plantraindoc_v1.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceFragmentCompat
@@ -31,7 +33,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 if (sharedPrefs.getBoolean("hasAccount", false)) {
                     Toast.makeText(activity, "You can now sync your training", Toast.LENGTH_LONG).show()
                 } else {
-                    //navigate to register fragment
                     findNavController().navigate(R.id.action_settingsFragment_to_registerServerFragment)
                 }
             }
