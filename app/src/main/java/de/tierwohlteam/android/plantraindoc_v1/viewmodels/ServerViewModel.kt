@@ -67,6 +67,7 @@ class ServerViewModel @Inject constructor(
             putString(KEY_LOGGED_IN_EMAIL, DEFAULT_USER_EMAIL)
             putString(KEY_LOGGED_IN_NAME, DEFAULT_USER_NAME)
             putString(KEY_PASSWORD, DEFAULT_USER_PASSWORD)
+            putBoolean("useWebServer", false)
             apply()
         }
         _loginStatus.postValue(Resource.success(null))

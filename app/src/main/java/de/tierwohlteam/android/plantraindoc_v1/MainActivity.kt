@@ -40,9 +40,9 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener{
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
         //TODO can use the Dagger Prefs here??
-        val defaultPrefs = PreferenceManager.getDefaultSharedPreferences(this)
-        defaultPrefs.registerOnSharedPreferenceChangeListener(this)
-
+        //val defaultPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+        //defaultPrefs.registerOnSharedPreferenceChangeListener(this)
+        sharedPrefs.registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {

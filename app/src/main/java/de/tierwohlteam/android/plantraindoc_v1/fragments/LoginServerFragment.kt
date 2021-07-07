@@ -50,7 +50,7 @@ class LoginServerFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            //TODO is that working? Or am I stuck in the login?
+            sharedPrefs.edit().putBoolean("useWebServer", false).apply()
             findNavController().popBackStack()
         }
     }
@@ -90,7 +90,7 @@ class LoginServerFragment : Fragment() {
     }
     private fun redirectLogin(){
         val navOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.settingsFragment, false)
+            .setPopUpTo(R.id.settingsFragment, true)
             .build()
         findNavController().navigate(
             R.id.action_loginServerFragment_to_settingsFragment,
@@ -122,6 +122,7 @@ class LoginServerFragment : Fragment() {
                     }
                     Status.ERROR -> {
                         binding.progressBarLogin.visibility = View.GONE
+                        sharedPrefs.edit().putBoolean("useWebServer", false).apply()
                         Snackbar.make(binding.root,
                             result.message ?: "An unknown error occurred",
                             Snackbar.LENGTH_SHORT).show()

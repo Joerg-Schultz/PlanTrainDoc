@@ -1,5 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.di
 
+import android.app.Activity
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
@@ -12,6 +13,7 @@ import com.benasher44.uuid.uuidFrom
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import de.tierwohlteam.android.plantraindoc_v1.R
@@ -79,7 +81,8 @@ object AppModule {
     @Singleton
     @Provides
     fun provideSharedPreferences(@ApplicationContext app: Context): SharedPreferences =
-        app.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE)
+        //app.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE)
+        PreferenceManager.getDefaultSharedPreferences(app)
 
     @Singleton
     @Provides
