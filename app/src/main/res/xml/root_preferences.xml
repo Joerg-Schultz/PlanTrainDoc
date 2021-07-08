@@ -5,11 +5,15 @@
         <SwitchPreferenceCompat
                 app:key="useClicker"
                 app:defaultValue="true"
-                app:title="@string/make_click"/>
+                app:title="@string/make_click"
+                app:summaryOn="@string/ClickerOn"
+                app:summaryOff="@string/ClickerOff"/>
         <SwitchPreferenceCompat
                 app:key="useSpeechforHelper"
                 app:defaultValue="true"
-                app:title="@string/use_speech"/>
+                app:title="@string/use_speech"
+                app:summaryOn="@string/SpeechOn"
+                app:summaryOff="@string/SpeechOff"/>
     </PreferenceCategory>
 
     <PreferenceCategory

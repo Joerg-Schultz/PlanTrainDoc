@@ -70,4 +70,6 @@
     <string name="logged_out">Du wurdest ausgeloggt</string>
     <string name="Unknown_Error">Ein Fehler ist aufgetreten</string>
     <string name="register_success">Registrierung erfolgreich, du kannst dich jetzt einloggen</string>
+    <string name="SpeechOn">Voice Output for criteria on</string>
+    <string name="SpeechOff">Voice output for Criteria off</string>
 </resources>

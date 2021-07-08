@@ -13,6 +13,7 @@ import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_HAS_ACCOUNT
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_CLICKER
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_SPEECH
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_WEB_SERVER
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.ServerViewModel
 import javax.inject.Inject
 
@@ -27,13 +28,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
-        findPreference<SwitchPreferenceCompat>(KEY_USE_CLICKER)?.setOnPreferenceChangeListener{ preference, newValue ->
-            val snackBarText = if(newValue == true)  R.string.ClickerOn else R.string.ClickerOff
-            Snackbar.make(requireView(),snackBarText, Snackbar.LENGTH_LONG).show()
-            true
-        }
-
-        findPreference<SwitchPreferenceCompat>(KEY_USE_SPEECH)?.setOnPreferenceChangeListener{ preference, newValue ->
+        findPreference<SwitchPreferenceCompat>(KEY_USE_WEB_SERVER)?.setOnPreferenceChangeListener{ preference, newValue ->
             if (newValue == true) {
                 if (sharedPrefs.getBoolean(KEY_HAS_ACCOUNT, false)) {
                     findNavController().navigate(R.id.action_settingsFragment_to_loginServerFragment)

@@ -70,5 +70,7 @@
     <string name="logged_out">You are now logged out</string>
     <string name="Unknown_Error">An unknown error occurred</string>
     <string name="register_success">Successfully registered, you can now log in</string>
+    <string name="SpeechOn">Voice Output for criteria on</string>
+    <string name="SpeechOff">Voice output for Criteria off</string>
 
 </resources>
