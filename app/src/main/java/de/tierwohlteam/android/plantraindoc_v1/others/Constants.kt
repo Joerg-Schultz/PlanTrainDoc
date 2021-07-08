@@ -9,9 +9,14 @@ object Constants {
     const val DEFAULT_USER_EMAIL = "PTD.appuser@mail.de"
     const val DEFAULT_USER_PASSWORD = "1234"
 
+    const val KEY_HAS_ACCOUNT = "hasAccount"
     const val KEY_LOGGED_IN_EMAIL = "KEY_LOGGED_IN_EMAIL"
     const val KEY_LOGGED_IN_NAME = "KEY_LOGGED_IN_NAME"
     const val KEY_PASSWORD = "KEY_PASSWORD"
+
+    const val KEY_USE_WEB_SERVER = "useWebServer"
+    const val KEY_USE_CLICKER = "useClicker"
+    const val KEY_USE_SPEECH = "useSpeechforHelper"
 
     const val FIRST_USAGE = "FIRST_USAGE"
     const val FIRST_GOAL = "FIRST_GOAL"

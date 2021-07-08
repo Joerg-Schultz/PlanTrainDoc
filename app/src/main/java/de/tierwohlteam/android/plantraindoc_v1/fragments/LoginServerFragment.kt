@@ -2,7 +2,6 @@ package de.tierwohlteam.android.plantraindoc_v1.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +21,7 @@ import de.tierwohlteam.android.plantraindoc_v1.others.Constants.DEFAULT_USER_PAS
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_LOGGED_IN_EMAIL
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_LOGGED_IN_NAME
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_PASSWORD
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_WEB_SERVER
 import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.BasicAuthInterceptor
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.ServerViewModel
@@ -50,11 +50,11 @@ class LoginServerFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            sharedPrefs.edit().putBoolean("useWebServer", false).apply()
+            sharedPrefs.edit().putBoolean(KEY_USE_WEB_SERVER, false).apply()
             redirectLogin()
         }
     }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = LoginServerFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
@@ -105,11 +105,7 @@ class LoginServerFragment : Fragment() {
                     Status.SUCCESS -> {
                         if (result.data != null) {
                             binding.progressBarLogin.visibility = View.GONE
-                            Snackbar.make(
-                                binding.root,
-                                result.data ?: "Successfully logged in",
-                                Snackbar.LENGTH_SHORT
-                            ).show()
+                            Snackbar.make(binding.root, result.data, Snackbar.LENGTH_SHORT).show()
                             with(sharedPrefs.edit()) {
                                 putString(KEY_LOGGED_IN_EMAIL, curEmail)
                                 putString(KEY_LOGGED_IN_NAME, curName)
@@ -122,14 +118,15 @@ class LoginServerFragment : Fragment() {
                     }
                     Status.ERROR -> {
                         binding.progressBarLogin.visibility = View.GONE
-                        sharedPrefs.edit().putBoolean("useWebServer", false).apply()
+                        sharedPrefs.edit().putBoolean(KEY_USE_WEB_SERVER, false).apply()
                         Snackbar.make(binding.root,
-                            result.message ?: "An unknown error occurred",
+                            result.message ?: getString(R.string.Unknown_Error),
                             Snackbar.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
                         binding.progressBarLogin.visibility = View.VISIBLE
                     }
+                    else -> {/* NO-OP */}
                 }
             }
         })

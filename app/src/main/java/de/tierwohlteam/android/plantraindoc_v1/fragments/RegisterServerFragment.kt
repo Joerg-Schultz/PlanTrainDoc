@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.RegisterServerFragmentBinding
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_HAS_ACCOUNT
 import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.ServerViewModel
 import javax.inject.Inject
@@ -53,10 +54,10 @@ class RegisterServerFragment : Fragment() {
                     Status.SUCCESS -> {
                         binding.progressBarRegister.visibility = View.GONE
                         Snackbar.make(binding.root,
-                            result.data ?: "Successfully registered, you can now log in",
+                            result.data ?: getString(R.string.register_success),
                             Snackbar.LENGTH_SHORT).show()
                         with (sharedPrefs.edit()) {
-                            putBoolean("hasAccount",true)
+                            putBoolean(KEY_HAS_ACCOUNT,true)
                             apply()
                         }
                         findNavController().navigate(R.id.action_registerServerFragment_to_loginServerFragment)
@@ -64,12 +65,13 @@ class RegisterServerFragment : Fragment() {
                     Status.ERROR -> {
                         binding.progressBarRegister.visibility = View.GONE
                         Snackbar.make(binding.root,
-                            result.message ?: "An unknown error occurred",
+                            result.message ?: getString(R.string.Unknown_Error),
                             Snackbar.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
                         binding.progressBarRegister.visibility = View.VISIBLE
                     }
+                    else -> { /* NO-OP */ }
                 }
             }
         })
