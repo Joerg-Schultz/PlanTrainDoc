@@ -81,4 +81,10 @@
         <action android:id="@+id/action_loginServerFragment_to_settingsFragment"
                 app:destination="@id/settingsFragment"/>
     </fragment>
+
+    <fragment
+            android:id="@+id/syncServerFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.SyncServerFragment"
+            android:label="@string/synchronize">
+    </fragment>
 </navigation>

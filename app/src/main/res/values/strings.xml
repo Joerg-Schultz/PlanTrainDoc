@@ -72,5 +72,6 @@
     <string name="register_success">Successfully registered, you can now log in</string>
     <string name="SpeechOn">Voice Output for criteria on</string>
     <string name="SpeechOff">Voice output for Criteria off</string>
+    <string name="synchronize">Synchronize</string>
 
 </resources>

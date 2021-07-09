@@ -19,6 +19,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_WEB_SERVER
 import javax.inject.Inject
 
 
@@ -54,8 +55,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener{
         val inflater = menuInflater
         inflater.inflate(R.menu.top_bar_menu, menu)
         topMenu = menu
-        topMenu?.findItem(R.id.menuItemSync)?.isVisible =
-            sharedPrefs.getBoolean("useWebServer",false)
+        topMenu?.findItem(R.id.syncServerFragment)?.isVisible =
+            sharedPrefs.getBoolean(KEY_USE_WEB_SERVER,false)
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -65,10 +66,10 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener{
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (sharedPreferences != null) {
-            if(key.equals("useWebServer")) {
+            if(key.equals(KEY_USE_WEB_SERVER)) {
                 //topMenu?.findItem(R.id.menuItemSync)?.isVisible = true
-                topMenu?.findItem(R.id.menuItemSync)?.isVisible =
-                    sharedPreferences.getBoolean("useWebServer",false)
+                topMenu?.findItem(R.id.syncServerFragment)?.isVisible =
+                    sharedPreferences.getBoolean(KEY_USE_WEB_SERVER,false)
             }
         }
     }
