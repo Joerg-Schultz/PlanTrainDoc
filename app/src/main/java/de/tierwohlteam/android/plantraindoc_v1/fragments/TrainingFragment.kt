@@ -9,12 +9,10 @@ import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
@@ -28,21 +26,20 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class TrainingFragment : Fragment(R.layout.training_fragment) {
     private val trainingViewModel: TrainingViewModel by activityViewModels()
-
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
     private var _binding: TrainingFragmentBinding? = null
     private val binding get() = _binding!!
 
     private var soundPool: SoundPool? = null
     private var soundId = 1
     private var tts: TextToSpeech? = null
-    private lateinit var sharedPreferences : SharedPreferences
-
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = TrainingFragmentBinding.inflate(inflater, container, false)
@@ -68,11 +65,6 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 tts?.language = Locale.GERMAN
             }
         }
-
-        //Preferences
-        //TODO Inject???
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-
         return view
     }
 
@@ -105,21 +97,13 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         lifecycleScope.launchWhenStarted {
             trainingViewModel.countDown.collect {
                 if(it != null) {
+                    if (it <= 0) stopTraining(view)
                     binding.tvConstraintHeader.text = getString(R.string.remaining)
                     val text = it.toString()
                     binding.tvConstraintCounter.text = text
                 } else {
                     binding.tvConstraintHeader.text = ""
                     binding.tvConstraintCounter.text = ""
-                }
-            }
-        }
-
-        //stop when countdown is 0
-        lifecycleScope.launchWhenStarted {
-            trainingViewModel.countDown.collect {
-                if (it != null && it <= 0) {
-                    stopTraining(view)
                 }
             }
         }

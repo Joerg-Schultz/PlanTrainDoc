@@ -41,8 +41,11 @@ class TrainingViewModel @Inject constructor(
     private val selectedPlanConstraint: MutableStateFlow<PlanConstraint?> = MutableStateFlow(value = null)
     private val selectedPlanHelper: MutableStateFlow<PlanHelper?> = MutableStateFlow(value = null)
     private var getHelperNextValue : (() -> String)? = null
+
     fun setSelectedPlan(plan: Plan){
         selectedPlan.value = plan
+        clickResetCounter.value = Pair(0,0)
+        totalTrials.value = 0
         //prepare constraint
         viewModelScope.launch {
             selectedPlanConstraint.value = repository.getPlanConstraint(plan)
@@ -135,8 +138,8 @@ class TrainingViewModel @Inject constructor(
     }
     //enable cancel of timer from fragment
     fun cleanup(){
-        totalTrials.value = 0
-        clickResetCounter.value = Pair(0,0)
+        //TODO stop the timer when leaving training fragment
+        //restart when going back to existing training
         if(::constraintTimer.isInitialized) constraintTimer.cancel()
     }
 
