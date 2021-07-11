@@ -1,6 +1,5 @@
 package de.tierwohlteam.android.plantraindoc_v1.repositories
 
-import android.content.Context
 import androidx.annotation.WorkerThread
 import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.daos.*
@@ -8,10 +7,12 @@ import de.tierwohlteam.android.plantraindoc_v1.models.*
 import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.PTDapi
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.AccountRequest
+import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.GoalRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.LocalDateTime
 import javax.inject.Inject
 
 /**
@@ -70,7 +71,7 @@ class PTDRepository @Inject constructor(
 
     /**
      * Goal functions
-     *
+     ***********************************************************
      *  Insert a Goal into the database
      *  @param[goal] Goal object
      */
@@ -117,8 +118,22 @@ class PTDRepository @Inject constructor(
         emitAll(dataFlow.map { Resource.success(it) })
     }
 
-
     /**
+     * get all goals which were changed since a given date
+     * @param[lastSyncDate] LocalDateTime?
+     *                      if null, all goals will be returned
+     * @return List<Goal>
+     */
+    suspend fun getNewGoalsLocal(lastSyncDate: LocalDateTime? = null): List<Goal> {
+        return if (lastSyncDate == null) {
+            goalDao.getAll()
+        } else {
+            goalDao.getNew(lastSyncDate)
+        }
+    }
+
+
+/**
      * get the parent of a goal
      * @param[goal] the child goal
      * @return Goal parent or null if goal already is top level
@@ -336,6 +351,21 @@ class PTDRepository @Inject constructor(
                 }
             } catch (e: Exception) {
                 Resource.error("Couldn't connect to PlanTrainDoc Web Server", null)
+            }
+        }
+
+    /**
+     * get all goals from Web Server which were changed since a given date
+     * @param[lastSyncDate] LocalDateTime?
+     *                      if null, all goals will be returned
+     * @return List<Goal>
+     */
+    suspend fun getNewGoalsRemote(lastSyncDate: LocalDateTime?): List<Goal> =
+        withContext(Dispatchers.IO){
+            try {
+                ptdApi.goals(date = lastSyncDate?.toString() ?: "")
+            } catch(e: Exception){
+                emptyList<Goal>()
             }
         }
 

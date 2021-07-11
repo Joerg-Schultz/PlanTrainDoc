@@ -40,9 +40,6 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener{
         val navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-        //TODO can use the Dagger Prefs here??
-        //val defaultPrefs = PreferenceManager.getDefaultSharedPreferences(this)
-        //defaultPrefs.registerOnSharedPreferenceChangeListener(this)
         sharedPrefs.registerOnSharedPreferenceChangeListener(this)
     }
 

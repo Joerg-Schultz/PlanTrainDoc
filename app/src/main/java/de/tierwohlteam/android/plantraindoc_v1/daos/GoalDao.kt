@@ -4,6 +4,7 @@ import androidx.room.*
 import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.models.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.LocalDateTime
 import java.net.IDN
 
 @Dao
@@ -15,12 +16,19 @@ interface GoalDao {
     @Insert
     suspend fun insertGoalDependency(dependencyCrossRef: GoalDependencyCrossRef)
 
+    @Query("SELECT * from goals")
+    suspend fun getAll(): List<Goal>
+
     @Query("SELECT * from goals where id = :goalID")
     suspend fun getByID(goalID: Uuid): Goal?
 
     @Transaction
     @Query("SELECT * from goals where id = :goalID")
     suspend fun getByIDWithPlan(goalID: Uuid): GoalWithPlan?
+
+    @Query("SELECT * from goals where changed < :lastSyncDate")
+    suspend fun getNew(lastSyncDate: LocalDateTime): List<Goal>
+
 
     // Because Room runs the two queries for us under the hood,
     // add the @Transaction annotation, to ensure that this
