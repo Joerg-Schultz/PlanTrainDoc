@@ -24,4 +24,8 @@ interface PTDapi {
     suspend fun goals(
         @Query("date") date: String) : List<Goal>
 
+    @POST("/goals")
+    suspend fun insertGoal(
+        @Body goals: List<Goal>) : Response<SimpleResponse>
+
 }

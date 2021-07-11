@@ -97,7 +97,14 @@ class ServerViewModel @Inject constructor(
         }
         localJob.join()
         remoteJob.join()
-        _syncGoalsStatus.postValue(Resource.success(newGoalsRemote))
+
+        val localOnlyGoals = newGoalsLocal.filter {
+                local -> newGoalsRemote.none { it.id == local.id } }
+        Log.d("SYNC", localOnlyGoals.toString())
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.putGoalsRemote(localOnlyGoals)
+            _syncGoalsStatus.postValue(Resource.success(localOnlyGoals))
+        }
 
     }
 }

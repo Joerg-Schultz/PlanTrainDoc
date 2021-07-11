@@ -1,19 +1,16 @@
 package de.tierwohlteam.android.plantraindoc_v1.di
 
-import android.app.Activity
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import com.benasher44.uuid.uuidFrom
+import com.google.gson.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import de.tierwohlteam.android.plantraindoc_v1.R
@@ -23,16 +20,21 @@ import de.tierwohlteam.android.plantraindoc_v1.others.Constants
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.BASE_URL
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USER_ID
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.PTD_DB_NAME
-import de.tierwohlteam.android.plantraindoc_v1.others.Constants.SHARED_PREFERENCES_NAME
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDdb
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.BasicAuthInterceptor
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.PTDapi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.toLocalDateTime
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.reflect.Type
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -92,12 +94,33 @@ object AppModule {
         val client = OkHttpClient.Builder()
             .addInterceptor(basicAuthInterceptor)
             .build()
+
+        val gson = GsonBuilder()
+            .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeAdapter)
+            .create()
+
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()
             .create(PTDapi::class.java)
+    }
+    //https://medium.com/@haohcraft/deserialize-and-serialize-datetime-with-gson-82ea59e874c7
+    //https://sites.google.com/site/gson/gson-user-guide#TOC-Custom-Serialization-and-Deserialization
+    object LocalDateTimeAdapter: JsonDeserializer<LocalDateTime>, JsonSerializer<LocalDateTime>{
+        override fun deserialize(
+            json: JsonElement?,
+            typeOfT: Type?,
+            context: JsonDeserializationContext?
+        ): LocalDateTime {
+            return json.toString().toLocalDateTime()
+        }
+
+        override fun serialize(src: LocalDateTime?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
+            return JsonPrimitive(src.toString())
+        }
+
     }
 
     @Singleton

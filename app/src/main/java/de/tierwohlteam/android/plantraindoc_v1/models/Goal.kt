@@ -1,5 +1,5 @@
 @file:UseSerializers(
-    UUIDAsStringSerializer::class
+    UUIDAsStringSerializer::class,
 )
 package de.tierwohlteam.android.plantraindoc_v1.models
 

@@ -45,7 +45,6 @@ class SyncServerFragment: Fragment() {
                         binding.progressBar.visibility = View.GONE
                         var resultText = "Hallo "
                         result.data!!.forEach{
-                            Log.d("SYNC", "Goal: ${it.goal}")
                             resultText = resultText.plus("${it.goal}\n")}
                         binding.tvGoalsLocal.text = resultText
                     }

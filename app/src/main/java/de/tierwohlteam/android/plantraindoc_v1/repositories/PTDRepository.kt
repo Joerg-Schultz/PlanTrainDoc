@@ -8,6 +8,7 @@ import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.PTDapi
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.AccountRequest
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.GoalRequest
+import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.responses.SimpleResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -366,6 +367,25 @@ class PTDRepository @Inject constructor(
                 ptdApi.goals(date = lastSyncDate?.toString() ?: "")
             } catch(e: Exception){
                 emptyList<Goal>()
+            }
+        }
+
+    /**
+     * Send a local goal to the server and insert it to DB
+     * @param[localGoal] Goal
+     * @return Resource<SimpleResponse<String>>
+     */
+    suspend fun putGoalsRemote(localGoals: List<Goal>) =
+        withContext(Dispatchers.IO){
+            try {
+                val response = ptdApi.insertGoal(localGoals)
+                if(response.isSuccessful && response.body()!!.successful){
+                    Resource.success(response.body()?.message)
+                } else {
+                    Resource.error(response.body()?.message ?: response.message(), null)
+                }
+            } catch (e: Exception) {
+                Resource.error("Couldn't connect to PlanTrainDoc Web Server", null)
             }
         }
 
