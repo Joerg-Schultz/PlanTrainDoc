@@ -139,3 +139,6 @@ object AppModule {
         return scheme
     }
 }
+
+//https://www.reddit.com/r/android_devs/comments/hc6dea/how_do_i_break_this_dagger_dependency_cycle_when/
+//https://stackoverflow.com/questions/67314954/change-auth-credentials-in-ktor-client
