@@ -61,15 +61,25 @@
             android:id="@+id/settingsFragment"
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.SettingsFragment"
             android:label="@string/settings">
+        <action android:id="@+id/action_settingsFragment_to_serverRegisterFragment"
+                app:destination="@id/serverRegisterFragment"/>
+        <action android:id="@+id/action_settingsFragment_to_serverLoginFragment"
+                app:destination="@id/serverLoginFragment"/>
     </fragment>
 
     <fragment
-            android:id="@+id/subGoalsFragment"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.SubGoalsFragment"
-            android:label="blabla">
-        <argument
-                android:name="title"
-                app:argType="string"
-                android:defaultValue="NavSubGoals" />
+            android:id="@+id/serverRegisterFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.RegisterServerFragment"
+            android:label="Registration">
+        <action android:id="@+id/action_registerServerFragment_to_loginServerFragment"
+                app:destination="@id/serverLoginFragment"/>
     </fragment>
+    <fragment
+            android:id="@+id/serverLoginFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.LoginServerFragment"
+            android:label="@string/Login">
+        <action android:id="@+id/action_loginServerFragment_to_settingsFragment"
+                app:destination="@id/settingsFragment"/>
+    </fragment>
+
 </navigation>

@@ -1,5 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -11,10 +12,16 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_WEB_SERVER
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+    @Inject
+    lateinit var sharedPrefs: SharedPreferences
+
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private var topMenu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
+        sharedPrefs.registerOnSharedPreferenceChangeListener(this)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -35,10 +44,28 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.top_bar_menu, menu)
+        topMenu = menu
+        topMenu?.findItem(R.id.syncServerFragment)?.isVisible =
+            sharedPrefs.getBoolean(KEY_USE_WEB_SERVER,false)
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (sharedPreferences != null) {
+            if(key.equals(KEY_USE_WEB_SERVER)) {
+                //topMenu?.findItem(R.id.menuItemSync)?.isVisible = true
+                topMenu?.findItem(R.id.syncServerFragment)?.isVisible =
+                    sharedPreferences.getBoolean(KEY_USE_WEB_SERVER,false)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        sharedPrefs.unregisterOnSharedPreferenceChangeListener(this)
     }
 }

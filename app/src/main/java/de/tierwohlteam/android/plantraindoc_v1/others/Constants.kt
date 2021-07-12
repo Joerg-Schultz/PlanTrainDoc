@@ -14,4 +14,9 @@ object Constants {
 
     const val VIBRATION_SHORT = 200L
     const val VIBRATION_LONG = 500L
+
+    const val KEY_USE_WEB_SERVER = "useWebServer"
+    const val BASE_URL = "http://192.168.178.29:8080"
+    const val KEY_HAS_ACCOUNT = "hasAccount"
+    const val LAST_SYNC_DATE = "LAST_SYNC_DATE"
 }
