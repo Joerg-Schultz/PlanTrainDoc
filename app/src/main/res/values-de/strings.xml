@@ -62,8 +62,15 @@
     <string name="clickBarChart">Clicks vs. Resets</string>
     <string name="no_planstats">Noch kein Trainingsplan</string>
     <string name="name">Name</string>
-    <string name="Login">Login</string>
     <string name="register">Register</string>
-    <string name="synchronize">Synchronize</string>
-    <string name="logged_out">You are logged out</string>
+    <string name="useWebServer">Web Server verwenden</string>
+    <string name="Login">Login</string>
+    <string name="ClickerOn">Du verwendst den Clicker jetzt mit Click</string>
+    <string name="ClickerOff">Der Clicker arbeitet jetzt ohne Geräusch</string>
+    <string name="logged_out">Du wurdest ausgeloggt</string>
+    <string name="Unknown_Error">Ein Fehler ist aufgetreten</string>
+    <string name="register_success">Registrierung erfolgreich, du kannst dich jetzt einloggen</string>
+    <string name="SpeechOn">Voice Output for criteria on</string>
+    <string name="SpeechOff">Voice output for Criteria off</string>
+    <string name="synchronize">Synchronisieren</string>
 </resources>

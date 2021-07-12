@@ -65,6 +65,13 @@
     <string name="Login">Login</string>
     <string name="register">Register</string>
     <string name="synchronize">Synchronize</string>
-    <string name="logged_out">You are logged out</string>
+    <string name="useWebServer">Use Web Server</string>
+    <string name="ClickerOn">You are now using the clicker with sound</string>
+    <string name="ClickerOff">The clicker now works without sound</string>
+    <string name="logged_out">You are now logged out</string>
+    <string name="Unknown_Error">An unknown error occurred</string>
+    <string name="register_success">Successfully registered, you can now log in</string>
+    <string name="SpeechOn">Voice Output for criteria on</string>
+    <string name="SpeechOff">Voice output for Criteria off</string>
 
 </resources>
