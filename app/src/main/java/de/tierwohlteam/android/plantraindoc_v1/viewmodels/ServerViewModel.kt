@@ -93,18 +93,15 @@ class ServerViewModel @Inject constructor(
             newGoalsLocal = repository.getNewGoalsLocal(lastSyncDate)
         }
         var newGoalsRemote: List<Goal> = listOf()
-       val remoteGetJob = viewModelScope.launch(Dispatchers.IO){
+        val remoteGetJob = viewModelScope.launch(Dispatchers.IO){
             newGoalsRemote = repository.getNewGoalsRemote(lastSyncDate)
         }
-        localGetJob.join()
-        remoteGetJob.join()
-        Log.d("SYNC", newGoalsRemote.toString())
+        joinAll(localGetJob, remoteGetJob)
 
         val localOnlyGoals = newGoalsLocal.filter {
                 local -> newGoalsRemote.none { it.id == local.id } }
         val remoteOnlyGoals = newGoalsRemote.filter {
             remote ->  newGoalsLocal.none { it.id == remote.id } }
-        Log.d("SYNC", remoteOnlyGoals.toString())
         val remotePutJob = viewModelScope.launch(Dispatchers.IO) {
             repository.putGoalsRemote(localOnlyGoals)
         }
