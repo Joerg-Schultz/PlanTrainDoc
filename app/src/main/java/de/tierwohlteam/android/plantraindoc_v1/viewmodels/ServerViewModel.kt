@@ -21,6 +21,7 @@ import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.datetime.toLocalDateTime
 import okhttp3.internal.wait
@@ -88,23 +89,30 @@ class ServerViewModel @Inject constructor(
         _syncGoalsStatus.postValue(Resource.loading(null))
         val lastSyncDate = sharedPrefs.getString(LAST_SYNC_DATE, null)?.toLocalDateTime()
         var newGoalsLocal: List<Goal> = listOf()
-        val localJob = viewModelScope.launch(Dispatchers.IO){
+        val localGetJob = viewModelScope.launch(Dispatchers.IO){
             newGoalsLocal = repository.getNewGoalsLocal(lastSyncDate)
         }
         var newGoalsRemote: List<Goal> = listOf()
-       val remoteJob = viewModelScope.launch(Dispatchers.IO){
+       val remoteGetJob = viewModelScope.launch(Dispatchers.IO){
             newGoalsRemote = repository.getNewGoalsRemote(lastSyncDate)
         }
-        localJob.join()
-        remoteJob.join()
+        localGetJob.join()
+        remoteGetJob.join()
+        Log.d("SYNC", newGoalsRemote.toString())
 
         val localOnlyGoals = newGoalsLocal.filter {
                 local -> newGoalsRemote.none { it.id == local.id } }
-        Log.d("SYNC", localOnlyGoals.toString())
-        viewModelScope.launch(Dispatchers.IO) {
+        val remoteOnlyGoals = newGoalsRemote.filter {
+            remote ->  newGoalsLocal.none { it.id == remote.id } }
+        Log.d("SYNC", remoteOnlyGoals.toString())
+        val remotePutJob = viewModelScope.launch(Dispatchers.IO) {
             repository.putGoalsRemote(localOnlyGoals)
-            _syncGoalsStatus.postValue(Resource.success(localOnlyGoals))
         }
+        val localPutJob = viewModelScope.launch(Dispatchers.IO) {
+            remoteOnlyGoals.forEach { repository.insertGoal(it) }
+        }
+        joinAll(remotePutJob,localPutJob)
+        _syncGoalsStatus.postValue(Resource.success(remoteOnlyGoals))
 
     }
 }

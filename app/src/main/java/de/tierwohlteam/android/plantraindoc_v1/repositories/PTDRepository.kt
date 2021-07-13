@@ -363,11 +363,13 @@ class PTDRepository @Inject constructor(
      */
     suspend fun getNewGoalsRemote(lastSyncDate: LocalDateTime?): List<Goal> =
         withContext(Dispatchers.IO){
-            try {
+            ptdApi.goals(date = lastSyncDate?.toString() ?: "")
+
+         /*   try {
                 ptdApi.goals(date = lastSyncDate?.toString() ?: "")
             } catch(e: Exception){
                 emptyList<Goal>()
-            }
+            } */
         }
 
     /**

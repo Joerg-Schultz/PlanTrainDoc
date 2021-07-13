@@ -114,7 +114,8 @@ object AppModule {
             typeOfT: Type?,
             context: JsonDeserializationContext?
         ): LocalDateTime {
-            return json.toString().toLocalDateTime()
+            val cleanJson = json.toString().replace("\"","")
+            return cleanJson.toLocalDateTime()
         }
 
         override fun serialize(src: LocalDateTime?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
