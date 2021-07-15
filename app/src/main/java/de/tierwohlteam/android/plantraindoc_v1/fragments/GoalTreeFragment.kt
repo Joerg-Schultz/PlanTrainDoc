@@ -106,13 +106,7 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
             "goal" -> FIRST_GOAL
             else -> return false
         }
-        val isFirst = sharedPreferences.getBoolean(selectedLevel, true)
-        return if(!isFirst){
-            false
-        } else {
-            sharedPreferences.edit().putBoolean(selectedLevel, false).apply()
-            true
-        }
+        return sharedPreferences.getBoolean(selectedLevel, true)
     }
 
     private fun setupRecyclerView() {
