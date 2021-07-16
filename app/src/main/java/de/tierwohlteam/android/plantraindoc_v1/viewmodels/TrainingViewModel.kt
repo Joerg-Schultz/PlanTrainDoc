@@ -40,6 +40,7 @@ class TrainingViewModel @Inject constructor(
     private val selectedPlanConstraint: MutableStateFlow<PlanConstraint?> = MutableStateFlow(value = null)
     private val selectedPlanHelper: MutableStateFlow<PlanHelper?> = MutableStateFlow(value = null)
     private var getHelperNextValue : (() -> String)? = null
+
     fun setSelectedPlan(plan: Plan){
         selectedPlan.value = plan
         //prepare constraint

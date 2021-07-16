@@ -73,5 +73,9 @@
     <string name="register_success">Successfully registered, you can now log in</string>
     <string name="SpeechOn">Voice Output for criteria on</string>
     <string name="SpeechOff">Voice output for Criteria off</string>
+    <string name="no_training">No Training for this goal yet</string>
+    <string name="trend">Trend</string>
+    <string name="total_clicks">Total Clicks</string>
+    <string name="total_trend">Total Trend</string>
 
 </resources>

@@ -73,4 +73,8 @@
     <string name="SpeechOn">Voice Output for criteria on</string>
     <string name="SpeechOff">Voice output for Criteria off</string>
     <string name="synchronize">Synchronisieren</string>
+    <string name="no_training">Noch kein Training für dieses Ziel</string>
+    <string name="trend">Trend</string>
+    <string name="total_clicks">Clicks gesamt</string>
+    <string name="total_trend">Trend gesamt</string>
 </resources>
