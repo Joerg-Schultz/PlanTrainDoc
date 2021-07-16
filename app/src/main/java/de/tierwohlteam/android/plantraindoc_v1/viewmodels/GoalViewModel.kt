@@ -128,4 +128,6 @@ class GoalViewModel @Inject constructor(
             }
         }
     }
+
+    fun isTopLevel(): Boolean = parentGoal.value == null
 }

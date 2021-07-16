@@ -2,6 +2,7 @@ package de.tierwohlteam.android.plantraindoc_v1.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,14 +38,14 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
     private val goalViewModel: GoalViewModel by activityViewModels()
 
     @Inject
-    lateinit var sharedPreferences : SharedPreferences
+    lateinit var sharedPreferences: SharedPreferences
 
     private var _binding: GoaltreeFragmentBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var goalTreeAdapter: GoalTreeAdapter
 
-    private var currentGoals : MutableList<GoalWithPlan> = mutableListOf()
+    private var currentGoals: MutableList<GoalWithPlan> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = GoaltreeFragmentBinding.inflate(inflater, container, false)
@@ -85,31 +86,33 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
             findNavController().navigate(R.id.action_goalTreeFragment_to_addModifyGoalFragment)
         }
     }
+
     private fun checkFirstUse(view: View) {
         when {
             firstUse("app") -> MaterialAlertDialogBuilder(view.context)
                 .setTitle(getString(R.string.welcome))
                 .setMessage(getString(R.string.welcome_message))
                 .setPositiveButton(getString(R.string.ok)) { dialog, which ->
-                    sharedPreferences.edit().putBoolean(FIRST_USAGE,false).apply()
+                    sharedPreferences.edit().putBoolean(FIRST_USAGE, false).apply()
                 }
                 .show()
             firstUse("goal") -> MaterialAlertDialogBuilder(view.context)
                 .setTitle(getString(R.string.congratulation))
                 .setMessage(getString(R.string.firstgoal_message))
                 .setPositiveButton(getString(R.string.ok)) { dialog, which ->
-                    sharedPreferences.edit().putBoolean(FIRST_GOAL,false).apply()
+                    sharedPreferences.edit().putBoolean(FIRST_GOAL, false).apply()
                 }
                 .show()
             else -> {
             }
         }
     }
+
     private fun firstUse(level: String): Boolean {
-        return when(level){
+        return when (level) {
             "app" -> sharedPreferences.getBoolean(FIRST_USAGE, true)
             "goal" -> sharedPreferences.getBoolean(FIRST_GOAL, false)
-            else ->  false
+            else -> false
         }
     }
 
@@ -137,7 +140,7 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
             val toPos = target.adapterPosition
             Collections.swap(currentGoals, fromPos, toPos)
             val titleList = currentGoals.map { it.goal.goal }
-            recyclerView.adapter?.notifyItemMoved(fromPos,toPos)
+            recyclerView.adapter?.notifyItemMoved(fromPos, toPos)
             return true
         }
 
@@ -150,6 +153,13 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
                 ItemTouchHelper.LEFT -> goalViewModel.moveTreeDown(pos)
                 ItemTouchHelper.RIGHT -> goalViewModel.moveTreeUp() //TODO allow only if there is a parent. Goals are not shown
             }
+        }
+
+        override fun getSwipeDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+            val parent = currentGoals[viewHolder.adapterPosition].goal.parents
+            return if(parent == null)
+                ItemTouchHelper.LEFT else
+                super.getSwipeDirs(recyclerView, viewHolder)
         }
 
     }
