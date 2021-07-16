@@ -10,6 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.DefaultValueFormatter
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.adapters.SubGoalListAdapter
@@ -143,14 +145,19 @@ class ClicksFragment : Fragment() {
                                         BarEntry(2F, result.data.second.toFloat())
                                     ), "ClickRatio"
                                 )
-                                barDataSet.setColors(
-                                    resources.getColor(R.color.accent),
-                                    resources.getColor(R.color.primaryLightColor)
-                                )
+                                barDataSet.apply {
+                                    setColors(
+                                        resources.getColor(R.color.accent),
+                                        resources.getColor(R.color.primaryLightColor)
+                                    )
+                                    valueTextSize = 16F
+                                    valueFormatter = DefaultValueFormatter(0)
+                                }
                                 binding.clicksBarChart.apply {
                                     data = BarData(barDataSet)
                                     setNoDataText("No Training for this goal")
                                     invalidate()
+
                                 }
                             }
                         }
@@ -163,14 +170,24 @@ class ClicksFragment : Fragment() {
     private fun setupBarChart(){
         binding.clicksBarChart.xAxis.apply {
             position = XAxis.XAxisPosition.BOTTOM
+            setDrawGridLines(false)
+            //isEnabled = false
+            labelCount = 2
+            textSize = 16F
+            valueFormatter = IndexAxisValueFormatter(listOf("","Click", "Reset"))
         }
         binding.clicksBarChart.axisLeft.apply {
             axisMinimum = 0F
-
+            setDrawGridLines(false)
+        }
+        binding.clicksBarChart.axisRight.apply {
+            isEnabled = false
         }
         binding.clicksBarChart.apply{
-            description.text = getString(R.string.clickBarChart)
             legend.isEnabled = false
+            description.isEnabled = false
+            extraBottomOffset = 16F
+
         }
     }
 }
@@ -276,6 +293,11 @@ class TimeCourseFragment : Fragment() {
         }
         binding.timeCourseChart.axisLeft.apply {
             axisMinimum = 0F
+        }
+        binding.timeCourseChart.apply{
+            legend.isEnabled = false
+            description.isEnabled = false
+            extraBottomOffset = 16F
         }
     }
 }
