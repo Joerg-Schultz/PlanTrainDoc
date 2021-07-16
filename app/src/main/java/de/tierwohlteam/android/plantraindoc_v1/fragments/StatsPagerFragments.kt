@@ -111,13 +111,14 @@ class ClicksFragment : Fragment() {
             binding.apply {
                 tvNoPlan.visibility = View.VISIBLE
                 clicksBarChart.visibility = View.GONE
+                pBBarchart.visibility = View.GONE
             }
         } else {// else -> show bar chart
             trainingViewModel.setSelectedPlan(plan!!)
             binding.apply {
                 tvNoPlan.visibility = View.GONE
                 clicksBarChart.visibility = View.VISIBLE
-                binding.pBBarchart.visibility = View.VISIBLE
+                pBBarchart.visibility = View.VISIBLE
             }
            lifecycleScope.launchWhenStarted {
                 goalViewModel.subGoalsRecursive.collect {
@@ -221,6 +222,7 @@ class TimeCourseFragment : Fragment() {
             binding.apply {
                 tvNoPlan.visibility = View.VISIBLE
                 timeCourseChart.visibility = View.GONE
+                pBTimecourse.visibility = View.GONE
             }
         } else {// else -> show bar chart
             trainingViewModel.setSelectedPlan(plan!!)
