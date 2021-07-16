@@ -23,6 +23,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.PlanConstraint
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
 import de.tierwohlteam.android.plantraindoc_v1.models.ReinforcementScheme
 import de.tierwohlteam.android.plantraindoc_v1.others.Status
+import de.tierwohlteam.android.plantraindoc_v1.others.prettyStringFloat
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.PlanViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -162,7 +163,7 @@ class AddPlanFragment : Fragment() {
                     layoutParams = helperLayoutParams
                     wrapSelectorWheel = true
                     minValue = 1
-                    displayedValues = distanceScheme.getLevels().map { it.toString() }.toTypedArray()
+                    displayedValues = distanceScheme.getLevels().map { it.toString().prettyStringFloat() }.toTypedArray()
                     maxValue = distanceScheme.getLevels().size - 1
                     value = 5
                     setOnValueChangedListener { picker, oldVal, newVal ->
@@ -184,7 +185,7 @@ class AddPlanFragment : Fragment() {
                     layoutParams = helperLayoutParams
                     wrapSelectorWheel = true
                     minValue = 1
-                    displayedValues = durationScheme.getLevels().map { it.toString() }.toTypedArray()
+                    displayedValues = durationScheme.getLevels().map { it.toString().prettyStringFloat() }.toTypedArray()
                     maxValue = durationScheme.getLevels().size - 1
                     value = 5
                     setOnValueChangedListener { picker, oldVal, newVal ->
