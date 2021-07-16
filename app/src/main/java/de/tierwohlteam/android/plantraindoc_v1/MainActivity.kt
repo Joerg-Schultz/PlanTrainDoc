@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_PlanTrainDoc_v1)
         setContentView(R.layout.main_activity)
 
         val navHostFragment =
