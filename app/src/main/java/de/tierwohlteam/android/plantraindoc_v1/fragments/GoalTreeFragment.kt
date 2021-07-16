@@ -70,24 +70,10 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
                     Status.SUCCESS -> {
                         binding.pBgoaltree.visibility = View.GONE
                         result.data?.let {
+                            checkFirstUse(view)
                             goalTreeAdapter.submitList(it)
                             if (it.isNotEmpty()) {
                                 currentGoals = it as MutableList<GoalWithPlan>
-                            } else {
-                                when {
-                                    firstUse("app") -> MaterialAlertDialogBuilder(view.context)
-                                        .setTitle(getString(R.string.welcome))
-                                        .setMessage(getString(R.string.welcome_message))
-                                        .setPositiveButton(getString(R.string.ok)) { dialog, which -> {} }
-                                        .show()
-                                    //set FIRSTUSAGE to false
-                                    firstUse("goal") -> MaterialAlertDialogBuilder(view.context)
-                                        .setTitle(getString(R.string.congratulation))
-                                        .setMessage(getString(R.string.firstgoal_message))
-                                        .setPositiveButton(getString(R.string.ok)) { dialog, which -> {} }
-                                        .show()
-                                    else -> {}
-                                }
                             }
                         }
                     }
@@ -99,14 +85,32 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
             findNavController().navigate(R.id.action_goalTreeFragment_to_addModifyGoalFragment)
         }
     }
-
-    private fun firstUse(level: String): Boolean {
-        val selectedLevel = when(level){
-            "app" -> FIRST_USAGE
-            "goal" -> FIRST_GOAL
-            else -> return false
+    private fun checkFirstUse(view: View) {
+        when {
+            firstUse("app") -> MaterialAlertDialogBuilder(view.context)
+                .setTitle(getString(R.string.welcome))
+                .setMessage(getString(R.string.welcome_message))
+                .setPositiveButton(getString(R.string.ok)) { dialog, which ->
+                    sharedPreferences.edit().putBoolean(FIRST_USAGE,false).apply()
+                }
+                .show()
+            firstUse("goal") -> MaterialAlertDialogBuilder(view.context)
+                .setTitle(getString(R.string.congratulation))
+                .setMessage(getString(R.string.firstgoal_message))
+                .setPositiveButton(getString(R.string.ok)) { dialog, which ->
+                    sharedPreferences.edit().putBoolean(FIRST_GOAL,false).apply()
+                }
+                .show()
+            else -> {
+            }
         }
-        return sharedPreferences.getBoolean(selectedLevel, true)
+    }
+    private fun firstUse(level: String): Boolean {
+        return when(level){
+            "app" -> sharedPreferences.getBoolean(FIRST_USAGE, true)
+            "goal" -> sharedPreferences.getBoolean(FIRST_GOAL, false)
+            else ->  false
+        }
     }
 
     private fun setupRecyclerView() {

@@ -78,13 +78,6 @@ class GoalViewModel @Inject constructor(
             if (status != null) newGoal.status = status
             viewModelScope.launch {
                 repository.insertGoal(newGoal)
-                when {
-                    sharedPreferences.getBoolean(FIRST_USAGE, true) ->
-                        sharedPreferences.edit().putBoolean(FIRST_USAGE, false).apply()
-                    // TODO show this dialog until the first child was created??
-                    parentGoal.value != null ->
-                        sharedPreferences.edit().putBoolean(FIRST_GOAL, false).apply()
-                }
                 _insertGoalStatus.postValue(Event(Resource.success(newGoal)))
             }
         }

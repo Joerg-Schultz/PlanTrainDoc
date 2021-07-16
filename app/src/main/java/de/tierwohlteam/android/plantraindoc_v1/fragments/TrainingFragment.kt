@@ -199,13 +199,15 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
     open inner class UISingleValueHelper() : UINoHelper() {
         override fun makeHelper() {
             lifecycleScope.launchWhenStarted {
-                trainingViewModel.helperNextValue.collect {
-                    if (it != null) {
-                        binding.tvHelperInfo.text = it
+                trainingViewModel.helperNextValue.collect { nextHelper ->
+                    if (nextHelper != null) {
+                        val speak=  nextHelper.replace(".0","")
+                            .replace(",",".") //Only if locale == german
+                        binding.tvHelperInfo.text = speak
                         if(sharedPreferences.getBoolean("useSpeechforHelper", true))
                             launch {
                                 delay(1000)
-                                tts!!.speak(it, TextToSpeech.QUEUE_FLUSH, null, "")
+                                tts!!.speak(speak, TextToSpeech.QUEUE_FLUSH, null, "")
                         }
                     }
                 }

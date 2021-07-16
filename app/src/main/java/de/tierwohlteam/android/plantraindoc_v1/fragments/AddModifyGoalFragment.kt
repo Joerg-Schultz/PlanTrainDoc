@@ -1,5 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,14 +20,19 @@ import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.AddModifyGoalFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithPlan
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants
 import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import javax.inject.Inject
 
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+
     private val viewModel: GoalViewModel by activityViewModels()
     private var _binding: AddModifyGoalFragmentBinding? = null
     private val binding get() = _binding!!
@@ -55,6 +61,9 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
                 status = selectedStatus(),
                 goalWP = viewModel.selectedGoal.value
             )
+            if(sharedPreferences.getBoolean(Constants.FIRST_GOAL, true)) {
+                sharedPreferences.edit().putBoolean(Constants.FIRST_GOAL, true).apply()
+            }
         }
             /*
             binding.buttonSavegoal.setOnClickListener {
