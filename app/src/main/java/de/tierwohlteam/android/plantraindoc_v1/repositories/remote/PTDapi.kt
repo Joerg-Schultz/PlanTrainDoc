@@ -20,11 +20,12 @@ interface PTDapi {
     suspend fun login(
         @Body loginRequest: AccountRequest) : Response<SimpleResponse>
 
-    @GET("/goals")
+    @GET("/goals/app")
     suspend fun goals(
-        @Query("date") date: String) : List<Goal>
+        @Query("date") date: String,
+    ) : List<Goal>
 
-    @POST("/goals")
+    @POST("/goals/app")
     suspend fun insertGoal(
         @Body goals: List<Goal>) : Response<SimpleResponse>
 
