@@ -1,5 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.repositories
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.daos.*
@@ -224,6 +225,20 @@ class PTDRepository @Inject constructor(
         if (plan == null) flowOf(null) else planDao.getPlanWithRelationsFromPlan(planID = plan.id)
 
     /**
+     * get all plans with relations which were changed since a given date
+     * @param[lastSyncDate] LocalDateTime?
+     *                      if null, all goals will be returned
+     * @return List<PlanWithRelation>
+     */
+    suspend fun getNewPlansWithRelationsLocal(lastSyncDate: LocalDateTime? = null): List<PlanWithRelations> {
+        return if (lastSyncDate == null) {
+            planDao.getAllWithRelations()
+        } else {
+            planDao.getNewWithRelations(lastSyncDate)
+        }
+    }
+
+    /**
      * Session functions
      *
      *  Insert a Session into the database
@@ -373,8 +388,8 @@ class PTDRepository @Inject constructor(
         }
 
     /**
-     * Send a local goal to the server and insert it to DB
-     * @param[localGoal] Goal
+     * Send a list of local goals to the server and insert it to DB
+     * @param[localGoals] List of Goal
      * @return Resource<SimpleResponse<String>>
      */
     suspend fun putGoalsRemote(localGoals: List<Goal>) =
@@ -391,4 +406,34 @@ class PTDRepository @Inject constructor(
             }
         }
 
+    /**
+     * Send a list of local PlanWithRelations to the server and insert it to DB
+     * @param[localPWRList] List of PlanWithRelations
+     * @return Resource<SimpleResponse<String>>
+     */
+    suspend fun putPlansRemote(localPWRList: List<PlanWithRelations>) =
+        withContext(Dispatchers.IO) {
+        try {
+            Log.d("PLANSYNC", "in PutPlansRemote: $localPWRList")
+            val response = ptdApi.insertPlans(localPWRList)
+            if(response.isSuccessful && response.body()!!.successful){
+                Resource.success(response.body()?.message)
+            } else {
+                Resource.error(response.body()?.message ?: response.message(), null)
+            }
+        } catch (e: Exception) {
+            Resource.error("Couldn't connect to PlanTrainDoc Web Server", null)
+        }
+    }
+
+    /**
+     * get all plans with their relations from Web Server which were changed since a given date
+     * @param[lastSyncDate] LocalDateTime?
+     *                      if null, all goals will be returned
+     * @return List<PlanWithRelations>
+     */
+    suspend fun getNewPlansWithRelationsRemote(lastSyncDate: LocalDateTime?): List<PlanWithRelations> =
+        withContext(Dispatchers.IO) {
+            ptdApi.plans(date = lastSyncDate?.toString() ?: "")
+        }
 }

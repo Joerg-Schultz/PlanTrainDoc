@@ -26,7 +26,7 @@ interface GoalDao {
     @Query("SELECT * from goals where id = :goalID")
     suspend fun getByIDWithPlan(goalID: Uuid): GoalWithPlan?
 
-    @Query("SELECT * from goals where changed < :lastSyncDate")
+    @Query("SELECT * from goals where changed > :lastSyncDate")
     suspend fun getNew(lastSyncDate: LocalDateTime): List<Goal>
 
 

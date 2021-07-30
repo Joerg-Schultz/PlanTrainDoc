@@ -7,6 +7,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.PlanConstraint
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanWithRelations
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.LocalDateTime
 
 @Dao
 interface PlanDao {
@@ -39,6 +40,13 @@ interface PlanDao {
     @Transaction
     @Query("SELECT * from plans where id = :planID")
     fun getPlanWithRelationsFromPlan(planID: Uuid): Flow<PlanWithRelations?>
+
+    @Transaction
+    @Query("SELECT * from plans")
+    suspend fun getAllWithRelations(): List<PlanWithRelations>
+    @Transaction
+    @Query("SELECT * from plans where changed > :lastSyncDate")
+    fun getNewWithRelations(lastSyncDate: LocalDateTime): List<PlanWithRelations>
 
     @Query("DELETE from planconstraints where planID = :planID")
     suspend fun deleteConstraints(planID: Uuid)

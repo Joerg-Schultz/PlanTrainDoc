@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.benasher44.uuid.Uuid
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
+import de.tierwohlteam.android.plantraindoc_v1.models.PlanWithRelations
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.DEFAULT_USER_EMAIL
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.DEFAULT_USER_NAME
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.DEFAULT_USER_PASSWORD
@@ -19,13 +20,9 @@ import de.tierwohlteam.android.plantraindoc_v1.others.Constants.LAST_SYNC_DATE
 import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.datetime.toLocalDateTime
-import okhttp3.internal.wait
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -89,27 +86,57 @@ class ServerViewModel @Inject constructor(
         _syncGoalsStatus.postValue(Resource.loading(null))
         val lastSyncDate = sharedPrefs.getString(LAST_SYNC_DATE, null)?.toLocalDateTime()
         var newGoalsLocal: List<Goal> = listOf()
-        val localGetJob = viewModelScope.launch(Dispatchers.IO){
+        val localGetGoalsJob = viewModelScope.launch(Dispatchers.IO){
             newGoalsLocal = repository.getNewGoalsLocal(lastSyncDate)
         }
         var newGoalsRemote: List<Goal> = listOf()
-        val remoteGetJob = viewModelScope.launch(Dispatchers.IO){
+        val remoteGetGoalsJob = viewModelScope.launch(Dispatchers.IO){
             newGoalsRemote = repository.getNewGoalsRemote(lastSyncDate)
         }
-        joinAll(localGetJob, remoteGetJob)
+        joinAll(localGetGoalsJob, remoteGetGoalsJob)
 
         val localOnlyGoals = newGoalsLocal.filter {
                 local -> newGoalsRemote.none { it.id == local.id } }
         val remoteOnlyGoals = newGoalsRemote.filter {
             remote ->  newGoalsLocal.none { it.id == remote.id } }
-        val remotePutJob = viewModelScope.launch(Dispatchers.IO) {
+        val remotePutGoalsJob = viewModelScope.launch(Dispatchers.IO) {
             repository.putGoalsRemote(localOnlyGoals)
         }
-        val localPutJob = viewModelScope.launch(Dispatchers.IO) {
+        val localPutGoalsJob = viewModelScope.launch(Dispatchers.IO) {
             remoteOnlyGoals.forEach { repository.insertGoal(it) }
         }
-        joinAll(remotePutJob,localPutJob)
+        joinAll(remotePutGoalsJob,localPutGoalsJob)
         _syncGoalsStatus.postValue(Resource.success(remoteOnlyGoals))
 
+        var newPlansLocal: List<PlanWithRelations> = listOf()
+        val localGetPlansJob = viewModelScope.launch(Dispatchers.IO) {
+            newPlansLocal = repository.getNewPlansWithRelationsLocal(lastSyncDate)
+        }
+        var newPlansRemote: List<PlanWithRelations> = listOf()
+        val remoteGetPlansJob = viewModelScope.launch(Dispatchers.IO) {
+            newPlansRemote = repository.getNewPlansWithRelationsRemote(lastSyncDate)
+        }
+        joinAll(localGetPlansJob, remoteGetPlansJob)
+
+        val localOnlyPlans = newPlansLocal.filter {
+                local -> newPlansRemote.none { it.plan.id == local.plan.id } }
+        val remoteOnlyPlans = newPlansRemote.filter {
+                remote ->  newPlansLocal.none { it.plan.id == remote.plan.id } }
+        val remotePutPlansJob = viewModelScope.launch(Dispatchers.IO) {
+            repository.putPlansRemote(localOnlyPlans)
+        }
+        val localPutPlansJob = viewModelScope.launch(Dispatchers.IO) {
+            //TODO put details in repository
+            remoteOnlyPlans.forEach {
+                Log.d("SYNCCONST", "PlanID: ${it.plan.id}")
+                repository.insertPlan(it.plan)
+                Log.d("SYNCCONST", "Inserted Plan, Now Start constraint ${it.constraint!!.planID}")
+                it.constraint?.let { it1 -> repository.insertPlanConstraint(it1) }
+            /*    it.helpers.forEach { helper ->
+                    repository.insertPlanHelper(helper)
+                } */
+            }
+        }
+        joinAll(remotePutPlansJob,localPutPlansJob)
     }
 }
