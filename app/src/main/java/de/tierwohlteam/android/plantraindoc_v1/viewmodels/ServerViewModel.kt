@@ -130,11 +130,12 @@ class ServerViewModel @Inject constructor(
             remoteOnlyPlans.forEach {
                 Log.d("SYNCCONST", "PlanID: ${it.plan.id}")
                 repository.insertPlan(it.plan)
-                Log.d("SYNCCONST", "Inserted Plan, Now Start constraint ${it.constraint!!.planID}")
-                it.constraint?.let { it1 -> repository.insertPlanConstraint(it1) }
-            /*    it.helpers.forEach { helper ->
+                if(it.constraint != null) {
+                    repository.insertPlanConstraint(it.constraint)
+                }
+                it.helpers.forEach { helper ->
                     repository.insertPlanHelper(helper)
-                } */
+                }
             }
         }
         joinAll(remotePutPlansJob,localPutPlansJob)

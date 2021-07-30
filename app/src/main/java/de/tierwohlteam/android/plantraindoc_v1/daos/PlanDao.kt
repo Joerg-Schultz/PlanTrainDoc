@@ -15,8 +15,10 @@ interface PlanDao {
     @Insert
     suspend fun insert(plan: Plan)
 
+    // Postgres has only a single entry for constraints with the same value
+    // This throws an error when inserting an already existing constraint
     @Transaction
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(planConstraint: PlanConstraint)
 
     @Transaction
