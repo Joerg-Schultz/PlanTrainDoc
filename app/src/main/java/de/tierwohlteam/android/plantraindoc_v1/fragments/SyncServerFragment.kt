@@ -42,21 +42,53 @@ class SyncServerFragment: Fragment() {
             result?.let {
                 when (result.status) {
                     Status.SUCCESS -> {
-                        binding.progressBar.visibility = View.GONE
-                        var resultText = "Hallo "
-                        result.data!!.forEach{
-                            resultText = resultText.plus("${it.goal}\n")}
-                        binding.tvGoalsLocal.text = resultText
+                        binding.pbSyncgoals.visibility = View.INVISIBLE
+                        binding.tvSyncgoalsDone.visibility = View.VISIBLE
                     }
                     Status.ERROR -> {
                         /* NO-OP */
                     }
                     Status.LOADING -> {
-                        binding.progressBar.visibility = View.VISIBLE
+                        binding.pbSyncgoals.visibility = View.VISIBLE
                     }
                     else -> { /*NO-OP*/ }
                 }
             }
         })
+        serverViewModel.syncPlansStatus.observe(viewLifecycleOwner, Observer { result ->
+            result?.let {
+                when (result.status) {
+                    Status.SUCCESS -> {
+                        binding.pbSyncplans.visibility = View.INVISIBLE
+                        binding.tvSyncplansDone.visibility = View.VISIBLE
+                    }
+                    Status.ERROR -> {
+                        /* NO-OP */
+                    }
+                    Status.LOADING -> {
+                        binding.pbSyncplans.visibility = View.VISIBLE
+                    }
+                    else -> { /*NO-OP*/ }
+                }
+            }
+        })
+        serverViewModel.syncTrainingStatus.observe(viewLifecycleOwner, Observer { result ->
+            result?.let {
+                when (result.status) {
+                    Status.SUCCESS -> {
+                        binding.pbSynctraining.visibility = View.INVISIBLE
+                        binding.tvSynctrainingDone.visibility = View.VISIBLE
+                    }
+                    Status.ERROR -> {
+                        /* NO-OP */
+                    }
+                    Status.LOADING -> {
+                        binding.pbSynctraining.visibility = View.VISIBLE
+                    }
+                    else -> { /*NO-OP*/ }
+                }
+            }
+        })
+
     }
 }

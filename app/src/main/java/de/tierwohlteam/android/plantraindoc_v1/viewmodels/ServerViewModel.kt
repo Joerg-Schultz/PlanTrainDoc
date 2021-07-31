@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.benasher44.uuid.Uuid
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
+import de.tierwohlteam.android.plantraindoc_v1.models.Plan
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanWithRelations
 import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.DEFAULT_USER_EMAIL
@@ -42,6 +43,10 @@ class ServerViewModel @Inject constructor(
 
     private val _syncGoalsStatus = MutableLiveData<Resource<List<Goal>>>()
     val syncGoalsStatus : LiveData<Resource<List<Goal>>> = _syncGoalsStatus
+    private val _syncPlansStatus = MutableLiveData<Resource<List<PlanWithRelations>>>()
+    val syncPlansStatus : LiveData<Resource<List<PlanWithRelations>>> = _syncPlansStatus
+    private val _syncTrainingStatus = MutableLiveData<Resource<List<SessionWithRelations>>>()
+    val syncTrainingStatus : LiveData<Resource<List<SessionWithRelations>>> = _syncTrainingStatus
 
     fun register(name: String, eMail: String, password: String, repeatedPassword: String){
         _registerStatus.postValue(Resource.loading(null))
@@ -109,6 +114,7 @@ class ServerViewModel @Inject constructor(
         joinAll(remotePutGoalsJob,localPutGoalsJob)
         _syncGoalsStatus.postValue(Resource.success(remoteOnlyGoals))
 
+        _syncPlansStatus.postValue(Resource.loading(null))
         var newPlansLocal: List<PlanWithRelations> = listOf()
         val localGetPlansJob = viewModelScope.launch(Dispatchers.IO) {
             newPlansLocal = repository.getNewPlansWithRelationsLocal(lastSyncDate)
@@ -140,7 +146,9 @@ class ServerViewModel @Inject constructor(
             }
         }
         joinAll(remotePutPlansJob,localPutPlansJob)
+        _syncPlansStatus.postValue(Resource.success(remoteOnlyPlans))
 
+        _syncTrainingStatus.postValue(Resource.loading(null))
         // Sessions and Trials can nly be generated in the app -> only send
         var newSessions: List<SessionWithRelations> = listOf()
         val localGetSessionsJob = viewModelScope.launch(Dispatchers.IO) {
@@ -150,5 +158,8 @@ class ServerViewModel @Inject constructor(
         val remotePutSessionsJob = viewModelScope.launch(Dispatchers.IO) {
             repository.putSessionsRemote(newSessions)
         }
+        joinAll(remotePutSessionsJob)
+        _syncTrainingStatus.postValue(Resource.success(newSessions))
+
     }
 }
