@@ -182,6 +182,19 @@ class PTDRepository @Inject constructor(
     }
 
     /**
+     * insert plan with constraint and helpers
+     * @param[planWR] PlanWithRelations
+     */
+    suspend fun insertPlanWithRelations(planWR: PlanWithRelations) {
+        insertPlan(planWR.plan)
+        if(planWR.constraint != null) {
+            insertPlanConstraint(planWR.constraint)
+        }
+        planWR.helpers.forEach { helper ->
+            insertPlanHelper(helper)
+        }
+    }
+    /**
      * Insert a Constraint for a Plan
      * @param[constraint] a PlanConstraint object
      */

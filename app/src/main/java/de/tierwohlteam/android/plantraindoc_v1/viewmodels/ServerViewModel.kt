@@ -89,6 +89,8 @@ class ServerViewModel @Inject constructor(
     }
 
     suspend fun synchronize() {
+
+        //collect goals
         _syncGoalsStatus.postValue(Resource.loading(null))
         val lastSyncDate = sharedPrefs.getString(LAST_SYNC_DATE, null)?.toLocalDateTime()
         var newGoalsLocal: List<Goal> = listOf()
@@ -99,8 +101,26 @@ class ServerViewModel @Inject constructor(
         val remoteGetGoalsJob = viewModelScope.launch(Dispatchers.IO){
             newGoalsRemote = repository.getNewGoalsRemote(lastSyncDate)
         }
-        joinAll(localGetGoalsJob, remoteGetGoalsJob)
+        //collect plans
+        _syncPlansStatus.postValue(Resource.loading(null))
+        var newPlansLocal: List<PlanWithRelations> = listOf()
+        val localGetPlansJob = viewModelScope.launch(Dispatchers.IO) {
+            newPlansLocal = repository.getNewPlansWithRelationsLocal(lastSyncDate)
+        }
+        var newPlansRemote: List<PlanWithRelations> = listOf()
+        val remoteGetPlansJob = viewModelScope.launch(Dispatchers.IO) {
+            newPlansRemote = repository.getNewPlansWithRelationsRemote(lastSyncDate)
+        }
+        //collect Sessions
+        _syncTrainingStatus.postValue(Resource.loading(null))
+        // Sessions and Trials can nly be generated in the app -> only send
+        var newSessions: List<SessionWithRelations> = listOf()
+        val localGetSessionsJob = viewModelScope.launch(Dispatchers.IO) {
+            newSessions = repository.getNewSessionsWithRelationsLocal(lastSyncDate)
+        }
+        joinAll(localGetGoalsJob, remoteGetGoalsJob, localGetPlansJob, remoteGetPlansJob, localGetSessionsJob)
 
+        // Sync Goals
         val localOnlyGoals = newGoalsLocal.filter {
                 local -> newGoalsRemote.none { it.id == local.id } }
         val remoteOnlyGoals = newGoalsRemote.filter {
@@ -114,17 +134,7 @@ class ServerViewModel @Inject constructor(
         joinAll(remotePutGoalsJob,localPutGoalsJob)
         _syncGoalsStatus.postValue(Resource.success(remoteOnlyGoals))
 
-        _syncPlansStatus.postValue(Resource.loading(null))
-        var newPlansLocal: List<PlanWithRelations> = listOf()
-        val localGetPlansJob = viewModelScope.launch(Dispatchers.IO) {
-            newPlansLocal = repository.getNewPlansWithRelationsLocal(lastSyncDate)
-        }
-        var newPlansRemote: List<PlanWithRelations> = listOf()
-        val remoteGetPlansJob = viewModelScope.launch(Dispatchers.IO) {
-            newPlansRemote = repository.getNewPlansWithRelationsRemote(lastSyncDate)
-        }
-        joinAll(localGetPlansJob, remoteGetPlansJob)
-
+        // Sync Plans. Only after goals are finished
         val localOnlyPlans = newPlansLocal.filter {
                 local -> newPlansRemote.none { it.plan.id == local.plan.id } }
         val remoteOnlyPlans = newPlansRemote.filter {
@@ -135,26 +145,13 @@ class ServerViewModel @Inject constructor(
         val localPutPlansJob = viewModelScope.launch(Dispatchers.IO) {
             //TODO put details in repository
             remoteOnlyPlans.forEach {
-                Log.d("SYNCCONST", "PlanID: ${it.plan.id}")
-                repository.insertPlan(it.plan)
-                if(it.constraint != null) {
-                    repository.insertPlanConstraint(it.constraint)
-                }
-                it.helpers.forEach { helper ->
-                    repository.insertPlanHelper(helper)
-                }
+                repository.insertPlanWithRelations(it)
             }
         }
         joinAll(remotePutPlansJob,localPutPlansJob)
         _syncPlansStatus.postValue(Resource.success(remoteOnlyPlans))
 
-        _syncTrainingStatus.postValue(Resource.loading(null))
-        // Sessions and Trials can nly be generated in the app -> only send
-        var newSessions: List<SessionWithRelations> = listOf()
-        val localGetSessionsJob = viewModelScope.launch(Dispatchers.IO) {
-            newSessions = repository.getNewSessionsWithRelationsLocal(lastSyncDate)
-        }
-        joinAll(localGetSessionsJob)
+        // sync sessions. Only after Plans are finished
         val remotePutSessionsJob = viewModelScope.launch(Dispatchers.IO) {
             repository.putSessionsRemote(newSessions)
         }
