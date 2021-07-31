@@ -3,6 +3,7 @@ package de.tierwohlteam.android.plantraindoc_v1.repositories.remote
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.models.Plan
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanWithRelations
+import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.AccountRequest
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.GoalRequest
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.responses.SimpleResponse
@@ -39,5 +40,9 @@ interface PTDapi {
     @POST("/plans/sync")
     suspend fun insertPlans(
         @Body plans: List<PlanWithRelations>) : Response<SimpleResponse>
+
+    @POST("sessions/sync")
+    suspend fun insertSessions(
+        @Body newSessions: List<SessionWithRelations>): Response<SimpleResponse>
 
 }

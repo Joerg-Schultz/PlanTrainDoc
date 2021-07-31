@@ -263,6 +263,21 @@ class PTDRepository @Inject constructor(
         if(sessionID == null) flowOf(null) else sessionDao.getByIDWithRelations(sessionID)
 
     /**
+     * get all sessions with relations (Trials!) which were changed since a given date
+     * @param[lastSyncDate] LocalDateTime?
+     *                      if null, all goals will be returned
+     * @return List<SessionWithRelations>
+     */
+
+    suspend fun getNewSessionsWithRelationsLocal(lastSyncDate: LocalDateTime?): List<SessionWithRelations> {
+        return if (lastSyncDate == null) {
+            sessionDao.getAllWithRelations()
+        } else {
+            sessionDao.getNewWithRelations(lastSyncDate)
+        }
+    }
+
+    /**
      * get all session associated with a plan
      * @param[plan] Plan object
      * @return a flow of the sessions
@@ -436,4 +451,25 @@ class PTDRepository @Inject constructor(
         withContext(Dispatchers.IO) {
             ptdApi.plans(date = lastSyncDate?.toString() ?: "")
         }
+
+    /**
+     * Send a list of local SessionWithRelations to the server and insert it to DB
+     * @param[localSWRList] List of SessionWithRelations
+     * @return Resource<SimpleResponse<String>>
+     */
+    suspend fun putSessionsRemote(newSessions: List<SessionWithRelations>) {
+        withContext(Dispatchers.IO) {
+            try {
+                Log.d("PLANSYNC", "in PutPlansRemote: $newSessions")
+                val response = ptdApi.insertSessions(newSessions)
+                if (response.isSuccessful && response.body()!!.successful) {
+                    Resource.success(response.body()?.message)
+                } else {
+                    Resource.error(response.body()?.message ?: response.message(), null)
+                }
+            } catch (e: Exception) {
+                Resource.error("Couldn't connect to PlanTrainDoc Web Server", null)
+            }
+        }
+    }
 }

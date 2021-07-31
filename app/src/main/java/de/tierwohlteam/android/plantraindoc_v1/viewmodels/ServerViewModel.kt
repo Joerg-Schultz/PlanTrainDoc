@@ -10,6 +10,7 @@ import com.benasher44.uuid.Uuid
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanWithRelations
+import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.DEFAULT_USER_EMAIL
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.DEFAULT_USER_NAME
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.DEFAULT_USER_PASSWORD
@@ -139,5 +140,15 @@ class ServerViewModel @Inject constructor(
             }
         }
         joinAll(remotePutPlansJob,localPutPlansJob)
+
+        // Sessions and Trials can nly be generated in the app -> only send
+        var newSessions: List<SessionWithRelations> = listOf()
+        val localGetSessionsJob = viewModelScope.launch(Dispatchers.IO) {
+            newSessions = repository.getNewSessionsWithRelationsLocal(lastSyncDate)
+        }
+        joinAll(localGetSessionsJob)
+        val remotePutSessionsJob = viewModelScope.launch(Dispatchers.IO) {
+            repository.putSessionsRemote(newSessions)
+        }
     }
 }

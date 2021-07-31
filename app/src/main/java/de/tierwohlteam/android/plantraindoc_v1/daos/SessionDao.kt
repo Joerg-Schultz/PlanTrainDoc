@@ -2,9 +2,11 @@ package de.tierwohlteam.android.plantraindoc_v1.daos
 
 import androidx.room.*
 import com.benasher44.uuid.Uuid
+import de.tierwohlteam.android.plantraindoc_v1.models.PlanWithRelations
 import de.tierwohlteam.android.plantraindoc_v1.models.Session
 import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.LocalDateTime
 
 @Dao
 interface SessionDao {
@@ -27,5 +29,12 @@ interface SessionDao {
 
     @Query("UPDATE sessions set comment = :comment where id = :sessionID")
     suspend fun updateComment(sessionID: Uuid, comment: String?)
+
+    @Transaction
+    @Query("SELECT * from sessions")
+    suspend fun getAllWithRelations(): List<SessionWithRelations>
+    @Transaction
+    @Query("SELECT * from sessions where created > :lastSyncDate")
+    fun getNewWithRelations(lastSyncDate: LocalDateTime): List<SessionWithRelations>
 
 }
