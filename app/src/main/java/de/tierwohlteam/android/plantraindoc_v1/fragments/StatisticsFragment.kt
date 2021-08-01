@@ -43,11 +43,11 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
         val viewPager2 = view.findViewById<ViewPager2>(R.id.stats_pager_container)
 
         val fragmentTitleList: Map<String,Fragment> = mapOf(
-            "Clicks" to ClicksFragment.newInstance(level = "top"),
-            "Trend" to TimeCourseFragment.newInstance(level = "top"),
-            "Goals" to SubGoalsFragment(),
-            "Total CLicks" to ClicksFragment.newInstance(level = "all"),
-            "Total Trend" to TimeCourseFragment.newInstance(level = "all"),
+            getString(R.string.click) to ClicksFragment.newInstance(level = "top"),
+            getString(R.string.trend) to TimeCourseFragment.newInstance(level = "top"),
+            getString(R.string.goals) to SubGoalsFragment(),
+            getString(R.string.total_clicks) to ClicksFragment.newInstance(level = "all"),
+            getString(R.string.total_trend) to TimeCourseFragment.newInstance(level = "all"),
         )
 
         viewPager2.adapter = StatsViewPagerAdapter(this.childFragmentManager, lifecycle,

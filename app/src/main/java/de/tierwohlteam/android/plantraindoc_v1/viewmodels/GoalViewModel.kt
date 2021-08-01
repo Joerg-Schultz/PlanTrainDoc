@@ -1,5 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.viewmodels
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.benasher44.uuid.Uuid
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.*
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.FIRST_GOAL
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.FIRST_USAGE
 import de.tierwohlteam.android.plantraindoc_v1.others.Event
 import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
@@ -21,6 +25,7 @@ import javax.inject.Inject
 class GoalViewModel @Inject constructor(
     private val repository: PTDRepository,
     private val userID: Uuid,
+    private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
     //observe the parent and if changed update the goals
@@ -123,4 +128,6 @@ class GoalViewModel @Inject constructor(
             }
         }
     }
+
+    fun isTopLevel(): Boolean = parentGoal.value == null
 }

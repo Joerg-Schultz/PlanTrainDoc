@@ -20,6 +20,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_LONG
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_SHORT
 import de.tierwohlteam.android.plantraindoc_v1.others.percentage
+import de.tierwohlteam.android.plantraindoc_v1.others.prettyStringFloat
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -184,13 +185,14 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
     open inner class UISingleValueHelper() : UINoHelper() {
         override fun makeHelper() {
             lifecycleScope.launchWhenStarted {
-                trainingViewModel.helperNextValue.collect {
-                    if (it != null) {
-                        binding.tvHelperInfo.text = it
+                trainingViewModel.helperNextValue.collect { nextHelper ->
+                    if (nextHelper != null) {
+                        val speak = nextHelper.prettyStringFloat()
+                        binding.tvHelperInfo.text = speak
                         if(sharedPreferences.getBoolean("useSpeechforHelper", true))
                             launch {
                                 delay(1000)
-                                tts!!.speak(it, TextToSpeech.QUEUE_FLUSH, null, "")
+                                tts!!.speak(speak, TextToSpeech.QUEUE_FLUSH, null, "")
                         }
                     }
                 }

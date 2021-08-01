@@ -10,6 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.DefaultValueFormatter
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.adapters.SubGoalListAdapter
@@ -107,17 +109,18 @@ class ClicksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         goal = goalViewModel.selectedGoal.value?.goal
         plan = goalViewModel.selectedGoal.value?.plan
-        if (plan == null){
+        if (plan == null && level == "top"){
             binding.apply {
                 tvNoPlan.visibility = View.VISIBLE
                 clicksBarChart.visibility = View.GONE
+                pBBarchart.visibility = View.GONE
             }
         } else {// else -> show bar chart
-            trainingViewModel.setSelectedPlan(plan!!)
+            //trainingViewModel.setSelectedPlan(plan!!)
             binding.apply {
                 tvNoPlan.visibility = View.GONE
                 clicksBarChart.visibility = View.VISIBLE
-                binding.pBBarchart.visibility = View.VISIBLE
+                pBBarchart.visibility = View.VISIBLE
             }
            lifecycleScope.launchWhenStarted {
                 goalViewModel.subGoalsRecursive.collect {
@@ -142,14 +145,19 @@ class ClicksFragment : Fragment() {
                                         BarEntry(2F, result.data.second.toFloat())
                                     ), "ClickRatio"
                                 )
-                                barDataSet.setColors(
-                                    resources.getColor(R.color.accent),
-                                    resources.getColor(R.color.primaryLightColor)
-                                )
+                                barDataSet.apply {
+                                    setColors(
+                                        resources.getColor(R.color.accent),
+                                        resources.getColor(R.color.primaryLightColor)
+                                    )
+                                    valueTextSize = 16F
+                                    valueFormatter = DefaultValueFormatter(0)
+                                }
                                 binding.clicksBarChart.apply {
                                     data = BarData(barDataSet)
                                     setNoDataText("No Training for this goal")
                                     invalidate()
+
                                 }
                             }
                         }
@@ -162,14 +170,24 @@ class ClicksFragment : Fragment() {
     private fun setupBarChart(){
         binding.clicksBarChart.xAxis.apply {
             position = XAxis.XAxisPosition.BOTTOM
+            setDrawGridLines(false)
+            //isEnabled = false
+            labelCount = 2
+            textSize = 16F
+            valueFormatter = IndexAxisValueFormatter(listOf("","Click", "Reset"))
         }
         binding.clicksBarChart.axisLeft.apply {
             axisMinimum = 0F
-
+            setDrawGridLines(false)
+        }
+        binding.clicksBarChart.axisRight.apply {
+            isEnabled = false
         }
         binding.clicksBarChart.apply{
-            description.text = getString(R.string.clickBarChart)
             legend.isEnabled = false
+            description.isEnabled = false
+            extraBottomOffset = 16F
+
         }
     }
 }
@@ -217,13 +235,14 @@ class TimeCourseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         goal = goalViewModel.selectedGoal.value?.goal
         plan = goalViewModel.selectedGoal.value?.plan
-        if (plan == null) {
+        if (plan == null && level == "top") {
             binding.apply {
                 tvNoPlan.visibility = View.VISIBLE
                 timeCourseChart.visibility = View.GONE
+                pBTimecourse.visibility = View.GONE
             }
         } else {// else -> show bar chart
-            trainingViewModel.setSelectedPlan(plan!!)
+            //trainingViewModel.setSelectedPlan(plan!!)
             binding.apply {
                 tvNoPlan.visibility = View.GONE
                 timeCourseChart.visibility = View.VISIBLE
@@ -238,42 +257,53 @@ class TimeCourseFragment : Fragment() {
             setupLineChart()
             lifecycleScope.launchWhenStarted {
                 statisticsViewModel.trialsFromPlan.collect { result ->
-                    when(result.status) {
+                    when (result.status) {
                         Status.LOADING -> {
                             binding.pBTimecourse.visibility = View.VISIBLE
                         }
                         Status.SUCCESS -> {
+                            binding.pBTimecourse.visibility = View.GONE
+                            binding.timeCourseChart.apply {
+                                axisLeft.apply {
+                                    setDrawGridLines(false)
+                                }
+                                setNoDataText(getString(R.string.no_training))
+                            }
                             if (result.data!!.isNotEmpty()) {
-                                binding.pBTimecourse.visibility = View.GONE
                                 val dataList: MutableList<Entry> = mutableListOf()
                                 for (chartPoint in result.data) {
                                     dataList.add(Entry(chartPoint.xValue.toFloat(), chartPoint.yValue.toFloat()))
                                 }
                                 val dataSet = LineDataSet(dataList, "Time Course")
                                 dataSet.circleRadius = 8f
-                                binding.timeCourseChart.apply {
-                                    data = LineData(dataSet)
-                                    data.setDrawValues(false)
-                                    axisLeft.apply {
-                                        setDrawGridLines(false)
-                                    }
-                                    setNoDataText("No Training for this goal")
-                                    marker = LineChartMarkerView(result.data, requireContext(), R.layout.line_chart_annotation)
-                                    invalidate()
-                                }
+                                binding.timeCourseChart.data = LineData(dataSet)
+                                binding.timeCourseChart.data.setDrawValues(false)
+
+                                binding.timeCourseChart.marker = LineChartMarkerView(
+                                    result.data,
+                                    requireContext(),
+                                    R.layout.line_chart_annotation
+                                )
                             }
+                            binding.timeCourseChart.invalidate()
                         }
                     }
                 }
             }
         }
     }
+
     private fun setupLineChart(){
         binding.timeCourseChart.xAxis.apply {
             axisMinimum = 0F
         }
         binding.timeCourseChart.axisLeft.apply {
             axisMinimum = 0F
+        }
+        binding.timeCourseChart.apply{
+            legend.isEnabled = false
+            description.isEnabled = false
+            extraBottomOffset = 16F
         }
     }
 }
