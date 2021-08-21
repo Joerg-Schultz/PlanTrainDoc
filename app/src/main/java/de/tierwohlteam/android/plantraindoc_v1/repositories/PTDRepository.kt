@@ -404,6 +404,7 @@ class PTDRepository @Inject constructor(
      *                      if null, all goals will be returned
      * @return List<Goal>
      */
+    //TODO catch errors in all get functions return SimpleResponse with List<Goal>
     suspend fun getNewGoalsRemote(lastSyncDate: LocalDateTime?): List<Goal> =
         withContext(Dispatchers.IO){
             ptdApi.goals(date = lastSyncDate?.toString() ?: "")

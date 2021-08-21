@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
@@ -98,7 +99,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         lifecycleScope.launchWhenStarted {
             trainingViewModel.countDown.collect {
                 if(it != null) {
-                    if (it <= 0) stopTraining(view)
+                    if (it <= 0) stopTraining()
                     binding.tvConstraintHeader.text = getString(R.string.remaining)
                     val text = it.toString()
                     binding.tvConstraintCounter.text = text
@@ -110,9 +111,10 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         }
     }
 
-    private fun stopTraining(view: View) {
+    private fun stopTraining() {
         vibrate()
-        view.findNavController().popBackStack()
+        findNavController().popBackStack()
+        //TODO at the first call after installation this jumps back too far
     }
     private fun vibrate(duration: String = "long"){
         val milliseconds = when(duration){
