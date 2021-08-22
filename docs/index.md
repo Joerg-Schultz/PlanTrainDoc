@@ -4,7 +4,7 @@
 
 ## Navigation durch die Ziel Hierarchie
 
-![Navigation](https://user-images.githubusercontent.com/35415909/130355911-3984b419-50fd-4cde-a224-dbb41ce45082.mp4)
+<video src="https://user-images.githubusercontent.com/35415909/130355911-3984b419-50fd-4cde-a224-dbb41ce45082.mp4"></video>
 
 ## Plan hinzufügen
 
