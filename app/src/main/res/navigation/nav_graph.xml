@@ -7,7 +7,7 @@
 
     <fragment
             android:id="@+id/goalTreeFragment"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.GoalTreeFragment"
+            android:name="de.tierwohlteam.android.plantraindoc.fragments.GoalTreeFragment"
             android:label="@string/plan_verb"
             tools:layout="@layout/goaltree_fragment">
         <action android:id="@+id/action_goalTreeFragment_to_addModifyGoalFragment"
@@ -22,14 +22,14 @@
 
     <fragment
             android:id="@+id/addModifyGoalFragment"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.AddModifyGoalFragment"
+            android:name="de.tierwohlteam.android.plantraindoc.fragments.AddModifyGoalFragment"
             android:label="@string/plan_verb"
             tools:layout="@layout/add_modify_goal_fragment">
     </fragment>
 
     <fragment
             android:id="@+id/showTrainingFragment"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.ShowTrainingFragment"
+            android:name="de.tierwohlteam.android.plantraindoc.fragments.ShowTrainingFragment"
             android:label="@string/train"
             tools:layout="@layout/show_training_fragment">
         <action android:id="@+id/action_showTrainingFragment_to_trainingFragment"
@@ -38,28 +38,28 @@
 
     <fragment
             android:id="@+id/addPlanFragment"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.AddPlanFragment"
+            android:name="de.tierwohlteam.android.plantraindoc.fragments.AddPlanFragment"
             android:label="@string/plan_verb"
             tools:layout="@layout/add_plan_fragment">
     </fragment>
 
     <fragment
             android:id="@+id/trainingFragment"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.TrainingFragment"
+            android:name="de.tierwohlteam.android.plantraindoc.fragments.TrainingFragment"
             android:label="@string/train"
             tools:layout="@layout/training_fragment">
     </fragment>
 
     <fragment
             android:id="@+id/statisticsFragment"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.StatisticsFragment"
+            android:name="de.tierwohlteam.android.plantraindoc.fragments.StatisticsFragment"
             android:label="@string/statistics"
             tools:layout="@layout/statistics_fragment">
     </fragment>
 
     <fragment
             android:id="@+id/settingsFragment"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.SettingsFragment"
+            android:name="de.tierwohlteam.android.plantraindoc.fragments.SettingsFragment"
             android:label="@string/settings">
         <action android:id="@+id/action_settingsFragment_to_registerServerFragment"
                 app:destination="@id/registerServerFragment"/>
@@ -69,14 +69,14 @@
 
     <fragment
             android:id="@+id/registerServerFragment"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.RegisterServerFragment"
+            android:name="de.tierwohlteam.android.plantraindoc.fragments.RegisterServerFragment"
             android:label="Registration">
         <action android:id="@+id/action_registerServerFragment_to_loginServerFragment"
                 app:destination="@id/loginServerFragment"/>
     </fragment>
     <fragment
             android:id="@+id/loginServerFragment"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.LoginServerFragment"
+            android:name="de.tierwohlteam.android.plantraindoc.fragments.LoginServerFragment"
             android:label="@string/Login">
         <action android:id="@+id/action_loginServerFragment_to_settingsFragment"
                 app:destination="@id/settingsFragment"/>
@@ -84,7 +84,7 @@
 
     <fragment
             android:id="@+id/syncServerFragment"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.SyncServerFragment"
+            android:name="de.tierwohlteam.android.plantraindoc.fragments.SyncServerFragment"
             android:label="@string/synchronize">
     </fragment>
 </navigation>
