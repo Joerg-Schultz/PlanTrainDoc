@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo
 import android.media.SoundPool
 import android.os.*
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -223,12 +224,10 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 } else {
                     if(sharedPreferences.getBoolean("useClicker", true))
                         soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
+                    timer.cancel()
+                    timerIsRunning = false
                     lifecycleScope.launchWhenStarted {
                         trainingViewModel.addTrial(true)
-                    }
-                    if(timerIsRunning){
-                        timer.cancel()
-                        timerIsRunning = false
                     }
                     binding.buttonClick.setBackgroundColor(resources.getColor(R.color.primaryColor))
                     binding.buttonClick.text = getString(R.string.startTimer)
@@ -238,14 +237,14 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
         override fun makeButtonReset() {
             binding.buttonReset.setOnClickListener {
-                lifecycleScope.launchWhenStarted {
-                    trainingViewModel.addTrial(false)
-                }
                 if(timerIsRunning){
                     timer.cancel()
                     binding.buttonClick.setBackgroundColor(resources.getColor(R.color.primaryColor))
                     binding.buttonClick.text = getString(R.string.startTimer)
                     timerIsRunning = false
+                }
+                lifecycleScope.launchWhenStarted {
+                    trainingViewModel.addTrial(false)
                 }
             }
         }
