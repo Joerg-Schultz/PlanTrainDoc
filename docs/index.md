@@ -4,11 +4,11 @@
 
 ## Navigation durch die Ziel Hierarchie
 
-<video src="https://user-images.githubusercontent.com/35415909/130355911-3984b419-50fd-4cde-a224-dbb41ce45082.mp4"></video>
+<video src="https://user-images.githubusercontent.com/35415909/130355911-3984b419-50fd-4cde-a224-dbb41ce45082.mp4" controls="controls" style="max-width: 730px;"></video>
 
 ## Plan hinzufügen
 
-https://user-images.githubusercontent.com/35415909/130355960-7d2a3457-abbc-4e62-8841-3e951eed6e9d.mp4
+<video src="https://user-images.githubusercontent.com/35415909/130355960-7d2a3457-abbc-4e62-8841-3e951eed6e9d.mp4" controls="controls" style="max-width: 730px;"></video>
 
 ## Auswertung
 
