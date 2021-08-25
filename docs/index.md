@@ -36,9 +36,8 @@ kleinen Unterzielen angekommen bin. Hier unterstützt mich PlanTrainDoc, indem
 ich für die Ziele mit beliebig vielen Unterzielen anlegen kann, die wiederum beliebig
 viele Unterziele haben können.
 
-<img src="images/AddPlanDistanz.png" width="200"  alt="Add Plan"/>
-
+<!-- <img src="images/AddPlanDistanz.png" width="200"  alt="Add Plan"/> -->
 
 <video controls width="240" height="320" >
-<source src="images/AddPlan.mp4">
+<source src="images/ZielAnlegen_KinnTarget_edited.mp4">
 </video>
