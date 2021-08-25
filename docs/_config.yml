@@ -3,5 +3,6 @@ description: Computer Assisted Animal Training
 show_downloads: false
 github:
   is_project_page: false
+  is_project_footer: true
 google_analytics:
 theme: jekyll-theme-cayman
