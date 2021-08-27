@@ -2,19 +2,17 @@
 layout: default
 ---
 
-# Anleitung
-
-## Ziele setzen
+# Ziele setzen
 
 <!-- _Be a splitter, not a lumper - (Bob Bailey, Alexandra Kurland, ...)_ -->
 
-### Ein neues Ziel anlegen
+## Ein neues Ziel anlegen
 <!-- Kinn Target -->
 <video controls width="240" height="320" >
 <source src="images/ZielAnlegen_KinnTarget_edited.mp4">
 </video>
 
-### Unterziele definieren
+## Unterziele definieren
 
 Um Ziele in kleinere Unterziele aufzubrechen, wischt man das Ziel einfach nach
 und legt neue Ziele an. Dabei gibt es keine Einschränkungen, wie viele Ebenen
@@ -30,15 +28,15 @@ Hund berührt Target
 Signal "Touch"
 -->
 
-### Durch die Ziele navigieren
+## Durch Ziele navigieren
 
 <video controls width="240" height="320" >
 <source src="images/Navigation_Kinntarget_small.mp4">
 </video>
 
-## Training planen
+# Training planen
 
-### Wie will ich trainieren?
+## Wie will ich trainieren?
 Um Kriterien schnell an das Verhalten des Hundes anzupassen, ist es sinnvoll,
 das Training in Päckchen aufzuteilen. 
 <dl>
@@ -52,7 +50,7 @@ ich das Training nach 5 Verhalten (ob erfolgreich oder nicht) stoppen</dd>
 <dt>Frei</dt>
 </dl>
 
-### Was will ich trainieren
+## Was will ich trainieren
 
 Menschen sind schlecht darin, sich zufällig zu verhalten. Das ist ein Problem,
 wenn ich ein Kriterium variabel halten will. Genau hier kann ein Computer helfen,
@@ -85,7 +83,7 @@ lassen, wie oft ich das Warteverhalten belohne bzw. das Signal gebe.</dd>
 <dd></dd>
 </dl>
 
-## Trainieren und Dokumentieren
+# Trainieren und Dokumentieren
 
 Im Training verwende ich PlanTrainDoc als Clicker (einstellbar). Da ich
 zusätzlich auch jeden "Fehler“ (neutraler: Reset) notiere, habe ich jederzeit
@@ -99,7 +97,7 @@ Vor jeder Trainingseinheit schreibe ich das aktuelle Kriterium auf,
 nach der Einheit dokumentiere ich direkt den Erfolg der Einheit. Damit erstelle
 ich während des Trainings direkt in PlanTrainDoc meine Dokumentation. 
 
-## Auswerten
+# Auswerten
 
 PlanTrainDoc merkt sich jedes erfolgreiche (Click) und nicht erfolgreiche (Reset)
 Verhalten. Damit kann ich den Erfolg jedes Trainings, jedes
