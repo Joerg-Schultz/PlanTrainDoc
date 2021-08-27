@@ -83,6 +83,10 @@ lassen, wie oft ich das Warteverhalten belohne bzw. das Signal gebe.</dd>
 <dd></dd>
 </dl>
 
+<video controls width="240" height="320" >
+<source src="images/Planen_Kinntarget_small.mp4">
+</video>
+
 # Trainieren und Dokumentieren
 
 Im Training verwende ich PlanTrainDoc als Clicker (einstellbar). Da ich
@@ -97,9 +101,16 @@ Vor jeder Trainingseinheit schreibe ich das aktuelle Kriterium auf,
 nach der Einheit dokumentiere ich direkt den Erfolg der Einheit. Damit erstelle
 ich während des Trainings direkt in PlanTrainDoc meine Dokumentation. 
 
+<video controls width="240" height="320" >
+<source src="images/Planen_Kinntarget_small.mp4">
+</video>
+
 # Auswerten
 
 PlanTrainDoc merkt sich jedes erfolgreiche (Click) und nicht erfolgreiche (Reset)
 Verhalten. Damit kann ich den Erfolg jedes Trainings, jedes
 Unterziels und Ziels überprüfen. 
 
+<video controls width="240" height="320" >
+<source src="images/Auswertung_Kinntarget_small.mp4">
+</video>
