@@ -63,11 +63,11 @@ basieren.
 <dd>Hier lege ich die mittlere Dauer eines Versuches fest. Während des 
 Trainings gibt mir PlanTrainDoc dann unterschiedliche Zeiten um diesen
 Mittelwert vor. Von 0,1 bis 1,5 Sekunden wird eine konstante Zeit vorgegeben,
-danach werden sie variiert. [Werte](durationscheme.md)</dd>
+danach werden sie variiert. [Werte](https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt)</dd>
 <dt>Distanz</dt>
 <dd>Hier lege ich als Kriterium eine mittlere Distanz fest. Wie bei der Dauer
 gibt mir PlanTrainDoc während des Trainings eine Distanz vor die sich variabel um
-diesen Mittelwert bewegt. [Werte](distancescheme.txt)</dd>
+diesen Mittelwert bewegt. [Werte](https://joerg-schultz.github.io/PlanTrainDoc/distancescheme.txt)</dd>
 <dt>Signal unterscheiden</dt>
 <dd>Bei der Signalunterscheidung (z.B. Platz vs. Sitz aus dem Stehen) soll
 der Hund nur das Signal als Unterscheidungskriterium haben und nicht eine
