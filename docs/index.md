@@ -50,7 +50,7 @@ ich das Training nach 5 Verhalten (ob erfolgreich oder nicht) stoppen</dd>
 <dt>Frei</dt>
 </dl>
 
-## Was will ich trainieren
+## Was will ich trainieren?
 
 Menschen sind schlecht darin, sich zufällig zu verhalten. Das ist ein Problem,
 wenn ich ein Kriterium variabel halten will. Genau hier kann ein Computer helfen,
@@ -63,7 +63,7 @@ basieren.
 <dd>Hier lege ich die mittlere Dauer eines Versuches fest. Während des 
 Trainings gibt mir PlanTrainDoc dann unterschiedliche Zeiten um diesen
 Mittelwert vor. Von 0,1 bis 1,5 Sekunden wird eine konstante Zeit vorgegeben,
-danach werden sie variiert. [Werte](durationscheme.txt)</dd>
+danach werden sie variiert. [Werte](durationscheme.md)</dd>
 <dt>Distanz</dt>
 <dd>Hier lege ich als Kriterium eine mittlere Distanz fest. Wie bei der Dauer
 gibt mir PlanTrainDoc während des Trainings eine Distanz vor die sich variabel um
