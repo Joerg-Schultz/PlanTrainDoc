@@ -103,7 +103,7 @@ nach der Einheit dokumentiere ich direkt den Erfolg der Einheit. Damit erstelle
 ich während des Trainings direkt in PlanTrainDoc meine Dokumentation. 
 
 <video controls width="240" height="320" >
-<source src="images/Planen_Kinntarget_small.mp4">
+<source src="images/Training_Kinntarget_edited.mp4">
 </video>
 
 # Auswerten
