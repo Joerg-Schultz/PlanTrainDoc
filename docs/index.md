@@ -68,29 +68,21 @@ lassen, wie oft ich das Warteverhalten belohne bzw. das Signal gebe.</dd>
 
 ## Trainieren und Dokumentieren
 
+Im Training verwende ich PlanTrainDoc als Clicker (einstellbar). Da ich
+zusätzlich auch jeden "Fehler“ (neutraler: Reset) notiere, habe ich jederzeit
+während des Trainings die genaue Erfolgsrate.
+
+Je nach gewählter Trainingsart gibt mir PlanTrainDoc hier Kriterien vor. In den
+Einstellungen kann ich wählen, ob mir das jeweilige Kriterium angesagt oder
+nur angezeigt wird.
+
 Vor jeder Trainingseinheit schreibe ich das aktuelle Kriterium auf,
 nach der Einheit dokumentiere ich direkt den Erfolg der Einheit. Damit erstelle
-ich während des Trainings direkt in PlanTrainDoc meine Dokumentation.
+ich während des Trainings direkt in PlanTrainDoc meine Dokumentation. 
 
 ## Auswerten
 
-Beim Erstellen eines Trainingsplans stelle ich mir zwei Fragen:
-1. Was genau soll der Hund machen?
-2. Kann ich das in kleinere Ziele aufteilen?
-
-Dabei mache ich mir noch keine Gedanken darüber, wie ich das Verhalten trainieren will.
-
-
-Beispiel Kinn Target:
-<dl>
-    <dt>Was genau soll der Hund machen?</dt>
-        <dd>Der Hund soll im Stehen mit dem Kinn einen Target auf Kopfhöhe 
-vor ihm mit einer geraden Rückenlinie für maximal eine Minute berühren</dd>
-    <dt>Kann ich das in kleinere Ziele aufteilen?</dt>
-        <dd>
-- der Hund muss eine Minute ruhig stehen
-- er muss das Target mit der Nase (und nur der Nase) berühren
-- er muss diese Position für eine Minute halten
-</dd>
-</dl>
+PlanTrainDoc merkt sich jedes erfolgreiche (Click) und nicht erfolgreiche (Reset)
+Verhalten. Damit kann ich den Erfolg jedes Trainings, jedes
+Unterziels und Ziels überprüfen. 
 
