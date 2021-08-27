@@ -6,3 +6,6 @@ github:
   is_project_footer: true
 google_analytics:
 theme: jekyll-theme-cayman
+relative_links:
+  enabled:     true
+  collections: false
