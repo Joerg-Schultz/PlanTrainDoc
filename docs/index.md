@@ -6,16 +6,35 @@ layout: default
 
 ## Ziele setzen
 
-_Be a splitter, not a lumper - (Bob Bailey, Alexandra Kurland, ...)_
+<!-- _Be a splitter, not a lumper - (Bob Bailey, Alexandra Kurland, ...)_ -->
 
 ### Ein neues Ziel anlegen
+<!-- Kinn Target -->
 <video controls width="240" height="320" >
 <source src="images/ZielAnlegen_KinnTarget_edited.mp4">
 </video>
 
 ### Unterziele definieren
 
+Um Ziele in kleinere Unterziele aufzubrechen, wischt man das Ziel einfach nach
+und legt neue Ziele an. Dabei gibt es keine Einschränkungen, wie viele Ebenen
+man einfügt.
+
+<video controls width="240" height="320" >
+<source src="images/UnterzieleAnlegen_KinnTarget.mp4">
+</video>
+
+<!-- 
+für 1 min -> 10 sec, 30 sec
+Hund berührt Target
+Signal "Touch"
+-->
+
 ### Durch die Ziele navigieren
+
+<video controls width="240" height="320" >
+<source src="images/Navigation_Kinntarget_small.mp4">
+</video>
 
 ## Training planen
 
