@@ -14,7 +14,7 @@ layout: default
 
 ## Unterziele definieren
 
-Um Ziele in kleinere Unterziele aufzubrechen, wischt man das Ziel einfach nach
+Um Ziele in kleinere Unterziele aufzubrechen, wischt man das Ziel einfach nach links
 und legt neue Ziele an. Dabei gibt es keine Einschränkungen, wie viele Ebenen
 man einfügt.
 
@@ -42,17 +42,18 @@ das Training in Päckchen aufzuteilen.
 <dl>
 <dt>Zeit basiert</dt>
 <dd>Ich wähle die Dauer einer Trainingseinheit. Sobald ich mit der Einheit 
-beginne startet PlanTrainDoc einen Timer der mich durch Vibration über den Ablauf
+beginne, startet PlanTrainDoc einen Timer, der mich durch Vibration über den Ablauf
 informiert und das Training stoppt.</dd>
 <dt>Anzahl Verhalten des Tieres</dt>
 <dd>Alternativ kann ich die Anzahl der Verhalten des Tieres vorgeben. Z.B. kann
-ich das Training nach 5 Verhalten (ob erfolgreich oder nicht) stoppen</dd>
+ich das Training nach 5 Verhalten (ob erfolgreich oder nicht) stoppen.</dd>
 <dt>Frei</dt>
+<dd>Keine Einschränkung</dd>
 </dl>
 
 ## Was will ich trainieren?
 
-Menschen sind schlecht darin, sich zufällig zu verhalten. Das ist ein Problem,
+Menschen sind schlecht darin sich zufällig zu verhalten. Das ist ein Problem,
 wenn ich ein Kriterium variabel halten will. Genau hier kann ein Computer helfen,
 indem er mir als Trainer variable Kriterien vorgibt. PlanTrainDoc verwendet für 
 Distanz und Dauer Zahlenreihen, die auf Morgan Spectors Buch 
@@ -63,16 +64,16 @@ basieren.
 <dd>Hier lege ich die mittlere Dauer eines Versuches fest. Während des 
 Trainings gibt mir PlanTrainDoc dann unterschiedliche Zeiten um diesen
 Mittelwert vor. Von 0,1 bis 1,5 Sekunden wird eine konstante Zeit vorgegeben,
-danach werden sie variiert. [Werte](https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt)</dd>
+danach werden sie variiert. <a href="https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt">Werte</a></dd>
 <dt>Distanz</dt>
 <dd>Hier lege ich als Kriterium eine mittlere Distanz fest. Wie bei der Dauer
-gibt mir PlanTrainDoc während des Trainings eine Distanz vor die sich variabel um
-diesen Mittelwert bewegt. [Werte](https://joerg-schultz.github.io/PlanTrainDoc/distancescheme.txt)</dd>
+gibt mir PlanTrainDoc während des Trainings eine Distanz vor, die sich variabel um
+diesen Mittelwert bewegt. <a href="https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt">Werte</a></dd>
 <dt>Signal unterscheiden</dt>
 <dd>Bei der Signalunterscheidung (z.B. Platz vs. Sitz aus dem Stehen) soll
 der Hund nur das Signal als Unterscheidungskriterium haben und nicht eine
 Reihenfolge der Signale. In PlanTrainDoc kann ich eine beliebige Anzahl von
-Signalen vorgeben. Währendes Trainings wird dann gleichverteilt aus diesen
+Signalen vorgeben. Während des Trainings wird dann gleichverteilt aus diesen
 Signalen gezogen.</dd>
 <dt>Signal einführen</dt>
 <dd>Unter Signalkontrolle soll der Hund das Verhalten erst dann zeigen, wenn 
@@ -80,7 +81,7 @@ das Signal gegeben wird. Eine Möglichkeit, dies zu trainieren, ist, den Hund au
 für das Warteverhalten zu belohnen. Mit PlanTrainDoc kann ich mir vorgeben
 lassen, wie oft ich das Warteverhalten belohne bzw. das Signal gebe.</dd>
 <dt>Frei</dt>
-<dd></dd>
+<dd>Keine Hilfe</dd>
 </dl>
 
 <video controls width="240" height="320" >
@@ -94,7 +95,7 @@ zusätzlich auch jeden "Fehler“ (neutraler: Reset) notiere, habe ich jederzeit
 während des Trainings die genaue Erfolgsrate.
 
 Je nach gewählter Trainingsart gibt mir PlanTrainDoc hier Kriterien vor. In den
-Einstellungen kann ich wählen, ob mir das jeweilige Kriterium angesagt oder
+Einstellungen kann ich wählen, ob mir das Kriterium angesagt oder
 nur angezeigt wird.
 
 Vor jeder Trainingseinheit schreibe ich das aktuelle Kriterium auf,
@@ -109,7 +110,7 @@ ich während des Trainings direkt in PlanTrainDoc meine Dokumentation.
 
 PlanTrainDoc merkt sich jedes erfolgreiche (Click) und nicht erfolgreiche (Reset)
 Verhalten. Damit kann ich den Erfolg jedes Trainings, jedes
-Unterziels und Ziels überprüfen. 
+Unterziels und jedes Ziels überprüfen. 
 
 <video controls width="240" height="320" >
 <source src="images/Auswertung_Kinntarget_small.mp4">
