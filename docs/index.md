@@ -34,10 +34,11 @@ Trainings flexibel an. Da jedes einzelne Verhalten des Hundes gespeichert wird, 
 jedes Ziel Erfolgsstatistiken anzeigen lassen und meinen Plan danach verbessern. Und da das ganze
 auf meinem Smartphone läuft, habe ich alle Informationen immer bei mir.
 
+# Was kann ich mit der App machen?
 
-# Ziele festlegen
+## Ziele festlegen
 
-## Ein neues Ziel anlegen
+### Ein neues Ziel anlegen
 
 Als ersten Schritt lege ich in der App ein neues Ziel an. Dafür clicke ich
 auf den orangen '+' Button. Für jedes Ziel gebe ich einen Titel an,
@@ -49,7 +50,7 @@ definiere Details des Verhaltens und lege den Status des Ziels fest. Mit dem ora
 <source src="images/ZielAnlegen_KinnTarget_edited.mp4">
 </video>
 
-## Unterziele definieren
+### Unterziele definieren
 
 Merke ich, dass das Ziel zu groß ist und zu viele Trainingsschritte beinhaltet, definiere ich mir
 kleinere Unterziele. Dazu wische ich das aktuelle Ziel einfach nach links und lege die kleineren
@@ -60,7 +61,7 @@ habe. Natürlich kann ich auf einem Level mehrere Ziele anlegen.
 <source src="images/UnterzieleAnlegen_KinnTarget.mp4">
 </video>
 
-## Durch Ziele navigieren
+### Durch Ziele navigieren
 
 Um von einem detaillierten Ziel wieder nach oben zu navigieren, wische ich entweder ein Ziel
 nach rechts oder verwende den Backbutton. Hab ich eine Gruppe von Zielen auf dem gleichen
@@ -71,12 +72,12 @@ erarbeitet werden soll.
 <source src="images/Navigation_Kinntarget_small.mp4">
 </video>
 
-# Training planen
+## Training planen
 
 Zu jedem Ziel kann ich ein Training anlegen. Dazu clicke ich auf den grünen
 'Planen' Text des Ziels. Jetzt kann ich festlegen, was und wie ich trainieren will.
 
-## Wie will ich trainieren?
+### Wie will ich trainieren?
 
 Um Kriterien schnell an das Verhalten des Hundes anzupassen, versuche ich,
 meine Trainingseinheiten kurz zu halten. Dazu lege ich vor dem Training
@@ -94,7 +95,7 @@ ich das Training nach 5 Verhalten (ob erfolgreich oder nicht) stoppen lassen.</d
 <dd>Keine Einschränkung</dd>
 </dl>
 
-## Was will ich trainieren?
+### Was will ich trainieren?
 
 Menschen sind schlecht darin sich zufällig zu verhalten. Das ist ein Problem,
 wenn ich ein Kriterium variabel halten will. Daher lasse ich mir die Kriterien
@@ -134,7 +135,7 @@ lassen, wie oft ich das Warteverhalten belohne bzw. das Signal gebe.</dd>
 <source src="images/Planen_Kinntarget_small.mp4">
 </video>
 
-# Trainieren und Dokumentieren
+## Trainieren und Dokumentieren
 
 Um das Training zu starten, clicke ich auf den grünen 'Training' Text
 eines Ziels. Im Training verwende ich PlanTrainDoc als Clicker. Da ich
@@ -153,7 +154,7 @@ ich während des Trainings direkt in PlanTrainDoc meine Dokumentation.
 <source src="images/Training_Kinntarget_edited.mp4">
 </video>
 
-# Auswerten
+## Auswerten
 
 PlanTrainDoc merkt sich jedes erfolgreiche (Click) und nicht erfolgreiche (Reset)
 Verhalten. Damit kann ich den Erfolg jedes Trainings, jedes
