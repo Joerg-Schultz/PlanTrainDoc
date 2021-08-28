@@ -2,33 +2,68 @@
 layout: default
 ---
 
-# Ziele setzen
+Beim Training mit meinem Hund bin ich immer wieder in die gleichen Probleme gelaufen.
 
-<!-- _Be a splitter, not a lumper - (Bob Bailey, Alexandra Kurland, ...)_ -->
+- Während des Trainings kann ich mir nicht gleichzeitig merken, 
+  wie viele erfolgreiche und fehlerhafte Verhalten der Hund gezeigt hat.
+- Wenn ich jeweils nur eine Minute pro Einheit trainieren will, vergesse ich
+  spätestens bei der dritten Einheit, den Wecker zu starten. Will ich nur eine
+  bestimmte Anzahl von Versuchen trainieren, bin ich mir am Ende der Einheit nicht sicher,
+  ob der Hund schon fünf oder doch nur vier Versuche gezeigt hat.
+- Um mit variablen Kriterien zu arbeiten, muss ich während des Trainings auf Zetteln
+  die jeweiligen Werte nachvollziehen und kann mich nicht auf den Hund konzentrieren
+- Wenn ich während des Trainings dokumentiere, wird die Einheit immer mehr 
+  zerstückelt, weil ich ständig zum Rechner / Papier gehen muss.
+- Beim Training draußen kann ich nicht mit Stift und Zettel arbeiten.
+- Wenn ich vor dem Training einen Plan erstellt habe, muss ich das Training 
+  komplett unterbrechen, wenn ich auch nur kleine Änderungen am Plan vornehmen will.
+
+Nachdem mir klar geworden ist, dass dadurch mein Training nicht so gut ist, wie es sein könnte,
+habe ich angefangen 
+[PlanTrainDoc](https://play.google.com/store/apps/details?id=de.tierwohlteam.android.plantraindoc) 
+zu entwickeln. Inzwischen verwende ich die App bei allen Schritten meines Trainings – angefangen
+von der Planung über das eigentliche Training, bei dem ich gleichzeitig meine Dokumentation erstelle,
+bis zur Auswertung, anhand der ich wieder den Trainingsplan anpasse. Während des Trainings zeigt mir
+PlanTrainDoc an, wie viele Versuche der Hund gemacht hat und wie viele davon erfolgreich waren. 
+Die App sagt mir Bescheid, wann ich mein Training stoppen will (Zeit oder Anzahl Versuche).
+Wenn ich mit variablen Kriterien arbeite, kann mir PlanTrainDoc für jeden Versuch einen Wert
+ansagen. Vor dem Training kann ich in der App meine Ziele festlegen, die ich während des Trainings
+flexibel anpassen kann. Da jedes einzelne Verhalten des Hundes gespeichert wird, kann ich mir für
+jedes Ziel Erfolgsstatistiken anzeigen lassen und meinen Plan danach verbessern. Und da das ganze
+auf meinen Smartphone läuft, habe ich alle Informationen immer bei mir.
+
+
+# Ziele festlegen
 
 ## Ein neues Ziel anlegen
-<!-- Kinn Target -->
+
+Als ersten Schritt lege ich in der App ein neues Ziel an. Dafür clicke ich
+auf den orangen '+' Button. Für jedes Ziel kann ich einen Titel angeben,
+Details notieren und den Status des Ziels definieren. Mit dem orangen Button kann
+dann das Ziel spichern. Möchte ich Änderungen vornehmen, z.B. den Status auf
+'in Bearbeitung' setzen, clicke ich auf das Ziel.
+
 <video controls width="240" height="320" >
 <source src="images/ZielAnlegen_KinnTarget_edited.mp4">
 </video>
 
 ## Unterziele definieren
 
-Um Ziele in kleinere Unterziele aufzubrechen, wischt man das Ziel einfach nach links
-und legt neue Ziele an. Dabei gibt es keine Einschränkungen, wie viele Ebenen
-man einfügt.
+Merke ich, dass das Ziel zu groß ist undzu viele Trainingsschritte beinhaltet, definiere ich mir
+kleinere Unterziele. Dazu wische ich das Ziel einfach nach links und lege die kleineren
+Ziele an. Das wiederhole ich so lange, bis ich das Ziel in trainierbare Schritte zerlegt
+habe. Natürlich kann ich auf einem Level mehrere Ziele anlegen.
 
 <video controls width="240" height="320" >
 <source src="images/UnterzieleAnlegen_KinnTarget.mp4">
 </video>
 
-<!-- 
-für 1 min -> 10 sec, 30 sec
-Hund berührt Target
-Signal "Touch"
--->
-
 ## Durch Ziele navigieren
+
+Um von einem detaillierten Ziel wieder nach oben zu navigieren, wische ich entweder ein Ziel
+nach rechts oder verwende den Backbutton. Hab ich eine Gruppe von Zielen auf dem gleichen
+Level, kann ich die Reihenfolge verändern. Damit kann ich zum Beispiel die Reihenfolge der
+Trainingsschritte definieren
 
 <video controls width="240" height="320" >
 <source src="images/Navigation_Kinntarget_small.mp4">
@@ -36,7 +71,11 @@ Signal "Touch"
 
 # Training planen
 
+Zu jedem Ziel kann ich ein Training anlegen. Dazu clicke ich auf den grünen
+'Planen' Text des Ziels. Jetzt kann ich festlegen, was und wie ich trainieren will.
+
 ## Wie will ich trainieren?
+
 Um Kriterien schnell an das Verhalten des Hundes anzupassen, ist es sinnvoll,
 das Training in Päckchen aufzuteilen. 
 <dl>
@@ -52,6 +91,8 @@ ich das Training nach 5 Verhalten (ob erfolgreich oder nicht) stoppen.</dd>
 </dl>
 
 ## Was will ich trainieren?
+
+_Training is a mechanical skill_
 
 Menschen sind schlecht darin sich zufällig zu verhalten. Das ist ein Problem,
 wenn ich ein Kriterium variabel halten will. Genau hier kann ein Computer helfen,
@@ -90,12 +131,13 @@ lassen, wie oft ich das Warteverhalten belohne bzw. das Signal gebe.</dd>
 
 # Trainieren und Dokumentieren
 
-Im Training verwende ich PlanTrainDoc als Clicker (einstellbar). Da ich
+Um das Training zu starten, clicke ich auf den grünen 'Training' Text
+eines Ziels. Im Training verwende ich PlanTrainDoc als Clicker. Da ich
 zusätzlich auch jeden "Fehler“ (neutraler: Reset) notiere, habe ich jederzeit
 während des Trainings die genaue Erfolgsrate.
 
 Je nach gewählter Trainingsart gibt mir PlanTrainDoc hier Kriterien vor. In den
-Einstellungen kann ich wählen, ob mir das Kriterium angesagt oder
+Einstellungen (Zahnrad oben rechts) kann ich wählen, ob mir das Kriterium angesagt oder
 nur angezeigt wird.
 
 Vor jeder Trainingseinheit schreibe ich das aktuelle Kriterium auf,
@@ -110,7 +152,13 @@ ich während des Trainings direkt in PlanTrainDoc meine Dokumentation.
 
 PlanTrainDoc merkt sich jedes erfolgreiche (Click) und nicht erfolgreiche (Reset)
 Verhalten. Damit kann ich den Erfolg jedes Trainings, jedes
-Unterziels und jedes Ziels überprüfen. 
+Unterziels und jedes Ziels überprüfen. Dazu clicke ich auf den 'Auswerten' Text des Ziels.
+Hier bekomme ich sowohl die Ergebnisse des Trainings für dieses Ziel als auch aller seiner
+Unterziele angezeigt. Ich kann mir zum einen Überblick über die erfolgreichen (geclickten)
+und die nicht geclickten Versuche anzeigen lassen. Zum anderen kann ich mir den zeitlichen
+Verlauf meines Trainings graphisch darstellen lassen. Hier sehe ich, ob mein Hund häufig
+gecklickte (ansteigende Linie) oder nicht gecklickte (horizontale Linie) Verhalten gezeigt hat.
+Clicke ich auf einen Punkt, wirdmir angezeigt, zu welchem Ziel dieses Verhalten gehört hat.
 
 <video controls width="240" height="320" >
 <source src="images/Auswertung_Kinntarget_small.mp4">
