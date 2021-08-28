@@ -2,6 +2,8 @@
 layout: default
 ---
 
+# Warum eine App?
+
 Beim Training mit meinem Hund bin ich immer wieder in die gleichen Probleme gelaufen.
 
 - Während des Trainings kann ich mir nicht gleichzeitig merken, 
