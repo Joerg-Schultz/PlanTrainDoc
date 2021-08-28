@@ -27,12 +27,12 @@ zu entwickeln. Inzwischen verwende ich die App bei allen Schritten meines Traini
 von der Planung über das eigentliche Training, bei dem ich gleichzeitig meine Dokumentation erstelle,
 bis zur Auswertung, anhand der ich wieder den Trainingsplan anpasse. Während des Trainings zeigt mir
 PlanTrainDoc an, wie viele Versuche der Hund gemacht hat und wie viele davon erfolgreich waren. 
-Die App sagt mir Bescheid, wann ich mein Training stoppen will (Zeit oder Anzahl Versuche).
+Die App sagt mir Bescheid, wann ich mein Training stoppen will.
 Wenn ich mit variablen Kriterien arbeite, sagt mir PlanTrainDoc für jeden Versuch den aktuellen
-Wert an. Vor dem Training lege ich in der App meine Ziele fest, passe sie aber schon während des
-Trainings flexibel an. Da jedes einzelne Verhalten des Hundes gespeichert wird, kann ich mir für
-jedes Ziel Erfolgsstatistiken anzeigen lassen und meinen Plan danach verbessern. Und da das ganze
-auf meinem Smartphone läuft, habe ich alle Informationen immer bei mir.
+Wert an. Vor dem Training lege ich in der App meine Ziele fest und passe sie während des
+Trainings flexibel an. Für jedes Ziel kann ich mirErfolgsstatistiken anzeigen lassen und 
+meinen Plan verbessern. Und da das ganze auf meinem Smartphone läuft, habe ich alle Informationen
+immer bei mir.
 
 # Was kann ich mit der App machen?
 
@@ -147,8 +147,8 @@ Einstellungen (Zahnrad oben rechts) kann ich wählen, ob mir das Kriterium anges
 nur angezeigt wird.
 
 Vor jeder Trainingseinheit schreibe ich das aktuelle Kriterium auf,
-nach der Einheit dokumentiere ich direkt den Erfolg der Einheit. Damit erstelle
-ich während des Trainings direkt in PlanTrainDoc meine Dokumentation. 
+nach der Einheit dokumentiere ich direkt den Erfolg der Einheit. Dadurch erstelle
+ich während des Trainings direkt meine Dokumentation. 
 
 <video controls width="240" height="320" >
 <source src="images/Training_Kinntarget_edited.mp4">
@@ -158,13 +158,13 @@ ich während des Trainings direkt in PlanTrainDoc meine Dokumentation.
 
 PlanTrainDoc merkt sich jedes erfolgreiche (Click) und nicht erfolgreiche (Reset)
 Verhalten. Damit kann ich den Erfolg jedes Trainings, jedes
-Unterziels und jedes Ziels überprüfen. Dazu clicke ich auf den 'Auswerten' Text des Ziels.
-Hier bekomme ich sowohl die Ergebnisse des Trainings für dieses Ziel als auch aller seiner
+Unterziels und jedes Ziels nachvollziehen. Dazu clicke ich auf den 'Auswerten' Text des Ziels.
+Hier bekomme ich die Ergebnisse des Trainings für dieses Ziel und aller seiner
 Unterziele angezeigt. Ich kann mir zum einen Überblick über die erfolgreichen (geclickten)
 und die nicht geclickten Versuche anzeigen lassen. Zum anderen kann ich mir den zeitlichen
 Verlauf meines Trainings graphisch darstellen lassen. Hier sehe ich, ob mein Hund häufig
 gecklickte (ansteigende Linie) oder nicht gecklickte (horizontale Linie) Verhalten gezeigt hat.
-Clicke ich auf einen Punkt, wirdmir angezeigt, zu welchem Ziel dieses Verhalten gehört hat.
+Clicke ich auf einen Punkt, wird mir angezeigt, zu welchem Ziel dieses Verhalten gehört hat.
 
 <video controls width="240" height="320" >
 <source src="images/Auswertung_Kinntarget_small.mp4">
