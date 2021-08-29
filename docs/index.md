@@ -1,11 +1,10 @@
 ---
 layout: default
-title: PTD
 ---
 
-# Warum eine App?
+# Warum diese App?
 
-Beim Training mit meinem Hund bin ich immer wieder in die gleichen Probleme gelaufen.
+Beim Training mit meinem Hund bin ich immer wieder auf die gleichen Probleme gestoßen.
 
 - Während des Trainings kann ich mir nicht gleichzeitig merken, 
   wie viele erfolgreiche und fehlerhafte Verhalten der Hund gezeigt hat.
@@ -17,7 +16,7 @@ Beim Training mit meinem Hund bin ich immer wieder in die gleichen Probleme gela
   die jeweiligen Werte nachvollziehen und kann mich nicht auf den Hund konzentrieren.
 - Wenn ich während des Trainings dokumentiere, wird die Einheit immer mehr 
   zerstückelt, weil ich ständig zum Rechner / Papier gehen muss.
-- Beim Training draußen kann ich nicht mit Stift und Zettel arbeiten.
+- Beim Training draußen kann ich schlecht mit Stift und Zettel arbeiten.
 - Wenn ich vor dem Training einen Plan erstellt habe, muss ich das Training 
   komplett unterbrechen, wenn ich auch nur kleine Änderungen am Plan vornehmen will.
 
@@ -31,8 +30,8 @@ PlanTrainDoc an, wie viele Versuche der Hund gemacht hat und wie viele davon erf
 Die App sagt mir Bescheid, wann ich mein Training stoppen will.
 Wenn ich mit variablen Kriterien arbeite, sagt mir PlanTrainDoc für jeden Versuch den aktuellen
 Wert an. Vor dem Training lege ich in der App meine Ziele fest und passe sie während des
-Trainings flexibel an. Für jedes Ziel kann ich mirErfolgsstatistiken anzeigen lassen und 
-meinen Plan verbessern. Und da das ganze auf meinem Smartphone läuft, habe ich alle Informationen
+Trainings flexibel an. Für jedes Ziel kann ich mir Erfolgsstatistiken anzeigen lassen und 
+meinen Plan verbessern. Und da das Ganze auf meinem Smartphone läuft, habe ich alle Informationen
 immer bei mir.
 
 # Was kann ich mit der App machen?
@@ -106,7 +105,7 @@ Distanz und Dauer Zahlenreihen, die auf Morgan Spectors Buch
 basieren. 
 <dl>
 <dt>Dauer</dt> 
-<dd>Hier lege ich die mittlere Dauer eines Versuches fest. Während des 
+<dd>Hier lege ich die mittlere Dauer eines Versuches in Sekunden fest. Während des 
 Trainings gibt mir PlanTrainDoc dann unterschiedliche Zeiten um diesen
 Mittelwert vor. Von 0,1 bis 1,5 Sekunden wird eine konstante Zeit vorgegeben,
 danach wird sie variiert. Ich starte jeden Versuch in der App. Ist die vorgegebene Zeit
@@ -132,6 +131,8 @@ lassen, wie oft ich das Warteverhalten belohne bzw. das Signal gebe.</dd>
 <dd>Keine Hilfe</dd>
 </dl>
 
+--- 
+
 <video controls width="240" height="320" >
 <source src="images/Planen_Kinntarget_small.mp4">
 </video>
@@ -141,7 +142,8 @@ lassen, wie oft ich das Warteverhalten belohne bzw. das Signal gebe.</dd>
 Um das Training zu starten, clicke ich auf den grünen 'Training' Text
 eines Ziels. Im Training verwende ich PlanTrainDoc als Clicker. Da ich
 zusätzlich auch jeden "Fehler“ (neutraler: Reset) notiere, habe ich jederzeit
-während des Trainings die genaue Erfolgsrate.
+während des Trainings die genaue Erfolgsrate. Über die Einstellungen kann
+ich das Clickgeräusch auch ausschalten.
 
 Je nach gewählter Trainingsart gibt mir PlanTrainDoc hier Kriterien vor. In den
 Einstellungen (Zahnrad oben rechts) kann ich wählen, ob mir das Kriterium angesagt oder
