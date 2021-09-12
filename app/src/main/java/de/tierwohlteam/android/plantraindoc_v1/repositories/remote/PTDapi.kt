@@ -1,11 +1,11 @@
 package de.tierwohlteam.android.plantraindoc_v1.repositories.remote
 
-import de.tierwohlteam.android.plantraindoc_v1.models.Goal
-import de.tierwohlteam.android.plantraindoc_v1.models.Plan
-import de.tierwohlteam.android.plantraindoc_v1.models.PlanWithRelations
-import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
+import com.benasher44.uuid.Uuid
+import de.tierwohlteam.android.plantraindoc_v1.models.*
+import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.AccountRequest
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.GoalRequest
+import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.IDRequest
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.responses.SimpleResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -23,23 +23,25 @@ interface PTDapi {
     suspend fun login(
         @Body loginRequest: AccountRequest) : Response<SimpleResponse>
 
+    @POST("/loginWeb")
+    suspend fun getUserID(
+        @Body idRequest: IDRequest): Response<User>
+
     @GET("/goals/app")
     suspend fun goals(
-        @Query("date") date: String,
-    ) : List<Goal>
+        @Query("date") date: String): List<Goal>
 
     @POST("/goals/app")
     suspend fun insertGoal(
-        @Body goals: List<Goal>) : Response<SimpleResponse>
+        @Body goals: List<Goal>): Response<SimpleResponse>
 
     @GET("/plans/sync")
     suspend fun plans(
-        @Query("date") date: String,
-    ) : List<PlanWithRelations>
+        @Query("date") date: String): List<PlanWithRelations>
 
     @POST("/plans/sync")
     suspend fun insertPlans(
-        @Body plans: List<PlanWithRelations>) : Response<SimpleResponse>
+        @Body plans: List<PlanWithRelations>): Response<SimpleResponse>
 
     @POST("sessions/sync")
     suspend fun insertSessions(

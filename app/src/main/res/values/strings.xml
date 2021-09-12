@@ -78,5 +78,6 @@
     <string name="total_clicks">Total Clicks</string>
     <string name="total_trend">Total Trend</string>
     <string name="training">Training</string>
+    <string name="build_from_server">Build from Server</string>
 
 </resources>

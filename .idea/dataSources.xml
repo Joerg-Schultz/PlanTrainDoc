@@ -1,34 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Android SQLite" uuid="1cb1d001-0af3-469b-a857-41bb85f66c63">
+    <data-source source="LOCAL" name="PTDv1" uuid="e6bbf15c-8309-4f79-8e4a-fa5a202ca6b8">
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\binf009\AppData\Local\JetBrains\IntelliJIdea2021.1\android\databases\EMULATOR_Pixel_2_API_24\de.tierwohlteam.android.plantraindoc_v1\internal\plantraindoc_db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\binf009\AppData\Local\JetBrains\IntelliJIdea2021.1\android\databases\EMULATOR_Pixel_2_API_24\de.tierwohlteam.android.plantraindoc_v1\internal\plantraindocv1_db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>
           <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.34.0/sqlite-jdbc-3.34.0.jar</url>
         </library>
       </libraries>
-    </data-source>
-    <data-source source="LOCAL" name="plantraindoc" uuid="4ab20ec5-91d8-4922-b642-20c3ba515386">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\binf009\AppData\Local\JetBrains\IntelliJIdea2021.1\android\databases\EMULATOR_Pixel_2_API_24\de.tierwohlteam.android.plantraindoc_v1\internal\plantraindoc_db</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="blatest" uuid="5a96a164-dd7c-423d-860f-534e4e4c772c">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\binf009\AppData\Local\JetBrains\IntelliJIdea2021.1\android\databases\EMULATOR_Pixel_2_API_24\de.tierwohlteam.android.plantraindoc_v1\internal\plantraindoc_db</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="PTDv1" uuid="a050a672-aa3b-477c-af0c-a70c2f6152f9">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\binf009\AppData\Local\JetBrains\IntelliJIdea2021.1\android\databases\EMULATOR_Pixel_2_API_24\de.tierwohlteam.android.plantraindoc_v1\internal\plantraindocv1_db</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
 </project>

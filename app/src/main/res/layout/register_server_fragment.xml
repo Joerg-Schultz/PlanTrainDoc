@@ -114,5 +114,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/btn_register"
             android:visibility="invisible"/>
+    <com.google.android.material.switchmaterial.SwitchMaterial
+            android:text="@string/build_from_server"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/swBuildFromServer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilRegisterPasswordConfirm" android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

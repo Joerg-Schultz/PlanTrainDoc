@@ -28,6 +28,7 @@ abstract class PTDdb : RoomDatabase(){
     abstract fun planDao(): PlanDao
     abstract fun sessionDao(): SessionDao
     abstract fun trialDao(): TrialDao
+    fun erase() = this.clearAllTables() //THIS CLEANS ALL DATABASE ENTRIES!!!!
 }
 
 class Converters {

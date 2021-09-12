@@ -42,8 +42,11 @@ class RegisterServerFragment : Fragment() {
             val email: String = binding.tiUserEmailRegister.text.toString()
             val password: String = binding.tiPasswordRegister.text.toString()
             val repeatedPassword: String = binding.tiPasswordConfirmRegister.text.toString()
+            val buildFromServer: Boolean = binding.swBuildFromServer.isChecked
+            //Dialog if buildFromServer == true?
             serverViewModel.register(name = name, eMail = email,
-                password = password, repeatedPassword = repeatedPassword)
+                password = password, repeatedPassword = repeatedPassword,
+                buildFromServer = buildFromServer)
         }
     }
 

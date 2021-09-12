@@ -2,6 +2,7 @@ package de.tierwohlteam.android.plantraindoc_v1.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.benasher44.uuid.Uuid
@@ -124,7 +125,7 @@ object AppModule {
 
     }
 
-    @Singleton
+    //@Singleton
     @Provides
     fun provideUserID(sharedPreferences: SharedPreferences, repository: PTDRepository): Uuid {
         var userID = sharedPreferences.getString(KEY_USER_ID, null)
@@ -148,7 +149,7 @@ object AppModule {
                 }
                 dbJob.join()
                 if (!userInDB) {
-                    val newUserID = Uuid.fromString(userID) ?: uuid4()
+                    val newUserID = Uuid.fromString(userID)
                     val user = User(
                         id = newUserID, name = Constants.DEFAULT_USER_NAME,
                         email = Constants.DEFAULT_USER_EMAIL, password = Constants.DEFAULT_USER_PASSWORD

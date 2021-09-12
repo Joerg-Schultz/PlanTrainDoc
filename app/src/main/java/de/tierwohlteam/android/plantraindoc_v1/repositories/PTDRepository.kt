@@ -1,19 +1,20 @@
 package de.tierwohlteam.android.plantraindoc_v1.repositories
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.annotation.WorkerThread
 import com.benasher44.uuid.Uuid
 import de.tierwohlteam.android.plantraindoc_v1.daos.*
 import de.tierwohlteam.android.plantraindoc_v1.models.*
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.BASE_URL
 import de.tierwohlteam.android.plantraindoc_v1.others.Resource
+import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.PTDapi
 import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.AccountRequest
-import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.GoalRequest
-import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.responses.SimpleResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.InternalCoroutinesApi
+import de.tierwohlteam.android.plantraindoc_v1.repositories.remote.requests.IDRequest
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDateTime
 import javax.inject.Inject
 
@@ -23,13 +24,15 @@ import javax.inject.Inject
  */
 
 class PTDRepository @Inject constructor(
+    private val ptdDB: PTDdb,
     private val userDao: UserDao,
     private val dogDao: DogDao,
     private val goalDao: GoalDao,
     private val planDao: PlanDao,
     private val sessionDao: SessionDao,
     private val trialDao: TrialDao,
-    private val ptdApi : PTDapi
+    private val ptdApi : PTDapi,
+    private val sharedPreferences: SharedPreferences
 ) {
 
     /**
@@ -377,6 +380,41 @@ class PTDRepository @Inject constructor(
         }
 
     /**
+     * reset the userID from the database
+     * !!! erases all current database entries -> use with care
+     * @param[name] name of user
+     * @param[eMail] email
+     * @param[password]
+     */
+    suspend fun buildFromServer(name: String, eMail: String, password: String): Resource<String> {
+        val getUser = withContext(Dispatchers.IO) {
+            try {
+                val response = ptdApi.getUserID(
+                    IDRequest(name = name, eMail = eMail, password = password))
+                if (response.isSuccessful) {
+                    Resource.success(response.body())
+                } else {
+                    Resource.error(response.message(), null)
+                }
+            } catch (e: Exception) {
+                Resource.error("Couldn't connect to PlanTrainDoc Web Server", null)
+            }
+        }
+        return if (getUser.status == Status.SUCCESS) {
+            val user = getUser.data!!
+            user.role = "standard" // TODO get this from db
+            withContext(Dispatchers.IO) {
+                ptdDB.erase() //clean database
+                insertUser(user) //restart with server user id
+            }
+            sharedPreferences.edit().putString(Constants.KEY_USER_ID, user.id.toString()).apply()
+            Resource.success(user.id.toString())
+        } else {
+            Resource.error("Could not rebuild db", null)
+        }
+    }
+
+    /**
      * login a user
      * @param[id] Uuid of the user (from Room)
      * @param[name] name of user
@@ -394,7 +432,7 @@ class PTDRepository @Inject constructor(
                     Resource.error(response.body()?.message ?: response.message(), null)
                 }
             } catch (e: Exception) {
-                Resource.error("Couldn't connect to PlanTrainDoc Web Server", null)
+                Resource.error("Couldn't connect to PlanTrainDoc Web Server at $BASE_URL", null)
             }
         }
 
