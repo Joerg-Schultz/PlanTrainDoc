@@ -138,7 +138,6 @@ class ServerViewModel @Inject constructor(
         }
         val localPutGoalsJob = viewModelScope.launch(Dispatchers.IO) {
             remoteOnlyGoals.sortedBy { it.created }.forEach {
-                Log.d("SYNCSERVER", "insert Goal: ${it.goal}")
                 repository.insertGoal(it) }
         }
         joinAll(remotePutGoalsJob,localPutGoalsJob)
@@ -154,7 +153,6 @@ class ServerViewModel @Inject constructor(
         }
         val localPutPlansJob = viewModelScope.launch(Dispatchers.IO) {
             remoteOnlyPlans.sortedBy { it.plan.created }.forEach {
-                Log.d("SYNCSERVER", "insert Plan: ${it.plan.id}")
                 repository.insertPlanWithRelations(it)
             }
         }
