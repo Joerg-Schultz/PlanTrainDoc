@@ -193,8 +193,10 @@ class PTDRepository @Inject constructor(
         if(planWR.constraint != null) {
             insertPlanConstraint(planWR.constraint)
         }
-        planWR.helpers.forEach { helper ->
-            insertPlanHelper(helper)
+        if(!planWR.helpers.isNullOrEmpty()) {
+            planWR.helpers.forEach { helper ->
+                insertPlanHelper(helper)
+            }
         }
     }
     /**
