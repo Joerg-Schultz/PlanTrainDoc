@@ -79,5 +79,8 @@
     <string name="total_trend">Total Trend</string>
     <string name="training">Training</string>
     <string name="build_from_server">Build from Server</string>
+    <string name="useLightGate">Use Light Gate</string>
+    <string name="paired">Paired Devices</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

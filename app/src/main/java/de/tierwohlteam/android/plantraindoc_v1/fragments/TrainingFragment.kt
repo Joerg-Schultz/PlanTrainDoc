@@ -149,6 +149,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             makeButtonClick()
             makeButtonReset()
             makeHelper()
+            makeExternalTools()
         }
 
         open fun makeButtonClick() {
@@ -174,6 +175,35 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         open fun makeHelper() {
             binding.tvHelperHeader.text = ""
             binding.tvHelperInfo.text = ""
+        }
+
+        //add additional tools which are able to click
+        // this might be a light gate or an external clicker (3B Clicker)
+        open fun makeExternalTools() {
+            var cooperate: Boolean = false
+            /*
+            check if use of an external tool is enabled in settings
+            Hide details in viewModel. Here I only want to work with true and false
+            viewModel.cooperation.collect { cooperation ->
+                if (cooperation) {
+                    tts!!.speak("Start", TextToSpeech.QUEUE_FLUSH, null, "")
+                    cooperate = true
+                } else {
+                    if (cooperate) tts!!.speak("Warten", TextToSpeech.QUEUE_FLUSH, null, "")
+                    viewModel.addTrial(false) // Don't let this trigger the next collection
+                    cooperate = false
+                }
+            }
+            observe the addTrial in ViewModel. Emit from a SharedFlow each time something gets inserted
+            then perform the actions here
+            viewModel.currentTrial.collect { success ->
+                if (success) {
+                    cooperate = false
+                } else {
+                   cooperate = false
+                }
+            }
+             */
         }
     }
 

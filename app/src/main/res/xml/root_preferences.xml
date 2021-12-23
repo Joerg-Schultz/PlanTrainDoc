@@ -26,4 +26,13 @@
             app:key="useWebServer"/>
 
     </PreferenceCategory>
+
+    <PreferenceCategory app:title="Additional Tools">
+        <SwitchPreferenceCompat
+                app:title="@string/useLightGate"
+                app:summaryOn="You connected to the Light Gate, ready to train!"
+                app:summaryOff="You are not connected to the Light Gate"
+                app:defaultValue="false"
+                app:key="useLightGate"/>
+    </PreferenceCategory>
 </PreferenceScreen>

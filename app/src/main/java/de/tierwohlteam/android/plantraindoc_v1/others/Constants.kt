@@ -17,6 +17,7 @@ object Constants {
     const val KEY_USE_WEB_SERVER = "useWebServer"
     const val KEY_USE_CLICKER = "useClicker"
     const val KEY_USE_SPEECH = "useSpeechforHelper"
+    const val KEY_USE_LIGHT_GATE = "useLightGate"
 
     const val FIRST_USAGE = "FIRST_USAGE"
     const val FIRST_GOAL = "FIRST_GOAL"

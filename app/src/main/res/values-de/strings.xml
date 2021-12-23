@@ -78,4 +78,7 @@
     <string name="total_clicks">Clicks gesamt</string>
     <string name="total_trend">Trend gesamt</string>
     <string name="training">Training</string>
+    <string name="useLightGate">Lichtschranke verwenden</string>
+    <string name="paired">Gepaarte Geräte</string>
+    <string name="cancel">Cancel</string>
 </resources>
