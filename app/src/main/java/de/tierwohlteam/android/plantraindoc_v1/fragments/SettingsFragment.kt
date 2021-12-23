@@ -19,6 +19,7 @@ import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_HAS_ACCOUNT
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_WEB_SERVER
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.ServerViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -65,6 +66,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun connectDialog(context: Context, tool: BTTool) {
         val pairedDevices = tool.getPairedDevices()
         var selectedDevice: BluetoothDevice? = pairedDevices.firstOrNull()
+        lifecycleScope.launch {
+            tool.connectionMessage.collect {
+                //TODO replace !!
+                Snackbar.make(view!!, it, Snackbar.LENGTH_LONG).show()
+                if (it.contains("failed")) {
+                    //TODO set pref to false
+                }
+            }
+        }
         MaterialAlertDialogBuilder(context)
             .setTitle(resources.getString(R.string.paired))
             .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->

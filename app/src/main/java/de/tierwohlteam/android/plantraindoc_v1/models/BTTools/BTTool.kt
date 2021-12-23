@@ -7,8 +7,13 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.util.Log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
@@ -20,10 +25,10 @@ import java.io.OutputStream
  * to define the tool specific functions
  */
 abstract class BTTool {
-    abstract fun toolAction(msg:Message)
+    abstract fun toolReadAction(msg:Message)
 
-    protected val _connectionMessage: MutableSharedFlow<String> = MutableSharedFlow()
-    val connectionMessage = _connectionMessage as SharedFlow<String>
+    protected val _connectionMessage: MutableStateFlow<String> = MutableStateFlow(value = "")
+    val connectionMessage: StateFlow<String> = _connectionMessage
 
     private val TAG = "BLUETOOTH_CONNECTION"
     private lateinit var createConnectThread: CreateConnectThread
@@ -36,7 +41,16 @@ abstract class BTTool {
 
     private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
-            toolAction(msg)
+            when (msg.what) {
+                // If the updates come from the Thread to Create Connection
+                CONNECTION_STATUS -> {
+                    _connectionMessage.value = if (msg.arg1 == 1) "Bluetooth Connected" else "Connection Failed"
+                }
+                // If the updates come from the Thread for Data Exchange
+                MESSAGE_READ -> {
+                    toolReadAction(msg)
+                }
+            }
         }
     }
 
