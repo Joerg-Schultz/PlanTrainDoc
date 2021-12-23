@@ -23,10 +23,12 @@ import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_LONG
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_SHORT
 import de.tierwohlteam.android.plantraindoc_v1.others.percentage
 import de.tierwohlteam.android.plantraindoc_v1.others.prettyStringFloat
+import de.tierwohlteam.android.plantraindoc_v1.viewmodels.ToolsViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -35,6 +37,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TrainingFragment : Fragment(R.layout.training_fragment) {
     private val trainingViewModel: TrainingViewModel by activityViewModels()
+    private val toolsViewMode: ToolsViewModel by activityViewModels()
+
     @Inject
     lateinit var sharedPreferences: SharedPreferences
     private var _binding: TrainingFragmentBinding? = null
@@ -154,7 +158,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
         open fun makeButtonClick() {
             binding.buttonClick.setOnClickListener {
-                if(sharedPreferences.getBoolean("useClicker", true))
+                if (sharedPreferences.getBoolean("useClicker", true))
                     soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
                 lifecycleScope.launchWhenStarted {
                     trainingViewModel.addTrial(true)
@@ -184,29 +188,32 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             /*
             check if use of an external tool is enabled in settings
             Hide details in viewModel. Here I only want to work with true and false
-            viewModel.cooperation.collect { cooperation ->
-                if (cooperation) {
-                    tts!!.speak("Start", TextToSpeech.QUEUE_FLUSH, null, "")
-                    cooperate = true
-                } else {
-                    if (cooperate) tts!!.speak("Warten", TextToSpeech.QUEUE_FLUSH, null, "")
-                    viewModel.addTrial(false) // Don't let this trigger the next collection
-                    cooperate = false
+            */
+            lifecycleScope.launchWhenStarted {
+                toolsViewMode.cooperationLightGate.collectLatest { cooperation ->
+                    if (cooperation) {
+                        tts!!.speak("Start", TextToSpeech.QUEUE_FLUSH, null, "")
+                        cooperate = true
+                    } else {
+                        if (cooperate) tts!!.speak("Warten", TextToSpeech.QUEUE_FLUSH, null, "")
+                        //trainingViewModel.addTrial(false) // Don't let this trigger the next collection
+                        cooperate = false
+                    }
                 }
-            }
-            observe the addTrial in ViewModel. Emit from a SharedFlow each time something gets inserted
-            then perform the actions here
-            viewModel.currentTrial.collect { success ->
-                if (success) {
-                    cooperate = false
-                } else {
-                   cooperate = false
+                /*observe the addTrial in ViewModel. Emit from a SharedFlow each time something gets inserted
+                then perform the actions here
+*/
+                trainingViewModel.currentTrial.collect { success ->
+                    if (success) {
+                        cooperate = false
+                    } else {
+                       cooperate = false
+                    }
                 }
+
             }
-             */
         }
     }
-
     /*
      * Helper for a single value like Distance or Discrimination
      * shows a single count in the helper information text view

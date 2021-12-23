@@ -1,4 +1,4 @@
-package de.tierwohlteam.android.plantraindoc_v1.models.BTTools
+package de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -7,13 +7,8 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.util.Log
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream

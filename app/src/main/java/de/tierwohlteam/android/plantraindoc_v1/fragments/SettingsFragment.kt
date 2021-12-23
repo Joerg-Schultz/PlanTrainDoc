@@ -13,8 +13,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
-import de.tierwohlteam.android.plantraindoc_v1.models.BTTools.BTTool
-import de.tierwohlteam.android.plantraindoc_v1.models.BTTools.LightGate
+import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.BTTool
+import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.LightGate
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_HAS_ACCOUNT
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_WEB_SERVER
@@ -52,7 +52,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<SwitchPreferenceCompat>(KEY_USE_LIGHT_GATE)?.setOnPreferenceChangeListener { preference, newValue ->
             if (newValue == true) {
                 //TODO replace !!
-                val lightGate = LightGate()
+                val lightGate = LightGate
                 connectDialog(this.context!!, lightGate)
             }
             if (newValue == false) {
