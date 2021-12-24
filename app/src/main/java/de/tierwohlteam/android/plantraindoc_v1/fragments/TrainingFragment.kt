@@ -193,11 +193,13 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 toolsViewMode.cooperationLightGate.collectLatest { cooperation ->
                     if (cooperation) {
                         tts!!.speak("Start", TextToSpeech.QUEUE_FLUSH, null, "")
+                        Log.e("LIGHTGATE", "cooperate true")
                         cooperate = true
                     } else {
                         if (cooperate) {
                             tts!!.speak("Stop", TextToSpeech.QUEUE_FLUSH, null, "")
                             trainingViewModel.addTrial(false) // Don't let this trigger the next collection
+                            Log.e("LIGHTGATE", "cooperate false")
                             cooperate = false
                         }
                     }
@@ -206,9 +208,8 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
             lifecycleScope.launchWhenStarted {
                 trainingViewModel.currentTrial.collect { result ->
-                    if (result != null) {
-                        cooperate = false
-                    }
+                    Log.e("LIGHTGATE", "cooperate false in trial")
+                    cooperate = false
                 }
             }
         }

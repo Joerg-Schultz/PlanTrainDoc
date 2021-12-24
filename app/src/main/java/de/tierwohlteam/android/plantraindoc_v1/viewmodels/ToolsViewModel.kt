@@ -24,11 +24,9 @@ class ToolsViewModel @Inject constructor(
 
     init {
         val useLightGate = sharedPrefs.getBoolean(KEY_USE_LIGHT_GATE, false)
-        Log.e("LIGHTGATE", "Pref: $useLightGate")
         if (useLightGate) {
             viewModelScope.launch {
                 LightGate.cooperation.collect {
-                    Log.e("LIGHTGATE", "Collected $it")
                     _cooperationLightGate.value = it
                 }
             }

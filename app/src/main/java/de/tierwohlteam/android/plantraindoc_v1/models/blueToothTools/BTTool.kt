@@ -65,7 +65,12 @@ abstract class BTTool {
         createConnectThread = CreateConnectThread(bluetoothAdapter, device.address.toString())
         createConnectThread.start()
     }
-
+    suspend fun cancelConnection() {
+        try {
+            mmSocket.close()
+        } catch (e: Exception) {
+        }
+    }
     /* ============================ Thread to Create Connection ================================= */
     inner class CreateConnectThread(bluetoothAdapter: BluetoothAdapter, address: String) : Thread() {
 
@@ -109,14 +114,14 @@ abstract class BTTool {
             connectedThread.run()
         }
 
-        // Closes the client socket and causes the thread to finish.
+/*        // Closes the client socket and causes the thread to finish.
         // Disconnect from Arduino board
         fun cancel() {
             try {
                 mmSocket.close()
             } catch (e: IOException) {
             }
-        }
+        } */
     }
 
     /* =============================== Thread for Data Exchange ================================= */

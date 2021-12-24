@@ -93,11 +93,11 @@ class TrainingViewModel @Inject constructor(
     )
 
     //SharedFlow to broadcast success when a Trial is finished
-    private val _currentTrial: MutableStateFlow<Boolean?> = MutableStateFlow(value = null)
-    val currentTrial: StateFlow<Boolean?> = _currentTrial as StateFlow<Boolean?>
+    private val _currentTrial: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    val currentTrial: SharedFlow<Boolean> = _currentTrial
     suspend fun addTrial(success: Boolean) {
         val trial = Trial(sessionID = session.id, success = success)
-        _currentTrial.value = trial.success
+        _currentTrial.emit(trial.success)
         //Using GlobalScope as the insert also has to happen when
         // training is stopped and ViewModel is closed
         GlobalScope.launch {

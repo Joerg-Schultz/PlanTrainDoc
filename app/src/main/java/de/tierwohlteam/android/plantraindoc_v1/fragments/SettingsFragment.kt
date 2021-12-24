@@ -56,8 +56,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 connectDialog(this.context!!, lightGate)
             }
             if (newValue == false) {
-                //TODO disconnect BTTool:cancel()
-                // just have to find the right one to cancel :D
+                lifecycleScope.launch {
+                    LightGate.cancelConnection()
+                    Snackbar.make(requireView(), "Lightgate disconnected", Snackbar.LENGTH_LONG).show()
+                }
             }
             true
         }
@@ -68,10 +70,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         var selectedDevice: BluetoothDevice? = pairedDevices.firstOrNull()
         lifecycleScope.launch {
             tool.connectionMessage.collect {
-                //TODO replace !!
-                Snackbar.make(view!!, it, Snackbar.LENGTH_LONG).show()
+                Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
                 if (it.contains("failed")) {
-                    //TODO set pref to false
+                    //set pref to false
+                    with(sharedPrefs.edit()) {
+                        putBoolean(KEY_USE_LIGHT_GATE, false)
+                        apply()
+                    }
                 }
             }
         }
