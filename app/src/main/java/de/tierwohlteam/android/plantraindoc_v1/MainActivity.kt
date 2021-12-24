@@ -42,6 +42,10 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener{
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
         sharedPrefs.registerOnSharedPreferenceChangeListener(this)
+        with(sharedPrefs.edit()) {
+            putBoolean(Constants.KEY_USE_LIGHT_GATE, false)
+            apply()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

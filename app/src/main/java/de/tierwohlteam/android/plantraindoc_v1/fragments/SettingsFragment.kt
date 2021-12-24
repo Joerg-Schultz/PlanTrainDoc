@@ -83,6 +83,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         MaterialAlertDialogBuilder(context)
             .setTitle(resources.getString(R.string.paired))
             .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
+                with(sharedPrefs.edit()) {
+                    putBoolean(KEY_USE_LIGHT_GATE, false)
+                    apply()
+                }
             }
             .setPositiveButton(resources.getString(R.string.ok)) { dialog, which ->
                 selectedDevice?.let {
