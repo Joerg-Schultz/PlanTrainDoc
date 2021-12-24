@@ -35,6 +35,7 @@ class TrainingViewModel @Inject constructor(
     var clickResetCounter: MutableStateFlow<Pair<Int,Int>> = MutableStateFlow(value = Pair(0,0))
     //var helperNextValue: MutableStateFlow<String?> = MutableStateFlow(value = null)
     var helperNextValue: MutableSharedFlow<String?> = MutableSharedFlow(replay = 1)
+    //var helperNextValue: MutableSharedFlow<String?> = MutableSharedFlow(replay = 0)
     var sessionType: MutableStateFlow<String?> = MutableStateFlow(value = null)
 
     private val selectedPlan: MutableStateFlow<Plan?> = MutableStateFlow(value = null)

@@ -283,18 +283,20 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         override fun makeHelper() {
             lifecycleScope.launchWhenStarted {
                 trainingViewModel.helperNextValue.collect {
-                    binding.tvHelperInfo.text = it
+                    if (sharedPreferences.getBoolean("useSpeechforHelper", true)) {
+                        delay(1000)
+                        tts!!.speak(it?.prettyStringFloat() ?: "", TextToSpeech.QUEUE_FLUSH, null, "")
+                    }
+                }
+            }
+            lifecycleScope.launchWhenStarted {
+                trainingViewModel.helperNextValue.collect {
+                    binding.tvHelperInfo.text = it ?: ""
                     if (it != null) {
-                        if (sharedPreferences.getBoolean("useSpeechforHelper", true))
-                            launch {
-                                delay(1000)
-                                tts!!.speak(it, TextToSpeech.QUEUE_FLUSH, null, "")
-                            }
                         timer = object : CountDownTimer((it.toFloat() * 1000).toLong(), 1000) {
                             override fun onTick(p0: Long) {
                                 binding.tvHelperInfo.text = (p0 / 1000).toString()
                             }
-
                             override fun onFinish() {
                                 vibrate("short")
                             }
