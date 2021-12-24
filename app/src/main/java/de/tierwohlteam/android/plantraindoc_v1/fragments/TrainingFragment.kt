@@ -306,6 +306,27 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 }
             }
         }
+
+        override fun makeExternalTools() {
+            var cooperate: Boolean = false
+            lifecycleScope.launch {
+                toolsViewMode.cooperationLightGate.collect { cooperation ->
+                    if (cooperation) {
+                        if (! cooperate) {
+                            tts!!.speak("Start", TextToSpeech.QUEUE_FLUSH, null, "")
+                            binding.buttonClick.performClick()
+                        }
+                        cooperate = true
+                    } else {
+                        if (cooperate && timerIsRunning) {
+                            tts!!.speak("Stop", TextToSpeech.QUEUE_FLUSH, null, "")
+                            binding.buttonReset.performClick()
+                        }
+                        cooperate = false
+                    }
+                }
+            }
+        }
     }
 }
 
