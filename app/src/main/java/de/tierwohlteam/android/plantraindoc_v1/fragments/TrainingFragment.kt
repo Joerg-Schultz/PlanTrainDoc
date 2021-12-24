@@ -195,22 +195,21 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                         tts!!.speak("Start", TextToSpeech.QUEUE_FLUSH, null, "")
                         cooperate = true
                     } else {
-                        if (cooperate) tts!!.speak("Warten", TextToSpeech.QUEUE_FLUSH, null, "")
-                        //trainingViewModel.addTrial(false) // Don't let this trigger the next collection
-                        cooperate = false
+                        if (cooperate) {
+                            tts!!.speak("Stop", TextToSpeech.QUEUE_FLUSH, null, "")
+                            trainingViewModel.addTrial(false) // Don't let this trigger the next collection
+                            cooperate = false
+                        }
                     }
                 }
-                /*observe the addTrial in ViewModel. Emit from a SharedFlow each time something gets inserted
-                then perform the actions here
-*/
-                trainingViewModel.currentTrial.collect { success ->
-                    if (success) {
-                        cooperate = false
-                    } else {
-                       cooperate = false
-                    }
-                }
+            }
 
+            lifecycleScope.launchWhenStarted {
+                trainingViewModel.currentTrial.collect { result ->
+                    if (result != null) {
+                        cooperate = false
+                    }
+                }
             }
         }
     }

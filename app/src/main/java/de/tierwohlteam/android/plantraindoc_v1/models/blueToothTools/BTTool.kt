@@ -147,7 +147,6 @@ abstract class BTTool {
                     // Parsing the incoming data stream
                     if (buffer[bytes] == '\n'.toByte()) {
                         val arduinoMsg = String(buffer, 0, bytes)
-                        Log.e("Arduino Message", arduinoMsg)
                         handler.obtainMessage(MESSAGE_READ, arduinoMsg).sendToTarget()
                         bytes = 0
                     } else {

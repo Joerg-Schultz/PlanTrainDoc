@@ -14,8 +14,6 @@ object LightGate : BTTool() {
 
     override fun toolReadAction(msg: Message) {
         val statusText = msg.obj.toString().replace("""\W""".toRegex(), "")
-        Log.e("Arduino Message", "Status: $statusText")
-        Log.e("LIGHTGATE", "Setting cooperation to ${statusText == "Start"}")
         _cooperation.value = statusText == "Start"
     }
 }
