@@ -185,10 +185,6 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         // this might be a light gate or an external clicker (3B Clicker)
         open fun makeExternalTools() {
             var cooperate: Boolean = false
-            /*
-            check if use of an external tool is enabled in settings
-            Hide details in viewModel. Here I only want to work with true and false
-            */
             lifecycleScope.launchWhenStarted {
                 toolsViewMode.cooperationLightGate.collectLatest { cooperation ->
                     if (cooperation) {
@@ -197,7 +193,8 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                     } else {
                         if (cooperate) {
                             tts!!.speak("Stop", TextToSpeech.QUEUE_FLUSH, null, "")
-                            trainingViewModel.addTrial(false) // Don't let this trigger the next collection
+                            //trainingViewModel.addTrial(false) // Don't let this trigger the next collection
+                            binding.buttonReset.performClick()
                             cooperate = false
                         }
                     }
