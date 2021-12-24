@@ -312,16 +312,20 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 toolsViewMode.cooperationLightGate.collect { cooperation ->
                     if (cooperation) {
                         if (! cooperate) {
-                            tts!!.speak("Start", TextToSpeech.QUEUE_FLUSH, null, "")
-                            binding.buttonClick.performClick()
+                            cooperate = true
+                            if (!timerIsRunning) {
+                                tts!!.speak("Start", TextToSpeech.QUEUE_FLUSH, null, "")
+                                binding.buttonClick.performClick()
+                            }
                         }
-                        cooperate = true
                     } else {
-                        if (cooperate && timerIsRunning) {
-                            tts!!.speak("Stop", TextToSpeech.QUEUE_FLUSH, null, "")
-                            binding.buttonReset.performClick()
+                        if (cooperate) {
+                            cooperate = false
+                            if (timerIsRunning) {
+                                tts!!.speak("Stop", TextToSpeech.QUEUE_FLUSH, null, "")
+                                binding.buttonReset.performClick()
+                            }
                         }
-                        cooperate = false
                     }
                 }
             }
