@@ -15,8 +15,10 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.BTTool
+import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.Feeder
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.LightGate
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_HAS_ACCOUNT
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_FEEDER
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_WEB_SERVER
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.ServerViewModel
@@ -60,6 +62,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 lifecycleScope.launch {
                     LightGate.cancelConnection()
                     Snackbar.make(requireView(), "Lightgate disconnected", Snackbar.LENGTH_LONG).show()
+                }
+            }
+            true
+        }
+
+        findPreference<SwitchPreferenceCompat>(KEY_USE_FEEDER)?.setOnPreferenceChangeListener { preference, newValue ->
+            if (newValue == true) {
+                //TODO replace !!
+                val feeder = Feeder
+                connectDialog(this.context!!, feeder)
+            }
+            if (newValue == false) {
+                lifecycleScope.launch {
+                    Feeder.cancelConnection()
+                    Snackbar.make(requireView(), "Feeder disconnected", Snackbar.LENGTH_LONG).show()
                 }
             }
             true

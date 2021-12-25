@@ -82,5 +82,6 @@
     <string name="useLightGate">Use Light Gate</string>
     <string name="paired">Paired Devices</string>
     <string name="cancel">Cancel</string>
+    <string name="useFeeder">Use Feeder</string>
 
 </resources>

@@ -6,20 +6,20 @@ import android.content.pm.ActivityInfo
 import android.media.SoundPool
 import android.os.*
 import android.speech.tts.TextToSpeech
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
+import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.Feeder
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_AUTO_CLICK
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_FEEDER
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_LONG
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_SHORT
 import de.tierwohlteam.android.plantraindoc_v1.others.percentage
@@ -154,7 +154,8 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             makeButtonClick()
             makeButtonReset()
             makeHelper()
-            makeExternalTools()
+            makeExternalSensors()
+            makeFeeder()
         }
 
         open fun makeButtonClick() {
@@ -184,7 +185,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
         //add additional tools which are able to click
         // this might be a light gate or an external clicker (3B Clicker)
-        open fun makeExternalTools() {
+        open fun makeExternalSensors() {
             var cooperate: Boolean = false
             lifecycleScope.launchWhenStarted {
                 toolsViewMode.cooperationLightGate.collectLatest { cooperation ->
@@ -205,6 +206,15 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             lifecycleScope.launchWhenStarted {
                 trainingViewModel.currentTrial.collect {
                     cooperate = false
+                }
+            }
+        }
+
+        open fun makeFeeder() {
+            viewLifecycleOwner.lifecycleScope.launch {
+                trainingViewModel.currentTrial.collect{
+                    if (sharedPreferences.getBoolean(KEY_USE_FEEDER, false))
+                        if (it) Feeder.treat()
                 }
             }
         }
@@ -311,7 +321,8 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             }
         }
 
-        override fun makeExternalTools() {
+        override fun makeExternalSensors() {
+            // LightGate
             var cooperate: Boolean = false
             viewLifecycleOwner.lifecycleScope.launch {
                 toolsViewMode.cooperationLightGate.collect { cooperation ->
