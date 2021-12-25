@@ -19,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_AUTO_CLICK
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_LONG
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_SHORT
 import de.tierwohlteam.android.plantraindoc_v1.others.percentage
@@ -298,7 +299,11 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                                 binding.tvHelperInfo.text = (p0 / 1000).toString()
                             }
                             override fun onFinish() {
-                                vibrate("short")
+                                if (sharedPreferences.getBoolean(KEY_USE_AUTO_CLICK, false)) {
+                                    binding.buttonClick.performClick()
+                                } else {
+                                    vibrate("short")
+                                }
                             }
                         }
                     }
@@ -308,23 +313,20 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
         override fun makeExternalTools() {
             var cooperate: Boolean = false
-            lifecycleScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 toolsViewMode.cooperationLightGate.collect { cooperation ->
-                    if (cooperation) {
-                        if (! cooperate) {
-                            cooperate = true
-                            if (!timerIsRunning) {
-                                tts!!.speak("Start", TextToSpeech.QUEUE_FLUSH, null, "")
-                                binding.buttonClick.performClick()
-                            }
+                    if (cooperation && !cooperate) {
+                        cooperate = true
+                        if (!timerIsRunning) {
+                            tts!!.speak("Start", TextToSpeech.QUEUE_FLUSH, null, "")
+                            binding.buttonClick.performClick()
                         }
-                    } else {
-                        if (cooperate) {
-                            cooperate = false
-                            if (timerIsRunning) {
-                                tts!!.speak("Stop", TextToSpeech.QUEUE_FLUSH, null, "")
-                                binding.buttonReset.performClick()
-                            }
+                    }
+                    if (!cooperation && cooperate) {
+                        cooperate = false
+                        if (timerIsRunning) {
+                            tts!!.speak("Stop", TextToSpeech.QUEUE_FLUSH, null, "")
+                            binding.buttonReset.performClick()
                         }
                     }
                 }
