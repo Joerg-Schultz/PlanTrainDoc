@@ -56,12 +56,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             if (newValue == true) {
                 //TODO replace !!
                 val lightGate = LightGate
-                connectDialog(this.context!!, lightGate)
+                connectDialog(this.context!!, lightGate, KEY_USE_LIGHT_GATE)
             }
             if (newValue == false) {
                 lifecycleScope.launch {
                     LightGate.cancelConnection()
-                    Snackbar.make(requireView(), "Lightgate disconnected", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(requireView(), R.string.LightGateNotConnected, Snackbar.LENGTH_LONG).show()
                 }
             }
             true
@@ -71,28 +71,27 @@ class SettingsFragment : PreferenceFragmentCompat() {
             if (newValue == true) {
                 //TODO replace !!
                 val feeder = Feeder
-                connectDialog(this.context!!, feeder)
+                connectDialog(this.context!!, feeder, KEY_USE_FEEDER)
             }
             if (newValue == false) {
                 lifecycleScope.launch {
                     Feeder.cancelConnection()
-                    Snackbar.make(requireView(), "Feeder disconnected", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(requireView(), R.string.FeederNotConnected, Snackbar.LENGTH_LONG).show()
                 }
             }
             true
         }
     }
 
-    private fun connectDialog(context: Context, tool: BTTool) {
+    private fun connectDialog(context: Context, tool: BTTool, key: String) {
         val pairedDevices = tool.getPairedDevices()
         var selectedDevice: BluetoothDevice? = pairedDevices.firstOrNull()
         lifecycleScope.launch {
             tool.connectionMessage.collect {
                 Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
                 if (it.contains("failed")) {
-                    //set pref to false
                     with(sharedPrefs.edit()) {
-                        putBoolean(KEY_USE_LIGHT_GATE, false)
+                        putBoolean(key, false)
                         apply()
                     }
                 }
@@ -102,7 +101,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             .setTitle(resources.getString(R.string.paired))
             .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
                 with(sharedPrefs.edit()) {
-                    putBoolean(KEY_USE_LIGHT_GATE, false)
+                    putBoolean(key, false)
                     apply()
                 }
             }

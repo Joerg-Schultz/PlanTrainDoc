@@ -78,8 +78,14 @@
     <string name="total_clicks">Clicks gesamt</string>
     <string name="total_trend">Trend gesamt</string>
     <string name="training">Training</string>
+    <string name="build_from_server">Von Web Server kopieren</string>
     <string name="useLightGate">Lichtschranke verwenden</string>
     <string name="paired">Gepaarte Geräte</string>
     <string name="cancel">Cancel</string>
-    <string name="useFeeder">Use Feeder</string>
+    <string name="useFeeder">Futterautomat verwenden</string>
+    <string name="LightGateNotConnected">Du bist nicht mit der Lichtschranke verbunden</string>
+    <string name="LightGateConnected">Du bist mit der Lichtschranke verbunden</string>
+    <string name="FeederConnected">Du bist mit dem Futterautomaten verbunden</string>
+    <string name="FeederNotConnected">Du bist nicht mit dem Futterautomaten verbunden</string>
+    <string name="additional_tools">externe Tools (BlueTooth)</string>
 </resources>

@@ -27,11 +27,11 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Additional Tools">
+    <PreferenceCategory app:title="@string/additional_tools">
         <SwitchPreferenceCompat
                 app:title="@string/useLightGate"
-                app:summaryOn="You connected to the Light Gate, ready to train!"
-                app:summaryOff="You are not connected to the Light Gate"
+                app:summaryOn="@string/LightGateConnected"
+                app:summaryOff="@string/LightGateNotConnected"
                 app:defaultValue="false"
                 app:key="useLightGate"/>
         <SwitchPreferenceCompat
@@ -41,6 +41,8 @@
                 app:defaultValue="false"/>
         <SwitchPreferenceCompat
                 app:title="@string/useFeeder"
+                app:summaryOn="@string/FeederConnected"
+                app:summaryOff="@string/FeederNotConnected"
                 app:key="useFeeder"
                 app:defaultValue="false"/>
 

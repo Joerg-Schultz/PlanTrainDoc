@@ -83,5 +83,10 @@
     <string name="paired">Paired Devices</string>
     <string name="cancel">Cancel</string>
     <string name="useFeeder">Use Feeder</string>
+    <string name="LightGateConnected">You are connected to the Light Gate, ready to train!</string>
+    <string name="LightGateNotConnected">You are not connected to the Light Gate</string>
+    <string name="FeederConnected">You are connected to the Feeder</string>
+    <string name="FeederNotConnected">You are not connected to the Feeder</string>
+    <string name="additional_tools">External Tools (BlueTooth)</string>
 
 </resources>
