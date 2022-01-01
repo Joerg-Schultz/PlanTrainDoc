@@ -88,5 +88,6 @@
     <string name="FeederConnected">You are connected to the Feeder</string>
     <string name="FeederNotConnected">You are not connected to the Feeder</string>
     <string name="additional_tools">External Tools (BlueTooth)</string>
+    <string name="evaluate">Evaluate</string>
 
 </resources>

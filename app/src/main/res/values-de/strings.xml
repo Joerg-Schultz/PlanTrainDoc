@@ -88,4 +88,5 @@
     <string name="FeederConnected">Du bist mit dem Futterautomaten verbunden</string>
     <string name="FeederNotConnected">Du bist nicht mit dem Futterautomaten verbunden</string>
     <string name="additional_tools">externe Tools (BlueTooth)</string>
+    <string name="evaluate">Auswerten</string>
 </resources>
