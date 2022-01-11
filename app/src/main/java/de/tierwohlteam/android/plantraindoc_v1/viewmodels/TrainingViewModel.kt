@@ -1,6 +1,7 @@
 package de.tierwohlteam.android.plantraindoc_v1.viewmodels
 
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -100,14 +101,14 @@ class TrainingViewModel @Inject constructor(
         _currentTrial.emit(trial.success)
         //Using GlobalScope as the insert also has to happen when
         // training is stopped and ViewModel is closed
-        GlobalScope.launch {
+       // GlobalScope.launch {
             repository.insertTrial(trial)
             helperNextValue.collect {
                 if (it != null) {
                     val trialCriterion = TrialCriterion(trialID = trial.id, criterion = it)
                     repository.insertTrialCriterion(trialCriterion)
                 }
-            }
+         //   }
         }
         totalTrials.value++
         var (click, reset) = clickResetCounter.value

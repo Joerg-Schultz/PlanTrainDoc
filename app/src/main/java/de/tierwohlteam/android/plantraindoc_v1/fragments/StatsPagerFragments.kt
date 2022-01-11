@@ -1,6 +1,7 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
+import okhttp3.internal.notify
 
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
@@ -237,7 +239,7 @@ class ValuesFragment : Fragment() {
         goal = goalViewModel.selectedGoal.value?.goal
         plan = goalViewModel.selectedGoal.value?.plan
 
-        if (plan == null && level == "top") {
+        if (plan == null) {
             binding.apply {
                 tvNoPlan.visibility = View.VISIBLE
                 valuesBarChart.visibility = View.GONE
@@ -246,6 +248,8 @@ class ValuesFragment : Fragment() {
             return
         }
         // there is a plan
+        statisticsViewModel.analyzePlan(plan!!)
+
         binding.apply {
             tvNoPlan.visibility = View.GONE
             valuesBarChart.visibility = View.VISIBLE
@@ -253,8 +257,65 @@ class ValuesFragment : Fragment() {
         }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             statisticsViewModel.discreteValuesCounter.collect { result ->
-
+                when (result.status) {
+                    Status.LOADING ->{
+                        binding.pBBarchart.visibility = View.VISIBLE
+                    }
+                    Status.SUCCESS -> {
+                        if (result.data != null && result.data.isNotEmpty()) {
+                            binding.pBBarchart.visibility = View.GONE
+                            val sortedResults = result.data.toSortedMap()
+                            setupBarChart(sortedResults.keys)
+                            var xPos = 1F
+                            val stackedBarDataSet = BarDataSet(
+                                sortedResults.values.map {
+                                    BarEntry(xPos++, floatArrayOf(it.first.toFloat(), it.second.toFloat()))
+                                }
+                                , "ClickRatioPerCriterion"
+                            )
+                            stackedBarDataSet.apply {
+                                setColors(
+                                    resources.getColor(R.color.accent),
+                                    resources.getColor(R.color.primaryLightColor)
+                                )
+                                valueTextSize = 16F
+                                valueFormatter = DefaultValueFormatter(0)
+                            }
+                            binding.valuesBarChart.apply {
+                                data = BarData(stackedBarDataSet)
+                                setNoDataText("No Training for this goal")
+                                invalidate()
+                            }
+                        }
+                    }
+                }
             }
+        }
+    }
+
+    private fun setupBarChart(bars: Set<String>) {
+        val barsPlusOffset = mutableListOf<String>("")
+        barsPlusOffset.addAll(bars)
+        binding.valuesBarChart.xAxis.apply {
+            position = XAxis.XAxisPosition.BOTTOM
+            setDrawGridLines(false)
+            //isEnabled = false
+            labelCount = 2
+            textSize = 16F
+            valueFormatter = IndexAxisValueFormatter(barsPlusOffset)
+        }
+        binding.valuesBarChart.axisLeft.apply {
+            axisMinimum = 0F
+            setDrawGridLines(false)
+        }
+        binding.valuesBarChart.axisRight.apply {
+            isEnabled = false
+        }
+        binding.valuesBarChart.apply{
+            legend.isEnabled = false
+            description.isEnabled = false
+            extraBottomOffset = 16F
+
         }
     }
 }

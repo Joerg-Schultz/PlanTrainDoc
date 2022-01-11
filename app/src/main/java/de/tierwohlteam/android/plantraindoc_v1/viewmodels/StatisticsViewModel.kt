@@ -1,5 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -66,7 +67,7 @@ class StatisticsViewModel @Inject constructor(
             repository.getTrialsWithCriteriaByPlan(plan).collect { trials ->
                 val result: MutableMap<String, Pair<Int,Int>> = mutableMapOf()
                 for(trial in trials) {
-                    val success = trial.trial.success
+                    val success = trial!!.trial.success
                     for (criterion in trial.criteria) {
                         val current = result.getOrDefault(criterion.toString(), Pair(0,0))
                         val new = if (success) Pair(current.first + 1, current.second)
