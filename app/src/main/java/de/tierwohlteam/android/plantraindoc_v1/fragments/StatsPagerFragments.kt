@@ -208,6 +208,7 @@ class ValuesFragment : Fragment() {
     }
 
     private val goalViewModel: GoalViewModel by activityViewModels()
+    private val statisticsViewModel: StatisticsViewModel by activityViewModels()
 
     private var _binding: StatsGoalValuesBinding? = null
     private val binding get() = _binding!!
@@ -236,6 +237,25 @@ class ValuesFragment : Fragment() {
         goal = goalViewModel.selectedGoal.value?.goal
         plan = goalViewModel.selectedGoal.value?.plan
 
+        if (plan == null && level == "top") {
+            binding.apply {
+                tvNoPlan.visibility = View.VISIBLE
+                valuesBarChart.visibility = View.GONE
+                pBBarchart.visibility = View.GONE
+            }
+            return
+        }
+        // there is a plan
+        binding.apply {
+            tvNoPlan.visibility = View.GONE
+            valuesBarChart.visibility = View.VISIBLE
+            pBBarchart.visibility = View.VISIBLE
+        }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            statisticsViewModel.discreteValuesCounter.collect { result ->
+
+            }
+        }
     }
 }
 
