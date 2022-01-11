@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.adapters.SubGoalListAdapter
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsGoalClicksBinding
+import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsGoalValuesBinding
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsSubGoalsBinding
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsTimeCourseBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
@@ -189,6 +190,52 @@ class ClicksFragment : Fragment() {
             extraBottomOffset = 16F
 
         }
+    }
+}
+
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
+@AndroidEntryPoint
+class ValuesFragment : Fragment() {
+    companion object {
+        fun newInstance(level: String): ValuesFragment {
+            val args = Bundle()
+            args.putString("level", level)
+            val fragment = ValuesFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+    private val goalViewModel: GoalViewModel by activityViewModels()
+
+    private var _binding: StatsGoalValuesBinding? = null
+    private val binding get() = _binding!!
+
+    private var goal: Goal? = null
+    private var plan: Plan? = null
+
+    private var level: String = "top" //This fragment makes only sense for a single goal / Plan
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        level = arguments?.getString("level") ?: "top"
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = StatsGoalValuesBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        goal = goalViewModel.selectedGoal.value?.goal
+        plan = goalViewModel.selectedGoal.value?.plan
+
     }
 }
 

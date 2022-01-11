@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -16,7 +17,9 @@ import de.tierwohlteam.android.plantraindoc_v1.adapters.StatsViewPagerAdapter
 import de.tierwohlteam.android.plantraindoc_v1.databinding.ShowTrainingFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatisticsFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
+import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
+import de.tierwohlteam.android.plantraindoc_v1.viewmodels.PlanViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.StatisticsViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -27,6 +30,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
 class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
 
     private val goalViewModel: GoalViewModel by activityViewModels()
+    private val planViewModel: PlanViewModel by activityViewModels()
 
     private var _binding: StatisticsFragmentBinding? = null
     private val binding get() = _binding!!
@@ -44,6 +48,7 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
 
         val fragmentTitleList: Map<String,Fragment> = mapOf(
             getString(R.string.click) to ClicksFragment.newInstance(level = "top"),
+            getString(R.string.values) to ValuesFragment.newInstance(level = "top"),
             getString(R.string.trend) to TimeCourseFragment.newInstance(level = "top"),
             getString(R.string.goals) to SubGoalsFragment(),
             getString(R.string.total_clicks) to ClicksFragment.newInstance(level = "all"),
