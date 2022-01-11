@@ -5,10 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import com.benasher44.uuid.Uuid
-import de.tierwohlteam.android.plantraindoc_v1.models.Trial
-import de.tierwohlteam.android.plantraindoc_v1.models.TrialCriterion
-import de.tierwohlteam.android.plantraindoc_v1.models.TrialWithAnnotations
-import de.tierwohlteam.android.plantraindoc_v1.models.TrialWithCriteria
+import de.tierwohlteam.android.plantraindoc_v1.models.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -34,4 +31,9 @@ interface TrialDao {
             "inner join goals on plans.goalID = goals.id where " +
             "goals.id in (:goalsIDList)")
     fun getByGoalIDList(goalsIDList: List<Uuid>) : Flow<List<TrialWithAnnotations>>
+
+    @Query("SELECT * FROM trials " +
+            "inner join sessions on trials.sessionID = sessions.id " +
+            "inner join plans on sessions.planID = :planID")
+    fun getWithCriteriaByPlan(planID: Uuid): Flow<List<TrialWithCriteria>>
 }
