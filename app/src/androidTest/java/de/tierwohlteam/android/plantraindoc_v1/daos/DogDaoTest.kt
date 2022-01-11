@@ -11,6 +11,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.User
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDdb
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -45,7 +46,7 @@ class DogDaoTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndGetDog() {
+    fun insertAndGetDog() = runBlockingTest {
         val userID = uuid4()
         val dogID = uuid4()
         val user = User(

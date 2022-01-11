@@ -65,7 +65,7 @@ class TrialDaoTest {
     }
 
     @Test
-    fun insertAndGetTrialWithCriteria(){
+    fun insertAndGetTrialWithCriteria() = runBlockingTest{
         val userID = uuid4()
         val user = User(id = userID, name = "Test User", email = "testuser@mail.de", password = "123", role = "standard")
         repository.insertUser(user)

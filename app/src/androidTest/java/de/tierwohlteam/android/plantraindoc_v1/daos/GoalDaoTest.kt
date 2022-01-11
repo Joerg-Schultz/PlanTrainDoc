@@ -12,6 +12,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.User
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDdb
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -46,7 +47,7 @@ class GoalDaoTest {
 
 
     @Test
-    fun insertAndGetGoal() {
+    fun insertAndGetGoal() = runBlockingTest{
         val userID = uuid4()
         val user = User(id = userID, name = "Test User", email = "testuser@mail.de", password = "123", role = "standard")
         repository.insertUser(user)
@@ -58,7 +59,7 @@ class GoalDaoTest {
     }
 
     @Test
-    internal fun insertAndGetGoalParentTest() {
+    internal fun insertAndGetGoalParentTest() = runBlockingTest {
         val userID = uuid4()
         val user = User(id = userID, name = "Test User", email = "testuser@mail.de", password = "123", role = "standard")
         repository.insertUser(user)
@@ -75,7 +76,7 @@ class GoalDaoTest {
     }
 
     @Test
-    internal fun insertAndGetGoalDependencyTest() {
+    internal fun insertAndGetGoalDependencyTest() = runBlockingTest{
         val userID = uuid4()
         val user = User(id = userID, name = "Test User", email = "testuser@mail.de", password = "123", role = "standard")
         repository.insertUser(user)
