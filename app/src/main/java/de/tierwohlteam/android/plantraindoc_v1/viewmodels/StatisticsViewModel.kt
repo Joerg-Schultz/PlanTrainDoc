@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.GoalTreeItem
+import de.tierwohlteam.android.plantraindoc_v1.models.Plan
 import de.tierwohlteam.android.plantraindoc_v1.models.TrialWithAnnotations
 import de.tierwohlteam.android.plantraindoc_v1.others.Resource
 import de.tierwohlteam.android.plantraindoc_v1.repositories.PTDRepository
@@ -24,6 +25,8 @@ class StatisticsViewModel @Inject constructor(
 
     private var _clickResetCounter = MutableStateFlow<Resource<Pair<Int, Int>?>> (Resource.loading(null))
     var clickResetCounter: StateFlow<Resource<Pair<Int, Int>?>> = _clickResetCounter
+    private var _discreteValuesCounter = MutableStateFlow<Resource<Map<String,Pair<Int, Int>>>> (Resource.loading(null))
+    var discreteValuesCounter: StateFlow<Resource<Map<String,Pair<Int, Int>>>> = _discreteValuesCounter
     private var _trialsFromPlan = MutableStateFlow<Resource<List<ChartPoint>>> (Resource.loading(emptyList()))
     var trialsFromPlan: StateFlow<Resource<List<ChartPoint>>> = _trialsFromPlan
 
@@ -58,6 +61,23 @@ class StatisticsViewModel @Inject constructor(
         _trialsFromPlan.value = Resource.success(timeCourse)
     }
 
+    fun analyzePlan(plan: Plan) {
+        viewModelScope.launch {
+            repository.getTrialsWithCriteriaByPlan(plan).collect { trials ->
+                val result: MutableMap<String, Pair<Int,Int>> = mutableMapOf()
+                for(trial in trials) {
+                    val success = trial.trial.success
+                    for (criterion in trial.criteria) {
+                        val current = result.getOrDefault(criterion.toString(), Pair(0,0))
+                        val new = if (success) Pair(current.first + 1, current.second)
+                            else Pair(current.first, current.second + 1)
+                        result[criterion.toString()] = new
+                    }
+                }
+                _discreteValuesCounter.value = Resource.success(result)
+            }
+        }
+    }
 }
 
 data class ChartPoint(val xValue: Int, val yValue: Int, val sessionCriterion: String, val goal: String)
