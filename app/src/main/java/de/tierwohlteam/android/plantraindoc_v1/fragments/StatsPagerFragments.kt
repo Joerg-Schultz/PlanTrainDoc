@@ -1,5 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.adapters.SubGoalListAdapter
@@ -266,23 +268,24 @@ class ValuesFragment : Fragment() {
                             binding.pBBarchart.visibility = View.GONE
                             val sortedResults = result.data.toSortedMap()
                             setupBarChart(sortedResults.keys)
-                            var xPos = 1F
-                            val stackedBarDataSet = BarDataSet(
-                                sortedResults.values.map {
-                                    BarEntry(xPos++, floatArrayOf(it.first.toFloat(), it.second.toFloat()))
+                            var xPos = 1
+                            val plotDataList = mutableListOf<IBarDataSet>()
+                            for ((criterion, counts) in sortedResults) {
+                                val entry = BarEntry(xPos.toFloat(), floatArrayOf(counts.first.toFloat(), counts.second.toFloat()))
+                                val dataset = BarDataSet(arrayListOf(entry), criterion)
+                                dataset.apply {
+                                    setColors(
+                                        resources.getColor(R.color.accent),
+                                        resources.getColor(R.color.primaryLightColor)
+                                    )
+                                    valueTextSize = 16F
+                                    valueFormatter = DefaultValueFormatter(0)
                                 }
-                                , "ClickRatioPerCriterion"
-                            )
-                            stackedBarDataSet.apply {
-                                setColors(
-                                    resources.getColor(R.color.accent),
-                                    resources.getColor(R.color.primaryLightColor)
-                                )
-                                valueTextSize = 16F
-                                valueFormatter = DefaultValueFormatter(0)
+                                plotDataList.add(dataset)
+                                xPos++
                             }
                             binding.valuesBarChart.apply {
-                                data = BarData(stackedBarDataSet)
+                                data = BarData(plotDataList)
                                 setNoDataText("No Training for this goal")
                                 invalidate()
                             }
@@ -302,6 +305,7 @@ class ValuesFragment : Fragment() {
             //isEnabled = false
             labelCount = 2
             textSize = 16F
+            labelRotationAngle = 45.0F
             valueFormatter = IndexAxisValueFormatter(barsPlusOffset)
         }
         binding.valuesBarChart.axisLeft.apply {

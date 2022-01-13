@@ -69,10 +69,10 @@ class StatisticsViewModel @Inject constructor(
                 for(trial in trials) {
                     val success = trial!!.trial.success
                     for (criterion in trial.criteria) {
-                        val current = result.getOrDefault(criterion.toString(), Pair(0,0))
+                        val current = result.getOrDefault(criterion.criterion, Pair(0,0))
                         val new = if (success) Pair(current.first + 1, current.second)
                             else Pair(current.first, current.second + 1)
-                        result[criterion.toString()] = new
+                        result[criterion.criterion] = new
                     }
                 }
                 _discreteValuesCounter.value = Resource.success(result)
