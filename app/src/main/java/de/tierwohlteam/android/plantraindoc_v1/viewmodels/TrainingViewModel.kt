@@ -65,7 +65,10 @@ class TrainingViewModel @Inject constructor(
                 sessionType.value = null
             }else{
                 getHelperNextValue = setupHelper(selectedPlanHelper.value!!.type, selectedPlanHelper.value!!.value)
-                helperNextValue.emit(getHelperNextValue?.let { it() })
+                if (getHelperNextValue != null) {
+                    currentHelperValue = getHelperNextValue!!()
+                    helperNextValue.emit(currentHelperValue)
+                }
                 sessionType.value = selectedPlanHelper.value!!.type
             }
         }
@@ -100,18 +103,15 @@ class TrainingViewModel @Inject constructor(
     suspend fun addTrial(success: Boolean) {
         val trial = Trial(sessionID = session.id, success = success)
         _currentTrial.emit(trial.success)
-        Log.d("CRITSTATS", "Before insert")
         repository.insertTrial(trial)
-        Log.d("CRITSTATS", "After insert")
-        if (currentHelperValue != null) {
-            val trialCriterion = TrialCriterion(trialID = trial.id, criterion = currentHelperValue!!)
-            repository.insertTrialCriterion(trialCriterion)
-        }
+
+        if (currentHelperValue != null)
+            repository.insertTrialCriterion(TrialCriterion(trialID = trial.id, criterion = currentHelperValue!!))
         if (getHelperNextValue != null) {
             currentHelperValue = getHelperNextValue!!()
             helperNextValue.emit(currentHelperValue)
         }
-        Log.d("CRITSTATS", "After Collect")
+
         totalTrials.value++
         var (click, reset) = clickResetCounter.value
         clickResetCounter.value = if(success) Pair(++click, reset) else Pair(click, ++reset)
