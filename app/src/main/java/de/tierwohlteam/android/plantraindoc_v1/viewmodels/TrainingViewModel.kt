@@ -83,7 +83,7 @@ class TrainingViewModel @Inject constructor(
                 { durationScheme.getStep(value.toFloat()).toString() }
             }
             PlanHelper.discrimination -> {
-                { value.split(",").random() }
+                { value.split(",").map { it.trim() }.random() }
             }
             else -> null
         }

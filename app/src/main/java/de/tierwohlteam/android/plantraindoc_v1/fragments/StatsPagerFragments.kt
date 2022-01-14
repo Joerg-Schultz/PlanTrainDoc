@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.mikephil.charting.charts.CombinedChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
@@ -267,7 +268,7 @@ class ValuesFragment : Fragment() {
                         if (result.data != null && result.data.isNotEmpty()) {
                             binding.pBBarchart.visibility = View.GONE
                             val sortedResults = result.data.toSortedMap()
-                            setupBarChart(sortedResults.keys)
+                            setupBarChart(sortedResults.keys.toList())
                             var xPos = 1
                             val plotDataList = mutableListOf<IBarDataSet>()
                             for ((criterion, counts) in sortedResults) {
@@ -296,14 +297,15 @@ class ValuesFragment : Fragment() {
         }
     }
 
-    private fun setupBarChart(bars: Set<String>) {
+    private fun setupBarChart(bars: List<String>) {
         val barsPlusOffset = mutableListOf<String>("")
         barsPlusOffset.addAll(bars)
+        Log.d("CRITSTATS", barsPlusOffset.toString())
         binding.valuesBarChart.xAxis.apply {
             position = XAxis.XAxisPosition.BOTTOM
             setDrawGridLines(false)
             //isEnabled = false
-            labelCount = 2
+            //labelCount = 2
             textSize = 16F
             labelRotationAngle = 45.0F
             valueFormatter = IndexAxisValueFormatter(barsPlusOffset)
