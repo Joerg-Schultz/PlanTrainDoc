@@ -29,6 +29,7 @@ class TrainingViewModel @Inject constructor(
 
     private lateinit var session: Session
     private lateinit var constraintTimer: CountDownTimer
+    private var currentHelperValue: String? = null
 
     // TODO use non Mutables for interaction with outside world
     var totalTrials : MutableStateFlow<Int> = MutableStateFlow(value = 0)
@@ -99,23 +100,23 @@ class TrainingViewModel @Inject constructor(
     suspend fun addTrial(success: Boolean) {
         val trial = Trial(sessionID = session.id, success = success)
         _currentTrial.emit(trial.success)
-        //Using GlobalScope as the insert also has to happen when
-        // training is stopped and ViewModel is closed
-       // GlobalScope.launch {
-            repository.insertTrial(trial)
-            helperNextValue.collect {
-                if (it != null) {
-                    val trialCriterion = TrialCriterion(trialID = trial.id, criterion = it)
-                    repository.insertTrialCriterion(trialCriterion)
-                }
-         //   }
+        Log.d("CRITSTATS", "Before insert")
+        repository.insertTrial(trial)
+        Log.d("CRITSTATS", "After insert")
+        if (currentHelperValue != null) {
+            val trialCriterion = TrialCriterion(trialID = trial.id, criterion = currentHelperValue!!)
+            repository.insertTrialCriterion(trialCriterion)
         }
+        if (getHelperNextValue != null) {
+            currentHelperValue = getHelperNextValue!!()
+            helperNextValue.emit(currentHelperValue)
+        }
+        Log.d("CRITSTATS", "After Collect")
         totalTrials.value++
         var (click, reset) = clickResetCounter.value
         clickResetCounter.value = if(success) Pair(++click, reset) else Pair(click, ++reset)
         if(selectedPlanConstraint.value?.type == PlanConstraint.repetition)
             countDown.value = countDown.value!! - 1
-        helperNextValue.emit(getHelperNextValue?.let { it() })
     }
 
     suspend fun newSession(criterion: String) {
