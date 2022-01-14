@@ -89,5 +89,6 @@
     <string name="FeederNotConnected">You are not connected to the Feeder</string>
     <string name="additional_tools">External Tools (BlueTooth)</string>
     <string name="evaluate">Evaluate</string>
+    <string name="no_data">No data for this goal</string>
 
 </resources>

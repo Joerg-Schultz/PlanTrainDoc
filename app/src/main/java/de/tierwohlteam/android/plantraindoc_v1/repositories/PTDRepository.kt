@@ -356,7 +356,7 @@ class PTDRepository @Inject constructor(
      * @param[plan]
      * @return Flow of List of TrialWithCriteria
      */
-    fun getTrialsWithCriteriaByPlan(plan: Plan) : Flow<List<TrialWithCriteria?>> =
+    fun getTrialsWithCriteriaByPlan(plan: Plan) : Flow<List<TrialWithCriteria>> =
         trialDao.getWithCriteriaByPlan(plan.id)
 
     /**

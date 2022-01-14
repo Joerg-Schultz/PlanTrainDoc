@@ -54,7 +54,6 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
             getString(R.string.total_clicks) to ClicksFragment.newInstance(level = "all"),
             getString(R.string.total_trend) to TimeCourseFragment.newInstance(level = "all"),
         )
-
         viewPager2.adapter = StatsViewPagerAdapter(this.childFragmentManager, lifecycle,
             ArrayList(fragmentTitleList.values)
         )

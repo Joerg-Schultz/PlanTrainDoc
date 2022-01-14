@@ -89,4 +89,5 @@
     <string name="FeederNotConnected">Du bist nicht mit dem Futterautomaten verbunden</string>
     <string name="additional_tools">externe Tools (BlueTooth)</string>
     <string name="evaluate">Auswerten</string>
+    <string name="no_data">Keine Daten für dieses Ziel</string>
 </resources>

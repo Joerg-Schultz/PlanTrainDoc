@@ -187,6 +187,8 @@ class ClicksFragment : Fragment() {
         binding.clicksBarChart.axisLeft.apply {
             axisMinimum = 0F
             setDrawGridLines(false)
+            granularity = 1F
+            isGranularityEnabled = true
         }
         binding.clicksBarChart.axisRight.apply {
             isEnabled = false
@@ -260,15 +262,16 @@ class ValuesFragment : Fragment() {
             valuesBarChart.visibility = View.VISIBLE
             pBBarchart.visibility = View.VISIBLE
         }
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchWhenStarted {
             statisticsViewModel.discreteValuesCounter.collect { result ->
                 when (result.status) {
                     Status.LOADING ->{
                         binding.pBBarchart.visibility = View.VISIBLE
                     }
                     Status.SUCCESS -> {
-                        if (result.data != null && result.data.isNotEmpty()) {
-                            binding.pBBarchart.visibility = View.GONE
+                        binding.pBBarchart.visibility = View.GONE
+                        binding.valuesBarChart.setNoDataText(getString(R.string.no_data))
+                        if (result.data!!.isNotEmpty() ) {
                             val sortedResults = result.data.toSortedMap()
                             setupBarChart(sortedResults.keys.toList())
                             var xPos = 1
@@ -289,10 +292,9 @@ class ValuesFragment : Fragment() {
                             }
                             binding.valuesBarChart.apply {
                                 data = BarData(plotDataList)
-                                setNoDataText("No Training for this goal")
-                                invalidate()
                             }
                         }
+                        binding.valuesBarChart.invalidate()
                     }
                 }
             }
@@ -302,7 +304,6 @@ class ValuesFragment : Fragment() {
     private fun setupBarChart(bars: List<String>) {
         val barsPlusOffset = mutableListOf<String>("")
         barsPlusOffset.addAll(bars)
-        Log.d("CRITSTATS", barsPlusOffset.toString())
         binding.valuesBarChart.xAxis.apply {
             position = XAxis.XAxisPosition.BOTTOM
             setDrawGridLines(false)
@@ -421,7 +422,7 @@ class TimeCourseFragment : Fragment() {
                             if (result.data!!.isNotEmpty()) {
                                 val dataList: MutableList<Entry> = mutableListOf()
                                 for (chartPoint in result.data) {
-                                    dataList.add(Entry(chartPoint.xValue.toFloat(), chartPoint.yValue.toFloat()))
+                                    dataList.add(Entry(chartPoint.xValue.toFloat() + 1, chartPoint.yValue.toFloat()))
                                 }
                                 val dataSet = LineDataSet(dataList, "Time Course")
                                 dataSet.circleRadius = 8f
@@ -444,10 +445,19 @@ class TimeCourseFragment : Fragment() {
 
     private fun setupLineChart(){
         binding.timeCourseChart.xAxis.apply {
-            axisMinimum = 0F
+            axisMinimum = 1F
+            granularity = 1F
+            isGranularityEnabled = true
         }
         binding.timeCourseChart.axisLeft.apply {
-            axisMinimum = 0F
+            axisMinimum = 1F
+            granularity = 1F
+            isGranularityEnabled = true
+        }
+        binding.timeCourseChart.axisRight.apply {
+            axisMinimum = 1F
+            granularity = 1F
+            isGranularityEnabled = true
         }
         binding.timeCourseChart.apply{
             legend.isEnabled = false
