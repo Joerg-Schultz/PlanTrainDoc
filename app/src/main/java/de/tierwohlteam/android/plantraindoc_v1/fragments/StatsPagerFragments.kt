@@ -11,6 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.charts.CombinedChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
@@ -319,11 +321,22 @@ class ValuesFragment : Fragment() {
         binding.valuesBarChart.axisRight.apply {
             isEnabled = false
         }
+        val click = LegendEntry()
+        click.apply {
+            label = "Click"
+            formColor = resources.getColor(R.color.accent)
+            form = Legend.LegendForm.SQUARE
+        }
+        val reset = LegendEntry()
+        reset.apply {
+            label = "Reset"
+            formColor = resources.getColor(R.color.primaryLightColor)
+            form = Legend.LegendForm.SQUARE
+        }
         binding.valuesBarChart.apply{
-            legend.isEnabled = false
+            legend.setCustom(arrayOf(click, reset))
             description.isEnabled = false
             extraBottomOffset = 16F
-
         }
     }
 }
