@@ -312,6 +312,8 @@ class ValuesFragment : Fragment() {
         }
         binding.valuesBarChart.axisLeft.apply {
             axisMinimum = 0F
+            granularity = 1F
+            isGranularityEnabled = true
             setDrawGridLines(false)
         }
         binding.valuesBarChart.axisRight.apply {
