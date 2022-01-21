@@ -67,7 +67,7 @@ class StatisticsViewModel @Inject constructor(
             repository.getTrialsWithCriteriaByPlan(plan).collect { trials ->
                 val result: MutableMap<String, Pair<Int,Int>> = mutableMapOf()
                 for(trial in trials) {
-                    val success = trial!!.trial.success
+                    val success = trial.trial.success
                     for (criterion in trial.criteria) {
                         val current = result.getOrDefault(criterion.criterion, Pair(0,0))
                         val new = if (success) Pair(current.first + 1, current.second)

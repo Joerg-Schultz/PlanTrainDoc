@@ -123,8 +123,7 @@ class ClicksFragment : Fragment() {
                 clicksBarChart.visibility = View.GONE
                 pBBarchart.visibility = View.GONE
             }
-        } else {// else -> show bar chart
-            //trainingViewModel.setSelectedPlan(plan!!)
+        } else {
             binding.apply {
                 tvNoPlan.visibility = View.GONE
                 clicksBarChart.visibility = View.VISIBLE
@@ -262,7 +261,7 @@ class ValuesFragment : Fragment() {
             valuesBarChart.visibility = View.VISIBLE
             pBBarchart.visibility = View.VISIBLE
         }
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             statisticsViewModel.discreteValuesCounter.collect { result ->
                 when (result.status) {
                     Status.LOADING ->{
@@ -271,7 +270,7 @@ class ValuesFragment : Fragment() {
                     Status.SUCCESS -> {
                         binding.pBBarchart.visibility = View.GONE
                         binding.valuesBarChart.setNoDataText(getString(R.string.no_data))
-                        if (result.data!!.isNotEmpty() ) {
+                       if (! result.data.isNullOrEmpty() ) {
                             val sortedResults = result.data.toSortedMap()
                             setupBarChart(sortedResults.keys.toList())
                             var xPos = 1
@@ -293,9 +292,12 @@ class ValuesFragment : Fragment() {
                             binding.valuesBarChart.apply {
                                 data = BarData(plotDataList)
                             }
-                        }
+                       } else {
+                           setupBarChart(emptyList())
+                       }
                         binding.valuesBarChart.invalidate()
                     }
+                    else -> { /* NO-OP */ }
                 }
             }
         }
