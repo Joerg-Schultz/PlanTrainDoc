@@ -18,7 +18,9 @@ object Constants {
     const val KEY_USE_CLICKER = "useClicker"
     const val KEY_USE_SPEECH = "useSpeechforHelper"
     const val KEY_USE_LIGHT_GATE = "useLightGate"
-    const val KEY_USE_AUTO_CLICK = "useAutoClick" //only enabled with lightGate
+    const val KEY_USE_AUTO_CLICK_LIGHT_GATE = "useAutoClickLightGate" //only enabled with lightGate
+    const val KEY_USE_VISION_MAT = "useVisionMat"
+    const val KEY_USE_AUTO_CLICK_VISION_MAT = "useAutoClickVisionMat" //only enabled with VisionmMat
     const val KEY_USE_FEEDER = "useFeeder"
 
     const val FIRST_USAGE = "FIRST_USAGE"

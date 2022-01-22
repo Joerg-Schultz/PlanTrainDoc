@@ -36,8 +36,19 @@
                 app:key="useLightGate"/>
         <SwitchPreferenceCompat
                 app:title="AutoClick"
-                app:key="useAutoClick"
+                app:key="useAutoClickLightGate"
                 app:dependency="useLightGate"
+                app:defaultValue="false"/>
+        <SwitchPreferenceCompat
+                app:title="@string/useVisionMat"
+                app:summaryOn="@string/VisionMatConnected"
+                app:summaryOff="@string/VisionMatNotConnected"
+                app:defaultValue="false"
+                app:key="useVisionMat"/>
+        <SwitchPreferenceCompat
+                app:title="AutoClick"
+                app:key="useAutoClickVisionMat"
+                app:dependency="useVisionMat"
                 app:defaultValue="false"/>
         <SwitchPreferenceCompat
                 app:title="@string/useFeeder"
