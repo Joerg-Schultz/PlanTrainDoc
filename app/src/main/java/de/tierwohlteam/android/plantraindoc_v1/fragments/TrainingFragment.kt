@@ -19,7 +19,9 @@ import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBindi
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.Feeder
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_AUTO_CLICK_LIGHT_GATE
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_AUTO_CLICK_VISION_MAT
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_FEEDER
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_VISION_MAT
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_LONG
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_SHORT
 import de.tierwohlteam.android.plantraindoc_v1.others.percentage
@@ -273,6 +275,10 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                     }
                     binding.buttonClick.setBackgroundColor(resources.getColor(R.color.primaryColor))
                     binding.buttonClick.text = getString(R.string.startTimer)
+
+                    if (sharedPreferences.getBoolean(KEY_USE_VISION_MAT, false)) {
+                        if (dogOnMat) binding.buttonClick.performClick() //click in Listener???
+                    }
                 }
             }
         }
@@ -314,6 +320,12 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                                 } else {
                                     vibrate("short")
                                 }
+                                if (sharedPreferences.getBoolean(KEY_USE_AUTO_CLICK_VISION_MAT, false)) {
+                                    // Start next if might not be necessary, but let's play safe
+                                    if (dogOnMat) binding.buttonClick.performClick()
+                                } else {
+                                    vibrate("short")
+                                }
                             }
                         }
                     }
@@ -321,6 +333,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             }
         }
 
+        var dogOnMat = false
         override fun makeExternalSensors() {
             // LightGate
             var cooperate: Boolean = false
@@ -339,6 +352,19 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                             tts!!.speak("Stop", TextToSpeech.QUEUE_FLUSH, null, "")
                             binding.buttonReset.performClick()
                         }
+                    }
+                }
+            }
+
+            // VisionMat
+            viewLifecycleOwner.lifecycleScope.launch {
+                toolsViewMode.dogOnMat.collect { matStatus ->
+                    dogOnMat = matStatus
+                    if (timerIsRunning && !matStatus) {
+                        binding.buttonReset.performClick()
+                    }
+                    if (!timerIsRunning && matStatus) {
+                        binding.buttonClick.performClick()
                     }
                 }
             }
