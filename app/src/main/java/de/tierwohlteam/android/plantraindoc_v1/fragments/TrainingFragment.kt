@@ -315,16 +315,13 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                                 binding.tvHelperInfo.text = (p0 / 1000).toString()
                             }
                             override fun onFinish() {
-                                if (sharedPreferences.getBoolean(KEY_USE_AUTO_CLICK_LIGHT_GATE, false)) {
+                                when {
+                                    sharedPreferences.getBoolean(KEY_USE_AUTO_CLICK_LIGHT_GATE, false) ->
                                     binding.buttonClick.performClick()
-                                } else {
-                                    vibrate("short")
-                                }
-                                if (sharedPreferences.getBoolean(KEY_USE_AUTO_CLICK_VISION_MAT, false)) {
+                                    sharedPreferences.getBoolean(KEY_USE_AUTO_CLICK_VISION_MAT, false) ->
                                     // Start next if might not be necessary, but let's play safe
                                     if (dogOnMat) binding.buttonClick.performClick()
-                                } else {
-                                    vibrate("short")
+                                    else ->  vibrate("short")
                                 }
                             }
                         }
