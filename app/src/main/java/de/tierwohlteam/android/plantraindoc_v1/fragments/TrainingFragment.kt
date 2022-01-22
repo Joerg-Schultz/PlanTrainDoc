@@ -18,7 +18,7 @@ import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.Feeder
-import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_AUTO_CLICK
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_AUTO_CLICK_LIGHT_GATE
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_FEEDER
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_LONG
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_SHORT
@@ -309,7 +309,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                                 binding.tvHelperInfo.text = (p0 / 1000).toString()
                             }
                             override fun onFinish() {
-                                if (sharedPreferences.getBoolean(KEY_USE_AUTO_CLICK, false)) {
+                                if (sharedPreferences.getBoolean(KEY_USE_AUTO_CLICK_LIGHT_GATE, false)) {
                                     binding.buttonClick.performClick()
                                 } else {
                                     vibrate("short")

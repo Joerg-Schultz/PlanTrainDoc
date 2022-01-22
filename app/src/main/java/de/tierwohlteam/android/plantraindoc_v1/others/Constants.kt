@@ -20,6 +20,7 @@ object Constants {
     const val KEY_USE_LIGHT_GATE = "useLightGate"
     const val KEY_USE_AUTO_CLICK_LIGHT_GATE = "useAutoClickLightGate" //only enabled with lightGate
     const val KEY_USE_VISION_MAT = "useVisionMat"
+    const val KEY_UUID_VISION_MAT = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
     const val KEY_USE_AUTO_CLICK_VISION_MAT = "useAutoClickVisionMat" //only enabled with VisionmMat
     const val KEY_USE_FEEDER = "useFeeder"
 

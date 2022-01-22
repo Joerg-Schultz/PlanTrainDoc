@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.util.Log
+import com.benasher44.uuid.Uuid
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.io.IOException
@@ -21,6 +22,7 @@ import java.io.OutputStream
  */
 abstract class BTTool {
     abstract fun toolReadAction(msg:Message)
+    open val toolUUID: Uuid? = null
 
     protected val _connectionMessage: MutableStateFlow<String> = MutableStateFlow(value = "")
     val connectionMessage: StateFlow<String> = _connectionMessage
@@ -81,7 +83,8 @@ abstract class BTTool {
             try {
                 // Get a BluetoothSocket to connect with the given BluetoothDevice.
                 // MY_UUID is the app's UUID string, also used in the server code.
-                mmSocket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(uuid)
+                //mmSocket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(uuid)
+                mmSocket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(toolUUID ?: uuid)
             } catch (e: IOException) {
                 Log.e(TAG, "Socket's create() method failed", e)
             }
