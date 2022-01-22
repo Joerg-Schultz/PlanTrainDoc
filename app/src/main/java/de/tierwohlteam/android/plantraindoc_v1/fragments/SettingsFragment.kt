@@ -20,6 +20,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.LightGate
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_HAS_ACCOUNT
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_FEEDER
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_VISION_MAT
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_WEB_SERVER
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.ServerViewModel
 import kotlinx.coroutines.flow.collect
@@ -62,6 +63,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 lifecycleScope.launch {
                     LightGate.cancelConnection()
                     Snackbar.make(requireView(), R.string.LightGateNotConnected, Snackbar.LENGTH_LONG).show()
+                }
+            }
+            true
+        }
+
+        findPreference<SwitchPreferenceCompat>(KEY_USE_VISION_MAT)?.setOnPreferenceChangeListener { preference, newValue ->
+            if (newValue == true) {
+                //TODO replace !!
+                val visionMat = VisionMat
+                connectDialog(this.context!!, visionMat, KEY_USE_VISION_MAT)
+            }
+            if (newValue == false) {
+                lifecycleScope.launch {
+                    VisionMat.cancelConnection()
+                    Snackbar.make(requireView(), R.string.VisionMatNotConnected, Snackbar.LENGTH_LONG).show()
                 }
             }
             true
