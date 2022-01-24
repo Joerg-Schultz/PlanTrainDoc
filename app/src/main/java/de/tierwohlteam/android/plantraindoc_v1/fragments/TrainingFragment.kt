@@ -11,7 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
@@ -355,13 +357,21 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
             // VisionMat
             viewLifecycleOwner.lifecycleScope.launch {
-                toolsViewMode.dogOnMat.collect { matStatus ->
-                    dogOnMat = matStatus
-                    if (timerIsRunning && !matStatus) {
-                        binding.buttonReset.performClick()
-                    }
-                    if (!timerIsRunning && matStatus) {
-                        binding.buttonClick.performClick()
+            // https://developer.android.com/topic/libraries/architecture/coroutines
+            // repeatOnLifecycle launches the block in a new coroutine every time the
+                // lifecycle is in the STARTED state (or above) and cancels it when it's STOPPED.
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    // Trigger the flow and start listening for values.
+                    // This happens when lifecycle is STARTED and stops
+                    // collecting when the lifecycle is STOPPED
+                    toolsViewMode.dogOnMat.collect { matStatus ->
+                        dogOnMat = matStatus
+                        if (timerIsRunning && !matStatus) {
+                            binding.buttonReset.performClick()
+                        }
+                        if (!timerIsRunning && matStatus) {
+                            binding.buttonClick.performClick()
+                        }
                     }
                 }
             }
