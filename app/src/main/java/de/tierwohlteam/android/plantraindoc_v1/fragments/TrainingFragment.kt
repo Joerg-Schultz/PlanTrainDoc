@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo
 import android.media.SoundPool
 import android.os.*
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +38,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
+import kotlin.concurrent.timer
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -52,6 +54,8 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
     private var soundPool: SoundPool? = null
     private var soundId = 1
     private var tts: TextToSpeech? = null
+
+    lateinit var timer: CountDownTimer //Would prefer this to be in the UITimer Class, but has to be canceled with view
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = TrainingFragmentBinding.inflate(inflater, container, false)
@@ -141,6 +145,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        if (::timer.isInitialized) timer.cancel()
         trainingViewModel.cleanup()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
@@ -255,7 +260,6 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
      * When timer is running, use Click button as standard
      */
     open inner class UITimerHelper() : UINoHelper(){
-        lateinit var timer: CountDownTimer
         var timerIsRunning : Boolean = false
 
         override fun makeButtonClick() {
@@ -263,6 +267,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             binding.buttonClick.text = getString(R.string.startTimer)
             binding.buttonClick.setOnClickListener {
                 if (!timerIsRunning) {
+                    Log.d("CLICKER", "Starting timer")
                     timer.start()
                     timerIsRunning = true
                     binding.buttonClick.setBackgroundColor(resources.getColor(R.color.accent))
@@ -270,6 +275,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 } else {
                     if(sharedPreferences.getBoolean("useClicker", true))
                         soundPool?.play(soundId, 1F, 1F, 0, 0, 1F)
+                    Log.d("CLICKER", "CLICK!")
                     timer.cancel()
                     timerIsRunning = false
                     lifecycleScope.launchWhenStarted {
@@ -308,22 +314,27 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                     }
                 }
             }
-            lifecycleScope.launchWhenStarted {
-                trainingViewModel.helperNextValue.collect {
-                    binding.tvHelperInfo.text = it ?: ""
-                    if (it != null) {
-                        timer = object : CountDownTimer((it.toFloat() * 1000).toLong(), 1000) {
-                            override fun onTick(p0: Long) {
-                                binding.tvHelperInfo.text = (p0 / 1000).toString()
-                            }
-                            override fun onFinish() {
-                                when {
-                                    sharedPreferences.getBoolean(KEY_USE_AUTO_CLICK_LIGHT_GATE, false) ->
-                                    binding.buttonClick.performClick()
-                                    sharedPreferences.getBoolean(KEY_USE_AUTO_CLICK_VISION_MAT, false) ->
-                                    // Start next if might not be necessary, but let's play safe
-                                    if (dogOnMat) binding.buttonClick.performClick()
-                                    else ->  vibrate("short")
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                    trainingViewModel.helperNextValue.collect {
+                        binding.tvHelperInfo.text = it ?: ""
+                        if (it != null) {
+                            timer = object : CountDownTimer((it.toFloat() * 1000).toLong(), 1000) {
+                                override fun onTick(p0: Long) {
+                                    binding.tvHelperInfo.text = (p0 / 1000).toString()
+                                }
+
+                                override fun onFinish() {
+                                    when {
+                                        sharedPreferences.getBoolean(KEY_USE_AUTO_CLICK_LIGHT_GATE, false) ->
+                                            binding.buttonClick.performClick()
+                                        sharedPreferences.getBoolean(KEY_USE_AUTO_CLICK_VISION_MAT, false) -> {
+                                            // Start next if might not be necessary, but let's play safe
+                                            Log.d("CLICKER", "timer finished")
+                                            if (dogOnMat) binding.buttonClick.performClick()
+                                        }
+                                        else -> vibrate("short")
+                                    }
                                 }
                             }
                         }
@@ -370,6 +381,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                             binding.buttonReset.performClick()
                         }
                         if (!timerIsRunning && matStatus) {
+                            Log.d("CLICKER", "no timer + on Mat")
                             binding.buttonClick.performClick()
                         }
                     }

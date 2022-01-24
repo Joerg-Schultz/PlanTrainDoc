@@ -100,7 +100,8 @@ class TrainingViewModel @Inject constructor(
         _currentTrial.emit(trial.success)
         //Using GlobalScope as the insert also has to happen when
         // training is stopped and ViewModel is closed
-        GlobalScope.launch {
+        //GlobalScope.launch {
+        viewModelScope.launch {
             repository.insertTrial(trial)
             helperNextValue.collect {
                 if (it != null) {
