@@ -88,7 +88,7 @@
     <string name="FeederConnected">Du bist mit dem Futterautomaten verbunden</string>
     <string name="FeederNotConnected">Du bist nicht mit dem Futterautomaten verbunden</string>
     <string name="additional_tools">externe Tools (BlueTooth)</string>
-    <string name="useVisionMat">Use Vision for Mat Training</string>
-    <string name="VisionMatConnected">You are now useing the Vision Module for Mat Training</string>
-    <string name="VisionMatNotConnected">Vision Training is off</string>
+    <string name="useVisionMat">Verwende Bildanalyse für Decken Training</string>
+    <string name="VisionMatConnected">Du verwendest jetzt Bildanalyse für das Matten Training</string>
+    <string name="VisionMatNotConnected">Das Bildanalyse Modul ist nicht verbunden</string>
 </resources>

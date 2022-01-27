@@ -88,8 +88,8 @@
     <string name="FeederConnected">You are connected to the Feeder</string>
     <string name="FeederNotConnected">You are not connected to the Feeder</string>
     <string name="additional_tools">External Tools (BlueTooth)</string>
-    <string name="useVisionMat">Use Vision for Mat Training</string>
-    <string name="VisionMatConnected">You are now useing the Vision Module for Mat Training</string>
+    <string name="useVisionMat">Use the Vision Module for Mat Training</string>
+    <string name="VisionMatConnected">You are now using the Vision Module for Mat Training</string>
     <string name="VisionMatNotConnected">Vision Training is off</string>
 
 </resources>

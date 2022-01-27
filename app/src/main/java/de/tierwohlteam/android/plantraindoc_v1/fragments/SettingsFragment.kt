@@ -117,11 +117,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         var selectedDevice: BluetoothDevice? = pairedDevices.firstOrNull()
         lifecycleScope.launch {
             tool.connectionMessage.collect {
-                Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
-                if (it.contains("failed")) {
-                    with(sharedPrefs.edit()) {
-                        putBoolean(key, false)
-                        apply()
+                if (it.isNotEmpty()) {
+                    Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
+                    if (it.contains("failed")) {
+                        with(sharedPrefs.edit()) {
+                            putBoolean(key, false)
+                            apply()
+                        }
                     }
                 }
             }
