@@ -19,6 +19,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_AUTO_CLICK_LIGHT_GATE
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_AUTO_CLICK_VISION_MAT
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_FEEDER
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_VISION_MAT
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_WEB_SERVER
 import javax.inject.Inject
 
@@ -42,10 +47,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener{
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
         sharedPrefs.registerOnSharedPreferenceChangeListener(this)
-        with(sharedPrefs.edit()) {
-            putBoolean(Constants.KEY_USE_LIGHT_GATE, false)
-            apply()
-        }
+        setBlueToothFalse()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -79,5 +81,16 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener{
     override fun onDestroy() {
         super.onDestroy()
         sharedPrefs.unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+    private fun setBlueToothFalse() {
+        val blueToothKeys = listOf<String>(KEY_USE_FEEDER, KEY_USE_LIGHT_GATE, KEY_USE_AUTO_CLICK_LIGHT_GATE,
+        KEY_USE_VISION_MAT, KEY_USE_AUTO_CLICK_VISION_MAT)
+        with(sharedPrefs.edit()) {
+            blueToothKeys.forEach {
+                putBoolean(it, false)
+                apply()
+            }
+        }
     }
 }

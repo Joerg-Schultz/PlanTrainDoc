@@ -18,7 +18,10 @@ import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.BTTool
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.Feeder
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.LightGate
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.VisionMat
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_HAS_ACCOUNT
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_AUTO_CLICK_LIGHT_GATE
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_AUTO_CLICK_VISION_MAT
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_FEEDER
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_VISION_MAT
@@ -64,6 +67,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 lifecycleScope.launch {
                     LightGate.cancelConnection()
                     Snackbar.make(requireView(), R.string.LightGateNotConnected, Snackbar.LENGTH_LONG).show()
+                    setAutoClickFalse(KEY_USE_AUTO_CLICK_LIGHT_GATE)
                 }
             }
             true
@@ -79,6 +83,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 lifecycleScope.launch {
                     VisionMat.cancelConnection()
                     Snackbar.make(requireView(), R.string.VisionMatNotConnected, Snackbar.LENGTH_LONG).show()
+                    setAutoClickFalse(KEY_USE_AUTO_CLICK_VISION_MAT)
                 }
             }
             true
@@ -97,6 +102,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 }
             }
             true
+        }
+    }
+
+    private fun setAutoClickFalse(key: String) {
+        with(sharedPrefs.edit()) {
+            putBoolean(key, false)
+            apply()
         }
     }
 
