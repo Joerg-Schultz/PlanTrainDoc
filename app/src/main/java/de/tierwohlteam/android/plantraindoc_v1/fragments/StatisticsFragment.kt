@@ -23,6 +23,7 @@ import de.tierwohlteam.android.plantraindoc_v1.viewmodels.PlanViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.StatisticsViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
@@ -30,7 +31,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
 class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
 
     private val goalViewModel: GoalViewModel by activityViewModels()
-    private val planViewModel: PlanViewModel by activityViewModels()
+    private val statisticsViewModel: StatisticsViewModel by activityViewModels()
 
     private var _binding: StatisticsFragmentBinding? = null
     private val binding get() = _binding!!
@@ -42,8 +43,15 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val goal = goalViewModel.selectedGoal.value?.goal ?: return
+        val goal : Goal = goalViewModel.selectedGoal.value?.goal ?: return
         binding.statsGoal.text = goal.goal
+
+        lifecycleScope.launchWhenStarted {
+            goalViewModel.subGoalsRecursive.collect {
+                statisticsViewModel.setGoalList(it)
+            }
+        }
+
         val viewPager2 = view.findViewById<ViewPager2>(R.id.stats_pager_container)
 
         val fragmentTitleList: Map<String,Fragment> = mapOf(

@@ -1,6 +1,5 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.mikephil.charting.charts.CombinedChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.components.XAxis
@@ -31,18 +29,16 @@ import de.tierwohlteam.android.plantraindoc_v1.others.LineChartMarkerView
 import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.StatisticsViewModel
-import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
-import okhttp3.internal.notify
 
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @AndroidEntryPoint
 class SubGoalsFragment : Fragment() {
 
-    private val goalViewModel: GoalViewModel by activityViewModels()
+    private val statisticsViewModel: StatisticsViewModel by activityViewModels()
 
     private var _binding: StatsSubGoalsBinding? = null
     private val binding get() = _binding!!
@@ -66,10 +62,8 @@ class SubGoalsFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
         lifecycleScope.launchWhenStarted {
-            goalViewModel.subGoalsRecursive.collect{
-                if (it != null) {
-                    goalListAdapter.submitList(it)
-                }
+            statisticsViewModel.goalList.collect {
+                goalListAdapter.submitList(it)
             }
         }
     }
@@ -89,7 +83,6 @@ class ClicksFragment : Fragment() {
         }
     }
     private val goalViewModel: GoalViewModel by activityViewModels()
-    private val trainingViewModel: TrainingViewModel by activityViewModels()
     private val statisticsViewModel: StatisticsViewModel by activityViewModels()
 
     private var _binding: StatsGoalClicksBinding? = null
@@ -129,16 +122,10 @@ class ClicksFragment : Fragment() {
                 clicksBarChart.visibility = View.VISIBLE
                 pBBarchart.visibility = View.VISIBLE
             }
-           lifecycleScope.launchWhenStarted {
-                goalViewModel.subGoalsRecursive.collect {
-                    if (it != null && it.isNotEmpty()) {
-                        statisticsViewModel.analyzeGoals(it, level = level)
-                    }
-                }
-           }
             setupBarChart()
+            val counter = if (level == "top") statisticsViewModel.clickResetCounterTop else statisticsViewModel.clickResetCounter
             lifecycleScope.launchWhenStarted {
-                statisticsViewModel.clickResetCounter.collect { result ->
+                counter.collect { result ->
                     when(result.status){
                         Status.LOADING ->{
                             binding.pBBarchart.visibility = View.VISIBLE
@@ -254,7 +241,7 @@ class ValuesFragment : Fragment() {
             return
         }
         // there is a plan
-        statisticsViewModel.analyzePlan(plan!!)
+        //statisticsViewModel.analyzePlan(plan!!)
 
         binding.apply {
             tvNoPlan.visibility = View.GONE
@@ -358,7 +345,6 @@ class TimeCourseFragment : Fragment() {
         }
     }
     private val goalViewModel: GoalViewModel by activityViewModels()
-    private val trainingViewModel: TrainingViewModel by activityViewModels()
     private val statisticsViewModel: StatisticsViewModel by activityViewModels()
 
     private var _binding: StatsTimeCourseBinding? = null
@@ -399,16 +385,10 @@ class TimeCourseFragment : Fragment() {
                 tvNoPlan.visibility = View.GONE
                 timeCourseChart.visibility = View.VISIBLE
             }
-            lifecycleScope.launchWhenStarted {
-                goalViewModel.subGoalsRecursive.collect {
-                    if (it != null) {
-                        statisticsViewModel.analyzeGoals(it, level = level)
-                    }
-                }
-            }
             setupLineChart()
+            val chartPoints = if (level == "top") statisticsViewModel.chartPointsTop else statisticsViewModel.chartPoints
             lifecycleScope.launchWhenStarted {
-                statisticsViewModel.trialsFromPlan.collect { result ->
+                chartPoints.collect { result ->
                     when (result.status) {
                         Status.LOADING -> {
                             binding.pBTimecourse.visibility = View.VISIBLE
