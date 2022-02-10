@@ -32,38 +32,62 @@ class StatisticsViewModel @Inject constructor(
     private var _chartPointsTop = MutableStateFlow<Resource<List<ChartPoint>>> (Resource.loading(emptyList()))
     var chartPointsTop: StateFlow<Resource<List<ChartPoint>>> = _chartPointsTop
 
+    private val trialsWithAnnotationAll: StateFlow<List<TrialWithAnnotations>> = _goalList.flatMapLatest { goals ->
+        repository.getTrialsByGoalIDList(goals.map { it.id })
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue =emptyList()
+    )
+    private val trialsWithAnnotationCurrent: StateFlow<List<TrialWithAnnotations>> = _goalList.flatMapLatest { goals ->
+        repository.getTrialsByGoalIDList(goals.filter {it.level == 0}.map { it.id })
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue =emptyList()
+    )
+    private val trialsWithCriteriaCurrent: StateFlow<List<TrialWithCriteria>> = _goalList.flatMapLatest { goals ->
+        val goalID = goals.firstOrNull { it.level == 0 }
+        if (goalID == null) {
+            emptyFlow()
+        } else {
+            repository.getTrialsWithCriteriaByGoalID(goalID.id)
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = emptyList()
+    )
 
-    fun setGoalList(goalList: List<GoalTreeItem>?) {
-        _goalList.value = goalList ?: emptyList()
-        analyzeGoalsNew()
-    }
-
-    private fun analyzeGoalsNew() {
+    init {
         viewModelScope.launch {
-            repository.getTrialsByGoalIDList(_goalList.value.map { it.id }).collect {
+            trialsWithAnnotationAll.collect {
                 val (click, reset, timeCourse) = analyzeTrialList(it)
-                _clickResetCounter.value = Resource.success(Pair(click,reset))
+                _clickResetCounter.value = Resource.success(Pair(click, reset))
                 _chartPoints.value = Resource.success(timeCourse)
             }
         }
         viewModelScope.launch {
-            repository.getTrialsByGoalIDList(_goalList.value.filter { it.level == 0 }.map { it.id }).collect {
+            trialsWithAnnotationCurrent.collect {
                 val (click, reset, timeCourse) = analyzeTrialList(it)
                 _clickResetCounterTop.value = Resource.success(Pair(click,reset))
                 _chartPointsTop.value = Resource.success(timeCourse)
             }
         }
         viewModelScope.launch {
-            val goalID = goalList.value.firstOrNull { it.level == 0 }
-            if (goalID == null) {
-                _discreteValuesCounter.value = Resource.success(emptyMap())
-            } else {
-                repository.getTrialsWithCriteriaByGoalID(goalID.id).collect {
-                    _discreteValuesCounter.value = Resource.success(analyzeCriteria(it))
-                }
-            }
+           trialsWithCriteriaCurrent.collect {
+               _discreteValuesCounter.value = Resource.success(analyzeCriteria(it))
+           }
         }
     }
+
+
+    fun setGoalList(goalList: List<GoalTreeItem>?) {
+        _goalList.value = goalList ?: emptyList()
+    }
+
+
+
     private fun analyzeTrialList(trialList: List<TrialWithAnnotations>): CombinedStats {
         var totalClick = 0
         var totalReset = 0
