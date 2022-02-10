@@ -402,7 +402,7 @@ class TimeCourseFragment : Fragment() {
                                 setNoDataText(getString(R.string.no_training))
                             }
                             if (result.data!!.isNotEmpty()) {
-                                val dataList: MutableList<Entry> = mutableListOf()
+                                val dataList: MutableList<Entry> = mutableListOf(Entry(0F,0F))
                                 for (chartPoint in result.data) {
                                     dataList.add(Entry(chartPoint.xValue.toFloat() + 1, chartPoint.yValue.toFloat()))
                                 }
@@ -427,17 +427,17 @@ class TimeCourseFragment : Fragment() {
 
     private fun setupLineChart(){
         binding.timeCourseChart.xAxis.apply {
-            axisMinimum = 1F
+            axisMinimum = 0F
             granularity = 1F
             isGranularityEnabled = true
         }
         binding.timeCourseChart.axisLeft.apply {
-            axisMinimum = 1F
+            axisMinimum = 0F
             granularity = 1F
             isGranularityEnabled = true
         }
         binding.timeCourseChart.axisRight.apply {
-            axisMinimum = 1F
+            axisMinimum = 0F
             granularity = 1F
             isGranularityEnabled = true
         }
