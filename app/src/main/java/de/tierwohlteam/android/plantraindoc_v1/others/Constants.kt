@@ -27,7 +27,9 @@ object Constants {
     const val VIBRATION_SHORT = 200L
     const val VIBRATION_LONG = 500L
 
-    const val BASE_URL = "http://192.168.178.29:8081"
+    //const val BASE_URL = "http://192.168.178.29:8081"
+    const val BASE_URL = "http://192.168.178.47:8081" // Pi
+    //const val BASE_URL = "http://3.69.211.201/" //AWS
     val IGNORE_AUTH_URLS = listOf("/register", "/login")
 
     const val LAST_SYNC_DATE = "LAST_SYNC_DATE"
