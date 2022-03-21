@@ -23,5 +23,6 @@ class ReinforcementScheme() {
     }
     fun getStep(level: Float): Float? = levels[level]?.getStep()
     fun getLevels() : List<Float> = levels.keys.toList().sorted()
+    fun getValues(level: Float): List<Float> = levels[level]?.steps ?: emptyList()
 }
 
