@@ -47,6 +47,7 @@ class TrainingViewModel @Inject constructor(
 
     fun overrideHelperNextValue(newValue: String) {
         viewModelScope.launch {
+            currentHelperValue = newValue
             helperNextValue.emit(newValue)
         }
     }
