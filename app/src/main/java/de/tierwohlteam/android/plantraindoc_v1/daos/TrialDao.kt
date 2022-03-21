@@ -43,6 +43,10 @@ interface TrialDao {
     fun getWithCriteriaByPlan(planID: Uuid): Flow<List<TrialWithCriteria>>
 
     @Transaction
+    @Query("SELECT distinct trials.* from trials WHERE trials.sessionID = :sessionID")
+    fun getWithCriteriaBySession(sessionID: Uuid): Flow<List<TrialWithCriteria>>
+
+    @Transaction
     @Query("SELECT distinct trials.* from trials, sessions, plans WHERE trials.sessionID = sessions.id " +
             "and sessions.planID = plans.id " +
             "and plans.goalID = :goalID")

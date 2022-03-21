@@ -360,6 +360,14 @@ class PTDRepository @Inject constructor(
         trialDao.getWithCriteriaByPlan(plan.id)
 
     /**
+     * get all Trials with Criteria for a session
+     * @param[session]
+     * @return Flow of List of TrialWithCriteria
+     */
+    fun getTrialsWithCriteriaBySession(session: Session) : Flow<List<TrialWithCriteria>> =
+        trialDao.getWithCriteriaBySession(session.id)
+
+    /**
      * get all Trials with Criteria for a Goal (all Training)
      * @param[UUID]
      * @return Flow of List of TrialWithCriteria

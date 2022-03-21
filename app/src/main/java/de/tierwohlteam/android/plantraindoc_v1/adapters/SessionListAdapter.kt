@@ -5,6 +5,7 @@ import android.view.View.*
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -71,6 +72,9 @@ class SessionListAdapter(private val addComment: (Session) -> Unit) : RecyclerVi
             tvSessionConstraint.text = session.criterion
             tvPercentage.text = evaluationText
             resultImageview.setImageResource(image)
+        }
+        holder.itemView.setOnClickListener{ holderView ->
+            holderView.findNavController().navigate(R.id.action_showTrainingFragment_to_statisticsDialogFragment)
         }
     }
 }
