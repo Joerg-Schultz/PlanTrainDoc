@@ -38,11 +38,19 @@ class TrainingViewModel @Inject constructor(
     //var helperNextValue: MutableStateFlow<String?> = MutableStateFlow(value = null)
     var helperNextValue: MutableSharedFlow<String?> = MutableSharedFlow(replay = 1)
     var sessionType: MutableStateFlow<String?> = MutableStateFlow(value = null)
+    var helperValueList: List<String> = emptyList()
 
     private val selectedPlan: MutableStateFlow<Plan?> = MutableStateFlow(value = null)
     private val selectedPlanConstraint: MutableStateFlow<PlanConstraint?> = MutableStateFlow(value = null)
     private val selectedPlanHelper: MutableStateFlow<PlanHelper?> = MutableStateFlow(value = null)
     private var getHelperNextValue : (() -> String)? = null
+
+    fun overrideHelperNextValue(newValue: String) {
+        viewModelScope.launch {
+            currentHelperValue = newValue
+            helperNextValue.emit(newValue)
+        }
+    }
 
     fun setSelectedPlan(plan: Plan){
         selectedPlan.value = plan
@@ -75,17 +83,23 @@ class TrainingViewModel @Inject constructor(
     }
 
     private fun setupHelper(type: String, value: String): (() -> String)? {
-        return when (type) {
+        when (type) {
             PlanHelper.distance -> {
-                { distanceScheme.getStep(value.toFloat()).toString() }
+                helperValueList = distanceScheme.getValues(value.toFloat()).map { it.toString() }
+                return { distanceScheme.getStep(value.toFloat()).toString() }
             }
             PlanHelper.duration -> {
-                { durationScheme.getStep(value.toFloat()).toString() }
+                helperValueList = durationScheme.getValues(value.toFloat()).map { it.toString() }
+                return { durationScheme.getStep(value.toFloat()).toString() }
             }
             PlanHelper.discrimination -> {
-                { value.split(",").map { it.trim() }.random() }
+                helperValueList = value.split(",").map { it.trim() }
+                return { value.split(",").map { it.trim() }.random() }
             }
-            else -> null
+            else -> {
+                helperValueList = emptyList()
+                return null
+            }
         }
     }
 

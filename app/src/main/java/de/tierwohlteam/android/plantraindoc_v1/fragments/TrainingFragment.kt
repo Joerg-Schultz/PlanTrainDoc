@@ -31,6 +31,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import okhttp3.internal.indexOf
 import java.util.*
 import javax.inject.Inject
 
@@ -231,6 +232,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         override fun makeHelper() {
             lifecycleScope.launchWhenStarted {
                 trainingViewModel.helperNextValue.collect { nextHelper ->
+                    if (trainingViewModel.sessionType.value == PlanHelper.discrimination) prepareHelperValuePicker(nextHelper)
                     if (nextHelper != null) {
                         val speak = nextHelper.prettyStringFloat()
                         binding.tvHelperInfo.text = speak
@@ -242,6 +244,23 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                     }
                 }
             }
+        }
+
+        private fun prepareHelperValuePicker(showValue: String?) {
+            binding.tvHelperInfo.visibility = View.GONE
+            val values = trainingViewModel.helperValueList.toTypedArray()
+            binding.npHelper.apply {
+                wrapSelectorWheel = false
+                displayedValues = values
+                minValue = 0
+                maxValue = values.lastIndex
+                value = values.indexOf(showValue)
+                if (value == -1) value = 0
+                setOnValueChangedListener { numberPicker, oldVal, newVal ->
+                    trainingViewModel.overrideHelperNextValue(values[newVal])
+                }
+            }
+            binding.npHelper.visibility = View.VISIBLE
         }
     }
 
