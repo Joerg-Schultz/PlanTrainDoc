@@ -74,7 +74,8 @@ class SessionListAdapter(private val addComment: (Session) -> Unit) : RecyclerVi
             resultImageview.setImageResource(image)
         }
         holder.itemView.setOnClickListener{ holderView ->
-            holderView.findNavController().navigate(R.id.action_showTrainingFragment_to_statisticsDialogFragment)
+            Toast.makeText(holderView.context, "Clicked", Toast.LENGTH_LONG).show()
+           // holderView.findNavController().navigate(R.id.action_showTrainingFragment_to_statisticsDialogFragment)
         }
     }
 }

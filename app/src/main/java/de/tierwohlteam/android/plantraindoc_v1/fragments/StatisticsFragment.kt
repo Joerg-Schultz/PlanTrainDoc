@@ -29,8 +29,9 @@ import kotlinx.coroutines.flow.collect
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @AndroidEntryPoint
-class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
+abstract class StatisticsFragment : Fragment() {
 
+    abstract fun makeFragmentList() : Map<String, Fragment>
     private val goalViewModel: GoalViewModel by activityViewModels()
     private val statisticsViewModel: StatisticsViewModel by activityViewModels()
 
@@ -55,14 +56,7 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
 
         val viewPager2 = view.findViewById<ViewPager2>(R.id.stats_pager_container)
 
-        val fragmentTitleList: Map<String,Fragment> = mapOf(
-            getString(R.string.click) to ClicksFragment.newInstance(level = "top"),
-            getString(R.string.values) to ValuesFragment.newInstance(level = "top"),
-            getString(R.string.trend) to TimeCourseFragment.newInstance(level = "top"),
-            getString(R.string.goals) to SubGoalsFragment(),
-            getString(R.string.total_clicks) to ClicksFragment.newInstance(level = "all"),
-            getString(R.string.total_trend) to TimeCourseFragment.newInstance(level = "all"),
-        )
+        val fragmentTitleList = makeFragmentList()
         viewPager2.adapter = StatsViewPagerAdapter(this.childFragmentManager, lifecycle,
             ArrayList(fragmentTitleList.values)
         )
@@ -73,4 +67,19 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
         }.attach()
 
     }
+
+}
+
+@OptIn(InternalCoroutinesApi::class, ExperimentalCoroutinesApi::class)
+class GoalStatisticsFragment : StatisticsFragment() {
+    override fun makeFragmentList() : Map<String, Fragment> =
+        mapOf(
+            getString(R.string.click) to ClicksFragment.newInstance(level = "top"),
+            getString(R.string.values) to ValuesFragment.newInstance(level = "top"),
+            getString(R.string.trend) to TimeCourseFragment.newInstance(level = "top"),
+            getString(R.string.goals) to SubGoalsFragment(),
+            getString(R.string.total_clicks) to ClicksFragment.newInstance(level = "all"),
+            getString(R.string.total_trend) to TimeCourseFragment.newInstance(level = "all"),
+        )
+
 }

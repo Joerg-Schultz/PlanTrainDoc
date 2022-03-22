@@ -34,8 +34,6 @@
             tools:layout="@layout/show_training_fragment">
         <action android:id="@+id/action_showTrainingFragment_to_trainingFragment"
                 app:destination="@id/trainingFragment"/>
-        <action android:id="@+id/action_showTrainingFragment_to_statisticsDialogFragment"
-                app:destination="@id/statisticsDialogFragment"/>
     </fragment>
 
     <fragment
@@ -54,17 +52,11 @@
 
     <fragment
             android:id="@+id/statisticsFragment"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.StatisticsFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.GoalStatisticsFragment"
             android:label="@string/statistics"
             tools:layout="@layout/statistics_fragment">
     </fragment>
 
-    <fragment
-            android:id="@+id/statisticsDialogFragment"
-            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.StatsDialogFragment"
-            android:label="@string/statistics"
-            tools:layout="@layout/stats_goal_values">
-    </fragment>
 
     <fragment
             android:id="@+id/settingsFragment"
