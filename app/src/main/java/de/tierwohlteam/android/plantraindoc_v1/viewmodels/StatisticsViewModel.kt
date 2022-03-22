@@ -32,8 +32,10 @@ class StatisticsViewModel @Inject constructor(
     private var _clickResetCounterSession = MutableStateFlow<Resource<Pair<Int, Int>?>> (Resource.loading(null))
     var clickResetCounterSession: StateFlow<Resource<Pair<Int, Int>?>> = _clickResetCounterSession
 
-    private var _discreteValuesCounter = MutableStateFlow<Resource<Map<String,Pair<Int, Int>>>> (Resource.loading(null))
-    var discreteValuesCounter: StateFlow<Resource<Map<String,Pair<Int, Int>>>> = _discreteValuesCounter
+    private var _discreteValuesCounterGoal = MutableStateFlow<Resource<Map<String,Pair<Int, Int>>>> (Resource.loading(null))
+    var discreteValuesCounterGoal: StateFlow<Resource<Map<String,Pair<Int, Int>>>> = _discreteValuesCounterGoal
+    private var _discreteValuesCounterSessions = MutableStateFlow<Resource<Map<String,Pair<Int, Int>>>> (Resource.loading(null))
+    var discreteValuesCounterSessions: StateFlow<Resource<Map<String,Pair<Int, Int>>>> = _discreteValuesCounterSessions
 
     private var _chartPoints = MutableStateFlow<Resource<List<ChartPoint>>> (Resource.loading(emptyList()))
     var chartPoints: StateFlow<Resource<List<ChartPoint>>> = _chartPoints
@@ -102,11 +104,21 @@ class StatisticsViewModel @Inject constructor(
         }
         viewModelScope.launch {
            trialsWithCriteriaGoal.collect {
-               _discreteValuesCounter.value = Resource.success(analyzeCriteria(it))
+               _discreteValuesCounterGoal.value = Resource.success(analyzeCriteria(it))
            }
         }
+        viewModelScope.launch {
+            trialsWithAnnotationSessions.collect {
+                val (click, reset, _) = analyzeTrialList(it)
+                _clickResetCounterSession.value = Resource.success(Pair(click,reset))
+            }
+        }
+        viewModelScope.launch {
+            trialsWithCriteriaSessions.collect {
+                _discreteValuesCounterSessions.value = Resource.success(analyzeCriteria(it))
+            }
+        }
     }
-
 
     fun setGoalList(goalList: List<GoalTreeItem>?) {
         _goalList.value = goalList ?: emptyList()

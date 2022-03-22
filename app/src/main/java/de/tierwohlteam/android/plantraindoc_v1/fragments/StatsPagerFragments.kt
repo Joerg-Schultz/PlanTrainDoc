@@ -257,7 +257,7 @@ class ValuesFragment : Fragment() {
             pBBarchart.visibility = View.VISIBLE
         }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            statisticsViewModel.discreteValuesCounter.collect { result ->
+            statisticsViewModel.discreteValuesCounterGoal.collect { result ->
                 when (result.status) {
                     Status.LOADING ->{
                         binding.pBBarchart.visibility = View.VISIBLE
