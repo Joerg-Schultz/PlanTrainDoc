@@ -21,32 +21,47 @@ class StatisticsViewModel @Inject constructor(
 
     private var _goalList = MutableStateFlow<List<GoalTreeItem>> (emptyList())
     var goalList: StateFlow<List<GoalTreeItem>> = _goalList
-    private var _clickResetCounter = MutableStateFlow<Resource<Pair<Int, Int>?>> (Resource.loading(null))
-    var clickResetCounter: StateFlow<Resource<Pair<Int, Int>?>> = _clickResetCounter
-    private var _clickResetCounterTop = MutableStateFlow<Resource<Pair<Int, Int>?>> (Resource.loading(null))
-    var clickResetCounterTop: StateFlow<Resource<Pair<Int, Int>?>> = _clickResetCounterTop
+
+    private var _sessionList = MutableStateFlow<List<Session>> (emptyList())
+
+
+    private var _clickResetCounterGoalRecursive = MutableStateFlow<Resource<Pair<Int, Int>?>> (Resource.loading(null))
+    var clickResetCounterGoalRecursive: StateFlow<Resource<Pair<Int, Int>?>> = _clickResetCounterGoalRecursive
+    private var _clickResetCounterGoal = MutableStateFlow<Resource<Pair<Int, Int>?>> (Resource.loading(null))
+    var clickResetCounterGoal: StateFlow<Resource<Pair<Int, Int>?>> = _clickResetCounterGoal
+    private var _clickResetCounterSession = MutableStateFlow<Resource<Pair<Int, Int>?>> (Resource.loading(null))
+    var clickResetCounterSession: StateFlow<Resource<Pair<Int, Int>?>> = _clickResetCounterSession
+
     private var _discreteValuesCounter = MutableStateFlow<Resource<Map<String,Pair<Int, Int>>>> (Resource.loading(null))
     var discreteValuesCounter: StateFlow<Resource<Map<String,Pair<Int, Int>>>> = _discreteValuesCounter
+
     private var _chartPoints = MutableStateFlow<Resource<List<ChartPoint>>> (Resource.loading(emptyList()))
     var chartPoints: StateFlow<Resource<List<ChartPoint>>> = _chartPoints
     private var _chartPointsTop = MutableStateFlow<Resource<List<ChartPoint>>> (Resource.loading(emptyList()))
     var chartPointsTop: StateFlow<Resource<List<ChartPoint>>> = _chartPointsTop
 
-    private val trialsWithAnnotationAll: StateFlow<List<TrialWithAnnotations>> = _goalList.flatMapLatest { goals ->
+    private val trialsWithAnnotationGoalRecursive: StateFlow<List<TrialWithAnnotations>> = _goalList.flatMapLatest { goals ->
         repository.getTrialsByGoalIDList(goals.map { it.id })
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue =emptyList()
     )
-    private val trialsWithAnnotationCurrent: StateFlow<List<TrialWithAnnotations>> = _goalList.flatMapLatest { goals ->
+    private val trialsWithAnnotationGoal: StateFlow<List<TrialWithAnnotations>> = _goalList.flatMapLatest { goals ->
         repository.getTrialsByGoalIDList(goals.filter {it.level == 0}.map { it.id })
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue =emptyList()
     )
-    private val trialsWithCriteriaCurrent: StateFlow<List<TrialWithCriteria>> = _goalList.flatMapLatest { goals ->
+    private val trialsWithAnnotationSession: StateFlow<List<TrialWithAnnotations>> = _goalList.flatMapLatest { goals ->
+        repository.getTrialsByGoalIDList(goals.filter {it.level == 0}.map { it.id })
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue =emptyList()
+    )
+    private val trialsWithCriteriaGoal: StateFlow<List<TrialWithCriteria>> = _goalList.flatMapLatest { goals ->
         val goalID = goals.firstOrNull { it.level == 0 }
         if (goalID == null) {
             emptyFlow()
@@ -61,21 +76,21 @@ class StatisticsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            trialsWithAnnotationAll.collect {
+            trialsWithAnnotationGoalRecursive.collect {
                 val (click, reset, timeCourse) = analyzeTrialList(it)
-                _clickResetCounter.value = Resource.success(Pair(click, reset))
+                _clickResetCounterGoalRecursive.value = Resource.success(Pair(click, reset))
                 _chartPoints.value = Resource.success(timeCourse)
             }
         }
         viewModelScope.launch {
-            trialsWithAnnotationCurrent.collect {
+            trialsWithAnnotationGoal.collect {
                 val (click, reset, timeCourse) = analyzeTrialList(it)
-                _clickResetCounterTop.value = Resource.success(Pair(click,reset))
+                _clickResetCounterGoal.value = Resource.success(Pair(click,reset))
                 _chartPointsTop.value = Resource.success(timeCourse)
             }
         }
         viewModelScope.launch {
-           trialsWithCriteriaCurrent.collect {
+           trialsWithCriteriaGoal.collect {
                _discreteValuesCounter.value = Resource.success(analyzeCriteria(it))
            }
         }
@@ -85,7 +100,9 @@ class StatisticsViewModel @Inject constructor(
     fun setGoalList(goalList: List<GoalTreeItem>?) {
         _goalList.value = goalList ?: emptyList()
     }
-
+    fun setSessionList(sessionList: List<Session>) {
+        _sessionList.value = sessionList
+    }
 
 
     private fun analyzeTrialList(trialList: List<TrialWithAnnotations>): CombinedStats {

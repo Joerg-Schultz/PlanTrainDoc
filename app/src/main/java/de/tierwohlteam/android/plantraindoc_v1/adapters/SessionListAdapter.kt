@@ -15,7 +15,8 @@ import de.tierwohlteam.android.plantraindoc_v1.models.Session
 import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
 import de.tierwohlteam.android.plantraindoc_v1.others.percentage
 
-class SessionListAdapter(private val addComment: (Session) -> Unit) : RecyclerView.Adapter<SessionListAdapter.SessionViewHolder>()  {
+class SessionListAdapter(private val addComment: (Session) -> Unit,
+private val setStatsSession: (Session) -> Unit) : RecyclerView.Adapter<SessionListAdapter.SessionViewHolder>()  {
 
     // generate a diff list to update only changed items in the RecView
     private val diffCallback = object : DiffUtil.ItemCallback<SessionWithRelations>(){
@@ -74,6 +75,7 @@ class SessionListAdapter(private val addComment: (Session) -> Unit) : RecyclerVi
             resultImageview.setImageResource(image)
         }
         holder.itemView.setOnClickListener{ holderView ->
+            setStatsSession(session)
             holderView.findNavController().navigate(R.id.action_showTrainingFragment_to_sessionStatisticsFragment)
         }
     }

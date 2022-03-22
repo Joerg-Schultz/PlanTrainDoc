@@ -17,6 +17,7 @@ import de.tierwohlteam.android.plantraindoc_v1.databinding.ShowTrainingFragmentB
 import de.tierwohlteam.android.plantraindoc_v1.models.*
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.PlanViewModel
+import de.tierwohlteam.android.plantraindoc_v1.viewmodels.StatisticsViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -31,6 +32,7 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
     private val goalViewModel: GoalViewModel by activityViewModels()
     private val planViewModel: PlanViewModel by activityViewModels()
     private val trainingViewModel: TrainingViewModel by activityViewModels()
+    private val statisticsViewModel: StatisticsViewModel by activityViewModels()
 
     private var _binding: ShowTrainingFragmentBinding? = null
     private val binding get() = _binding!!
@@ -70,11 +72,11 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
 
     private fun setupRecyclerView() {
         binding.rvSessionlist.apply {
-            sessionListAdapter = SessionListAdapter { session: Session ->
+            sessionListAdapter = SessionListAdapter({ session: Session ->
                 trainingViewModel.setCommentedSession(
                     session
                 )
-            }
+            }, { session: Session -> statisticsViewModel.setSessionList(listOf(session)) } )
             adapter = sessionListAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }

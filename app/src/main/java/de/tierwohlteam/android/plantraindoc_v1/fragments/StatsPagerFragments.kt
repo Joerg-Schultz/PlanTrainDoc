@@ -1,7 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -129,9 +128,9 @@ class ClicksFragment : Fragment() {
             }
             setupBarChart()
             val counter = when (level) {
-                StatisticLevel.GOAL -> statisticsViewModel.clickResetCounterTop
-                StatisticLevel.GOALRECURSIVE -> statisticsViewModel.clickResetCounter
-                StatisticLevel.SESSION -> statisticsViewModel.clickResetCounterTop // TODO Change to sessioncounter
+                StatisticLevel.GOAL -> statisticsViewModel.clickResetCounterGoal
+                StatisticLevel.GOALRECURSIVE -> statisticsViewModel.clickResetCounterGoalRecursive
+                StatisticLevel.SESSION -> statisticsViewModel.clickResetCounterGoal // TODO Change to sessioncounter
             }
             lifecycleScope.launchWhenStarted {
                 counter.collect { result ->
