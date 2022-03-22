@@ -33,6 +33,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 
+enum class StatisticLevel {
+    GOAL,
+    GOALRECURSIVE,
+    SESSION
+}
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @AndroidEntryPoint
@@ -74,9 +79,9 @@ class SubGoalsFragment : Fragment() {
 @AndroidEntryPoint
 class ClicksFragment : Fragment() {
     companion object {
-        fun newInstance(level: String): ClicksFragment {
+        fun newInstance(level: StatisticLevel): ClicksFragment {
             val args = Bundle()
-            args.putString("level", level)
+            args.putSerializable("level", level)
             val fragment = ClicksFragment()
             fragment.arguments = args
             return fragment
@@ -91,11 +96,11 @@ class ClicksFragment : Fragment() {
     private var goal: Goal? = null
     private var plan: Plan? = null
 
-    private var level: String = "all"
+    private lateinit var level: StatisticLevel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        level = arguments?.getString("level") ?: "all"
+        level = arguments?.get("level") as StatisticLevel
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -110,7 +115,7 @@ class ClicksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         goal = goalViewModel.selectedGoal.value?.goal
         plan = goalViewModel.selectedGoal.value?.plan
-        if (plan == null && level == "top"){
+        if (plan == null && level == StatisticLevel.GOAL){
             binding.apply {
                 tvNoPlan.visibility = View.VISIBLE
                 clicksBarChart.visibility = View.GONE
@@ -123,11 +128,15 @@ class ClicksFragment : Fragment() {
                 pBBarchart.visibility = View.VISIBLE
             }
             setupBarChart()
-            val counter = if (level == "top") statisticsViewModel.clickResetCounterTop else statisticsViewModel.clickResetCounter
+            val counter = when (level) {
+                StatisticLevel.GOAL -> statisticsViewModel.clickResetCounterTop
+                StatisticLevel.GOALRECURSIVE -> statisticsViewModel.clickResetCounter
+                StatisticLevel.SESSION -> statisticsViewModel.clickResetCounterTop // TODO Change to sessioncounter
+            }
             lifecycleScope.launchWhenStarted {
                 counter.collect { result ->
-                    when(result.status){
-                        Status.LOADING ->{
+                    when (result.status) {
+                        Status.LOADING -> {
                             binding.pBBarchart.visibility = View.VISIBLE
                         }
                         Status.SUCCESS -> {

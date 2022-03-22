@@ -74,12 +74,20 @@ abstract class StatisticsFragment : Fragment() {
 class GoalStatisticsFragment : StatisticsFragment() {
     override fun makeFragmentList() : Map<String, Fragment> =
         mapOf(
-            getString(R.string.click) to ClicksFragment.newInstance(level = "top"),
+            getString(R.string.click) to ClicksFragment.newInstance(level = StatisticLevel.GOAL),
             getString(R.string.values) to ValuesFragment.newInstance(level = "top"),
             getString(R.string.trend) to TimeCourseFragment.newInstance(level = "top"),
             getString(R.string.goals) to SubGoalsFragment(),
-            getString(R.string.total_clicks) to ClicksFragment.newInstance(level = "all"),
+            getString(R.string.total_clicks) to ClicksFragment.newInstance(level = StatisticLevel.GOALRECURSIVE),
             getString(R.string.total_trend) to TimeCourseFragment.newInstance(level = "all"),
+        )
+}
+
+@OptIn(InternalCoroutinesApi::class, ExperimentalCoroutinesApi::class)
+class SessionStatisticsFragment : StatisticsFragment() {
+    override fun makeFragmentList() : Map<String, Fragment> =
+        mapOf(
+            getString(R.string.click) to ClicksFragment.newInstance(level = StatisticLevel.SESSION),
         )
 
 }
