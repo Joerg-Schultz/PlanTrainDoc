@@ -75,11 +75,11 @@ class GoalStatisticsFragment : StatisticsFragment() {
     override fun makeFragmentList() : Map<String, Fragment> =
         mapOf(
             getString(R.string.click) to ClicksFragment.newInstance(level = StatisticLevel.GOAL),
-            getString(R.string.values) to ValuesFragment.newInstance(level = "top"),
-            getString(R.string.trend) to TimeCourseFragment.newInstance(level = "top"),
+            getString(R.string.values) to ValuesFragment.newInstance(level = StatisticLevel.GOAL),
+            getString(R.string.trend) to TimeCourseFragment.newInstance(level = StatisticLevel.GOAL),
             getString(R.string.goals) to SubGoalsFragment(),
             getString(R.string.total_clicks) to ClicksFragment.newInstance(level = StatisticLevel.GOALRECURSIVE),
-            getString(R.string.total_trend) to TimeCourseFragment.newInstance(level = "all"),
+            getString(R.string.total_trend) to TimeCourseFragment.newInstance(level = StatisticLevel.GOALRECURSIVE),
         )
 }
 
@@ -88,6 +88,6 @@ class SessionStatisticsFragment : StatisticsFragment() {
     override fun makeFragmentList() : Map<String, Fragment> =
         mapOf(
             getString(R.string.click) to ClicksFragment.newInstance(level = StatisticLevel.SESSION),
-        )
-
+            getString(R.string.values) to ValuesFragment.newInstance(level = StatisticLevel.SESSION),
+            )
 }

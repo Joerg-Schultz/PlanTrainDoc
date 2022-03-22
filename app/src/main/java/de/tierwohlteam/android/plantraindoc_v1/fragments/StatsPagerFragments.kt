@@ -130,7 +130,7 @@ class ClicksFragment : Fragment() {
             val counter = when (level) {
                 StatisticLevel.GOAL -> statisticsViewModel.clickResetCounterGoal
                 StatisticLevel.GOALRECURSIVE -> statisticsViewModel.clickResetCounterGoalRecursive
-                StatisticLevel.SESSION -> statisticsViewModel.clickResetCounterGoal // TODO Change to sessioncounter
+                StatisticLevel.SESSION -> statisticsViewModel.clickResetCounterSession
             }
             lifecycleScope.launchWhenStarted {
                 counter.collect { result ->
@@ -201,9 +201,9 @@ class ClicksFragment : Fragment() {
 @AndroidEntryPoint
 class ValuesFragment : Fragment() {
     companion object {
-        fun newInstance(level: String): ValuesFragment {
+        fun newInstance(level: StatisticLevel): ValuesFragment {
             val args = Bundle()
-            args.putString("level", level)
+            args.putSerializable("level", level)
             val fragment = ValuesFragment()
             fragment.arguments = args
             return fragment
@@ -219,11 +219,11 @@ class ValuesFragment : Fragment() {
     private var goal: Goal? = null
     private var plan: Plan? = null
 
-    private var level: String = "top" //This fragment makes only sense for a single goal / Plan
+    private lateinit var level: StatisticLevel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        level = arguments?.getString("level") ?: "top"
+        level = arguments?.get("level") as StatisticLevel
     }
 
     override fun onCreateView(
@@ -256,8 +256,13 @@ class ValuesFragment : Fragment() {
             valuesBarChart.visibility = View.VISIBLE
             pBBarchart.visibility = View.VISIBLE
         }
+        val counter = when (level) {
+            StatisticLevel.SESSION -> statisticsViewModel.discreteValuesCounterSessions
+            StatisticLevel.GOAL -> statisticsViewModel.discreteValuesCounterGoal
+            StatisticLevel.GOALRECURSIVE -> throw Exception("Value Statistics not defined on recursive goals")
+        }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            statisticsViewModel.discreteValuesCounterGoal.collect { result ->
+            counter.collect { result ->
                 when (result.status) {
                     Status.LOADING ->{
                         binding.pBBarchart.visibility = View.VISIBLE
@@ -321,13 +326,13 @@ class ValuesFragment : Fragment() {
         }
         val click = LegendEntry()
         click.apply {
-            label = "Click"
+            label = getString(R.string.click)
             formColor = resources.getColor(R.color.accent)
             form = Legend.LegendForm.SQUARE
         }
         val reset = LegendEntry()
         reset.apply {
-            label = "Reset"
+            label = getString(R.string.reset)
             formColor = resources.getColor(R.color.primaryLightColor)
             form = Legend.LegendForm.SQUARE
         }
@@ -344,9 +349,9 @@ class ValuesFragment : Fragment() {
 @AndroidEntryPoint
 class TimeCourseFragment : Fragment() {
     companion object {
-        fun newInstance(level: String): TimeCourseFragment {
+        fun newInstance(level: StatisticLevel): TimeCourseFragment {
             val args = Bundle()
-            args.putString("level", level)
+            args.putSerializable("level", level)
             val fragment = TimeCourseFragment()
             fragment.arguments = args
             return fragment
@@ -361,11 +366,11 @@ class TimeCourseFragment : Fragment() {
     private var goal: Goal? = null
     private var plan: Plan? = null
 
-    private var level: String = "all"
+    private lateinit var level: StatisticLevel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        level = arguments?.getString("level") ?: "all"
+        level = arguments?.get("level") as StatisticLevel
     }
 
     override fun onCreateView(
@@ -381,7 +386,7 @@ class TimeCourseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         goal = goalViewModel.selectedGoal.value?.goal
         plan = goalViewModel.selectedGoal.value?.plan
-        if (plan == null && level == "top") {
+        if (plan == null && level == StatisticLevel.GOAL) {
             binding.apply {
                 tvNoPlan.visibility = View.VISIBLE
                 timeCourseChart.visibility = View.GONE
@@ -394,7 +399,7 @@ class TimeCourseFragment : Fragment() {
                 timeCourseChart.visibility = View.VISIBLE
             }
             setupLineChart()
-            val chartPoints = if (level == "top") statisticsViewModel.chartPointsTop else statisticsViewModel.chartPoints
+            val chartPoints = if (level == StatisticLevel.GOAL) statisticsViewModel.chartPointsTop else statisticsViewModel.chartPoints
             lifecycleScope.launchWhenStarted {
                 chartPoints.collect { result ->
                     when (result.status) {
