@@ -352,6 +352,14 @@ class PTDRepository @Inject constructor(
         trialDao.getByGoalIDList(goalsIDList)
 
     /**
+     * get all Trials with session criterion and goal
+     * @param[sessionIDList] list of ids of session
+     * @return Flow of List of TrialWithAnnotations
+     */
+    fun getTrialsBySessionIDList(sessionIDList: List<Uuid>) : Flow<List<TrialWithAnnotations>> =
+        trialDao.getBySessionIDList(sessionIDList)
+
+    /**
      * get all Trials with Criteria for a plan (all Training)
      * @param[plan]
      * @return Flow of List of TrialWithCriteria
@@ -364,8 +372,8 @@ class PTDRepository @Inject constructor(
      * @param[session]
      * @return Flow of List of TrialWithCriteria
      */
-    fun getTrialsWithCriteriaBySession(session: Session) : Flow<List<TrialWithCriteria>> =
-        trialDao.getWithCriteriaBySession(session.id)
+    fun getTrialsWithCriteriaBySessionIDList(sessionIDList: List<Uuid>) : Flow<List<TrialWithCriteria>> =
+        trialDao.getWithCriteriaBySession(sessionIDList)
 
     /**
      * get all Trials with Criteria for a Goal (all Training)

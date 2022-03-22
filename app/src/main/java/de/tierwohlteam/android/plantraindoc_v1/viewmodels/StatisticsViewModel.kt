@@ -54,8 +54,8 @@ class StatisticsViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue =emptyList()
     )
-    private val trialsWithAnnotationSession: StateFlow<List<TrialWithAnnotations>> = _goalList.flatMapLatest { goals ->
-        repository.getTrialsByGoalIDList(goals.filter {it.level == 0}.map { it.id })
+    private val trialsWithAnnotationSessions: StateFlow<List<TrialWithAnnotations>> = _sessionList.flatMapLatest { sessions ->
+        repository.getTrialsBySessionIDList(sessions.map { it.id })
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -67,6 +67,17 @@ class StatisticsViewModel @Inject constructor(
             emptyFlow()
         } else {
             repository.getTrialsWithCriteriaByGoalID(goalID.id)
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = emptyList()
+    )
+    private val trialsWithCriteriaSessions: StateFlow<List<TrialWithCriteria>> = _sessionList.flatMapLatest { sessions ->
+        if (sessions.isEmpty()){
+            emptyFlow()
+        } else {
+            repository.getTrialsWithCriteriaBySessionIDList(sessions.map { it.id })
         }
     }.stateIn(
         scope = viewModelScope,

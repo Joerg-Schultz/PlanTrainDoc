@@ -32,6 +32,14 @@ interface TrialDao {
             "goals.id in (:goalsIDList)")
     fun getByGoalIDList(goalsIDList: List<Uuid>) : Flow<List<TrialWithAnnotations>>
 
+    @Query("SELECT distinct trials.id, trials.success, trials.created," +
+            "sessions.criterion as sessionCriterion, goals.goal as goal FROM " +
+            "trials inner join sessions on trials.sessionID = sessions.id " +
+            "inner join plans on sessions.planID = plans.id " +
+            "inner join goals on plans.goalID = goals.id where " +
+            "sessions.id in (:sessionIDList)")
+    fun getBySessionIDList(sessionIDList: List<Uuid>) : Flow<List<TrialWithAnnotations>>
+
 /*    @Query("SELECT * FROM trials " +
             "inner join sessions on trials.sessionID = sessions.id " +
             "inner join plans on sessions.planID = :planID")
@@ -43,8 +51,8 @@ interface TrialDao {
     fun getWithCriteriaByPlan(planID: Uuid): Flow<List<TrialWithCriteria>>
 
     @Transaction
-    @Query("SELECT distinct trials.* from trials WHERE trials.sessionID = :sessionID")
-    fun getWithCriteriaBySession(sessionID: Uuid): Flow<List<TrialWithCriteria>>
+    @Query("SELECT distinct trials.* from trials WHERE trials.sessionID in (:sessionIDList)")
+    fun getWithCriteriaBySession(sessionIDList: List<Uuid>): Flow<List<TrialWithCriteria>>
 
     @Transaction
     @Query("SELECT distinct trials.* from trials, sessions, plans WHERE trials.sessionID = sessions.id " +
