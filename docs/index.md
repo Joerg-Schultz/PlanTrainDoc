@@ -1,6 +1,9 @@
 ---
 layout: default
 ---
+# Inhalt
+
+[Ziele festlegen](#Ziele-festlegen)
 
 # Warum diese App?
 
