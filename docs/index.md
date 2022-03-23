@@ -5,6 +5,12 @@ layout: default
 
 [Ziele festlegen](#Ziele-festlegen)
 
+[Training planen](#Training-planen)
+
+[Trainieren und Dokumentieren](#Trainieren-und-Dokumentieren)
+
+[Auswerten](#Auswerten)
+
 # Warum diese App?
 
 Beim Training mit meinem Hund bin ich immer wieder auf die gleichen Probleme gestoßen.
