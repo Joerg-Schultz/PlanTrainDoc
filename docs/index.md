@@ -1,6 +1,10 @@
 ---
 layout: default
 ---
+<div style="float:right"><b><a href="index_de">DE</a> | EN</b></div>
+
+# Use english for landing page
+
 # Inhalt
 
 [Ziele festlegen](#Ziele-festlegen)
