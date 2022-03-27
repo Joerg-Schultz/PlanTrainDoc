@@ -4,8 +4,9 @@
 @import"{{ site.theme }}";
 .page-header{
   color:#ffff;
-  background-color:#8BC34A;
-  background-image:linear-gradient(120deg,#8BC34A,#8BC34A);
-  /* background-image:url("images/PTD_FaceBook_cover.png"); */
+  /*background-color:#8BC34A; */
+  /*background-image:linear-gradient(120deg,#8BC34A,#8BC34A); */
+  background-color:#ECECEC;
+  background-image:linear-gradient(120deg,#ECECEC,#ECECEC);
   padding: 1rem 1rem;
   }
