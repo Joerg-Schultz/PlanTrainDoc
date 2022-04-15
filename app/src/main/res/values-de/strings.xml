@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PlanTrainDoc_v1</string>
+    <string name="app_name">PlanTrainDoc</string>
     <string name="add_new_goal">Neues Ziel hinzufügen</string>
     <string name="goal">Ziel</string>
     <string name="status_new">Neu</string>

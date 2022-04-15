@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PlanTrainDoc_v1</string>
+    <string name="app_name">PlanTrainDoc</string>
     <string name="add_new_goal">Add new goal</string>
     <string name="goal">Goal</string>
     <string name="status_new">New</string>
