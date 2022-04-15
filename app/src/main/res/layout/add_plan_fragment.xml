@@ -55,12 +55,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/discrimination"/>
-
+        <!--
         <RadioButton
                 android:id="@+id/rb_helper_cueintroduction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/cue_introduction"/>
+         -->
 
         <RadioButton
                 android:id="@+id/rb_helper_free"

@@ -16,6 +16,7 @@
                 app:summaryOff="@string/SpeechOff"/>
     </PreferenceCategory>
 
+    <!--
     <PreferenceCategory
         app:title="Web Server">
         <SwitchPreferenceCompat
@@ -26,6 +27,7 @@
             app:key="useWebServer"/>
 
     </PreferenceCategory>
+    -->
 
     <PreferenceCategory app:title="@string/additional_tools">
         <SwitchPreferenceCompat
@@ -39,12 +41,14 @@
                 app:key="useAutoClick"
                 app:dependency="useLightGate"
                 app:defaultValue="false"/>
+        <!--
         <SwitchPreferenceCompat
                 app:title="@string/useFeeder"
                 app:summaryOn="@string/FeederConnected"
                 app:summaryOff="@string/FeederNotConnected"
                 app:key="useFeeder"
                 app:defaultValue="false"/>
+                -->
 
     </PreferenceCategory>
 </PreferenceScreen>

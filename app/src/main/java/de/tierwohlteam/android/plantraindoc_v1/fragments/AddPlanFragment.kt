@@ -216,6 +216,10 @@ class AddPlanFragment : Fragment() {
                 binding.conditionalHelper.addView(discriminationInput)
             }
         }
+        /**
+         * Not yet implemented
+         */
+        /*
         //Cue Introduction
         binding.rbHelperCueintroduction.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked){
@@ -239,6 +243,7 @@ class AddPlanFragment : Fragment() {
                 binding.conditionalHelper.addView(numberPicker)
             }
         }
+        */
         binding.rbHelperFree.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked){
                 helperType = PlanHelper.free
