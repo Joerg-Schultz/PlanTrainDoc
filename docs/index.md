@@ -1,17 +1,17 @@
 ---
 layout: default
 ---
-<div style="float:right"><b><a href="index_de">DE</a> | EN</b></div>
+<div style="float:right"><b><a href="index_de.md">DE</a> | EN</b></div>
 
-# Why might this App help you (executive summary)
+# Where can this App help you? (executive summary)
 
-[Ziele festlegen](#Ziele-festlegen)
+[Develop a training plan](#Developing-a-training-plan)
 
-[Training planen](#Training-planen)
+[Decide how to train a goal](#Add-training-details)
 
-[Trainieren und Dokumentieren](#Trainieren-und-Dokumentieren)
+[Train and document your training at the same time](#Train-and-Document)
 
-[Auswerten](#Auswerten)
+[Evaluate your training success](#Evaluate-your-Training)
 
 # Why this App?
 
@@ -121,3 +121,7 @@ Just as a side note: The Trend-Plot is inspired by the figures in B.F. Skinners 
 
 
 ## Set Preferences
+
+To set some preferences, click on the icon in the top right corner. Here, you can switch off the sound of the clicker. This can be useful, if you want to use PlanTrainDoc for documentation only. In addition, you can also switch off the announcement of criteria in the training. You still get the values displayed, but switching the sound off might reduce distraction for the dog.
+
+Finally, you can connect PlanTrainDoc to additional external tools. At the moment, this covers only the light gate, which I use to make training of cooperation signals for medical training easier. If you're interested, I've put a video about this on [YouTube](https://www.youtube.com/watch?v=R49OgaJhwL0).
