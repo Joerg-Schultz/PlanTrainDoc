@@ -2,83 +2,56 @@
 layout: default
 ---
 
-<div style="float:right"><b>DE | <a href="index">EN</a></b></div>
+<div style="float:right"><b>DE | <a href="index.md">EN</a></b></div>
 
-# Inhalt
+# Wobei kann diese App die helfen?
 
-[Ziele festlegen](#Ziele-festlegen)
+[Entwickeln eines Trainingsplans](#Einen-Trainingsplan-aufbauen)
 
-[Training planen](#Training-planen)
+[Entscheiden wie du ein Ziel trainierst](#Training-planen)
 
-[Trainieren und Dokumentieren](#Trainieren-und-Dokumentieren)
+[Trainieren und gleichzeitig dokumentieren](#Trainieren-und-Dokumentieren)
 
-[Auswerten](#Auswerten)
+[Auswerten deines Trainingserfolgs](#Auswerten)
 
 # Warum diese App?
 
 Beim Training mit meinem Hund bin ich immer wieder auf die gleichen Probleme gestoßen.
 
-- Während des Trainings kann ich mir nicht gleichzeitig merken, 
-  wie viele erfolgreiche und fehlerhafte Verhalten der Hund gezeigt hat.
-- Wenn ich jeweils nur eine Minute pro Einheit trainieren will, vergesse ich
-  spätestens bei der dritten Einheit, den Wecker zu starten. Will ich nur eine
-  bestimmte Anzahl von Versuchen trainieren, bin ich mir am Ende der Einheit nicht sicher,
-  ob der Hund schon fünf oder doch nur vier Versuche gezeigt hat.
-- Um mit variablen Kriterien zu arbeiten, muss ich während des Trainings auf Zetteln
-  die jeweiligen Werte nachvollziehen und kann mich nicht auf den Hund konzentrieren.
-- Wenn ich während des Trainings dokumentiere, wird die Einheit immer mehr 
-  zerstückelt, weil ich ständig zum Rechner / Papier gehen muss.
+- Während des Trainings kann ich mir nicht gleichzeitig merken, wie viele erfolgreiche und fehlerhafte Verhalten der Hund gezeigt hat.
+- Wenn ich jeweils nur eine Minute pro Einheit trainieren will, vergesse ich spätestens bei der dritten Einheit, den Wecker zu starten. Will ich nur eine bestimmte Anzahl von Versuchen trainieren, bin ich mir am Ende der Einheit nicht sicher, ob der Hund schon fünf oder doch nur vier Versuche gezeigt hat.
+- Um mit variablen Kriterien zu arbeiten, muss ich während des Trainings auf Zetteln die jeweiligen Werte nachvollziehen und kann mich nicht auf den Hund konzentrieren.
+- Wenn ich während des Trainings dokumentiere, wird die Einheit immer mehr zerstückelt, weil ich ständig zum Rechner / Papier gehen muss.
 - Beim Training draußen kann ich schlecht mit Stift und Zettel arbeiten.
-- Wenn ich vor dem Training einen Plan erstellt habe, muss ich das Training 
-  komplett unterbrechen, wenn ich auch nur kleine Änderungen am Plan vornehmen will.
+- Wenn ich vor dem Training einen Plan erstellt habe, muss ich das Training komplett unterbrechen, wenn ich auch nur kleine Änderungen am Plan vornehmen will.
 
-Nachdem mir klar geworden ist, dass dadurch mein Training nicht so gut ist, wie es sein könnte,
-habe ich angefangen 
-[PlanTrainDoc](https://play.google.com/store/apps/details?id=de.tierwohlteam.android.plantraindoc) 
-zu entwickeln. Inzwischen verwende ich die App bei allen Schritten meines Trainings – angefangen
-von der Planung über das eigentliche Training, bei dem ich gleichzeitig meine Dokumentation erstelle,
-bis zur Auswertung, anhand der ich wieder den Trainingsplan anpasse. Während des Trainings zeigt mir
-PlanTrainDoc an, wie viele Versuche der Hund gemacht hat und wie viele davon erfolgreich waren. 
-Die App sagt mir Bescheid, wann ich mein Training stoppen will.
-Wenn ich mit variablen Kriterien arbeite, sagt mir PlanTrainDoc für jeden Versuch den aktuellen
-Wert an. Vor dem Training lege ich in der App meine Ziele fest und passe sie während des
-Trainings flexibel an. Für jedes Ziel kann ich mir Erfolgsstatistiken anzeigen lassen und 
-meinen Plan verbessern. Und da das Ganze auf meinem Smartphone läuft, habe ich alle Informationen
-immer bei mir.
+Nachdem mir klar geworden ist, dass dadurch mein Training nicht so gut ist, wie es sein könnte, habe ich angefangen [PlanTrainDoc](https://play.google.com/store/apps/details?id=de.tierwohlteam.android.plantraindoc) zu entwickeln. Inzwischen verwende ich die App bei allen Schritten meines Trainings – angefangen von der Planung über das eigentliche Training, bei dem ich gleichzeitig meine Dokumentation erstelle, bis zur Auswertung, anhand der ich wieder den Trainingsplan anpasse. Während des Trainings zeigt mir PlanTrainDoc an, wie viele Versuche der Hund gemacht hat und wie viele davon erfolgreich waren. Die App sagt mir Bescheid, wann ich mein Training stoppen will. Wenn ich mit variablen Kriterien arbeite, sagt mir PlanTrainDoc für jeden Versuch den aktuellen Wert an. Vor dem Training lege ich in der App meine Ziele fest und passe sie während des Trainings flexibel an. Für jedes Ziel kann ich mir Erfolgsstatistiken anzeigen lassen und meinen Plan verbessern. Und da das Ganze auf meinem Smartphone läuft, habe ich alle Informationen immer bei mir.
 
-# Was kann ich mit der App machen?
+---
 
-## Ziele festlegen
+# Dokumentation
+
+## Einen Trainingsplan aufbauen
 
 ### Ein neues Ziel anlegen
 
-Als ersten Schritt lege ich in der App ein neues Ziel an. Dafür clicke ich
-auf den orangen '+' Button. Für jedes Ziel gebe ich einen Titel an,
-definiere Details des Verhaltens und lege den Status des Ziels fest. Mit dem orangen 
-'Disketten' Button speichere ich das Ziel. Möchte ich Änderungen vornehmen, z. B. den Status auf
-'in Bearbeitung' setzen, clicke ich auf das Ziel.
+Als ersten Schritt legst du dir in der App ein neues Ziel an. Dafür clickst du auf den orangen '+' Button. Für jedes Ziel kannst du einen Titel angeben, Details des Verhaltens beschreiben und den Status des Ziels festlegen. Mit dem orangen 'Disketten' Button speicherst du das Ziel. Möchtest du später Änderungen vornehmen, z.B. den Status auf 'in Bearbeitung' setzen, clickst du einfach auf das Ziel.
 
 <video controls width="240" height="320" >
 <source src="images/ZielAnlegen_KinnTarget_edited.mp4">
 </video>
 
-### Unterziele definieren
+### Das Ziel in kleine Schritte aufteilen
 
-Merke ich, dass das Ziel zu groß ist und zu viele Trainingsschritte beinhaltet, definiere ich mir
-kleinere Unterziele. Dazu wische ich das aktuelle Ziel einfach nach links und lege die kleineren
-Ziele an. Das wiederhole ich so lange, bis ich das Ziel in trainierbare Schritte zerlegt
-habe. Natürlich kann ich auf einem Level mehrere Ziele anlegen.
+Als nächsten Schritt kannst du das Ziel in kleinere Trainingsschritte aufteilen. Dazu wischst du einfach das Ziel nach links und gelangst damit eine Ebene tiefer. Hier kannst du wieder beliebig viele neue, kleinere Ziele anlegen. Und natürlich kannst du die auch wieder in weitere Unterziele aufspalten. Du wischst einfach so lange nach links und legst Unterziele an, bis du dein Ziel in kleine einzeln trainierbare Schritte heruntergebrochen hast. 
 
 <video controls width="240" height="320" >
 <source src="images/UnterzieleAnlegen_KinnTarget.mp4">
 </video>
 
-### Durch Ziele navigieren
+### Durch deinen Plan navigieren
 
-Um von einem detaillierten Ziel wieder nach oben zu navigieren, wische ich entweder ein Ziel
-nach rechts oder verwende den Backbutton. Hab ich eine Gruppe von Zielen auf dem gleichen
-Level, kann ich die Reihenfolge verändern. Damit kann ich mir vorgeben, welches Ziel zuerst
-erarbeitet werden soll.
+Nachdem du jetzt definiert hast, was genau deine Trainingsschritte sind, kannst du diese in jedem Detaillevel in eine beliebige Reihenfolge bringen. Und wenn du auf einem Level fertig bist, kannst du entweder ein Ziel nach rechts wischen oder den Back Button clicken um wieder einen Level höher zu gehen.
 
 <video controls width="240" height="320" >
 <source src="images/Navigation_Kinntarget_small.mp4">
@@ -177,5 +150,5 @@ gecklickte (ansteigende Linie) oder nicht gecklickte (horizontale Linie) Verhalt
 Clicke ich auf einen Punkt, wird mir angezeigt, zu welchem Ziel dieses Verhalten gehört hat.
 
 <video controls width="240" height="320" >
-<source src="images/Auswertung_Kinntarget_small.mp4">
+<source src="images/PTD_Stats.mp4">
 </video>

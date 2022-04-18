@@ -3,7 +3,7 @@ layout: default
 ---
 <div style="float:right"><b><a href="index_de.md">DE</a> | EN</b></div>
 
-# Where can this App help you? (executive summary)
+# Where can this App help you?
 
 [Develop a training plan](#Developing-a-training-plan)
 
@@ -34,7 +34,7 @@ And that was the point where I realised it time to change my behaviour. So I dev
 
 ### Setting a new goal
 
-As first step, Yoi can add a high level goal. Just click on the orange '+' button. Now you can set a title and describe the behaviour in detail. Additionally, you can set the status of the goal. Store the goal by clicking on the orange 'disk' button. Of course, you can change all the details of the goal later on by just clicking on the goal.
+As first step, you can add a high level goal. Just click on the orange '+' button. Now you can set a title and describe the behaviour in detail. Additionally, you can set the status of the goal. Store the goal by clicking on the orange 'disk' button. Of course, you can change all the details of the goal later on by just clicking on the goal.
 
 <video controls width="240" height="320" >
 <source src="images/ZielAnlegen_KinnTarget_edited.mp4">
@@ -116,7 +116,7 @@ In the goal view, you can click on the green 'Evaluate' text for a goal. This wi
 Just as a side note: The Trend-Plot is inspired by the figures in B.F. Skinners book 'The behaviour of organisms'
 
 <video controls width="240" height="320" >
-<source src="images/Auswertung_Kinntarget_small.mp4">
+<source src="images/PTD_Stats.mp4">
 </video>
 
 
