@@ -3,9 +3,7 @@ layout: default
 ---
 <div style="float:right"><b><a href="index_de">DE</a> | EN</b></div>
 
-# Use english for landing page
-
-# Inhalt
+# Why might this App help you (executive summary)
 
 [Ziele festlegen](#Ziele-festlegen)
 
@@ -15,71 +13,44 @@ layout: default
 
 [Auswerten](#Auswerten)
 
-# Warum diese App?
+# Why this App?
 
-Beim Training mit meinem Hund bin ich immer wieder auf die gleichen Probleme gestoßen.
+When training my dog, I repeatedly ran into the same challenges:
 
-- Während des Trainings kann ich mir nicht gleichzeitig merken, 
-  wie viele erfolgreiche und fehlerhafte Verhalten der Hund gezeigt hat.
-- Wenn ich jeweils nur eine Minute pro Einheit trainieren will, vergesse ich
-  spätestens bei der dritten Einheit, den Wecker zu starten. Will ich nur eine
-  bestimmte Anzahl von Versuchen trainieren, bin ich mir am Ende der Einheit nicht sicher,
-  ob der Hund schon fünf oder doch nur vier Versuche gezeigt hat.
-- Um mit variablen Kriterien zu arbeiten, muss ich während des Trainings auf Zetteln
-  die jeweiligen Werte nachvollziehen und kann mich nicht auf den Hund konzentrieren.
-- Wenn ich während des Trainings dokumentiere, wird die Einheit immer mehr 
-  zerstückelt, weil ich ständig zum Rechner / Papier gehen muss.
-- Beim Training draußen kann ich schlecht mit Stift und Zettel arbeiten.
-- Wenn ich vor dem Training einen Plan erstellt habe, muss ich das Training 
-  komplett unterbrechen, wenn ich auch nur kleine Änderungen am Plan vornehmen will.
+- I just can't mentally keep track of successful and failed trials while at the same time focussing on the actual training.
+- I am a big fan of timed training sessions. Still, after a few sessions, I tend to forget to start the timer. And it gets even worse when limiting the sessions by the number of repetitions. Was it the fourth or already the fifth trial?
+- When training with variable criteria, I had to write those down before the training. While training, I had to check my notes and lost focus of the dog.
+- We all are well aware of the importance of data and documentation. But, documenting on paper while training broke my training flow.
+- And it gets worse when documenting with pen and paper when training outside. And its windy. Or raining...
+- Every plan has to be adopted to the real behavior. Using plans on paper, I had to stop the training (which can be a good thing!) even for the slightest modifications.
 
-Nachdem mir klar geworden ist, dass dadurch mein Training nicht so gut ist, wie es sein könnte,
-habe ich angefangen 
-[PlanTrainDoc](https://play.google.com/store/apps/details?id=de.tierwohlteam.android.plantraindoc) 
-zu entwickeln. Inzwischen verwende ich die App bei allen Schritten meines Trainings – angefangen
-von der Planung über das eigentliche Training, bei dem ich gleichzeitig meine Dokumentation erstelle,
-bis zur Auswertung, anhand der ich wieder den Trainingsplan anpasse. Während des Trainings zeigt mir
-PlanTrainDoc an, wie viele Versuche der Hund gemacht hat und wie viele davon erfolgreich waren. 
-Die App sagt mir Bescheid, wann ich mein Training stoppen will.
-Wenn ich mit variablen Kriterien arbeite, sagt mir PlanTrainDoc für jeden Versuch den aktuellen
-Wert an. Vor dem Training lege ich in der App meine Ziele fest und passe sie während des
-Trainings flexibel an. Für jedes Ziel kann ich mir Erfolgsstatistiken anzeigen lassen und 
-meinen Plan verbessern. Und da das Ganze auf meinem Smartphone läuft, habe ich alle Informationen
-immer bei mir.
+And that was the point where I realised it time to change my behaviour. So I developed an App to address these challenges: [PlanTrainDoc](https://play.google.com/store/apps/details?id=de.tierwohlteam.android.plantraindoc). By now, I use this App for all steps of my training - developing a training plan, performing the training with automated documentation, data driven evaluation and adaption of the plan. In the training phase, the App tells me when to stop a session based on time or number of trials. Additionally, when working with variable criteria, the app tells me the actual value for a trial. And as everything is on my Smartphone, I have all the data in my pocket.
 
-# Was kann ich mit der App machen?
+---
 
-## Ziele festlegen
+# Documentation
 
-### Ein neues Ziel anlegen
+## Developing a training plan
 
-Als ersten Schritt lege ich in der App ein neues Ziel an. Dafür clicke ich
-auf den orangen '+' Button. Für jedes Ziel gebe ich einen Titel an,
-definiere Details des Verhaltens und lege den Status des Ziels fest. Mit dem orangen 
-'Disketten' Button speichere ich das Ziel. Möchte ich Änderungen vornehmen, z. B. den Status auf
-'in Bearbeitung' setzen, clicke ich auf das Ziel.
+### Setting a new goal
+
+As first step, Yoi can add a high level goal. Just click on the orange '+' button. Now you can set a title and describe the behaviour in detail. Additionally, you can set the status of the goal. Store the goal by clicking on the orange 'disk' button. Of course, you can change all the details of the goal later on by just clicking on the goal.
 
 <video controls width="240" height="320" >
 <source src="images/ZielAnlegen_KinnTarget_edited.mp4">
 </video>
 
-### Unterziele definieren
+### Split it into smaller goals
 
-Merke ich, dass das Ziel zu groß ist und zu viele Trainingsschritte beinhaltet, definiere ich mir
-kleinere Unterziele. Dazu wische ich das aktuelle Ziel einfach nach links und lege die kleineren
-Ziele an. Das wiederhole ich so lange, bis ich das Ziel in trainierbare Schritte zerlegt
-habe. Natürlich kann ich auf einem Level mehrere Ziele anlegen.
+As next step, you can break your goal down into smaller training steps. Just swipe the goal you want to break down to the left. You are now a level and can add your sub goals (as many as you want) as before. Of course, you can repeat this step for each of the sub goals until you broke down your plan into trainable chunks. There is no limit on the levels, just split your goals as small as necessary.
 
 <video controls width="240" height="320" >
 <source src="images/UnterzieleAnlegen_KinnTarget.mp4">
 </video>
 
-### Durch Ziele navigieren
+### Navigate through your goals
 
-Um von einem detaillierten Ziel wieder nach oben zu navigieren, wische ich entweder ein Ziel
-nach rechts oder verwende den Backbutton. Hab ich eine Gruppe von Zielen auf dem gleichen
-Level, kann ich die Reihenfolge verändern. Damit kann ich mir vorgeben, welches Ziel zuerst
-erarbeitet werden soll.
+After the brainstorming phase, where you broke down your goals into small, trainable steps, you can start to sort your goals. Within one level, you can just drag a goal up and down until they are in the order you want to train. And of course you can move a level up by either swiping a goal to the left or using the back button.
 
 <video controls width="240" height="320" >
 <source src="images/Navigation_Kinntarget_small.mp4">

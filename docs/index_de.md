@@ -1,6 +1,9 @@
 ---
 layout: default
 ---
+
+<div style="float:right"><b>DE | <a href="index">EN</a></b></div>
+
 # Inhalt
 
 [Ziele festlegen](#Ziele-festlegen)
