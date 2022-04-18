@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<div style="float:right"><b>DE | <a href="index.md">EN</a></b></div>
+<div style="float:right"><b>DE | <a href="index">EN</a></b></div>
 
 # Wobei kann diese App die helfen?
 
