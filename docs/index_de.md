@@ -2,9 +2,10 @@
 layout: default
 ---
 
+<a href="https://play.google.com/store/apps/details?id=de.tierwohlteam.android.plantraindoc"> <img src="images/play_prism_hlock_2x.png" alt="Google Play"></a>
 <div style="float:right"><b>DE | <a href="index">EN</a></b></div>
 
-# Wobei kann diese App die helfen?
+# Wobei kann PlanTrainDoc Dir helfen?
 
 [Entwickeln eines Trainingsplans](#Einen-Trainingsplan-aufbauen)
 

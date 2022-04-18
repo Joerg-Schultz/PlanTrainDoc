@@ -1,15 +1,17 @@
 ---
 layout: default
 ---
+
+<a href="https://play.google.com/store/apps/details?id=de.tierwohlteam.android.plantraindoc"> <img src="images/play_prism_hlock_2x.png" alt="Google Play"></a>
 <div style="float:right"><b><a href="index_de">DE</a> | EN</b></div>
 
-# Where can this App help you?
+# How can PlanTrainDoc help you?
 
 [Develop a training plan](#Developing-a-training-plan)
 
 [Decide how to train a goal](#Add-training-details)
 
-[Train and document your training at the same time](#Train-and-Document)
+[Train and document your training](#Train-and-Document)
 
 [Evaluate your training success](#Evaluate-your-Training)
 
@@ -87,13 +89,15 @@ Of course you can click or reset a trial at any time, you don't have to wait unt
 <dd>Choose this if you don't need any helper for this step.</dd>
 </dl>
 
+---
+
 <video controls width="240" height="320" >
 <source src="images/Planen_Kinntarget_small.mp4">
 </video>
 
 ## Train and Document
 
-THe strength of PlanTrainDoc is, that you use the same App for planning and training! This allows to automatically document your training and link the data with your goals. To start the training, you just click on the green 'Train' text. On the next view, you will see a list of all your previous training sessions for this goal. This includes the success of each session and optional comments providing you with a fast overview of the training state of this goal.
+The strength of PlanTrainDoc is, that you use the same App for planning and training! This allows to automatically document your training and link the data with your goals. To start the training, you just click on the green 'Train' text. On the next view, you will see a list of all your previous training sessions for this goal. This includes the success of each session and optional comments providing you with a fast overview of the training state of this goal.
 
 Before starting a new session, you can note down the next criterion. Then click 'Train' and start your training! There are two large buttons - 'Click' and 'Reset'. If the trainee fulfills your criterion, press 'Click', if not 'Reset'. The App will automatically store each click/reset with the exact time and criterion. Documentation done while training!
 
