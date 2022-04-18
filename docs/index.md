@@ -93,25 +93,21 @@ Of course you can click or reset a trial at any time, you don't have to wait unt
 
 ## Train and Document
 
-Um das Training zu starten, clicke ich auf den grünen 'Training' Text
-eines Ziels. Im Training verwende ich PlanTrainDoc als Clicker. Da ich
-zusätzlich auch jeden "Fehler“ (neutraler: Reset) notiere, habe ich jederzeit
-während des Trainings die genaue Erfolgsrate. Über die Einstellungen kann
-ich das Clickgeräusch auch ausschalten.
+THe strength of PlanTrainDoc is, that you use the same App for planning and training! This allows to automatically document your training and link the data with your goals. To start the training, you just click on the green 'Train' text. On the next view, you will see a list of all your previous training sessions for this goal. This includes the success of each session and optional comments providing you with a fast overview of the training state of this goal.
 
-Je nach gewählter Trainingsart gibt mir PlanTrainDoc hier Kriterien vor. In den
-Einstellungen (Zahnrad oben rechts) kann ich wählen, ob mir das Kriterium angesagt oder
-nur angezeigt wird.
+Before starting a new session, you can note down the next criterion. Then click 'Train' and start your training! There are two large buttons - 'Click' and 'Reset'. If the trainee fulfills your criterion, press 'Click', if not 'Reset'. The App will automatically store each click/reset with the exact time and criterion. Documentation done while training!
 
-Vor jeder Trainingseinheit schreibe ich das aktuelle Kriterium auf,
-nach der Einheit dokumentiere ich direkt den Erfolg der Einheit. Dadurch erstelle
-ich während des Trainings direkt meine Dokumentation. 
+If you've chosen a helper for your training, the current criterion will be shown in the lower left. If you selected a limit for your session (time or repetitions), information will be given in the lower right corner. You can stop your training at each time with the back button.
+
+When training a discrimination task, I frequently want to break the pure randomness, e.g. when I realise that one position needs more repetitions. Therefore, in the case of discriminations, you can 'override' PlanTrainDoc and chose a different criterion. Again, this criterion will be stored in PlanTrainDocs database.
+
+Once you've finished your training session (either by pressing the back button or because your time /repetition limit is reached), you can note down a short comment to this session. Thus, you are creating a full documentation with minimal training interruption.
 
 <video controls width="240" height="320" >
 <source src="images/Training_Kinntarget_edited.mp4">
 </video>
 
-## Auswerten
+## Evaluate your Training
 
 PlanTrainDoc merkt sich jedes erfolgreiche (Click) und nicht erfolgreiche (Reset)
 Verhalten. Damit kann ich den Erfolg jedes Trainings, jedes
@@ -126,3 +122,6 @@ Clicke ich auf einen Punkt, wird mir angezeigt, zu welchem Ziel dieses Verhalten
 <video controls width="240" height="320" >
 <source src="images/Auswertung_Kinntarget_small.mp4">
 </video>
+
+
+## Set Preferences
