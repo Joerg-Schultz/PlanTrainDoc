@@ -7,13 +7,13 @@ layout: default
 
 # How can PlanTrainDoc help you?
 
-[Develop a training plan](#-Developing-a-training-plan)
+[Develop a training plan](#developing-a-training-plan)
 
-[Decide how to train a goal](#-Add-training-details)
+[Decide how to train a goal](#add-training-details)
 
-[Train and document your training](#-Train-and-Document)
+[Train and document your training](#train-and-document)
 
-[Evaluate your training success](#-Evaluate-your-Training)
+[Evaluate your training success](#evaluate-your-training)
 
 # Why this App?
 
