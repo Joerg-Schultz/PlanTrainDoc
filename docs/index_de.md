@@ -7,13 +7,13 @@ layout: default
 
 # Wobei kann PlanTrainDoc Dir helfen?
 
-[Entwickeln eines Trainingsplans](#Einen-Trainingsplan-aufbauen)
+[Entwickeln eines Trainingsplans](#-Einen-Trainingsplan-aufbauen)
 
-[Entscheiden wie du ein Ziel trainierst](#Training-planen)
+[Entscheiden wie du ein Ziel trainierst](#-Training-planen)
 
-[Trainieren und gleichzeitig dokumentieren](#Trainieren-und-Dokumentieren)
+[Trainieren und gleichzeitig dokumentieren](#-Trainieren-und-Dokumentieren)
 
-[Auswerten deines Trainingserfolgs](#Auswerten)
+[Auswerten deines Trainingserfolgs](#-Auswerten)
 
 # Warum diese App?
 
