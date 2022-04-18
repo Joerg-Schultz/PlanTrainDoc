@@ -134,11 +134,6 @@ der Hund nur das Signal als Unterscheidungskriterium haben und nicht eine
 Reihenfolge der Signale. In PlanTrainDoc kann ich eine beliebige Anzahl von
 Signalen vorgeben. Während des Trainings wird dann gleichverteilt aus diesen
 Signalen gezogen.</dd>
-<dt>Signal einführen</dt>
-<dd>Unter Signalkontrolle soll der Hund das Verhalten erst dann zeigen, wenn 
-das Signal gegeben wird. Eine Möglichkeit, dies zu trainieren, ist, den Hund auch
-für das Warteverhalten zu belohnen. Mit PlanTrainDoc kann ich mir vorgeben
-lassen, wie oft ich das Warteverhalten belohne bzw. das Signal gebe.</dd>
 <dt>Frei</dt>
 <dd>Keine Hilfe</dd>
 </dl>

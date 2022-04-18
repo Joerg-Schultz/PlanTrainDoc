@@ -56,72 +56,42 @@ After the brainstorming phase, where you broke down your goals into small, train
 <source src="images/Navigation_Kinntarget_small.mp4">
 </video>
 
-## Training planen
+## Add training details
 
-Zu jedem Ziel kann ich ein Training anlegen. Dazu clicke ich auf den grünen
-'Planen' Text des Ziels. Jetzt kann ich festlegen, was und wie ich trainieren will.
+### Define your sessions
 
-### Wie will ich trainieren?
+Once you've split your goal into small trainable units, you can start adding training details to each goal. Therefore, click on the green 'Plan' text of the goal you want to train. Do you want to train in small, defined training sessions? Then you can add either a timer or the number of repetitions you want to train as a limit.
 
-Um Kriterien schnell an das Verhalten des Hundes anzupassen, versuche ich,
-meine Trainingseinheiten kurz zu halten. Dazu lege ich vor dem Training
-entweder die Zeit oder die Anzahl der gezeigten Verhalten fest, nach 
-denen ich stoppen will.
 <dl>
-<dt>Zeit basiert</dt>
-<dd>Ich wähle die Dauer einer Trainingseinheit. Sobald ich mit der Einheit 
-beginne, startet PlanTrainDoc einen Timer. Ist die Zeit abgelaufen,
-werde ich durch Vibration informiert und das Training gestoppt.</dd>
-<dt>Anzahl Verhalten des Tieres</dt>
-<dd>Alternativ kann ich die Anzahl der Verhalten des Tieres vorgeben. Z.B. kann
-ich das Training nach 5 Verhalten (ob erfolgreich oder nicht) stoppen lassen.</dd>
-<dt>Frei</dt>
-<dd>Keine Einschränkung</dd>
+<dt>Time based</dt>
+<dd>Define the duration of each training session in seconds. The timer is started automatically as soon as you start your training session. After the pre-defined time interval, the Smartphone vibrates and the training is stopped. </dd>
+<dt>Repetitions</dt>
+<dd>Alternatively, you can provide a number of trials (success and fails). Again, the Smartphone will vibrate and the training is stopped once you reached this number of repetitions.</dd>
+<dt>No Constraint</dt>
+<dd>Oc course you can also train without any session limits!</dd>
 </dl>
 
-### Was will ich trainieren?
+### Add Helpers
 
-Menschen sind schlecht darin sich zufällig zu verhalten. Das ist ein Problem,
-wenn ich ein Kriterium variabel halten will. Daher lasse ich mir die Kriterien
-von meiner App vorgeben. PlanTrainDoc verwendet für 
-Distanz und Dauer Zahlenreihen, die auf Morgan Spectors Buch 
-[Clicker Training for Obedience](https://www.amazon.de/Clicker-Training-Obedience-Shaping-Performance-Positively/dp/0962401781/ref=sr_1_2?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&dchild=1&keywords=Clicker+training+for+obedience&qid=1630042590&sr=8-2)
-basieren. 
+We humans happen to be pretty bad in generating random numbers - sooner or later we will fall back into a pattern. Which makes the 'variable' criterion predictable for our trainees. To fix this, PlanTrainDoc can support your training by providing (not completely ;-) random criteria for duration, distance and discrimination. 'Not completely random' here means, that the numbers for duration and distance are from Morgan Spectors excellent book [Clicker Training for Obedience](https://www.amazon.de/Clicker-Training-Obedience-Shaping-Performance-Positively/dp/0962401781/ref=sr_1_2?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&dchild=1&keywords=Clicker+training+for+obedience&qid=1630042590&sr=8-2). 
+
 <dl>
-<dt>Dauer</dt> 
-<dd>Hier lege ich die mittlere Dauer eines Versuches in Sekunden fest. Während des 
-Trainings gibt mir PlanTrainDoc dann unterschiedliche Zeiten um diesen
-Mittelwert vor. Von 0,1 bis 1,5 Sekunden wird eine konstante Zeit vorgegeben,
-danach wird sie variiert. Ich starte jeden Versuch in der App. Ist die vorgegebene Zeit
-abgelaufen, werde ich durch Vibration informiert. Ich kann zu jedem Zeitpunkt den Versuch abbrechen
-oder clicken.
-<a href="https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt">Werte</a></dd>
-<dt>Distanz</dt>
-<dd>Hier lege ich als Kriterium eine mittlere Distanz fest. Wie bei der Dauer
-gibt mir PlanTrainDoc während des Trainings eine Distanz vor, die sich variabel um
-diesen Mittelwert bewegt. <a href="https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt">Werte</a></dd>
-<dt>Signal unterscheiden</dt>
-<dd>Bei der Signalunterscheidung (z.B. Platz vs. Sitz aus dem Stehen) soll
-der Hund nur das Signal als Unterscheidungskriterium haben und nicht eine
-Reihenfolge der Signale. In PlanTrainDoc kann ich eine beliebige Anzahl von
-Signalen vorgeben. Während des Trainings wird dann gleichverteilt aus diesen
-Signalen gezogen.</dd>
-<dt>Signal einführen</dt>
-<dd>Unter Signalkontrolle soll der Hund das Verhalten erst dann zeigen, wenn 
-das Signal gegeben wird. Eine Möglichkeit, dies zu trainieren, ist, den Hund auch
-für das Warteverhalten zu belohnen. Mit PlanTrainDoc kann ich mir vorgeben
-lassen, wie oft ich das Warteverhalten belohne bzw. das Signal gebe.</dd>
-<dt>Frei</dt>
-<dd>Keine Hilfe</dd>
+<dt>Duration</dt> 
+<dd>PlanTrainDoc will provide you with a duration for each trial around the value you provide here (in seconds). For 0.1 to 1.5 seconds, the given duration will be constant. For longer durations, it will follow this <a href="https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt">duration scheme</a>
+Of course you can click or reset a trial at any time, you don't have to wait until the timer has finished.
+<dt>Distance</dt>
+<dd>PlanTrainDoc will provide you with a variable value for the distance at each trial around the value you choose. Steps and values follow this <a href="https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt">distance scheme</a></dd>
+<dt>Discrimination</dt>
+<dd>When training a discrimination task, it is extremely important that the trainee can not predict the next behaviour. Here, you can provide a list of keywords, from which PlanTrainDoc will draw values uniformly. That is, each of the values has the same probability (think die or coin). </dd>
+<dt>Other Criterion</dt>
+<dd>Choose this if you don't need any helper for this step.</dd>
 </dl>
-
---- 
 
 <video controls width="240" height="320" >
 <source src="images/Planen_Kinntarget_small.mp4">
 </video>
 
-## Trainieren und Dokumentieren
+## Train and Document
 
 Um das Training zu starten, clicke ich auf den grünen 'Training' Text
 eines Ziels. Im Training verwende ich PlanTrainDoc als Clicker. Da ich
