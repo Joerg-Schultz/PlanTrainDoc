@@ -15,7 +15,7 @@ layout: default
 
 [Evaluate your training success](#evaluate-your-training)
 
-If you want to keep informed about updates and new ideas, just follow [PlanTrainDoc on Facebook](https://www.facebook.com/Plan-Train-Doc-117120153530151).
+If you want to get informed about updates and new ideas, just follow [PlanTrainDoc on Facebook](https://www.facebook.com/Plan-Train-Doc-117120153530151).
 
 # Why this App?
 

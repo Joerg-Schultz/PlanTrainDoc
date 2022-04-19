@@ -1,0 +1,9 @@
+PlanTrainDoc helps you to train your animal. You plan fast, train focussed  and document automatically. Ready-made modules for building distance or duration and to train discriminations let you train effectively and professionally. Full documentation with video instructions on <a href="http://www.plantraindoc.de">http://www.plantraindoc.de</a>.
+
+PlanTrainDoc helps you to structure your training by splitting it into small, trainable steps (be a splitter, not a lumper!). Next, you define for each step, how you want to train it. When you are working on distance or duration, PlanTrainDoc can provide variable criteria. If you are training a discrimination, PlanTrainDoc helps you to prevent predictable patterns.
+
+With PlanTrainDoc, you are using a single App for planing and training. Thus, PlanTrainDoc can automatically document your training and connect all data directly to your training plan. Detailed statistics and plots allow you to evaluate your training success. This enables you to iteratively improve your training plan based on real data.
+
+By integrating planing, training and documentation in a single app, PlanTrainDoc will improve the structure of your training and speed-up your training cycle. This does not only help you. The training will also be more fun for your dog.
+
+If you want to get informed about updates and new ideas, just follow <a href="https://www.facebook.com/Plan-Train-Doc-117120153530151">PlanTrainDoc on Facebook</a>. And if you want to help to develop PlanTrainDoc, you can find the complete code on <a href="https://github.com/Joerg-Schultz/PlanTrainDoc">GitHub</a>.
