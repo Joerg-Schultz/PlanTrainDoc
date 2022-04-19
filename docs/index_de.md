@@ -9,11 +9,13 @@ layout: default
 
 [Entwickeln eines Trainingsplans](#einen-trainingsplan-aufbauen)
 
-[Entscheiden wie du ein Ziel trainierst](#training-planen)
+[Entscheiden wie du ein Ziel trainierst](#training-für-einen-Schritt-definieren)
 
 [Trainieren und gleichzeitig dokumentieren](#trainieren-und-dokumentieren)
 
-[Auswerten deines Trainingserfolgs](#auswerten)
+[Auswerten deines Trainingserfolgs](#training-auswerten)
+
+Wenn du über Updates und neue Ideen auf dem Laufenden bleiben willst, folge einfach [PlanTrainDoc auf Facebook](https://www.facebook.com/Plan-Train-Doc-117120153530151)!
 
 # Warum diese App?
 
@@ -58,58 +60,34 @@ Nachdem du jetzt definiert hast, was genau deine Trainingsschritte sind, kannst 
 <source src="images/Navigation_Kinntarget_small.mp4">
 </video>
 
-## Training planen
-
-Zu jedem Ziel kann ich ein Training anlegen. Dazu clicke ich auf den grünen
-'Planen' Text des Ziels. Jetzt kann ich festlegen, was und wie ich trainieren will.
+## Training für einen Schritt definieren
 
 ### Wie will ich trainieren?
 
-Um Kriterien schnell an das Verhalten des Hundes anzupassen, versuche ich,
-meine Trainingseinheiten kurz zu halten. Dazu lege ich vor dem Training
-entweder die Zeit oder die Anzahl der gezeigten Verhalten fest, nach 
-denen ich stoppen will.
+Nachdem du jetzt einen Plan hast, was du trainieren willst, legst du im nächsten Schritt fest, wie du trainieren möchtest. Dazu clickst du auf den grünen 'Planen' Text in dem Ziel, dass du trainieren willst. Die erste Frage ist, ob du die Länge deiner Trainingseinheit definieren möchtest. Das kannst du entweder über die Zeit, oder über die Anzahl der Wiederholungen. Diese Einschränkung kann sehr sinnvoll sein, weil es dir ermöglicht, nach einer definierten Einheit zu überprüfen, ob dein Training so läuft wie du dir es vorstellst. Ist dein Hund so erfolgreich, wie du es geplant hast oder möchtest du etwas ändern?
+
 <dl>
 <dt>Zeit basiert</dt>
-<dd>Ich wähle die Dauer einer Trainingseinheit. Sobald ich mit der Einheit 
-beginne, startet PlanTrainDoc einen Timer. Ist die Zeit abgelaufen,
-werde ich durch Vibration informiert und das Training gestoppt.</dd>
-<dt>Anzahl Verhalten des Tieres</dt>
-<dd>Alternativ kann ich die Anzahl der Verhalten des Tieres vorgeben. Z.B. kann
-ich das Training nach 5 Verhalten (ob erfolgreich oder nicht) stoppen lassen.</dd>
+<dd>Hier kannst du die Dauer deiner Trainingseinheit in Sekunden vorgeben. Der Timer startet, sobald du mit dem Training beginnst. Nach Ablauf der Zeit vibriert dein Smartphone und das Training wird gestoppt.</dd>
+<dt>Wiederholungen</dt>
+<dd>Alternativ kann PlanTrainDoc die Anzahl der Verhalten (Erfolgreich oder nicht) mit zählen. Nach der vorgebenden Anzahl an Verhalten vibriert dein Smartphone und das Training wird gestoppt.</dd>
 <dt>Frei</dt>
-<dd>Keine Einschränkung</dd>
+<dd>Natürlich kannst du auch ohne Einschränkungen trainieren und selbst entscheiden, wie lange deine Trainingseinheit dauern soll.</dd>
 </dl>
 
-### Was will ich trainieren?
+### Helfer hinzufügen
 
-Menschen sind schlecht darin sich zufällig zu verhalten. Das ist ein Problem,
-wenn ich ein Kriterium variabel halten will. Daher lasse ich mir die Kriterien
-von meiner App vorgeben. PlanTrainDoc verwendet für 
-Distanz und Dauer Zahlenreihen, die auf Morgan Spectors Buch 
-[Clicker Training for Obedience](https://www.amazon.de/Clicker-Training-Obedience-Shaping-Performance-Positively/dp/0962401781/ref=sr_1_2?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&dchild=1&keywords=Clicker+training+for+obedience&qid=1630042590&sr=8-2)
-basieren. 
+Für Menschen ist es überraschend schwer, wirkliche Zufallsreihen zu generieren - in den meisten Fällen entstehen Muster. Und genau das ist ein Problem, weil unser Trainee dann diese Muster lernt und nicht das, was wir ihm eigentlich beibringen wollen. Und genau hier kann PlanTrainDoc dich unterstützen, indem es (fast ;-) zufällige Kriterien für Dauer, Distanz und Unterscheidungsaufgaben vorgibt. "Fast zufällig" weil die Zahlenreihen für Distanz und Dauer aus Morgan Spectors exzellentem Buch [Clicker Training for Obedience](https://www.amazon.de/Clicker-Training-Obedience-Shaping-Performance-Positively/dp/0962401781/ref=sr_1_2?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&dchild=1&keywords=Clicker+training+for+obedience&qid=1630042590&sr=8-2) stammen.
+
 <dl>
 <dt>Dauer</dt> 
-<dd>Hier lege ich die mittlere Dauer eines Versuches in Sekunden fest. Während des 
-Trainings gibt mir PlanTrainDoc dann unterschiedliche Zeiten um diesen
-Mittelwert vor. Von 0,1 bis 1,5 Sekunden wird eine konstante Zeit vorgegeben,
-danach wird sie variiert. Ich starte jeden Versuch in der App. Ist die vorgegebene Zeit
-abgelaufen, werde ich durch Vibration informiert. Ich kann zu jedem Zeitpunkt den Versuch abbrechen
-oder clicken.
-<a href="https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt">Werte</a></dd>
+<dd>Hier legst du die mittlere Dauer eines Versuches in Sekunden fest. Während des Trainings gibt dir PlanTrainDoc dann unterschiedliche Zeiten um diesen Mittelwert vor. Von 0,1 bis 1,5 Sekunden wird eine konstante Zeit vorgegeben, danach wird sie nach <a href="https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt">diesem Schema</a> variiert. Natürlich kannst du im Training zu jedem Zeitpunkt den Versuch abbrechen oder clicken.</dd>
 <dt>Distanz</dt>
-<dd>Hier lege ich als Kriterium eine mittlere Distanz fest. Wie bei der Dauer
-gibt mir PlanTrainDoc während des Trainings eine Distanz vor, die sich variabel um
-diesen Mittelwert bewegt. <a href="https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt">Werte</a></dd>
+<dd>Hier legst du als Kriterium eine mittlere Distanz fest. Wie bei der Dauer gibt dir PlanTrainDoc während des Trainings eine Distanz vor, die sich <a href="https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt">variabel um diesen Mittelwert</a> bewegt.</dd>
 <dt>Signal unterscheiden</dt>
-<dd>Bei der Signalunterscheidung (z.B. Platz vs. Sitz aus dem Stehen) soll
-der Hund nur das Signal als Unterscheidungskriterium haben und nicht eine
-Reihenfolge der Signale. In PlanTrainDoc kann ich eine beliebige Anzahl von
-Signalen vorgeben. Während des Trainings wird dann gleichverteilt aus diesen
-Signalen gezogen.</dd>
+<dd>Bei der Signalunterscheidung (z.B. Platz vs. Sitz aus dem Stehen) soll der Hund nur das Signal als Unterscheidungskriterium haben und nicht eine Reihenfolge der Signale. In PlanTrainDoc kann ich eine beliebige Anzahl von Signalen vorgeben. Während des Trainings wird dann gleichverteilt aus diesen Signalen gezogen. Du kannst die Vorschläge während des Trainings auch 'überstimmen'</dd>
 <dt>Frei</dt>
-<dd>Keine Hilfe</dd>
+<dd>Wenn du etwas anderes trainieren willst und keinen Helfer brauchst.</dd>
 </dl>
 
 --- 
@@ -120,36 +98,32 @@ Signalen gezogen.</dd>
 
 ## Trainieren und Dokumentieren
 
-Um das Training zu starten, clicke ich auf den grünen 'Training' Text
-eines Ziels. Im Training verwende ich PlanTrainDoc als Clicker. Da ich
-zusätzlich auch jeden "Fehler“ (neutraler: Reset) notiere, habe ich jederzeit
-während des Trainings die genaue Erfolgsrate. Über die Einstellungen kann
-ich das Clickgeräusch auch ausschalten.
+Eine der Stärken von PlanTrainDoc ist, dass du die gleiche App für Planung und Training verwendest. Daher kann PlanTrainDoc dein Training automatisch dokumentieren und alle Daten direkt mit deinem Trainingsplan verknüpfen. Um eine Trainingseinheit zu starten, clickst du auf den grünen 'Trainieren' Text des Ziels, das du trainieren möchtest. Als Erstes siehst du eine Liste aller bisherigen Trainingseinheiten für dieses Ziels. Dir werden die Erfolgsrate der Einheiten und auch optionale Kommentare angezeigt. Damit hast du vor jeder Einheit den genauen Überblick, wie dein bisheriges Training gelaufen ist.
 
-Je nach gewählter Trainingsart gibt mir PlanTrainDoc hier Kriterien vor. In den
-Einstellungen (Zahnrad oben rechts) kann ich wählen, ob mir das Kriterium angesagt oder
-nur angezeigt wird.
+Bevor du mit deiner Einheit beginnst, kannst du dir dein Kriterium notieren. Dann clickst du 'Trainieren' und startest dein Training. Während des Trainings stehen dir zwei große Buttons zur Verfügung- 'Click' und 'Reset'. Wein dein Trainee dein Kriterium erfüllt, drückst du 'Click', wenn nicht 'Reset'. PlanTrainDoc speichert automatisch alle clicks und resets mit der genauen Zeit und dem Kriterium. Damit dokumentiert PlanTrainDoc während du trainierst!
 
-Vor jeder Trainingseinheit schreibe ich das aktuelle Kriterium auf,
-nach der Einheit dokumentiere ich direkt den Erfolg der Einheit. Dadurch erstelle
-ich während des Trainings direkt meine Dokumentation. 
+Hast du die Dauer deiner Einheit definiert, wird dir die Information dazu rechts unten angezeigt. Du kannst das Training jederzeit stoppen, indem du den 'Back Button' drückst. Wenn du einen Helfer für die Einheit gewählt hast, wird das aktuelle Kriterium für den Versuch links unten angezeigt. Trainierst du die Dauer eines Verhaltens, (siehe Video), startest du den Timer, indem du 'Start Timer' drückst. Danach wird der Button als 'Standard' click button angezeigt. Danach wird der Button zum Clicker - kein herumfuchteln mit Stoppuhr und Clicker.
+
+Wenn du eine Unterscheidungsaufgabe trainierst, kann es sinnvoll sein, die reine Zufallsreihe zu unterbrechen, z.B. wenn mehr Masse auf einer Position benötigt wird. Daher kannst du bei Diskrimierungsaufgaben die Zufallsreihe 'überschreiben'. Natürlich wird dieses geänderte Kriterium genau so in der Datenbank gespeichert.
+
+Wenn deine Einheit zu Ende ist (entweder weil du den 'Back Button' gedrückt hast oder weil die automatisch beendet wurde), kannst du dir noch einen kurzen Kommentar zu der Einheit notieren. Damit baust du dir deine komplette Trainingsdokumentation mit minimaler Trainingsunterbrechung auf.
 
 <video controls width="240" height="320" >
 <source src="images/Training_Kinntarget_edited.mp4">
 </video>
 
-## Auswerten
+## Training Auswerten
 
-PlanTrainDoc merkt sich jedes erfolgreiche (Click) und nicht erfolgreiche (Reset)
-Verhalten. Damit kann ich den Erfolg jedes Trainings, jedes
-Unterziels und jedes Ziels nachvollziehen. Dazu clicke ich auf den 'Auswerten' Text des Ziels.
-Hier bekomme ich die Ergebnisse des Trainings für dieses Ziel und aller seiner
-Unterziele angezeigt. Ich kann mir zum einen Überblick über die erfolgreichen (geclickten)
-und die nicht geclickten Versuche anzeigen lassen. Zum anderen kann ich mir den zeitlichen
-Verlauf meines Trainings graphisch darstellen lassen. Hier sehe ich, ob mein Hund häufig
-gecklickte (ansteigende Linie) oder nicht gecklickte (horizontale Linie) Verhalten gezeigt hat.
-Clicke ich auf einen Punkt, wird mir angezeigt, zu welchem Ziel dieses Verhalten gehört hat.
+Da PlanTrainDoc deine Trainingsdaten automatisch sammelt, ist es einfach dein Training zu analysieren und auszuwerten. Als Erstes kannst du einen Überblick über den Erfolg jeder Einheit bekommen, indem du einfach auf die Einheit clickst. Hier bekommst du die Anzahl der erfolgreichen ('Click') und nicht erfolgreichen ('Reset') Versuche der Einheit angezeigt. Arbeitest du mit einem der PlanTrainDoc Helfer, bekommst du zusätzlich einen detaillierten Überblick über en Erfolg pro Kriterium. Das macht es dir einfach zu sehen, ob z.B. mehr Fehler bei größeren Distanzen auftreten oder ob bei einer Unterscheidungsaufgabe eine Position mehr Training benötigt. Damit kannst du dein Training sofort optimieren - basierend auf realen Daten!
+
+Wenn du Daten und Statistiken für ein Ziel sehen willst, clickst du einfach auf den grünen 'Auswerten' Text des Ziels. Als Erstes wird dir eine Auswertung aller Trainingseinheiten dieses Ziels angezeigt - sowohl als Gesamtstatistik Erfolg vs. Reset als auch eine Detailstatistik nach dem Trainingskriterium. In der 'Trend'abbildung wird jeder 'Click' als ansteigende Linie, jeder 'Reset' als horizontale Linie angezeigt. Damit findest du direkt Training-plateaus - und welche Einheit / welches Kriterium dafür verantwortlich ist. Da ein Ziel beliebig viele Unterziele haben kann, siehst du in den nächsten Abbildungen alle Unterziele, die Summe aller 'Clicks' und 'Resets' und den 'Trend'. Da das 'Trend'diagramm alle Einheiten aller Unterziele beinhaltet bekommst du einen schnellen Überblick über deinen Trainingsfortschritt. Die Idee für die 'Trend'diagramme stammt übrigens aus B.F. Skinners Buch 'The behaviour of organisms'
 
 <video controls width="240" height="320" >
 <source src="images/PTD_Stats.mp4">
 </video>
+
+## Präferenzen einstellen
+
+Um die Einstellungen für PlanTrainDoc anzupassen, clickst du auf das Zahnradicon in der oberen rechten Ecke. Als Erstes kannst du hier den Sound des Clickers abstellen. Das kann nützlich sein, wenn du PlanTrainDoc nur zur Dokumentation verwenden möchtest. Als Zweites kannst du die Sprachausgabe des aktuellen Kriteriums aus schalten, z.B. wenn das Geräusch eine Ablenkung für deinen Hund ist. Du bekommst natürlich weiterhin alles auf deinem Display angezeigt. 
+
+Schließlich kannst du PlanTrainDoc mit externen Tools verbinden. In der aktuellen Version ist das eine Lichtschranke, die ich einsetze, um mir das Arbeiten mit Kooperationssignalen im 'Medical Training' einfacher zu machen. Ich habe dazu ein [Video auf YouTube](https://www.youtube.com/watch?v=R49OgaJhwL0), in dem ich zeige, wie genau ich damit arbeite.

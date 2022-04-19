@@ -15,6 +15,8 @@ layout: default
 
 [Evaluate your training success](#evaluate-your-training)
 
+If you want to keep informed about updates and new ideas, just follow [PlanTrainDoc on Facebook](https://www.facebook.com/Plan-Train-Doc-117120153530151).
+
 # Why this App?
 
 When training my dog, I repeatedly ran into the same challenges:
@@ -62,7 +64,7 @@ After the brainstorming phase, where you broke down your goals into small, train
 
 ### Define your sessions
 
-Once you've split your goal into small trainable units, you can start adding training details to each goal. Therefore, click on the green 'Plan' text of the goal you want to train. Do you want to train in small, defined training sessions? Then you can add either a timer or the number of repetitions you want to train as a limit.
+Once you've split your goal into small trainable units, you can start adding training details to each goal. Therefore, click on the green 'Plan' text of the goal you want to train. Do you want to train in small, defined training sessions? Then you can add either a timer or the number of repetitions you want to train as a limit. Having a pre-planned break can be pretty useful to check whether you and your trainee is still on track or you might want to change criteria and / or setup.
 
 <dl>
 <dt>Time based</dt>
@@ -70,7 +72,7 @@ Once you've split your goal into small trainable units, you can start adding tra
 <dt>Repetitions</dt>
 <dd>Alternatively, you can provide a number of trials (success and fails). Again, the Smartphone will vibrate and the training is stopped once you reached this number of repetitions.</dd>
 <dt>No Constraint</dt>
-<dd>Oc course you can also train without any session limits!</dd>
+<dd>Of course you can also train without any session limits!</dd>
 </dl>
 
 ### Add Helpers
@@ -89,6 +91,7 @@ Of course you can click or reset a trial at any time, you don't have to wait unt
 <dd>Choose this if you don't need any helper for this step.</dd>
 </dl>
 
+
 ---
 
 <video controls width="240" height="320" >
@@ -99,9 +102,9 @@ Of course you can click or reset a trial at any time, you don't have to wait unt
 
 The strength of PlanTrainDoc is, that you use the same App for planning and training! This allows to automatically document your training and link the data with your goals. To start the training, you just click on the green 'Train' text. On the next view, you will see a list of all your previous training sessions for this goal. This includes the success of each session and optional comments providing you with a fast overview of the training state of this goal.
 
-Before starting a new session, you can note down the next criterion. Then click 'Train' and start your training! There are two large buttons - 'Click' and 'Reset'. If the trainee fulfills your criterion, press 'Click', if not 'Reset'. The App will automatically store each click/reset with the exact time and criterion. Documentation done while training!
+Before starting a new session, you can note down the next criterion. Then click 'Train' and start your training! There are two large buttons - 'Click' and 'Reset'. If the trainee fulfills your criterion, press 'Click', if not 'Reset'. PlanTrainDoc will automatically store each click/reset with the exact time and criterion. Documentation done while training!
 
-If you've chosen a helper for your training, the current criterion will be shown in the lower left. If you selected a limit for your session (time or repetitions), information will be given in the lower right corner. You can stop your training at each time with the back button. If you are training duration (see video below), you start the timer with a click on 'Start Timer'. This will also transform the button into a clicker. Just a single button, no fiddling with a stopwatch and a clicker.
+If you selected a limit for your session (time or repetitions), information will be given in the lower right corner. You can stop your training at each time with the back button. If you've chosen a helper for your training, the current criterion will be shown in the lower left. If you are training duration (see video below), you start the timer with a click on 'Start Timer'. This will also transform the button into a clicker. Just a single button, no fiddling with a stopwatch and a clicker.
 
 When training a discrimination task, I frequently want to break the pure randomness, e.g. when I realise that one position needs more repetitions. Therefore, in the case of discriminations, you can 'override' PlanTrainDoc and chose a different criterion. Again, this criterion will be stored in PlanTrainDocs database.
 
@@ -115,9 +118,7 @@ Once you've finished your training session (either by pressing the back button o
 
 Having collected all your training data automatically, PlanTrainDoc allows you to evaluate / analyse your training easily. First, you can get some statistics for each training session by clicking on the session. You will get an overview of the successful and failed trials. Furthermore, if PlanTrainDoc provided you with a criterion, you will see a break-down of the success for each criterion. This makes it easy to see whether e.g. there are more fails at larger distances or there is one position in a discrimination which needs more training. And, you can adapt your training immediately - based on real data.
 
-In the goal view, you can click on the green 'Evaluate' text for a goal. This will show you even more data and statistics. First, you will see an evaluation of all training sessions for this goal - again covering the total clicks and resets as well as a break-down according to criteria. In the 'Trend' plot, a click is shown as an increase, a reset as a horizontal line. This plot allows you to easily spot plateaus in your training - and show you, which session / criterion let to this plateau. As one goal can have multiple sub-goals, this view also shows you all the sub-goals, the click vs. reset distribution and the trend. As the trend plot covers all sessions of this goal plus all sub-goals, you get a quick overview of your progress.
-
-Just as a side note: The Trend-Plot is inspired by the figures in B.F. Skinners book 'The behaviour of organisms'
+In the goal view, you can click on the green 'Evaluate' text for a goal. This will show you even more data and statistics. First, you will see an evaluation of all training sessions for this goal - again covering the total clicks and resets as well as a break-down according to criteria. In the 'Trend' plot, a click is shown as an increase, a reset as a horizontal line. This plot allows you to easily spot plateaus in your training - and show you, which session / criterion let to this plateau. As one goal can have multiple sub-goals, this view also shows you all the sub-goals, the click vs. reset distribution and the trend. As the trend plot covers all sessions of this goal plus all sub-goals, you get a quick overview of your progress. Just as a side note: The Trend-Plot is inspired by the figures in B.F. Skinners book 'The behaviour of organisms'
 
 <video controls width="240" height="320" >
 <source src="images/PTD_Stats.mp4">
