@@ -82,7 +82,7 @@ We humans happen to be pretty bad in generating random numbers - sooner or later
 <dl>
 <dt>Duration</dt> 
 <dd>PlanTrainDoc will provide you with a duration for each trial around the value you provide here (in seconds). For 0.1 to 1.5 seconds, the given duration will be constant. For longer durations, it will follow this <a href="https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt">duration scheme</a>
-Of course you can click or reset a trial at any time, you don't have to wait until the timer has finished.
+Of course you can click or reset a trial at any time, you don't have to wait until the timer has finished.</dd>
 <dt>Distance</dt>
 <dd>PlanTrainDoc will provide you with a variable value for the distance at each trial around the value you choose. Steps and values follow this <a href="https://joerg-schultz.github.io/PlanTrainDoc/durationscheme.txt">distance scheme</a></dd>
 <dt>Discrimination</dt>
@@ -90,9 +90,6 @@ Of course you can click or reset a trial at any time, you don't have to wait unt
 <dt>Other Criterion</dt>
 <dd>Choose this if you don't need any helper for this step.</dd>
 </dl>
-
-
----
 
 <video controls width="240" height="320" >
 <source src="images/Planen_Kinntarget_small.mp4">

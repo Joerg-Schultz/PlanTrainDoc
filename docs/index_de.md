@@ -90,8 +90,6 @@ Für Menschen ist es überraschend schwer, wirkliche Zufallsreihen zu generieren
 <dd>Wenn du etwas anderes trainieren willst und keinen Helfer brauchst.</dd>
 </dl>
 
---- 
-
 <video controls width="240" height="320" >
 <source src="images/Planen_Kinntarget_small.mp4">
 </video>
