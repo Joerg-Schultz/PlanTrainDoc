@@ -1,7 +1,9 @@
 package de.tierwohlteam.android.plantraindoc_v1.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -46,6 +48,13 @@ class GoalTreeAdapter(private val selectGoal: (GoalWithPlan) -> Unit)
                 Goal.statusInProgress ->  holder.itemView.context.getString(R.string.status_inprogress)
                 Goal.statusNew ->  holder.itemView.context.getString(R.string.status_new)
                 else -> ""
+            }
+            if (goalWithPlan.goal.youtube.isEmpty()) {
+                btnYoutube.visibility = View.GONE
+            } else {
+                btnYoutube.setOnClickListener {
+                    Toast.makeText(holder.binding.btnYoutube.context, "Show video ${goalWithPlan.goal.youtube}", Toast.LENGTH_LONG).show()
+                }
             }
             if(goalWithPlan.plan == null) {
                 btnAction.text = holder.itemView.context.getText(R.string.plan_verb)
