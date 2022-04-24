@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "09a3b66ff0b01eb7b1e949df819073d9",
+    "identityHash": "ace871c56ac5d8803712421e11fcdc6d",
     "entities": [
       {
         "tableName": "users",
@@ -103,7 +103,7 @@
       },
       {
         "tableName": "goals",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `goal` TEXT NOT NULL, `description` TEXT NOT NULL, `parents` TEXT, `position` INTEGER NOT NULL, `status` TEXT NOT NULL, `created` TEXT NOT NULL, `changed` TEXT NOT NULL, `userID` TEXT NOT NULL, `youtube` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`userID`) REFERENCES `users`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`parents`) REFERENCES `goals`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `goal` TEXT NOT NULL, `description` TEXT NOT NULL, `parents` TEXT, `position` INTEGER NOT NULL, `status` TEXT NOT NULL, `created` TEXT NOT NULL, `changed` TEXT NOT NULL, `userID` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`userID`) REFERENCES `users`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`parents`) REFERENCES `goals`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -156,12 +156,6 @@
           {
             "fieldPath": "userID",
             "columnName": "userID",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "youtube",
-            "columnName": "youtube",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -609,7 +603,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '09a3b66ff0b01eb7b1e949df819073d9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ace871c56ac5d8803712421e11fcdc6d')"
     ]
   }
 }

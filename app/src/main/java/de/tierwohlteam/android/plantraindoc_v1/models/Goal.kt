@@ -54,7 +54,8 @@ data class Goal(
     var status: String = statusNew, //"in progress", "finished", "stopped"
     var created: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
     var changed: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
-    val userID: Uuid
+    val userID: Uuid,
+    val youtube: String = ""
 ) {
     companion object {
         const val path = "/goals"

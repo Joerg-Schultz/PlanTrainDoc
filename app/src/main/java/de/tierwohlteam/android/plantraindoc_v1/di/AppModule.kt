@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.preference.PreferenceManager
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import com.benasher44.uuid.uuidFrom
@@ -55,8 +57,14 @@ object AppModule {
         PTD_DB_NAME
     ) //.allowMainThreadQueries() //devdebug only!!!!
         //.fallbackToDestructiveMigration() // comment out in production
+        .addMigrations(MIGRATION_3_4)
         .build()
 
+    val MIGRATION_3_4 = object : Migration(3, 4) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("ALTER TABLE goals ADD COLUMN youtube TEXT")
+        }
+    }
     @Singleton
     @Provides
     fun provideUserDao(db: PTDdb) = db.userDao()
