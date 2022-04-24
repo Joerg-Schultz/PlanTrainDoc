@@ -54,7 +54,7 @@ object AppModule {
         PTDdb::class.java,
         PTD_DB_NAME
     ) //.allowMainThreadQueries() //devdebug only!!!!
-        .fallbackToDestructiveMigration() // comment out in production
+        //.fallbackToDestructiveMigration() // comment out in production
         .build()
 
     @Singleton
