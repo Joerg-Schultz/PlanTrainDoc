@@ -90,4 +90,5 @@
     <string name="additional_tools">externe Tools (BlueTooth)</string>
     <string name="evaluate">Auswerten</string>
     <string name="no_data">Keine Daten für dieses Ziel</string>
+    <string name="add_youtube_hint">URL YouTube video</string>
 </resources>
