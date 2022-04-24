@@ -55,7 +55,7 @@ data class Goal(
     var created: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
     var changed: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
     val userID: Uuid,
-    val youtube: String = ""
+    var youtube: String = ""
 ) {
     companion object {
         const val path = "/goals"

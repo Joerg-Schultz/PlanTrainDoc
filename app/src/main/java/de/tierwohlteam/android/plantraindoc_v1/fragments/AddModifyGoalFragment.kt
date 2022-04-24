@@ -58,6 +58,7 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
             viewModel.saveNewOrUpdatedGoal(
                 goalText = binding.tiGoal.text.toString(),
                 description = binding.tiDescription.text.toString(),
+                youtube = binding.tiYoutube.text.toString(),
                 status = selectedStatus(),
                 goalWP = viewModel.selectedGoal.value
             )
@@ -124,6 +125,7 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
         val goal = goalWithPlan.goal
         binding.tiGoal.setText(goal.goal)
         binding.tiDescription.setText(goal.description)
+        binding.tiYoutube.setText(goal.youtube)
         when (goal.status) {
             Goal.statusNew -> binding.radioButtonNew.isChecked = true
             Goal.statusInProgress -> binding.radioButtonInprogress.isChecked = true
