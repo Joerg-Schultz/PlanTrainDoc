@@ -62,7 +62,8 @@ object AppModule {
 
     val MIGRATION_3_4 = object : Migration(3, 4) {
         override fun migrate(database: SupportSQLiteDatabase) {
-            database.execSQL("ALTER TABLE goals ADD COLUMN youtube TEXT")
+            database.execSQL("ALTER TABLE goals ADD COLUMN youtube TEXT NOT NULL")
+            database.execSQL("UPDATE goals SET youtube = ''")
         }
     }
     @Singleton
