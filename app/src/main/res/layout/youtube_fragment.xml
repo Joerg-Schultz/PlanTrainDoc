@@ -7,6 +7,13 @@
         android:layout_height="match_parent"
         tools:context=".fragments.YouTubeFragment">
 
+    <TextView
+            android:text="@string/no_video_for_this_goal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/tv_novideo"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     <FrameLayout
             android:id="@+id/youtube_frame_fragment"
             android:layout_width="match_parent"
@@ -15,6 +22,14 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent">
+
+    </FrameLayout>
+    <TextView
+            android:text="Goal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/tv_youtube_goal"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="16dp" android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

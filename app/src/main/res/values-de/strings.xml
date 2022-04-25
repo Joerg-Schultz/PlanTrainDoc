@@ -91,4 +91,6 @@
     <string name="evaluate">Auswerten</string>
     <string name="no_data">Keine Daten für dieses Ziel</string>
     <string name="add_youtube_hint">URL YouTube video</string>
+    <string name="no_video_for_this_goal">Kein Video für dieses Ziel auf YouTube</string>
+    <string name="goal_video">Ziel Video</string>
 </resources>

@@ -31,8 +31,11 @@ class YouTubeFragment : Fragment() {
     ): View {
         _binding = YoutubeFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
+        val goalTitle = viewModel.selectedGoal.value?.goal?.goal ?: ""
+        binding.tvYoutubeGoal.text = goalTitle
         val videoID = viewModel.selectedGoal.value?.goal?.youtube ?: ""
         if (videoID.isNotEmpty()) {
+            binding.tvNovideo.visibility = View.GONE
             val youtubePlayerFragment = YouTubePlayerSupportFragmentX.newInstance()
             youtubePlayerFragment.initialize(API_KEY,
                 object : YouTubePlayer.OnInitializedListener {

@@ -97,7 +97,10 @@
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.SyncServerFragment"
             android:label="@string/synchronize">
     </fragment>
-    <fragment android:id="@+id/youTubeFragment"
-              android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.YouTubeFragment"
-              android:label="youtube_fragment" tools:layout="@layout/youtube_fragment"/>
+
+    <fragment
+            android:id="@+id/youTubeFragment"
+            android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.YouTubeFragment"
+            android:label="@string/goal_video"
+            tools:layout="@layout/youtube_fragment"/>
 </navigation>
