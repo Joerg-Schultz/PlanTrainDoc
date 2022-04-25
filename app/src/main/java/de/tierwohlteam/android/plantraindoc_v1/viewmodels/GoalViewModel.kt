@@ -65,7 +65,11 @@ class GoalViewModel @Inject constructor(
             val goal: Goal = goalWP.goal
             goal.goal = goalText
             goal.description = description
-            goal.youtube = youtube
+            val regexMatchWeb = """^https://\S+?v=(\w+)""".toRegex().find(youtube)
+            var videoID = regexMatchWeb?.groupValues?.last() ?: youtube
+            val regexMatchShort = """https://youtu.be/(\w+)""".toRegex().find(youtube)
+            videoID = regexMatchShort?.groupValues?.last() ?: videoID
+            goal.youtube = videoID
             if (status != null) goal.status = status
             viewModelScope.launch {
                 repository.updateGoal(goal)

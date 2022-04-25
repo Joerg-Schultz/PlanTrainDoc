@@ -21,6 +21,7 @@ import de.tierwohlteam.android.plantraindoc_v1.databinding.AddModifyGoalFragment
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.models.GoalWithPlan
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.YOUTUBE_BASE_URL
 import de.tierwohlteam.android.plantraindoc_v1.others.Status
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.GoalViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -125,7 +126,7 @@ class AddModifyGoalFragment : Fragment(R.layout.add_modify_goal_fragment) {
         val goal = goalWithPlan.goal
         binding.tiGoal.setText(goal.goal)
         binding.tiDescription.setText(goal.description)
-        binding.tiYoutube.setText(goal.youtube)
+        binding.tiYoutube.setText(if (goal.youtube.isNotEmpty()) "$YOUTUBE_BASE_URL${goal.youtube}" else "")
         when (goal.status) {
             Goal.statusNew -> binding.radioButtonNew.isChecked = true
             Goal.statusInProgress -> binding.radioButtonInprogress.isChecked = true

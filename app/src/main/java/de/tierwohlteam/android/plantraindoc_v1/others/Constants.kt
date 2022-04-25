@@ -33,4 +33,6 @@ object Constants {
     val IGNORE_AUTH_URLS = listOf("/register", "/login")
 
     const val LAST_SYNC_DATE = "LAST_SYNC_DATE"
+
+    const val YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v="
 }
