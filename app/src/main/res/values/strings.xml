@@ -93,5 +93,6 @@
     <string name="add_youtube_hint">URL of YouTube video</string>
     <string name="no_video_for_this_goal">No Video for this goal on YouTube</string>
     <string name="goal_video">Goal Video</string>
+    <string name="youtube">YouTube</string>
 
 </resources>
