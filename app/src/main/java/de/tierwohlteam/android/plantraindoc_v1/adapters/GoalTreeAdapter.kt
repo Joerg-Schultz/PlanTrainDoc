@@ -53,7 +53,8 @@ class GoalTreeAdapter(private val selectGoal: (GoalWithPlan) -> Unit)
                 btnYoutube.visibility = View.GONE
             } else {
                 btnYoutube.setOnClickListener {
-                    Toast.makeText(holder.binding.btnYoutube.context, "Show video ${goalWithPlan.goal.youtube}", Toast.LENGTH_LONG).show()
+                    selectGoal(goalWithPlan)
+                    it.findNavController().navigate(R.id.action_goalTreeFragment_to_youTubeFragment)
                 }
             }
             if(goalWithPlan.plan == null) {

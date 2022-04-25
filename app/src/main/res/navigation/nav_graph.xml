@@ -18,6 +18,7 @@
                 app:destination="@id/showTrainingFragment"/>
         <action android:id="@+id/action_goalTreeFragment_to_statisticsFragment"
                 app:destination="@id/statisticsFragment"/>
+        <action android:id="@+id/action_goalTreeFragment_to_youTubeFragment" app:destination="@id/youTubeFragment"/>
     </fragment>
 
     <fragment
@@ -96,4 +97,7 @@
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.SyncServerFragment"
             android:label="@string/synchronize">
     </fragment>
+    <fragment android:id="@+id/youTubeFragment"
+              android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.YouTubeFragment"
+              android:label="youtube_fragment" tools:layout="@layout/youtube_fragment"/>
 </navigation>
