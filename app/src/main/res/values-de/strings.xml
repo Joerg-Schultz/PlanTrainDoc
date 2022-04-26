@@ -97,4 +97,5 @@
     <string name="WLAN_Tools">Externe Tools (WLAN)</string>
     <string name="use_PTDCam">IP Kamera verwenden</string>
     <string name="ip_camera_stream_url">IP Camera Stream URL</string>
+    <string name="preview">Preview</string>
 </resources>

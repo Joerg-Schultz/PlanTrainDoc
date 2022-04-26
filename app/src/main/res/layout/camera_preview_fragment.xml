@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/ptdcam_url"
             android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp">
+            android:layout_marginStart="16dp" android:id="@+id/rg_resolution">
         <RadioButton
                 android:text="640 x 480"
                 android:layout_width="match_parent"
@@ -46,5 +46,11 @@
                 android:hint="@string/ip_camera_stream_url"
                 android:id="@+id/ti_ptdcam_url"/>
     </com.google.android.material.textfield.TextInputLayout>
+    <Button
+            android:text="@string/preview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/btn_preview"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" android:layout_marginBottom="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
