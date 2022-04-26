@@ -1,18 +1,22 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.media.SoundPool
 import android.os.*
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
@@ -20,6 +24,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.Feeder
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_AUTO_CLICK
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_FEEDER
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_PTDCAM
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_LONG
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.VIBRATION_SHORT
 import de.tierwohlteam.android.plantraindoc_v1.others.percentage
@@ -31,7 +36,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import okhttp3.internal.indexOf
 import java.util.*
 import javax.inject.Inject
 
@@ -39,7 +43,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TrainingFragment : Fragment(R.layout.training_fragment) {
     private val trainingViewModel: TrainingViewModel by activityViewModels()
-    private val toolsViewMode: ToolsViewModel by activityViewModels()
+    private val toolsViewModel: ToolsViewModel by activityViewModels()
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
@@ -50,6 +54,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
     private var soundId = 1
     private var tts: TextToSpeech? = null
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = TrainingFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -116,6 +121,11 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 }
             }
         }
+
+        // start PTDCam if activated
+        if (sharedPreferences.getBoolean(KEY_USE_PTDCAM, false) && toolsViewModel.ptdCam != null) {
+            toolsViewModel.startPTDCamRecording(context)
+        }
     }
 
     private fun stopTraining() {
@@ -138,6 +148,8 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        val recorder = toolsViewModel.stopPTDCamRecording(context)
+        Log.d("PTDCAM", "stop recording $recorder")
         trainingViewModel.cleanup()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
@@ -189,7 +201,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         open fun makeExternalSensors() {
             var cooperate: Boolean = false
             lifecycleScope.launchWhenStarted {
-                toolsViewMode.cooperationLightGate.collectLatest { cooperation ->
+                toolsViewModel.cooperationLightGate.collectLatest { cooperation ->
                     if (cooperation) {
                         tts!!.speak("Start", TextToSpeech.QUEUE_FLUSH, null, "")
                         cooperate = true
@@ -344,7 +356,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             // LightGate
             var cooperate: Boolean = false
             viewLifecycleOwner.lifecycleScope.launch {
-                toolsViewMode.cooperationLightGate.collect { cooperation ->
+                toolsViewModel.cooperationLightGate.collect { cooperation ->
                     if (cooperation && !cooperate) {
                         cooperate = true
                         if (!timerIsRunning) {

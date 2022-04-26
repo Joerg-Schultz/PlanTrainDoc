@@ -32,7 +32,7 @@ class CameraPreviewFragment : Fragment() {
 
         if  (toolsViewModel.ptdCamURL.isNotEmpty()) binding.tiPtdcamUrl.hint = toolsViewModel.ptdCamURL
         binding.btnPreview.setOnClickListener {
-            toolsViewModel.startPreview(
+            toolsViewModel.startPTDCamPreview(
                 streamURL = binding.tiPtdcamUrl.text.toString(),
                 resolution = selectedResolution(),
                 previewWindow = binding.mjpegPtdcam,
@@ -42,7 +42,7 @@ class CameraPreviewFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        toolsViewModel.stopPreview(binding.mjpegPtdcam)
+        toolsViewModel.stopPTDCamPreview(binding.mjpegPtdcam)
     }
 
     private fun selectedResolution(): PTDCam.Resolution {
