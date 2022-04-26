@@ -109,5 +109,5 @@
     <fragment android:id="@+id/cameraPreviewFragment"
               android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.CameraPreviewFragment"
               android:label="PTDCam"
-              tools:layout="@layout/fragment_camera_preview"/>
+              tools:layout="@layout/camera_preview_fragment"/>
 </navigation>

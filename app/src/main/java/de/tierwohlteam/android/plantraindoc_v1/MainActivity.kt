@@ -19,6 +19,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_PTDCAM
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_WEB_SERVER
 import javax.inject.Inject
 
@@ -43,7 +45,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener{
         setupActionBarWithNavController(navController, appBarConfiguration)
         sharedPrefs.registerOnSharedPreferenceChangeListener(this)
         with(sharedPrefs.edit()) {
-            putBoolean(Constants.KEY_USE_LIGHT_GATE, false)
+            putBoolean(KEY_USE_LIGHT_GATE, false)
+            putBoolean(KEY_USE_PTDCAM, false)
             apply()
         }
     }
