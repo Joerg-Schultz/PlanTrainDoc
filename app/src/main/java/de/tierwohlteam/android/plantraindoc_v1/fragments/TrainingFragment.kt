@@ -11,17 +11,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.Feeder
+import de.tierwohlteam.android.plantraindoc_v1.models.ipTools.PTDCam
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_AUTO_CLICK
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_FEEDER
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_PTDCAM
@@ -124,7 +123,11 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
         // start PTDCam if activated
         if (sharedPreferences.getBoolean(KEY_USE_PTDCAM, false) && toolsViewModel.ptdCam != null) {
-            toolsViewModel.startPTDCamRecording(context)
+            binding.mjpegPtdcam.visibility = View.VISIBLE
+            toolsViewModel.startPTDCamPreview("url", PTDCam.Resolution.R640x480, binding.mjpegPtdcam)
+            toolsViewModel.startPTDCamRecording(context,binding.mjpegPtdcam)
+        } else {
+            binding.mjpegPtdcam.visibility = View.INVISIBLE
         }
     }
 
@@ -148,7 +151,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        val recorder = toolsViewModel.stopPTDCamRecording(context)
+        val recorder = toolsViewModel.stopPTDCamRecording(context, trainingViewModel.session.id)
         Log.d("PTDCAM", "stop recording $recorder")
         trainingViewModel.cleanup()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED

@@ -27,7 +27,7 @@ class TrainingViewModel @Inject constructor(
     @Named("DurationScheme")
     lateinit var durationScheme : ReinforcementScheme
 
-    private lateinit var session: Session
+     lateinit var session: Session
     private lateinit var constraintTimer: CountDownTimer
     private var currentHelperValue: String? = null
 

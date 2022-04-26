@@ -2,8 +2,14 @@ package de.tierwohlteam.android.plantraindoc_v1.viewmodels
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import com.arthenica.ffmpegkit.FFmpegKit
+import com.arthenica.ffmpegkit.FFmpegSession
+import com.arthenica.ffmpegkit.ReturnCode
+import com.benasher44.uuid.Uuid
 import com.github.niqdev.mjpeg.MjpegRecordingHandler
 import com.github.niqdev.mjpeg.MjpegSurfaceView
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,10 +17,12 @@ import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.LightGate
 import de.tierwohlteam.android.plantraindoc_v1.models.ipTools.PTDCam
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_PTDCAM_URL
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +32,7 @@ class ToolsViewModel @Inject constructor(
 
     var ptdCam: PTDCam? = null
     var ptdCamURL: String = ""
-    private lateinit var recordingHandler: MjpegRecordingHandler
+    private var recordingHandler: MjpegRecordingHandler? = null
     private val _cooperationLightGate: MutableStateFlow<Boolean> = MutableStateFlow(value = false)
     val cooperationLightGate: StateFlow<Boolean> = _cooperationLightGate
 
@@ -57,21 +65,55 @@ class ToolsViewModel @Inject constructor(
         ptdCam?.stopPreview(previewWindow)
     }
 
-    fun startPTDCamRecording(context: Context?) {
+    fun startPTDCamRecording(context: Context?, miniWindow: MjpegSurfaceView) {
         recordingHandler = MjpegRecordingHandler(context!!)
-        if (!recordingHandler.isRecording) {
-            recordingHandler.startRecording()
+        miniWindow.setOnFrameCapturedListener(recordingHandler!!)
+        if (!recordingHandler!!.isRecording) {
+            recordingHandler!!.startRecording()
         }
     }
 
-    fun stopPTDCamRecording(context: Context?): String {
-        return if (recordingHandler.isRecording) {
-            recordingHandler.stopRecording()
+    fun stopPTDCamRecording(context: Context?, sessionId: Uuid): String {
+        return if (recordingHandler != null && recordingHandler!!.isRecording) {
+            recordingHandler!!.stopRecording()
             val videoFiles = context?.getExternalFilesDir(null)!!.listFiles()?.toList() ?: emptyList()
             val newestVideoFile = videoFiles.maxByOrNull { it.lastModified() }
+            if (newestVideoFile !=null && newestVideoFile.name.contains(".mjpeg")) {
+                convertVideo(newestVideoFile, sessionId)
+            }
             newestVideoFile.toString()
         } else {
             "Nothing recorded"
+        }
+    }
+
+    private fun convertVideo(newestVideoFile: File, sessionId: Uuid) {
+        val newestVideo = newestVideoFile.absolutePath
+        val newestVideoFileName = newestVideoFile.name
+        val mp4Video= newestVideo.replace(newestVideoFileName, "$sessionId.mp4")
+        viewModelScope.launch(Dispatchers.IO) {
+            Log.d("FFMPEG", "Start converting $newestVideo to $mp4Video")
+            //val session: FFmpegSession = FFmpegKit.execute("-i file1.mp4 -c:v mpeg4 file2.mp4")
+            val session: FFmpegSession = FFmpegKit.execute("-i $newestVideo $mp4Video")
+            if (ReturnCode.isSuccess(session.getReturnCode())) {
+                // SUCCESS
+                Log.d("FFMPEG", "Converted it!")
+                newestVideoFile.delete()
+            } else if (ReturnCode.isCancel(session.getReturnCode())) {
+                // CANCEL
+                Log.d("FFMPEG", "Canceled it!")
+            } else {
+                // FAILURE
+                Log.d(
+                    "FFMPEG",
+                    java.lang.String.format(
+                        "Command failed with state %s and rc %s.%s",
+                        session.getState(),
+                        session.getReturnCode(),
+                        session.getFailStackTrace()
+                    )
+                )
+            }
         }
     }
 }
