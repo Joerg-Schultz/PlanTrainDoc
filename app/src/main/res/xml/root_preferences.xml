@@ -27,6 +27,14 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/WLAN_Tools">
+        <SwitchPreferenceCompat
+            app:title="@string/use_PTDCam"
+            app:defaultValue="false"
+            app:key="usePTDCam" />
+    </PreferenceCategory>
+
+
     <PreferenceCategory app:title="@string/additional_tools">
         <SwitchPreferenceCompat
                 app:title="@string/useLightGate"
