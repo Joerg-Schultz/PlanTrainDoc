@@ -50,8 +50,9 @@ class GoalTreeAdapter(private val selectGoal: (GoalWithPlan) -> Unit)
                 else -> ""
             }
             if (goalWithPlan.goal.youtube.isEmpty()) {
-                btnYoutube.visibility = View.GONE
+                btnYoutube.visibility = View.INVISIBLE
             } else {
+                btnYoutube.visibility = View.VISIBLE
                 btnYoutube.setOnClickListener {
                     selectGoal(goalWithPlan)
                     it.findNavController().navigate(R.id.action_goalTreeFragment_to_youTubeFragment)
