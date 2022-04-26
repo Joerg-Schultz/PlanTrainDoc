@@ -3,8 +3,10 @@ package de.tierwohlteam.android.plantraindoc_v1.viewmodels
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.niqdev.mjpeg.MjpegSurfaceView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.LightGate
+import de.tierwohlteam.android.plantraindoc_v1.models.ipTools.PTDCam
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_PTDCAM_URL
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +20,7 @@ class ToolsViewModel @Inject constructor(
     private val sharedPrefs: SharedPreferences
 ) : ViewModel() {
 
+    private lateinit var ptdCam: PTDCam
     var ptdCamURL: String = ""
     private val _cooperationLightGate: MutableStateFlow<Boolean> = MutableStateFlow(value = false)
     val cooperationLightGate: StateFlow<Boolean> = _cooperationLightGate
@@ -34,15 +37,20 @@ class ToolsViewModel @Inject constructor(
         ptdCamURL = sharedPrefs.getString(KEY_PTDCAM_URL, "").toString()
     }
 
-    fun previewCamera(streamURL: String, resolution: PTDCamResolution) {
+    fun startPreview(
+        streamURL: String,
+        resolution: PTDCam.Resolution,
+        previewWindow: MjpegSurfaceView,
+    ) {
+        // TODO try / catch ?
+        //ptdCam = PTDCam(streamURL)
+        ptdCam = PTDCam("http://192.168.178.50:81/stream") // TODO
         ptdCamURL = streamURL
-        // TODO
-        // set prefs
-        // start preview
+        //ptdCam.setResolution(resolution)
+        ptdCam.load(previewWindow)
     }
-}
 
-enum class PTDCamResolution {
-    R640x480,
-    R600x800
+    fun stopPreview(previewWindow: MjpegSurfaceView) {
+        ptdCam.stopPreview(previewWindow)
+    }
 }
