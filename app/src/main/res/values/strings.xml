@@ -96,5 +96,7 @@
     <string name="youtube">YouTube</string>
     <string name="WLAN_Tools">External Tools (WLAN)</string>
     <string name="use_PTDCam">use IP Camera</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

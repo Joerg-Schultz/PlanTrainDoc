@@ -75,6 +75,8 @@
                 app:destination="@id/registerServerFragment"/>
         <action android:id="@+id/action_settingsFragment_to_loginServerFragment"
                 app:destination="@id/loginServerFragment"/>
+        <action android:id="@+id/action_settingsFragment_to_cameraPreviewFragment"
+                app:destination="@id/cameraPreviewFragment"/>
     </fragment>
 
     <fragment
@@ -103,4 +105,7 @@
             android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.YouTubeFragment"
             android:label="@string/goal_video"
             tools:layout="@layout/youtube_fragment"/>
+    <fragment android:id="@+id/cameraPreviewFragment"
+              android:name="de.tierwohlteam.android.plantraindoc_v1.fragments.CameraPreviewFragment"
+              android:label="fragment_camera_preview" tools:layout="@layout/fragment_camera_preview"/>
 </navigation>
