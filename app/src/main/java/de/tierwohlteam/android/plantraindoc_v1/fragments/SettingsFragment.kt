@@ -20,6 +20,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.LightGate
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_HAS_ACCOUNT
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_FEEDER
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_PTDCAM
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_WEB_SERVER
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.ServerViewModel
 import kotlinx.coroutines.flow.collect
@@ -78,6 +79,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     Feeder.cancelConnection()
                     Snackbar.make(requireView(), R.string.FeederNotConnected, Snackbar.LENGTH_LONG).show()
                 }
+            }
+            true
+        }
+
+        findPreference<SwitchPreferenceCompat>(KEY_USE_PTDCAM)?.setOnPreferenceChangeListener { preference, newValue ->
+            if (newValue == true) {
+               findNavController().navigate(R.id.action_settingsFragment_to_cameraPreviewFragment)
+            }
+            if (newValue == false) {
             }
             true
         }

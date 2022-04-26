@@ -20,6 +20,7 @@ object Constants {
     const val KEY_USE_LIGHT_GATE = "useLightGate"
     const val KEY_USE_AUTO_CLICK = "useAutoClick" //only enabled with lightGate
     const val KEY_USE_FEEDER = "useFeeder"
+    const val KEY_USE_PTDCAM = "usePTDCam"
 
     const val FIRST_USAGE = "FIRST_USAGE"
     const val FIRST_GOAL = "FIRST_GOAL"
