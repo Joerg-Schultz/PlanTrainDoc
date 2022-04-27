@@ -1,6 +1,8 @@
 package de.tierwohlteam.android.plantraindoc_v1.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import android.widget.Toast
@@ -15,8 +17,10 @@ import de.tierwohlteam.android.plantraindoc_v1.models.Session
 import de.tierwohlteam.android.plantraindoc_v1.models.SessionWithRelations
 import de.tierwohlteam.android.plantraindoc_v1.others.percentage
 
-class SessionListAdapter(private val addComment: (Session) -> Unit,
-private val setStatsSession: (Session) -> Unit) : RecyclerView.Adapter<SessionListAdapter.SessionViewHolder>()  {
+class SessionListAdapter(private val context: Context,
+                         private val addComment: (Session) -> Unit,
+                         private val setStatsSession: (Session) -> Unit)
+    : RecyclerView.Adapter<SessionListAdapter.SessionViewHolder>()  {
 
     // generate a diff list to update only changed items in the RecView
     private val diffCallback = object : DiffUtil.ItemCallback<SessionWithRelations>(){
@@ -78,5 +82,10 @@ private val setStatsSession: (Session) -> Unit) : RecyclerView.Adapter<SessionLi
             setStatsSession(session)
             holderView.findNavController().navigate(R.id.action_showTrainingFragment_to_sessionStatisticsFragment)
         }
+
+        // Show Video icon, if file present
+        val sessionVideo = "${session.id}.mp4"
+        val videoFiles = context.getExternalFilesDir(null)!!.listFiles()?.toList() ?: emptyList()
+        holder.binding.imgVideo.visibility = if (sessionVideo in videoFiles.map { it.name }) VISIBLE else INVISIBLE
     }
 }

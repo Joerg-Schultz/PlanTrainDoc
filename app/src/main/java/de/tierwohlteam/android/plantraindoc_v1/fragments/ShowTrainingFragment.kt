@@ -72,7 +72,7 @@ class ShowTrainingFragment : Fragment(R.layout.show_training_fragment) {
 
     private fun setupRecyclerView() {
         binding.rvSessionlist.apply {
-            sessionListAdapter = SessionListAdapter({ session: Session ->
+            sessionListAdapter = SessionListAdapter(context, { session: Session ->
                 trainingViewModel.setCommentedSession(
                     session
                 )
