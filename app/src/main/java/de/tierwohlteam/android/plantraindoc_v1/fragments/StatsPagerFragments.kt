@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.MediaController
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -22,6 +23,7 @@ import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsGoalClicksBindin
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsGoalValuesBinding
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsSubGoalsBinding
 import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsTimeCourseBinding
+import de.tierwohlteam.android.plantraindoc_v1.databinding.StatsVideoBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.Goal
 import de.tierwohlteam.android.plantraindoc_v1.models.Plan
 import de.tierwohlteam.android.plantraindoc_v1.others.LineChartMarkerView
@@ -458,6 +460,48 @@ class TimeCourseFragment : Fragment() {
             legend.isEnabled = false
             description.isEnabled = false
             extraBottomOffset = 16F
+        }
+    }
+}
+
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
+@AndroidEntryPoint
+class VideoFragment : Fragment() {
+
+    private val statisticsViewModel: StatisticsViewModel by activityViewModels()
+
+    private var _binding: StatsVideoBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = StatsVideoBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val session = statisticsViewModel.sessionList.value.first() //Check that there is only one session?
+        val sessionVideo = "${session.id}.mp4"
+        val videoFiles = context?.getExternalFilesDir(null)!!.listFiles()?.toList() ?: emptyList()
+        val videoFile = videoFiles.firstOrNull() { it.name == sessionVideo }
+        if (videoFile != null) {
+            binding.tvNosessionvideo.visibility = View.INVISIBLE
+            val mediaController = MediaController(context)
+            binding.videoView.apply {
+                visibility = View.VISIBLE
+                setMediaController(mediaController)
+                setVideoPath(videoFile.path)
+                requestFocus()
+                start()
+            }
+        } else {
+            binding.tvNosessionvideo.visibility = View.VISIBLE
+            binding.videoView.visibility = View.INVISIBLE
         }
     }
 }

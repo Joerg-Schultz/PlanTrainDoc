@@ -98,4 +98,6 @@
     <string name="use_PTDCam">IP Kamera verwenden</string>
     <string name="ip_camera_stream_url">IP Camera Stream URL</string>
     <string name="preview">Preview</string>
+    <string name="no_video_for_this_training">Kein Video für dieses Training</string>
+    <string name="video">Video</string>
 </resources>

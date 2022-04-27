@@ -23,7 +23,7 @@ class StatisticsViewModel @Inject constructor(
     var goalList: StateFlow<List<GoalTreeItem>> = _goalList
 
     private var _sessionList = MutableStateFlow<List<Session>> (emptyList())
-
+    var sessionList: StateFlow<List<Session>> = _sessionList
 
     private var _clickResetCounterGoalRecursive = MutableStateFlow<Resource<Pair<Int, Int>?>> (Resource.loading(null))
     var clickResetCounterGoalRecursive: StateFlow<Resource<Pair<Int, Int>?>> = _clickResetCounterGoalRecursive

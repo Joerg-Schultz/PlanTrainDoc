@@ -89,5 +89,6 @@ class SessionStatisticsFragment : StatisticsFragment() {
         mapOf(
             getString(R.string.click) to ClicksFragment.newInstance(level = StatisticLevel.SESSION),
             getString(R.string.values) to ValuesFragment.newInstance(level = StatisticLevel.SESSION),
+            getString(R.string.video) to VideoFragment()
             )
 }
