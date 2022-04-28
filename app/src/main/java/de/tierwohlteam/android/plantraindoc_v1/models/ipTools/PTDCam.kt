@@ -2,7 +2,12 @@ package de.tierwohlteam.android.plantraindoc_v1.models.ipTools
 
 import android.content.Context
 import android.util.Log
+import com.arthenica.ffmpegkit.FFmpegKit
+import com.arthenica.ffmpegkit.FFmpegSession
+import com.arthenica.ffmpegkit.ReturnCode
 import com.github.niqdev.mjpeg.*
+import kotlinx.coroutines.coroutineScope
+import java.io.File
 import kotlin.concurrent.thread
 
 class PTDCam(private val streamURL: String) {
@@ -18,6 +23,7 @@ class PTDCam(private val streamURL: String) {
                 { inputStream: MjpegInputStream ->
                     previewWindow.apply {
                         setSource(inputStream)
+                        //setDisplayMode(DisplayMode.BEST_FIT)
                         setDisplayMode(DisplayMode.SCALE_FIT)
                     }
                 }
@@ -40,6 +46,33 @@ class PTDCam(private val streamURL: String) {
             previewWindow.stopPlayback()
         }
     }
+
+    suspend fun convertToMp4(mjpegVideo: File, newName: String) : Boolean =
+        coroutineScope {
+            val fullPath = mjpegVideo.absolutePath
+            val mp4Path = fullPath.replace(mjpegVideo.name, newName)
+            val session: FFmpegSession = FFmpegKit.execute("-i $fullPath $mp4Path")
+            if (ReturnCode.isSuccess(session.returnCode)) {
+                mjpegVideo.delete()
+                return@coroutineScope true
+            } else if (ReturnCode.isCancel(session.returnCode)) {
+                Log.d("FFMPEG", "Canceled conversion of ${mjpegVideo.name}!")
+                return@coroutineScope false
+            } else {
+                // FAILURE
+                Log.d(
+                    "FFMPEG",
+                    java.lang.String.format(
+                        "Command failed with state %s and rc %s.%s",
+                        session.state,
+                        session.returnCode,
+                        session.failStackTrace
+                    )
+                )
+                return@coroutineScope false
+            }
+        }
+
 
     enum class Resolution {
         R640x480,

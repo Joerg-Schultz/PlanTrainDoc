@@ -84,6 +84,7 @@ class SessionListAdapter(private val context: Context,
         }
 
         // Show Video icon, if file present
+        // TODO The video of the newest session still gets converted while this is already show => No video icon here
         val sessionVideo = "${session.id}.mp4"
         val videoFiles = context.getExternalFilesDir(null)!!.listFiles()?.toList() ?: emptyList()
         holder.binding.imgVideo.visibility = if (sessionVideo in videoFiles.map { it.name }) VISIBLE else INVISIBLE

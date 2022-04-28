@@ -88,32 +88,8 @@ class ToolsViewModel @Inject constructor(
     }
 
     private fun convertVideo(newestVideoFile: File, sessionId: Uuid) {
-        val newestVideo = newestVideoFile.absolutePath
-        val newestVideoFileName = newestVideoFile.name
-        val mp4Video= newestVideo.replace(newestVideoFileName, "$sessionId.mp4")
         viewModelScope.launch(Dispatchers.IO) {
-            Log.d("FFMPEG", "Start converting $newestVideo to $mp4Video")
-            //val session: FFmpegSession = FFmpegKit.execute("-i file1.mp4 -c:v mpeg4 file2.mp4")
-            val session: FFmpegSession = FFmpegKit.execute("-i $newestVideo $mp4Video")
-            if (ReturnCode.isSuccess(session.getReturnCode())) {
-                // SUCCESS
-                Log.d("FFMPEG", "Converted it!")
-                newestVideoFile.delete()
-            } else if (ReturnCode.isCancel(session.getReturnCode())) {
-                // CANCEL
-                Log.d("FFMPEG", "Canceled it!")
-            } else {
-                // FAILURE
-                Log.d(
-                    "FFMPEG",
-                    java.lang.String.format(
-                        "Command failed with state %s and rc %s.%s",
-                        session.getState(),
-                        session.getReturnCode(),
-                        session.getFailStackTrace()
-                    )
-                )
-            }
+            ptdCam?.convertToMp4(newestVideoFile, "$sessionId.mp4")
         }
     }
 }
