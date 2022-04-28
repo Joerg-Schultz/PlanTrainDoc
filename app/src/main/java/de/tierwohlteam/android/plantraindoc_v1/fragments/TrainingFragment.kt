@@ -30,6 +30,7 @@ import de.tierwohlteam.android.plantraindoc_v1.others.percentage
 import de.tierwohlteam.android.plantraindoc_v1.others.prettyStringFloat
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.ToolsViewModel
 import de.tierwohlteam.android.plantraindoc_v1.viewmodels.TrainingViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
@@ -151,8 +152,12 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        val recorder = toolsViewModel.stopPTDCamRecording(context, trainingViewModel.session.id)
-        Log.d("PTDCAM", "stop recording $recorder")
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            val recorder = toolsViewModel.stopPTDCamRecording(context, trainingViewModel.session.id)
+            Log.d("PTDCAM", "stop recording $recorder")
+        }
+
         trainingViewModel.cleanup()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }

@@ -66,30 +66,19 @@ class ToolsViewModel @Inject constructor(
     }
 
     fun startPTDCamRecording(context: Context?, miniWindow: MjpegSurfaceView) {
-        recordingHandler = MjpegRecordingHandler(context!!)
-        miniWindow.setOnFrameCapturedListener(recordingHandler!!)
-        if (!recordingHandler!!.isRecording) {
-            recordingHandler!!.startRecording()
+        if (context != null) {
+            ptdCam?.startRecording(context, miniWindow)
         }
     }
 
-    fun stopPTDCamRecording(context: Context?, sessionId: Uuid): String {
-        return if (recordingHandler != null && recordingHandler!!.isRecording) {
-            recordingHandler!!.stopRecording()
-            val videoFiles = context?.getExternalFilesDir(null)!!.listFiles()?.toList() ?: emptyList()
-            val newestVideoFile = videoFiles.maxByOrNull { it.lastModified() }
-            if (newestVideoFile !=null && newestVideoFile.name.contains(".mjpeg")) {
-                convertVideo(newestVideoFile, sessionId)
-            }
-            newestVideoFile.toString()
+    suspend fun stopPTDCamRecording(context: Context?, sessionId: Uuid): String {
+        ptdCam?.stopRecording()
+        val newestVideoFile = ptdCam?.newestVideo(context)
+        return if (newestVideoFile != null) {
+            ptdCam?.convertToMp4(newestVideoFile, "$sessionId.mp4")
+            newestVideoFile.name
         } else {
             "Nothing recorded"
-        }
-    }
-
-    private fun convertVideo(newestVideoFile: File, sessionId: Uuid) {
-        viewModelScope.launch(Dispatchers.IO) {
-            ptdCam?.convertToMp4(newestVideoFile, "$sessionId.mp4")
         }
     }
 }

@@ -36,15 +36,25 @@ class PTDCam(private val streamURL: String) {
         TODO("Not yet implemented")
     }
 
-    fun startPreview(previewWindow: MjpegSurfaceView, context: Context?) {
-        recordingHandler = context?.let { MjpegRecordingHandler(it) }!!
-        previewWindow.setOnFrameCapturedListener(recordingHandler)
-    }
-
     fun stopPreview(previewWindow: MjpegSurfaceView) {
         thread {
             previewWindow.stopPlayback()
         }
+    }
+
+    fun startRecording(context: Context, window: MjpegSurfaceView) {
+        recordingHandler = MjpegRecordingHandler(context)
+        window.setOnFrameCapturedListener(recordingHandler)
+        recordingHandler.startRecording()
+    }
+
+    fun stopRecording() {
+        if (recordingHandler.isRecording) recordingHandler.stopRecording()
+    }
+
+    fun newestVideo(context: Context?) : File? {
+        val videoFiles = context?.getExternalFilesDir(null)!!.listFiles()?.toList() ?: emptyList()
+        return videoFiles.filter { it.name.contains(".mjpeg") } .maxByOrNull { it.lastModified() }
     }
 
     suspend fun convertToMp4(mjpegVideo: File, newName: String) : Boolean =
