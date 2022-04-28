@@ -15,6 +15,7 @@ import com.github.niqdev.mjpeg.MjpegSurfaceView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.LightGate
 import de.tierwohlteam.android.plantraindoc_v1.models.ipTools.PTDCam
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_PTDCAM_URL
 import kotlinx.coroutines.Dispatchers
@@ -31,8 +32,8 @@ class ToolsViewModel @Inject constructor(
 ) : ViewModel() {
 
     var ptdCam: PTDCam? = null
-    var ptdCamURL: String = ""
-    private var recordingHandler: MjpegRecordingHandler? = null
+    var ptdCamURL: String
+
     private val _cooperationLightGate: MutableStateFlow<Boolean> = MutableStateFlow(value = false)
     val cooperationLightGate: StateFlow<Boolean> = _cooperationLightGate
 
@@ -53,10 +54,11 @@ class ToolsViewModel @Inject constructor(
         resolution: PTDCam.Resolution,
         previewWindow: MjpegSurfaceView,
     ) {
-        // TODO try / catch ?
-        //ptdCam = PTDCam(streamURL)
-        ptdCam = PTDCam("http://192.168.178.50:81/stream") // TODO
-        ptdCamURL = streamURL
+        if (streamURL != ptdCamURL) {
+            sharedPrefs.edit().putString(KEY_PTDCAM_URL, streamURL)
+            ptdCamURL = streamURL
+        }
+        ptdCam = PTDCam(ptdCamURL)
         //ptdCam.setResolution(resolution)
         ptdCam!!.load(previewWindow)
     }

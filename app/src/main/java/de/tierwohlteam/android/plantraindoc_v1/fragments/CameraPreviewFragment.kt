@@ -1,6 +1,7 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,7 @@ class CameraPreviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if  (toolsViewModel.ptdCamURL.isNotEmpty()) binding.tiPtdcamUrl.hint = toolsViewModel.ptdCamURL
+        if  (toolsViewModel.ptdCamURL.isNotEmpty()) binding.tiPtdcamUrl.setText(toolsViewModel.ptdCamURL)
         binding.btnPreview.setOnClickListener {
             toolsViewModel.startPTDCamPreview(
                 streamURL = binding.tiPtdcamUrl.text.toString(),
