@@ -15,17 +15,20 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 
-class PTDCam(ptdCamURL: String) {
+class PTDCam(ptdCamURL: String,
+             var resolution: Resolution = Resolution.R640x480,
+             var vFlip: Boolean = true
+) {
 
     private val timeOut = 5 //sec
     private lateinit var recordingHandler: MjpegRecordingHandler
     private val streamURL = "$ptdCamURL:81/stream"
-    private var resolution = Resolution.R640x480
 
     private val controlURL = "$ptdCamURL/control"
-    private var vflip = true
 
-    fun load(previewWindow: MjpegSurfaceView) {
+    suspend fun load(previewWindow: MjpegSurfaceView) {
+        setResolution()
+        setVerticalFlip()
         Mjpeg.newInstance()
             .credential("Ich", "1234")
             .open(streamURL, timeOut)
@@ -42,16 +45,14 @@ class PTDCam(ptdCamURL: String) {
             }
     }
 
-    suspend fun setResolution(newResolution: Resolution) {
+    private suspend fun setResolution() {
         val response: HttpResponse = HttpClient(Android).request(controlURL) {
             parameter("var", "framesize")
-            parameter("val", newResolution.esp32Size.toString())
+            parameter("val", resolution.esp32Size.toString())
         }
-        if (response.status == HttpStatusCode.OK) resolution = newResolution
     }
 
-    suspend fun verticalFlip(vFlip: Boolean) {
-        vflip = vFlip
+    private suspend fun setVerticalFlip() {
         val response: HttpResponse = HttpClient(Android).request(controlURL) {
             parameter("var", "vflip")
             parameter("val", if (vFlip) "1" else "0" )

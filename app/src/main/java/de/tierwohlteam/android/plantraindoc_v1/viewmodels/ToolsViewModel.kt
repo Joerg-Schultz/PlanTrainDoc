@@ -46,16 +46,16 @@ class ToolsViewModel @Inject constructor(
         previewWindow: MjpegSurfaceView,
         vflip: Boolean = true,
     ) {
-        Log.d("PTDCAM", "current ptdcam url $ptdCamURL")
         if (streamURL.isNotEmpty() && streamURL != ptdCamURL) {
             sharedPrefs.edit().putString(KEY_PTDCAM_URL, streamURL).apply()
-            Log.d("PTDCAM", "wrote $streamURL to prefs")
             ptdCamURL = streamURL
         }
         if (ptdCam == null) ptdCam = PTDCam(ptdCamURL)
+        ptdCam!!.apply {
+            this.resolution = resolution
+            this.vFlip = vflip
+        }
         viewModelScope.launch {
-            ptdCam!!.setResolution(resolution)
-            ptdCam!!.verticalFlip(vflip)
             ptdCam!!.load(previewWindow)
         }
     }
