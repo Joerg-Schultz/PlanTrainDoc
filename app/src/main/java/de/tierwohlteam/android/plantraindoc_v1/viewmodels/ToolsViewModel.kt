@@ -42,18 +42,20 @@ class ToolsViewModel @Inject constructor(
 
     fun startPTDCamPreview(
         streamURL: String,
-        resolution: PTDCam.Resolution,
         previewWindow: MjpegSurfaceView,
+        resolution: PTDCam.Resolution = PTDCam.Resolution.DEFAULT,
         vflip: Boolean = true,
     ) {
         if (streamURL.isNotEmpty() && streamURL != ptdCamURL) {
             sharedPrefs.edit().putString(KEY_PTDCAM_URL, streamURL).apply()
             ptdCamURL = streamURL
         }
-        if (ptdCam == null) ptdCam = PTDCam(ptdCamURL)
-        ptdCam!!.apply {
-            this.resolution = resolution
-            this.vFlip = vflip
+        if (ptdCam == null) {
+            ptdCam = PTDCam(ptdCamURL)
+            ptdCam!!.apply {
+                this.resolution = resolution
+                this.vFlip = vflip
+            }
         }
         viewModelScope.launch {
             ptdCam!!.load(previewWindow)

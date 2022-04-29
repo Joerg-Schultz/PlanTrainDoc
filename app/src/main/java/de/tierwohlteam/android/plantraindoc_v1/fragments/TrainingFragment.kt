@@ -128,7 +128,6 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             binding.mjpegPtdcam.visibility = View.VISIBLE
             toolsViewModel.startPTDCamPreview(
                 sharedPreferences.getString(KEY_PTDCAM_URL, "")!!,
-                PTDCam.Resolution.DEFAULT,
                 binding.mjpegPtdcam,
             )
             toolsViewModel.startPTDCamRecording(context,binding.mjpegPtdcam)
