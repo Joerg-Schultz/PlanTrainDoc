@@ -126,11 +126,10 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         // start PTDCam if activated
         if (sharedPreferences.getBoolean(KEY_USE_PTDCAM, false) && toolsViewModel.ptdCam != null) {
             binding.mjpegPtdcam.visibility = View.VISIBLE
-            toolsViewModel.startPTDCamPreview(
-                sharedPreferences.getString(KEY_PTDCAM_URL, "")!!,
-                binding.mjpegPtdcam,
+            toolsViewModel.startPTDCamWindow(
+                window = binding.mjpegPtdcam,
             )
-            toolsViewModel.startPTDCamRecording(context,binding.mjpegPtdcam)
+            toolsViewModel.startPTDCamRecording(context)
         } else {
             binding.mjpegPtdcam.visibility = View.INVISIBLE
         }

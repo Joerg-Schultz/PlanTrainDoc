@@ -12,6 +12,7 @@ import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.LightGate
 import de.tierwohlteam.android.plantraindoc_v1.models.ipTools.PTDCam
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_PTDCAM_URL
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -24,7 +25,6 @@ class ToolsViewModel @Inject constructor(
 ) : ViewModel() {
 
     var ptdCam: PTDCam? = null
-    var ptdCamURL: String = sharedPrefs.getString(KEY_PTDCAM_URL, "")!!
 
     private val _cooperationLightGate: MutableStateFlow<Boolean> = MutableStateFlow(value = false)
     val cooperationLightGate: StateFlow<Boolean> = _cooperationLightGate
@@ -40,35 +40,41 @@ class ToolsViewModel @Inject constructor(
         }
     }
 
-    fun startPTDCamPreview(
-        streamURL: String,
-        previewWindow: MjpegSurfaceView,
-        resolution: PTDCam.Resolution = PTDCam.Resolution.DEFAULT,
-        vflip: Boolean = true,
+    fun startPTDCamWindow(
+        streamURL: String = "",
+        window: MjpegSurfaceView
     ) {
-        if (streamURL.isNotEmpty() && streamURL != ptdCamURL) {
+        val currentStreamURL = if (streamURL.isNotEmpty()) {
             sharedPrefs.edit().putString(KEY_PTDCAM_URL, streamURL).apply()
-            ptdCamURL = streamURL
-        }
-        if (ptdCam == null) {
-            ptdCam = PTDCam(ptdCamURL)
-            ptdCam!!.apply {
-                this.resolution = resolution
-                this.vFlip = vflip
-            }
-        }
+            streamURL
+        } else
+            sharedPrefs.getString(KEY_PTDCAM_URL, "")!!
+        if (ptdCam == null) stopPTDCam()
+        ptdCam = PTDCam(currentStreamURL)
         viewModelScope.launch {
-            ptdCam!!.load(previewWindow)
+            ptdCam!!.showInWindow(window)
         }
     }
 
-    fun stopPTDCamPreview(previewWindow: MjpegSurfaceView) {
-        ptdCam?.stopPreview(previewWindow)
+    fun setPTDCamResolution(resolution: PTDCam.Resolution) {
+        viewModelScope.launch(Dispatchers.IO) {
+            ptdCam?.setResolution(resolution)
+        }
     }
 
-    fun startPTDCamRecording(context: Context?, miniWindow: MjpegSurfaceView) {
+    fun setPTDCamVFlip(flip: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            ptdCam?.setVerticalFlip(flip)
+        }
+    }
+
+    fun stopPTDCam() {
+        ptdCam?.stop()
+    }
+
+    fun startPTDCamRecording(context: Context?) {
         if (context != null) {
-            ptdCam?.startRecording(context, miniWindow)
+            ptdCam?.startRecording(context)
         }
     }
 

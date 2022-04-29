@@ -15,26 +15,22 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 
-class PTDCam(ptdCamURL: String,
-             var resolution: Resolution = Resolution.R640x480,
-             var vFlip: Boolean = true
-) {
+class PTDCam(val ptdCamURL: String) {
 
     private val timeOut = 5 //sec
     private lateinit var recordingHandler: MjpegRecordingHandler
+    private lateinit var displayWindow: MjpegSurfaceView
     private val streamURL = "$ptdCamURL:81/stream"
-
     private val controlURL = "$ptdCamURL/control"
 
-    suspend fun load(previewWindow: MjpegSurfaceView) {
-        setResolution()
-        setVerticalFlip()
+    fun showInWindow(window: MjpegSurfaceView) {
+        displayWindow = window
         Mjpeg.newInstance()
             .credential("Ich", "1234")
             .open(streamURL, timeOut)
             .subscribe(
                 { inputStream: MjpegInputStream ->
-                    previewWindow.apply {
+                    displayWindow.apply {
                         setSource(inputStream)
                         //setDisplayMode(DisplayMode.BEST_FIT)
                         setDisplayMode(DisplayMode.SCALE_FIT)
@@ -45,29 +41,30 @@ class PTDCam(ptdCamURL: String,
             }
     }
 
-    private suspend fun setResolution() {
+    suspend fun setResolution(resolution: Resolution = Resolution.DEFAULT) {
         val response: HttpResponse = HttpClient(Android).request(controlURL) {
             parameter("var", "framesize")
             parameter("val", resolution.esp32Size.toString())
         }
     }
 
-    private suspend fun setVerticalFlip() {
+    suspend fun setVerticalFlip(vFlip: Boolean = true) {
         val response: HttpResponse = HttpClient(Android).request(controlURL) {
             parameter("var", "vflip")
             parameter("val", if (vFlip) "1" else "0" )
         }
     }
 
-    fun stopPreview(previewWindow: MjpegSurfaceView) {
+    fun stop() {
         thread {
-            previewWindow.stopPlayback()
+            displayWindow.stopPlayback()
+            displayWindow.clearStream()
         }
     }
 
-    fun startRecording(context: Context, window: MjpegSurfaceView) {
+    fun startRecording(context: Context) {
         recordingHandler = MjpegRecordingHandler(context)
-        window.setOnFrameCapturedListener(recordingHandler)
+        displayWindow.setOnFrameCapturedListener(recordingHandler)
         recordingHandler.startRecording()
     }
 
