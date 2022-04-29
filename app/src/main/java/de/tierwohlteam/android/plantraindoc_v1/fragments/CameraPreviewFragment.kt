@@ -62,11 +62,11 @@ class CameraPreviewFragment : Fragment() {
             previewRunning = ! previewRunning
         }
 
-        binding.rgResolution.setOnCheckedChangeListener { group, checkedId ->
+        binding.rgResolution.setOnCheckedChangeListener { _, checkedId ->
             val resolution = when (checkedId) {
                 R.id.rb_640480 -> PTDCam.Resolution.R640x480
-                R.id.rb_800600 -> PTDCam.Resolution.R600x800
-                else -> PTDCam.Resolution.R640x480
+                R.id.rb_800600 -> PTDCam.Resolution.R800x600
+                else -> PTDCam.Resolution.DEFAULT
             }
             toolsViewModel.setPTDCamResolution(resolution)
         }

@@ -104,9 +104,23 @@ class PTDCam(val ptdCamURL: String) {
         }
 
 
+    /**
+    10 UXGA(1600×1200)
+    9 SXGA(1280×1024)
+    8 XGA(1024×768)
+    7 SVGA(800×600)
+    6 VGA(640×480)
+    5 CIF(400×296)
+    4 QVGA(320×240)
+    3 HQVGA(240×176)
+    0 QQVGA(160×120)
+     */
     enum class Resolution(val esp32Size: Int) {
+        R320x240(4),
+        R400x296(5),
         R640x480(6),
-        R600x800(7),
+        R800x600(7),
+        R1024x768(8),
         DEFAULT(6)
     }
 
