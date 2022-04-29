@@ -134,5 +134,6 @@ dependencies {
     implementation 'com.github.niqdev:ipcam-view:2.3.4'
     implementation 'com.arthenica:ffmpeg-kit-video:4.5.1'
 
-
+    // ktor httpclient for IPCamera (maybe convert Retrofit to ktor?)
+    implementation "io.ktor:ktor-client-android:1.6.8"
 }

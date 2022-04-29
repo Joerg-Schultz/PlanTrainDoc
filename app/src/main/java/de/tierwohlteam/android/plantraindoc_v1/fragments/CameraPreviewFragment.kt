@@ -1,7 +1,6 @@
 package de.tierwohlteam.android.plantraindoc_v1.fragments
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +36,7 @@ class CameraPreviewFragment : Fragment() {
                 streamURL = binding.tiPtdcamUrl.text.toString(),
                 resolution = selectedResolution(),
                 previewWindow = binding.mjpegPtdcam,
+                vflip = binding.switchVflip.isChecked
             )
         }
     }

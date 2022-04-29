@@ -4,26 +4,18 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
-import com.arthenica.ffmpegkit.FFmpegKit
-import com.arthenica.ffmpegkit.FFmpegSession
-import com.arthenica.ffmpegkit.ReturnCode
 import com.benasher44.uuid.Uuid
-import com.github.niqdev.mjpeg.MjpegRecordingHandler
 import com.github.niqdev.mjpeg.MjpegSurfaceView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.LightGate
 import de.tierwohlteam.android.plantraindoc_v1.models.ipTools.PTDCam
-import de.tierwohlteam.android.plantraindoc_v1.others.Constants
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_PTDCAM_URL
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,7 +24,7 @@ class ToolsViewModel @Inject constructor(
 ) : ViewModel() {
 
     var ptdCam: PTDCam? = null
-    var ptdCamURL: String
+    var ptdCamURL: String = sharedPrefs.getString(KEY_PTDCAM_URL, "")!!
 
     private val _cooperationLightGate: MutableStateFlow<Boolean> = MutableStateFlow(value = false)
     val cooperationLightGate: StateFlow<Boolean> = _cooperationLightGate
@@ -46,21 +38,26 @@ class ToolsViewModel @Inject constructor(
                 }
             }
         }
-        ptdCamURL = sharedPrefs.getString(KEY_PTDCAM_URL, "").toString()
     }
 
     fun startPTDCamPreview(
         streamURL: String,
         resolution: PTDCam.Resolution,
         previewWindow: MjpegSurfaceView,
+        vflip: Boolean = true,
     ) {
-        if (streamURL != ptdCamURL) {
-            sharedPrefs.edit().putString(KEY_PTDCAM_URL, streamURL)
+        Log.d("PTDCAM", "current ptdcam url $ptdCamURL")
+        if (streamURL.isNotEmpty() && streamURL != ptdCamURL) {
+            sharedPrefs.edit().putString(KEY_PTDCAM_URL, streamURL).apply()
+            Log.d("PTDCAM", "wrote $streamURL to prefs")
             ptdCamURL = streamURL
         }
-        ptdCam = PTDCam(ptdCamURL)
-        //ptdCam.setResolution(resolution)
-        ptdCam!!.load(previewWindow)
+        if (ptdCam == null) ptdCam = PTDCam(ptdCamURL)
+        viewModelScope.launch {
+            ptdCam!!.setResolution(resolution)
+            ptdCam!!.verticalFlip(vflip)
+            ptdCam!!.load(previewWindow)
+        }
     }
 
     fun stopPTDCamPreview(previewWindow: MjpegSurfaceView) {

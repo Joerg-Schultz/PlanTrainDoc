@@ -21,6 +21,7 @@ import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBindi
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.Feeder
 import de.tierwohlteam.android.plantraindoc_v1.models.ipTools.PTDCam
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_PTDCAM_URL
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_AUTO_CLICK
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_FEEDER
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_PTDCAM
@@ -125,7 +126,11 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
         // start PTDCam if activated
         if (sharedPreferences.getBoolean(KEY_USE_PTDCAM, false) && toolsViewModel.ptdCam != null) {
             binding.mjpegPtdcam.visibility = View.VISIBLE
-            toolsViewModel.startPTDCamPreview("url", PTDCam.Resolution.R640x480, binding.mjpegPtdcam)
+            toolsViewModel.startPTDCamPreview(
+                sharedPreferences.getString(KEY_PTDCAM_URL, "")!!,
+                PTDCam.Resolution.DEFAULT,
+                binding.mjpegPtdcam,
+            )
             toolsViewModel.startPTDCamRecording(context,binding.mjpegPtdcam)
         } else {
             binding.mjpegPtdcam.visibility = View.INVISIBLE

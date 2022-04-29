@@ -9,11 +9,21 @@ import com.github.niqdev.mjpeg.*
 import kotlinx.coroutines.coroutineScope
 import java.io.File
 import kotlin.concurrent.thread
+import io.ktor.client.*
+import io.ktor.client.engine.android.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 
-class PTDCam(private val streamURL: String) {
+class PTDCam(ptdCamURL: String) {
 
     private val timeOut = 5 //sec
     private lateinit var recordingHandler: MjpegRecordingHandler
+    private val streamURL = "$ptdCamURL:81/stream"
+    private var resolution = Resolution.R640x480
+
+    private val controlURL = "$ptdCamURL/control"
+    private var vflip = true
 
     fun load(previewWindow: MjpegSurfaceView) {
         Mjpeg.newInstance()
@@ -32,8 +42,20 @@ class PTDCam(private val streamURL: String) {
             }
     }
 
-    fun setResolution(resolution: Resolution) {
-        TODO("Not yet implemented")
+    suspend fun setResolution(newResolution: Resolution) {
+        val response: HttpResponse = HttpClient(Android).request(controlURL) {
+            parameter("var", "framesize")
+            parameter("val", newResolution.esp32Size.toString())
+        }
+        if (response.status == HttpStatusCode.OK) resolution = newResolution
+    }
+
+    suspend fun verticalFlip(vFlip: Boolean) {
+        vflip = vFlip
+        val response: HttpResponse = HttpClient(Android).request(controlURL) {
+            parameter("var", "vflip")
+            parameter("val", if (vFlip) "1" else "0" )
+        }
     }
 
     fun stopPreview(previewWindow: MjpegSurfaceView) {
@@ -84,9 +106,10 @@ class PTDCam(private val streamURL: String) {
         }
 
 
-    enum class Resolution {
-        R640x480,
-        R600x800
+    enum class Resolution(val esp32Size: Int) {
+        R640x480(6),
+        R600x800(7),
+        DEFAULT(6)
     }
 
 }
