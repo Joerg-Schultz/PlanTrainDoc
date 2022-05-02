@@ -42,7 +42,7 @@ class CameraPreviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.tiPtdcamUrl.setText(sharedPreferences.getString(KEY_PTDCAM_URL, "")!!)
-        binding.switchVflip.isChecked = true
+        binding.switchVflip.isChecked = false
 
         binding.btnPreview.setOnClickListener {
             if (previewRunning) {

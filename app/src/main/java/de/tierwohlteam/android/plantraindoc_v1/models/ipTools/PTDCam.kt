@@ -58,7 +58,7 @@ class PTDCam(val ptdCamURL: String) {
     fun stop() {
         thread {
             displayWindow.stopPlayback()
-            displayWindow.clearStream()
+//            displayWindow.clearStream()
         }
     }
 
@@ -81,7 +81,10 @@ class PTDCam(val ptdCamURL: String) {
         coroutineScope {
             val fullPath = mjpegVideo.absolutePath
             val mp4Path = fullPath.replace(mjpegVideo.name, newName)
-            val session: FFmpegSession = FFmpegKit.execute("-i $fullPath $mp4Path")
+            // https://www.bogotobogo.com/FFMpeg/ffmpeg_video_speed_up_slow_down.php
+            // -i TheGoodTheBadAndTheUgly.mp4 -vf  "setpts=4*PTS" DownTheGoodTheBadAndTheUgly.mp4
+
+            val session: FFmpegSession = FFmpegKit.execute("-i $fullPath -vf  \"setpts=2.5*PTS\" $mp4Path")
             if (ReturnCode.isSuccess(session.returnCode)) {
                 mjpegVideo.delete()
                 return@coroutineScope true
