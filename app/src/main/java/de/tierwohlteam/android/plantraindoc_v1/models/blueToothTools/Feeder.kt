@@ -3,7 +3,7 @@ package de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools
 import android.os.Message
 
 object Feeder : BTTool() {
-    override fun toolReadAction(msg: Message) {
+    override suspend fun toolReadAction(msg: Message) {
         /* NO-OP */
     }
     fun treat() {

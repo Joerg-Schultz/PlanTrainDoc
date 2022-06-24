@@ -16,9 +16,7 @@ import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GA
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_PTDCAM_URL
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_3BCLICKER
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,8 +30,8 @@ class ToolsViewModel @Inject constructor(
     private val _cooperationLightGate: MutableStateFlow<Boolean> = MutableStateFlow(value = false)
     val cooperationLightGate: StateFlow<Boolean> = _cooperationLightGate
 
-    val _externalClicker: MutableStateFlow<ClickerStatus> = MutableStateFlow(value = ClickerStatus.UNKNOWN)
-    val externalClicker: StateFlow<ClickerStatus> = _externalClicker
+    val _externalClicker: MutableSharedFlow<ClickerStatus> = MutableSharedFlow(replay = 0)
+    val externalClicker = _externalClicker.asSharedFlow()
 
 
     init {
@@ -50,7 +48,7 @@ class ToolsViewModel @Inject constructor(
         if (useThreeBClicker) {
             viewModelScope.launch {
                 Clicker.clickerStatus.collect {
-                    _externalClicker.value = it
+                    _externalClicker.emit(it)
                 }
             }
         }

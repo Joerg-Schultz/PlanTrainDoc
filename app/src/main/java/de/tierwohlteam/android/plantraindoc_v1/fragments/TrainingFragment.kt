@@ -235,7 +235,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             }
 
             lifecycleScope.launchWhenStarted {
-                toolsViewModel.externalClicker.collectLatest { click ->
+                toolsViewModel.externalClicker.collect { click ->
                     when (click) {
                         ClickerStatus.CLICK -> binding.buttonClick.performClick()
                         ClickerStatus.RESET -> binding.buttonReset.performClick()

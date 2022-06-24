@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.util.Log
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.io.IOException
@@ -20,7 +21,7 @@ import java.io.OutputStream
  * to define the tool specific functions
  */
 abstract class BTTool {
-    abstract fun toolReadAction(msg:Message)
+    abstract suspend fun toolReadAction(msg:Message)
 
     protected val _connectionMessage: MutableStateFlow<String> = MutableStateFlow(value = "")
     val connectionMessage: StateFlow<String> = _connectionMessage
@@ -43,7 +44,11 @@ abstract class BTTool {
                 }
                 // If the updates come from the Thread for Data Exchange
                 MESSAGE_READ -> {
-                    toolReadAction(msg)
+
+                    //TODO really runBlocking???
+                    runBlocking(Dispatchers.Default) {
+                        toolReadAction(msg)
+                    }
                 }
             }
         }

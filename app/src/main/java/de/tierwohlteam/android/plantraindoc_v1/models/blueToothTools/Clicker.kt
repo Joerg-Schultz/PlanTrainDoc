@@ -1,20 +1,25 @@
 package de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools
 
 import android.os.Message
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import android.util.Log
+import kotlinx.coroutines.flow.*
 
 object Clicker : BTTool() {
-    private val _clickerStatus: MutableStateFlow<ClickerStatus> = MutableStateFlow(value = ClickerStatus.UNKNOWN)
-    val clickerStatus: StateFlow<ClickerStatus> = _clickerStatus
 
-    override fun toolReadAction(msg: Message) {
+    private val _clickerStatus = MutableSharedFlow<ClickerStatus>(replay = 1)
+    val clickerStatus = _clickerStatus.asSharedFlow()
+
+    override suspend fun toolReadAction(msg: Message) {
+        val msgText = msg.obj.toString()
+        Log.d("3BClicker",msgText)
         val statusText = msg.obj.toString().replace("""\W""".toRegex(), "")
-        _clickerStatus.value =  when (statusText) {
-            "Click" -> ClickerStatus.CLICK
-            "Reset" -> ClickerStatus.RESET
-            else -> ClickerStatus.UNKNOWN
-        }
+        _clickerStatus.emit(
+            when (statusText) {
+                "Click" -> ClickerStatus.CLICK
+                "Reset" -> ClickerStatus.RESET
+                else -> ClickerStatus.UNKNOWN
+            }
+        )
     }
 }
 

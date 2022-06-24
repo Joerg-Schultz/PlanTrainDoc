@@ -12,7 +12,7 @@ object LightGate : BTTool() {
     private val _cooperation: MutableStateFlow<Boolean> = MutableStateFlow(value = false)
     val cooperation = _cooperation as StateFlow<Boolean>
 
-    override fun toolReadAction(msg: Message) {
+    override suspend fun toolReadAction(msg: Message) {
         val statusText = msg.obj.toString().replace("""\W""".toRegex(), "")
         _cooperation.value = statusText == "Start"
     }
