@@ -100,4 +100,7 @@
     <string name="preview">Preview</string>
     <string name="no_video_for_this_training">Kein Video für dieses Training</string>
     <string name="video">Video</string>
+    <string name="use3BClicker">3BClicker verwenden</string>
+    <string name="threeBClickerConnected">Du bist mit dem 3BClicker verbunden!</string>
+    <string name="threeBClickerNotConnected">Du bist nicht mit dem 3BClicker verbunden!</string>
 </resources>

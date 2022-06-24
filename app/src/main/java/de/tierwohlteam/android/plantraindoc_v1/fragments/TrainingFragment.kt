@@ -19,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.databinding.TrainingFragmentBinding
 import de.tierwohlteam.android.plantraindoc_v1.models.PlanHelper
+import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.ClickerStatus
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.Feeder
 import de.tierwohlteam.android.plantraindoc_v1.models.ipTools.PTDCam
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_PTDCAM_URL
@@ -230,6 +231,17 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
             lifecycleScope.launchWhenStarted {
                 trainingViewModel.currentTrial.collect {
                     cooperate = false
+                }
+            }
+
+            lifecycleScope.launchWhenStarted {
+                toolsViewModel.externalClicker.collectLatest { click ->
+                    when (click) {
+                        ClickerStatus.CLICK -> binding.buttonClick.performClick()
+                        ClickerStatus.RESET -> binding.buttonReset.performClick()
+                        else -> { /* NO-OP */ }
+                    }
+
                 }
             }
         }

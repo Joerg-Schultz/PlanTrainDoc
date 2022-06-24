@@ -8,10 +8,13 @@ import androidx.lifecycle.viewModelScope
 import com.benasher44.uuid.Uuid
 import com.github.niqdev.mjpeg.MjpegSurfaceView
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.Clicker
+import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.ClickerStatus
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.LightGate
 import de.tierwohlteam.android.plantraindoc_v1.models.ipTools.PTDCam
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_PTDCAM_URL
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_3BCLICKER
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,12 +32,25 @@ class ToolsViewModel @Inject constructor(
     private val _cooperationLightGate: MutableStateFlow<Boolean> = MutableStateFlow(value = false)
     val cooperationLightGate: StateFlow<Boolean> = _cooperationLightGate
 
+    val _externalClicker: MutableStateFlow<ClickerStatus> = MutableStateFlow(value = ClickerStatus.UNKNOWN)
+    val externalClicker: StateFlow<ClickerStatus> = _externalClicker
+
+
     init {
         val useLightGate = sharedPrefs.getBoolean(KEY_USE_LIGHT_GATE, false)
         if (useLightGate) {
             viewModelScope.launch {
                 LightGate.cooperation.collect {
                     _cooperationLightGate.value = it
+                }
+            }
+        }
+
+        val useThreeBClicker = sharedPrefs.getBoolean(KEY_USE_3BCLICKER, false)
+        if (useThreeBClicker) {
+            viewModelScope.launch {
+                Clicker.clickerStatus.collect {
+                    _externalClicker.value = it
                 }
             }
         }

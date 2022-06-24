@@ -15,9 +15,12 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import de.tierwohlteam.android.plantraindoc_v1.R
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.BTTool
+import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.Clicker
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.Feeder
 import de.tierwohlteam.android.plantraindoc_v1.models.blueToothTools.LightGate
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_HAS_ACCOUNT
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_3BCLICKER
+import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_CLICKER
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_FEEDER
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_LIGHT_GATE
 import de.tierwohlteam.android.plantraindoc_v1.others.Constants.KEY_USE_PTDCAM
@@ -78,6 +81,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 lifecycleScope.launch {
                     Feeder.cancelConnection()
                     Snackbar.make(requireView(), R.string.FeederNotConnected, Snackbar.LENGTH_LONG).show()
+                }
+            }
+            true
+        }
+
+        findPreference<SwitchPreferenceCompat>(KEY_USE_3BCLICKER)?.setOnPreferenceChangeListener { preference, newValue ->
+            if (newValue == true) {
+                //TODO replace !!
+                val clicker = Clicker
+                connectDialog(this.context!!, clicker, KEY_USE_3BCLICKER)
+            }
+            if (newValue == false) {
+                lifecycleScope.launch {
+                    Clicker.cancelConnection()
+                    Snackbar.make(requireView(), R.string.threeBClickerNotConnected, Snackbar.LENGTH_LONG).show()
                 }
             }
             true

@@ -22,6 +22,7 @@ object Constants {
     const val KEY_USE_FEEDER = "useFeeder"
     const val KEY_USE_PTDCAM = "usePTDCam"
     const val KEY_PTDCAM_URL = ""
+    const val KEY_USE_3BCLICKER = "use3BClicker"
 
     const val FIRST_USAGE = "FIRST_USAGE"
     const val FIRST_GOAL = "FIRST_GOAL"

@@ -37,6 +37,13 @@
 
     <PreferenceCategory app:title="@string/additional_tools">
         <SwitchPreferenceCompat
+                app:title="@string/use3BClicker"
+                app:summaryOn="@string/threeBClickerConnected"
+                app:summaryOff="@string/threeBClickerNotConnected"
+                app:defaultValue="false"
+                app:key="use3BClicker"/>
+
+        <SwitchPreferenceCompat
                 app:title="@string/useLightGate"
                 app:summaryOn="@string/LightGateConnected"
                 app:summaryOff="@string/LightGateNotConnected"
