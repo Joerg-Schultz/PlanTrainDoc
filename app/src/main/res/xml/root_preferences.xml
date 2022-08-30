@@ -16,7 +16,7 @@
                 app:summaryOff="@string/SpeechOff"/>
     </PreferenceCategory>
 
-    <PreferenceCategory
+ <!--   <PreferenceCategory
         app:title="Web Server">
         <SwitchPreferenceCompat
             app:title="@string/useWebServer"
@@ -25,7 +25,7 @@
             app:defaultValue="false"
             app:key="useWebServer"/>
 
-    </PreferenceCategory>
+    </PreferenceCategory> -->
 
     <PreferenceCategory app:title="@string/WLAN_Tools">
         <SwitchPreferenceCompat

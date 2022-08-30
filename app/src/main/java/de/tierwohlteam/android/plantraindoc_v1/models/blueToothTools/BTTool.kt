@@ -45,7 +45,8 @@ abstract class BTTool {
                 // If the updates come from the Thread for Data Exchange
                 MESSAGE_READ -> {
 
-                    //TODO really runBlocking???
+                    //RunBlocking makes sense here, as these messages should be analysed
+                    // immediately. You don't want to delay a click because others stuff is running
                     runBlocking(Dispatchers.Default) {
                         toolReadAction(msg)
                     }

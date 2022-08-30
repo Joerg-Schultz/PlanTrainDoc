@@ -106,6 +106,17 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                 binding.resultTextview.text = text
             }
         }
+        // 3BClicker
+        lifecycleScope.launchWhenStarted {
+            toolsViewModel.externalClicker.collect { click ->
+                when (click) {
+                    ClickerStatus.CLICK -> binding.buttonClick.performClick()
+                    ClickerStatus.RESET -> binding.buttonReset.performClick()
+                    else -> { /* NO-OP */ }
+                }
+
+            }
+        }
 
         //start timer if constraint is time
         trainingViewModel.sessionTimer()
@@ -233,7 +244,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                     cooperate = false
                 }
             }
-
+  /*          // 3BClicker
             lifecycleScope.launchWhenStarted {
                 toolsViewModel.externalClicker.collect { click ->
                     when (click) {
@@ -243,7 +254,7 @@ class TrainingFragment : Fragment(R.layout.training_fragment) {
                     }
 
                 }
-            }
+            } */
         }
 
         open fun makeFeeder() {
