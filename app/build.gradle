@@ -44,13 +44,15 @@ android {
         jvmTarget = '1.8'
     }
     packagingOptions {
-        exclude "META-INF/AL2.0"
-        exclude "META-INF/LGPL2.1"
+        resources {
+            excludes += ['META-INF/AL2.0', 'META-INF/LGPL2.1']
+        }
     }
 
     buildFeatures {
         viewBinding = true
     }
+    namespace 'de.tierwohlteam.android.plantraindoc_v1'
 }
 
 dependencies {
