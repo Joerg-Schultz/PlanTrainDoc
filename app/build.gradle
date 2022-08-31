@@ -8,7 +8,7 @@ plugins {
 
 android {
     compileSdkVersion 31
-    buildToolsVersion "30.0.1"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "de.tierwohlteam.android.plantraindoc_v1"
