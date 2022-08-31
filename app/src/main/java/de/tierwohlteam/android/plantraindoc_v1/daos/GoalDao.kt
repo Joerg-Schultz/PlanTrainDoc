@@ -11,23 +11,23 @@ import java.net.IDN
 interface GoalDao {
 
     @Insert
-    suspend fun insert(goal: Goal)
+    fun insert(goal: Goal)
 
     @Insert
-    suspend fun insertGoalDependency(dependencyCrossRef: GoalDependencyCrossRef)
+    fun insertGoalDependency(dependencyCrossRef: GoalDependencyCrossRef)
 
     @Query("SELECT * from goals")
-    suspend fun getAll(): List<Goal>
+    fun getAll(): List<Goal>
 
     @Query("SELECT * from goals where id = :goalID")
-    suspend fun getByID(goalID: Uuid): Goal?
+    fun getByID(goalID: Uuid): Goal?
 
     @Transaction
     @Query("SELECT * from goals where id = :goalID")
-    suspend fun getByIDWithPlan(goalID: Uuid): GoalWithPlan?
+    fun getByIDWithPlan(goalID: Uuid): GoalWithPlan?
 
     @Query("SELECT * from goals where changed > :lastSyncDate")
-    suspend fun getNew(lastSyncDate: LocalDateTime): List<Goal>
+    fun getNew(lastSyncDate: LocalDateTime): List<Goal>
 
 
     // Because Room runs the two queries for us under the hood,
@@ -35,7 +35,7 @@ interface GoalDao {
     // happens atomically.
     @Transaction
     @Query("SELECT * from goals where id = :goalID")
-    suspend fun getByIDWithRelations(goalID: Uuid): GoalWithRelations?
+    fun getByIDWithRelations(goalID: Uuid): GoalWithRelations?
 
     @Query("SELECT * from goals where parents = :parentID order by position")
     fun getChildrenByID(parentID: Uuid?): Flow<List<Goal>>
@@ -52,10 +52,10 @@ interface GoalDao {
     fun getTopLevelWithPlan(): Flow<List<GoalWithPlan>>
 
     @Update
-    suspend fun update(goal: Goal)
+    fun update(goal: Goal)
 
     @Delete
-    suspend fun delete(goal: Goal)
+    fun delete(goal: Goal)
 
     // get all subgoals for a goal
     // returns GoalTreeItem

@@ -12,10 +12,10 @@ import kotlinx.datetime.LocalDateTime
 interface SessionDao {
 
     @Insert
-    suspend fun insert(session: Session)
+    fun insert(session: Session)
 
     @Query("SELECT * from sessions where id = :sessionID")
-    suspend fun getByID(sessionID: Uuid): Session?
+    fun getByID(sessionID: Uuid): Session?
 
     @Transaction
     @Query("SELECT * from sessions where id = :sessionID")
@@ -24,15 +24,16 @@ interface SessionDao {
     @Query("SELECT * from sessions where planID = :planID")
     fun getByPlanID(planID: Uuid?): Flow<List<Session>>
 
+    @Transaction
     @Query("SELECT * from sessions where planID = :planID")
     fun getByPlanIDWithRelations(planID: Uuid?) : Flow<List<SessionWithRelations>>
 
     @Query("UPDATE sessions set comment = :comment where id = :sessionID")
-    suspend fun updateComment(sessionID: Uuid, comment: String?)
+    fun updateComment(sessionID: Uuid, comment: String?)
 
     @Transaction
     @Query("SELECT * from sessions")
-    suspend fun getAllWithRelations(): List<SessionWithRelations>
+    fun getAllWithRelations(): List<SessionWithRelations>
     @Transaction
     @Query("SELECT * from sessions where created > :lastSyncDate")
     fun getNewWithRelations(lastSyncDate: LocalDateTime): List<SessionWithRelations>

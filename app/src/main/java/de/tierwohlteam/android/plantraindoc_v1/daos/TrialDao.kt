@@ -12,17 +12,17 @@ import kotlinx.coroutines.flow.Flow
 interface TrialDao {
 
     @Insert
-    suspend fun insert(trial: Trial)
+    fun insert(trial: Trial)
 
     @Insert
-    suspend fun insert(trialCriterion: TrialCriterion)
+    fun insert(trialCriterion: TrialCriterion)
 
     @Query("SELECT * from trials where id = :trialID")
-    suspend fun getByID(trialID: Uuid): Trial?
+    fun getByID(trialID: Uuid): Trial?
 
     @Transaction
     @Query("SELECT * from trials where id = :trialID")
-    suspend fun getByIDWithCriteria(trialID: Uuid): TrialWithCriteria?
+    fun getByIDWithCriteria(trialID: Uuid): TrialWithCriteria?
 
     @Query("SELECT distinct trials.id, trials.success, trials.created," +
             "sessions.criterion as sessionCriterion, goals.goal as goal FROM " +

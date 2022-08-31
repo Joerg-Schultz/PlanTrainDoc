@@ -12,16 +12,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
     @Insert
-    suspend fun insert(user: User)
+    fun insert(user: User)
 
     @Query("SELECT * from users where id = :userID")
-    suspend fun getByID(userID: Uuid): User?
+    fun getByID(userID: Uuid): User?
 
     @Transaction
     @Query("SELECT * from users where id = :userID")
-    suspend fun getByIDWithDogs(userID: Uuid): UserWithDogs?
+    fun getByIDWithDogs(userID: Uuid): UserWithDogs?
 
     @Query("SELECT * from users")
-    suspend fun getAll(): List<User>
+    fun getAll(): List<User>
 
 }

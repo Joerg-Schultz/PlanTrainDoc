@@ -9,8 +9,8 @@ import de.tierwohlteam.android.plantraindoc_v1.models.Dog
 @Dao
 interface DogDao {
     @Insert()
-    suspend fun insert(dog: Dog)
+    fun insert(dog: Dog)
 
     @Query("SELECT * from dogs where id = :dogID")
-    suspend fun getByID(dogID: Uuid): Dog?
+    fun getByID(dogID: Uuid): Dog?
 }
