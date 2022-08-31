@@ -78,6 +78,7 @@ class GoalTreeFragment : Fragment(R.layout.goaltree_fragment) {
                             }
                         }
                     }
+                    else -> { /* NO-OP */ }
                 }
             }
         }

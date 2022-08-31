@@ -165,6 +165,7 @@ class ClicksFragment : Fragment() {
                                 }
                             }
                         }
+                        else -> { /* NO-OP */}
                     }
                 }
             }
@@ -434,6 +435,7 @@ class TimeCourseFragment : Fragment() {
                             }
                             binding.timeCourseChart.invalidate()
                         }
+                        else -> { /* NO-OP */ }
                     }
                 }
             }
