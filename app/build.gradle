@@ -149,4 +149,7 @@ dependencies {
     implementation "io.ktor:ktor-client-serialization:$ktor_version"
     implementation "io.ktor:ktor-client-logging:$ktor_version"
     implementation "ch.qos.logback:logback-classic:1.2.11"
+
+    // https://developers.google.com/identity/one-tap/android/get-started
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
 }
