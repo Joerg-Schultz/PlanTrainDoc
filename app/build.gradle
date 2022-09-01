@@ -45,7 +45,7 @@ android {
     }
     packagingOptions {
         resources {
-            excludes += ['META-INF/AL2.0', 'META-INF/LGPL2.1']
+            excludes += ['META-INF/AL2.0', 'META-INF/LGPL2.1', 'META-INF/DEPENDENCIES']
         }
     }
 
@@ -141,7 +141,7 @@ dependencies {
     implementation 'com.arthenica:ffmpeg-kit-video:4.5.1'
 
     def ktor_version = "2.1.0"
-    // ktor httpclient for IPCamera (maybe convert Retrofit to ktor?)
+    // ktor httpclient for IPCamera
     implementation "io.ktor:ktor-client-android:$ktor_version"
     // ktor client for Web Server (can I use this for IPCamera?)
     implementation "io.ktor:ktor-client-core:$ktor_version"
