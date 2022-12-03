@@ -12,7 +12,7 @@ import kotlinx.datetime.LocalDateTime
 interface SessionDao {
 
     @Insert
-    fun insert(session: Session)
+    suspend fun insert(session: Session)
 
     @Query("SELECT * from sessions where id = :sessionID")
     fun getByID(sessionID: Uuid): Session?

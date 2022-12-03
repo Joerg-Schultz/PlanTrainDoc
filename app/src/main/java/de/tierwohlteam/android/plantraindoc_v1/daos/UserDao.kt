@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
     @Insert
-    fun insert(user: User)
+    suspend fun insert(user: User)
 
     @Query("SELECT * from users where id = :userID")
     fun getByID(userID: Uuid): User?
