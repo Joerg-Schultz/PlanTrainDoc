@@ -13,3 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/src/main/java/de/tierwohlteam/android/plantraindoc_v1/keys.kt
